@@ -33,6 +33,7 @@
 </head>
 
 <script src="trident.js" type="text/javascript" encoding="UTF-8"></script>
+<script src="triton.js" type="text/javascript" encoding="UTF-8"></script>
 
 <body bgcolor="#000044" style = "margin: 0;" onkeydown="javascript: return ctrl (event . key . toLowerCase ());">
 <div><canvas id="seawolf" /></div>
@@ -44,18 +45,25 @@
 var canvas = document . getElementById ('seawolf');
 var ctx = canvas . getContext ('2d');
 
+var t = new triton ();
+
+
 var resize = function () {
 	canvas . width = window . innerWidth;
 	canvas . height = window . innerHeight;
 	console . log (canvas . width, canvas . height);
+	ctx . translate (100, 100);
+	t . draw (ctx);
+	t . move (1);
 };
 
-resize ();
+setInterval (resize, 600);
+//resize ();
 
 var ctrl = function (key) {
 	if (key === 'control' || key === 'r') return true;
 	console . log (key);
-	return false;
+	return true;
 };
 
 addTrident ({name: 'Collins', delete: false});
