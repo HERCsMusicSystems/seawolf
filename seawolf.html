@@ -45,16 +45,22 @@
 var canvas = document . getElementById ('seawolf');
 var ctx = canvas . getContext ('2d');
 
-var t = new triton ();
+var texas = new Texas ();
+var hawaii = new Hawaii ();
+var virginia = new Virginia ();
+hawaii . position = {x: 300, y: 0, bearing: 0.4, depth: 150}; hawaii . speed = {x: 2, y: 0};
+texas . position = {x: 300, y: 0, bearing: 2, depth: 150}; texas . speed = {x: 3, y: 0};
 
 
 var resize = function () {
 	canvas . width = window . innerWidth;
 	canvas . height = window . innerHeight;
-	console . log (canvas . width, canvas . height);
+	//console . log (canvas . width, canvas . height);
 	ctx . translate (100, 100);
-	t . draw (ctx);
-	t . move (1);
+	simulateTridents (1);
+	drawTridents (ctx);
+	//t . draw (ctx);
+	//t . move (1);
 };
 
 setInterval (resize, 600);
@@ -66,12 +72,15 @@ var ctrl = function (key) {
 	return true;
 };
 
-addTrident ({name: 'Collins', delete: false});
-addTrident ({name: 'Los Angeles', delete: false});
-addTrident ({name: 'Barracuda', delete: true});
-addTrident ({name: 'Kilo', delete: true});
-addTrident ({name: 'Trident', delete: false});
-addTrident ({name: 'Triton', delete: false});
+//addTrident ({name: 'Collins', delete: false});
+//addTrident ({name: 'Los Angeles', delete: false});
+//addTrident ({name: 'Barracuda', delete: true});
+//addTrident ({name: 'Kilo', delete: true});
+//addTrident ({name: 'Trident', delete: false});
+//addTrident ({name: 'Triton', delete: false});
+addTrident (texas);
+addTrident (hawaii);
+addTrident (virginia);
 
 showTridents ();
 removeTridents ();
@@ -80,4 +89,3 @@ showTridents ();
 </script>
 
 </html>
-

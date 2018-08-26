@@ -7,4 +7,4 @@ var removeTrident = function (trident) {trident . delete = true;};
 var removeTridents = function () {var ind = 0; while (ind < tridents . length) {if (tridents [ind] . delete) tridents . splice (ind, 1); else ind ++;}};
 var showTridents = function () {for (var ind in tridents) console . log (tridents [ind]); console . log ('====');};
 var simulateTridents = function (delta) {for (var ind in tridents) tridents [ind] . simulate (delta);};
-
+var drawTridents = function (ctx) {for (var ind in tridents) tridents [ind] . draw (ctx);};
