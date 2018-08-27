@@ -39,6 +39,13 @@ triton . prototype . draw = function (ctx) {
 	ctx . stroke ();
 };
 
+var Virginia = function (name) {
+	triton . call (this);
+	this . class = 'Virginia';
+	this . name = name;
+};
+Virginia . prototype = Object . create (triton . prototype);
+/*
 var create_triton = function (triton_class, name) {
 	var triton = function () {triton_class . call (this); this . name = name;};
 	triton . prototype = Object . create (triton_class . prototype);
@@ -54,3 +61,4 @@ VirginiaClass . prototype = Object . create (triton . prototype);
 var Virginia = create_triton (VirginiaClass, 'Virginia');
 var Hawaii = create_triton (VirginiaClass, 'Hawaii');
 var Texas = create_triton (VirginiaClass, 'Texas');
+*/

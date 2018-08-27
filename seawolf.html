@@ -45,25 +45,28 @@
 var canvas = document . getElementById ('seawolf');
 var ctx = canvas . getContext ('2d');
 
-var texas = new Texas ();
-var hawaii = new Hawaii ();
-var virginia = new Virginia ();
+var texas = new Virginia ('Texas');
+var hawaii = new Virginia ('Hawaii');
+var virginia = new Virginia ('Virginia');
 hawaii . position = {x: 300, y: 0, bearing: 0.4, depth: 150}; hawaii . speed = {x: 2, y: 0};
 texas . position = {x: 300, y: 0, bearing: 2, depth: 150}; texas . speed = {x: 3, y: 0};
 
 
+var time = Date . now ();
+
 var resize = function () {
+	var now = Date . now ();
 	canvas . width = window . innerWidth;
 	canvas . height = window . innerHeight;
 	//console . log (canvas . width, canvas . height);
 	drawGrid (ctx, window . innerWidth, window . innerHeight, texas);
-	simulateTridents (1);
+	simulateTridents ((now - time) / 1000);
+	removeTridents ();
 	drawTridents (ctx);
-	//t . draw (ctx);
-	//t . move (1);
+	time = now;
 };
 
-setInterval (resize, 100);
+setInterval (resize, 50);
 //resize ();
 
 var ctrl = function (key) {
