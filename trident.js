@@ -9,11 +9,12 @@ var showTridents = function () {for (var ind in tridents) console . log (trident
 var simulateTridents = function (delta) {for (var ind in tridents) tridents [ind] . simulate (delta);};
 var drawTridents = function (ctx) {for (var ind in tridents) tridents [ind] . draw (ctx);};
 
-var scaling = 1;
+var scaling = 0.5;
 
 var drawGrid = function (ctx, width, height, triton) {
-  width *= 0.5; height *= 0.5;
+  width *= 0.5 / scaling; height *= 0.5 / scaling;
   var shift = triton === undefined ? {x: 0, y: 0} : {x: - triton . position . x, y: - triton . position . y};
+  ctx . scale (scaling, scaling);
   ctx . translate (width + shift . x, height + shift . y);
   ctx . beginPath ();
   ctx . strokeStyle = 'yellow';
