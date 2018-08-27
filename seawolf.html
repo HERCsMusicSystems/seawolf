@@ -56,14 +56,14 @@ var resize = function () {
 	canvas . width = window . innerWidth;
 	canvas . height = window . innerHeight;
 	//console . log (canvas . width, canvas . height);
-	ctx . translate (100, 100);
+	drawGrid (ctx, window . innerWidth, window . innerHeight, texas);
 	simulateTridents (1);
 	drawTridents (ctx);
 	//t . draw (ctx);
 	//t . move (1);
 };
 
-setInterval (resize, 600);
+setInterval (resize, 100);
 //resize ();
 
 var ctrl = function (key) {
