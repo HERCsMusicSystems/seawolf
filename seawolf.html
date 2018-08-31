@@ -35,7 +35,12 @@
 <script src="trident.js" type="text/javascript" encoding="UTF-8"></script>
 <script src="triton.js" type="text/javascript" encoding="UTF-8"></script>
 
-<body bgcolor="#000044" style = "margin: 0;" onkeydown="javascript: return ctrl (event . key . toLowerCase ());">
+<body bgcolor="#000044" style = "margin: 0;"
+	onkeydown="javascript: return ctrl (event . key . toLowerCase ());"
+	onwheel="javascript: return onWheel (event);"
+	onmousedown="javascript: return onMouseDown (event);"
+	oncontextmenu="javascript: event . preventDefault ();"
+>
 <div><canvas id="seawolf" /></div>
 
 </body>
@@ -48,8 +53,10 @@ var ctx = canvas . getContext ('2d');
 var texas = new Virginia ('Texas');
 var hawaii = new Virginia ('Hawaii');
 var virginia = new Virginia ('Virginia');
-hawaii . position = {x: 300, y: 0, bearing: 0.4, depth: 150}; hawaii . speed = {x: 2, y: 0};
-texas . position = {x: 300, y: 0, bearing: 2, depth: 150}; texas . speed = {x: 3, y: 0};
+var kuguar = new Akula ('Kuguar');
+hawaii . position = {x: 2.5, y: 0, bearing: 40, depth: 150}; hawaii . setSpeed ('half'); hawaii . depth_target = 150;
+texas . position = {x: 2.5, y: 0, bearing: 200, depth: 150}; texas . setSpeed ('flank'); texas . depth_target = 150;
+kuguar . position = {x: -2.5, y: 0, bearing: 100, depth: 150}; kuguar . setSpeed ('full'); kuguar . depth_target = 150;
 
 
 var time = Date . now ();
@@ -75,6 +82,9 @@ var ctrl = function (key) {
 	return true;
 };
 
+var onWheel = function (e) {if (e . deltaY > 0) {if (scaling <= 0.32768) return; scaling /= 1.25;} else scaling *= 1.25; console . log (scaling); return false;};
+var onMouseDown = function (e) {e . preventDefault (); console . log (e); return false;};
+
 //addTrident ({name: 'Collins', delete: false});
 //addTrident ({name: 'Los Angeles', delete: false});
 //addTrident ({name: 'Barracuda', delete: true});
@@ -84,6 +94,9 @@ var ctrl = function (key) {
 addTrident (texas);
 addTrident (hawaii);
 addTrident (virginia);
+addTrident (kuguar);
+
+classifyTridents (texas);
 
 showTridents ();
 removeTridents ();
