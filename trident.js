@@ -38,6 +38,7 @@ var drawGrid = function (ctx, width, height, triton) {
   var shift = triton === undefined ? {x: 0, y: 0} : {x: - triton . position . x * mile, y: - triton . position . y * mile};
   ctx . translate (width + shift . x, height + shift . y);
   ctx . beginPath ();
+  ctx . lineWidth = 1.5;
   ctx . strokeStyle = 'yellow';
   var limit_left = - shift . x - width;
   var limit_right = - shift . x + width;

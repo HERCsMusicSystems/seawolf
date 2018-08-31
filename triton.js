@@ -24,7 +24,7 @@ triton . prototype . noiseLevel = function () {return this . noise;};
 
 triton . prototype . move = function (delta) {
 	this . trail_delta --;
-	if (this . trail_delta < 1) {this . trail . push ({x: this . position . x * 128, y: this . position . y * 128}); this . trail_delta = 0.002 / delta;}
+	if (this . trail_delta < 1) {this . trail . push ({x: this . position . x * 128, y: this . position . y * 128}); this . trail_delta = 2 / delta;}
 	var bearing = (this . position . bearing - 90) * Math . PI / 180;
 	var sdelta = delta / 3600;
 	this . position . x += sdelta * (Math . cos (bearing) * this . speed . x - Math . sin (bearing) * this . speed . y);
@@ -36,7 +36,14 @@ triton . prototype . move = function (delta) {
 			if (this . depth_target > this . position . depth) this . position . depth += dspeed;
 			else this . position . depth -= dspeed;
 		}
-		console . log (dspeed, this . diving_speed, this . position);
+	}
+	if (this . bearing_target != this . position . bearing) {
+		var bspeed = this . bearing_speed * delta;
+		if (Math . abs (this . bearing_target - this . position . bearing) <= bspeed) {this . position . bearing = this . bearing_target; this . bearing_speed = 0;}
+		else {
+			if (this . bearing_target > this . position . bearing) this . position . bearing += bspeed;
+			else this . position . bearing -= bspeed;
+		}
 	}
 };
 
@@ -58,8 +65,9 @@ triton . prototype . setSpeed = function (index) {
 	this . noise = this . noises [index]; this . speed = {x: this . speeds [index], y: 0};
 };
 
-triton . prototype . targetDepth = function (depth) {
-	this . diving_speed = this . diving_speeds [this . diving_speeds . length - 1];
+triton . prototype . targetDepth = function (depth, index) {
+	if (index === undefined) index = this . diving_speeds . length - 1;
+	this . diving_speed = this . diving_speeds [index];
 	if (typeof (depth) === 'number') {this . depth_target = depth; return;}
 	switch (depth) {
 		case 'surface': this . depth_target = 0; break;
@@ -77,6 +85,15 @@ triton . prototype . targetDepth = function (depth) {
 			break;
 		default: break;
 	}
+};
+
+triton . prototype . targetBearing = function (target, index) {
+	if (index === undefined) index = this . bearing_speeds . length - 1;
+	this . bearing_speed = this . bearing_speeds [index];
+	if (typeof (target) === 'number') this . bearing_target = target;
+	else this . bearing_target = Math . atan2 (target . y - this . position . y, target . x - this . position . x) * 180 / Math . PI + 90;
+	if (this . bearing_target > 180 + this . position . bearing) this . position . bearing += 360;
+	if (this . bearing_target + 180 < this . position . bearing) this . position . bearing -= 360;
 };
 
 triton . prototype . draw = function (ctx) {

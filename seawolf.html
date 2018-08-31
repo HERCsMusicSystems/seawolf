@@ -55,7 +55,7 @@ var hawaii = new Virginia ('Hawaii');
 var virginia = new Virginia ('Virginia');
 var kuguar = new Akula ('Kuguar');
 hawaii . position = {x: 2.5, y: 0, bearing: 40, depth: 150}; hawaii . setSpeed ('half'); hawaii . depth_target = 150;
-texas . position = {x: 2.5, y: 0, bearing: 200, depth: 150}; texas . setSpeed ('flank'); texas . depth_target = 150;
+texas . position = {x: 2.5, y: 0, bearing: 180, depth: 150}; texas . setSpeed ('flank'); texas . depth_target = 150;
 kuguar . position = {x: -2.5, y: 0, bearing: 100, depth: 150}; kuguar . setSpeed ('full'); kuguar . depth_target = 150;
 
 
@@ -78,12 +78,15 @@ setInterval (resize, 50);
 
 var ctrl = function (key) {
 	if (key === 'control' || key === 'r') return true;
-	console . log (key);
 	return true;
 };
 
-var onWheel = function (e) {if (e . deltaY > 0) {if (scaling <= 0.32768) return; scaling /= 1.25;} else scaling *= 1.25; console . log (scaling); return false;};
-var onMouseDown = function (e) {e . preventDefault (); console . log (e); return false;};
+var onWheel = function (e) {if (e . deltaY > 0) {if (scaling <= 0.32768) return; scaling /= 1.25;} else scaling *= 1.25; return false;};
+var onMouseDown = function (e) {
+	e . preventDefault ();
+	texas . targetBearing ({x: e . clientX - canvas . width * 0.5, y: e . clientY - canvas . height * 0.5});
+	return false;
+};
 
 //addTrident ({name: 'Collins', delete: false});
 //addTrident ({name: 'Los Angeles', delete: false});
