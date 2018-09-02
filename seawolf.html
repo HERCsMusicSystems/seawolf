@@ -32,8 +32,8 @@
 	</style>
 </head>
 
-<script src="trident.js" type="text/javascript" encoding="UTF-8"></script>
-<script src="triton.js" type="text/javascript" encoding="UTF-8"></script>
+<script src="simulator.js" type="text/javascript" encoding="UTF-8"></script>
+<script src="vessel.js" type="text/javascript" encoding="UTF-8"></script>
 
 <body bgcolor="#000044" style = "margin: 0;"
 	onkeydown="javascript: return ctrl (event . key . toLowerCase ());"
@@ -67,9 +67,9 @@ var resize = function () {
 	canvas . height = window . innerHeight;
 	//console . log (canvas . width, canvas . height);
 	drawGrid (ctx, window . innerWidth, window . innerHeight, texas);
-	simulateTridents ((now - time) / 1000);
-	removeTridents ();
-	drawTridents (ctx);
+	simulate ((now - time) / 1000);
+	removeVessels ();
+	drawVessels (ctx);
 	time = now;
 };
 
@@ -88,22 +88,14 @@ var onMouseDown = function (e) {
 	return false;
 };
 
-//addTrident ({name: 'Collins', delete: false});
-//addTrident ({name: 'Los Angeles', delete: false});
-//addTrident ({name: 'Barracuda', delete: true});
-//addTrident ({name: 'Kilo', delete: true});
-//addTrident ({name: 'Trident', delete: false});
-//addTrident ({name: 'Triton', delete: false});
-addTrident (texas);
-addTrident (hawaii);
-addTrident (virginia);
-addTrident (kuguar);
+addVessel (texas);
+addVessel (hawaii);
+addVessel (virginia);
+addVessel (kuguar);
 
-classifyTridents (texas);
+classifyVessels (texas);
 
-showTridents ();
-removeTridents ();
-showTridents ();
+showVessels ();
 
 </script>
 

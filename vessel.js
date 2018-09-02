@@ -1,5 +1,5 @@
 
-var triton = function (country) {
+var vessel = function (country) {
 	this . position = {x: 0, y: 0, depth: 0, bearing: 0};
 	this . speed = {x: 0, y: 0};
 	this . diving_speed = 0;
@@ -20,9 +20,9 @@ var triton = function (country) {
 	this . diving_speeds = [0, 10, 20, 30, 40, 50, 60];
 };
 
-triton . prototype . noiseLevel = function () {return this . noise;};
+vessel . prototype . noiseLevel = function () {return this . noise;};
 
-triton . prototype . move = function (delta) {
+vessel . prototype . move = function (delta) {
 	this . trail_delta --;
 	if (this . trail_delta < 1) {this . trail . push ({x: this . position . x * 128, y: this . position . y * 128}); this . trail_delta = 2 / delta;}
 	var bearing = (this . position . bearing - 90) * Math . PI / 180;
@@ -47,9 +47,9 @@ triton . prototype . move = function (delta) {
 	}
 };
 
-triton . prototype . simulate = function (delta) {this . move (delta);};
+vessel . prototype . simulate = function (delta) {this . move (delta);};
 
-triton . prototype . setSpeed = function (index) {
+vessel . prototype . setSpeed = function (index) {
 	switch (index) {
 		case 'stop': index = 0; break;
 		case 'slow': index = 1; break;
@@ -65,7 +65,7 @@ triton . prototype . setSpeed = function (index) {
 	this . noise = this . noises [index]; this . speed = {x: this . speeds [index], y: 0};
 };
 
-triton . prototype . targetDepth = function (depth, index) {
+vessel . prototype . targetDepth = function (depth, index) {
 	if (index === undefined) index = this . diving_speeds . length - 1;
 	this . diving_speed = this . diving_speeds [index];
 	if (typeof (depth) === 'number') {this . depth_target = depth; return;}
@@ -87,7 +87,7 @@ triton . prototype . targetDepth = function (depth, index) {
 	}
 };
 
-triton . prototype . targetBearing = function (target, index) {
+vessel . prototype . targetBearing = function (target, index) {
 	if (index === undefined) index = this . bearing_speeds . length - 1;
 	this . bearing_speed = this . bearing_speeds [index];
 	if (typeof (target) === 'number') this . bearing_target = target;
@@ -96,7 +96,7 @@ triton . prototype . targetBearing = function (target, index) {
 	if (this . bearing_target + 180 < this . position . bearing) this . position . bearing -= 360;
 };
 
-triton . prototype . draw = function (ctx) {
+vessel . prototype . draw = function (ctx) {
 	ctx . strokeStyle = 'white';
 	ctx . lineWidth = 1;
 	for (var ind in this . trail) {
@@ -137,23 +137,23 @@ triton . prototype . draw = function (ctx) {
 	ctx . stroke ();
 };
 
-triton . prototype . checkStatusOf = function (vessel) {
+vessel . prototype . checkStatusOf = function (vessel) {
 	if (this === vessel) return 'simulation';
 	if (friends [this . country] . includes (vessel . country)) return 'friend';
 	if (enemies [this . country] . includes (vessel . country)) return 'enemy';
 	return 'neutral';
 };
 
-triton . prototype . getVectorFrom = function (vessel) {return {x: vessel . position . x - this . position . x, y: vessel . position . y - this . position . y};};
+vessel . prototype . getVectorFrom = function (vessel) {return {x: vessel . position . x - this . position . x, y: vessel . position . y - this . position . y};};
 
-triton . prototype . getRelativePositionOf = function (vessel) {
+vessel . prototype . getRelativePositionOf = function (vessel) {
 	var vector = this . getVectorFrom (vessel);
 	vector . distance = Math . sqrt (vector . x * vector . x + vector . y * vector . y);
 	vector . bearing = Math . atan2 (vector . y, vector . x);
 	return vector;
 };
 
-triton . prototype . getNoiseOf = function (vessel) {
+vessel . prototype . getNoiseOf = function (vessel) {
 	var vector = this . getRelativePositionOf (vessel);
 	noise = vessel . noiseLevel ();
 	if (vector . distance > 0) noise /= vector . distance * 1852;
@@ -162,18 +162,18 @@ triton . prototype . getNoiseOf = function (vessel) {
 
 var Virginia = function (name, country) {
 	if (country === undefined) country = 'USA';
-	triton . call (this, country);
+	vessel . call (this, country);
 	this . class = 'Virginia';
 	this . name = name;
 	this . speeds = [0, 2, 8, 15, 19, 25, 35];
 };
-Virginia . prototype = Object . create (triton . prototype);
+Virginia . prototype = Object . create (vessel . prototype);
 
 var Akula = function (name, country) {
 	if (country === undefined) country = 'Russia';
-	triton . call (this, country);
+	vessel . call (this, country);
 	this . class = 'Akula';
 	this . name = name;
 	this . speeds = [0, 2, 8, 15, 21, 28, 35];
 };
-Akula . prototype = Object . create (triton . prototype);
+Akula . prototype = Object . create (vessel . prototype);

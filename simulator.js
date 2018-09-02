@@ -1,14 +1,14 @@
 
-var tridents = [];
+var vessels = [];
 
-var addTrident = function (trident) {tridents . push (trident);};
-var getTrident = function (name) {for (var ind in tridents) {if (tridents [ind] . name === name) return tridents [ind];}; return null;};
-var removeTrident = function (trident) {trident . delete = true;};
-var removeTridents = function () {var ind = 0; while (ind < tridents . length) {if (tridents [ind] . delete) tridents . splice (ind, 1); else ind ++;}};
-var showTridents = function () {for (var ind in tridents) console . log (tridents [ind]); console . log ('====');};
-var simulateTridents = function (delta) {for (var ind in tridents) tridents [ind] . simulate (delta);};
-var drawTridents = function (ctx) {for (var ind in tridents) tridents [ind] . draw (ctx);};
-var classifyTridents = function (trident) {for (var ind in tridents) tridents [ind] . status = tridents [ind] . checkStatusOf (trident);};
+var addVessel = function (vessel) {vessels . push (vessel);};
+var getVessel = function (name) {for (var ind in vessels) {if (vessels [ind] . name === name) return vessels [ind];}; return null;};
+var removeVessel = function (vessel) {vessel . delete = true;};
+var removeVessels = function () {var ind = 0; while (ind < vessels . length) {if (vessels [ind] . delete) vessels . splice (ind, 1); else ind ++;}};
+var showVessels = function () {for (var ind in vessels) console . log (vessels [ind]); console . log ('====');};
+var simulate = function (delta) {for (var ind in vessels) vessels [ind] . simulate (delta);};
+var drawVessels = function (ctx) {for (var ind in vessels) vessels [ind] . draw (ctx);};
+var classifyVessels = function (vessel) {for (var ind in vessels) vessels [ind] . status = vessels [ind] . checkStatusOf (vessel);};
 
 var thermoclines = [{depth: 120, attenuation: 0.01}, {depth: 240, attenuation: 0.01}, {depth: 600, attenuation: 0.001}, {depth: 1200, attenuation: 0.001}];
 
@@ -32,10 +32,10 @@ var enemies = {
 
 var scaling = 1;
 
-var drawGrid = function (ctx, width, height, triton) {
+var drawGrid = function (ctx, width, height, vessel) {
   width *= 0.5; height *= 0.5;
   var mile = 128 * scaling;
-  var shift = triton === undefined ? {x: 0, y: 0} : {x: - triton . position . x * mile, y: - triton . position . y * mile};
+  var shift = vessel === undefined ? {x: 0, y: 0} : {x: - vessel . position . x * mile, y: - vessel . position . y * mile};
   ctx . translate (width + shift . x, height + shift . y);
   ctx . beginPath ();
   ctx . lineWidth = 1.5;
