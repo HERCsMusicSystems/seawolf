@@ -1,5 +1,6 @@
 
 var vessels = [];
+var remotes = {};
 
 var addVessel = function (vessel) {vessels . push (vessel);};
 var getVessel = function (name) {for (var ind in vessels) {if (vessels [ind] . name === name) return vessels [ind];}; return null;};
@@ -9,6 +10,7 @@ var showVessels = function () {for (var ind in vessels) console . log (vessels [
 var simulate = function (delta) {for (var ind in vessels) vessels [ind] . simulate (delta);};
 var drawVessels = function (ctx) {for (var ind in vessels) vessels [ind] . draw (ctx);};
 var classifyVessels = function (vessel) {for (var ind in vessels) vessels [ind] . status = vessels [ind] . checkStatusOf (vessel);};
+var constructRemotes = function () {remotes = {}; for (var ind in vessels) remotes [vessels [ind] . name] = vessels [ind] . position; return JSON . stringify (remotes);};
 
 var thermoclines = [{depth: 120, attenuation: 0.01}, {depth: 240, attenuation: 0.01}, {depth: 600, attenuation: 0.001}, {depth: 1200, attenuation: 0.001}];
 

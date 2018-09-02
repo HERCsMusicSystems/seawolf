@@ -44,6 +44,10 @@ vessel . prototype . move = function (delta) {
 			if (this . bearing_target > this . position . bearing) this . position . bearing += bspeed;
 			else this . position . bearing -= bspeed;
 		}
+	} else if (this . bearing_speed !== 0){
+		this . position . bearing += this . bearing_speed * delta;
+		while (this . position . bearing > 360) this . position . bearing -= 360;
+		while (this . position . bearing < 0) this . position . bearing += 360;
 	}
 };
 
@@ -95,6 +99,8 @@ vessel . prototype . targetBearing = function (target, index) {
 	if (this . bearing_target > 180 + this . position . bearing) this . position . bearing += 360;
 	if (this . bearing_target + 180 < this . position . bearing) this . position . bearing -= 360;
 };
+
+vessel . prototype . bearing = function (index) {this . bearing_speed = index > 0 ? this . bearing_speeds [index] : - this . bearing_speeds [- index];};
 
 vessel . prototype . draw = function (ctx) {
 	ctx . strokeStyle = 'white';
