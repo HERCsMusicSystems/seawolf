@@ -168,11 +168,11 @@ vessel . prototype . getNoiseOf = function (vessel) {
 	var bearing = vector . bearing - (this . position . bearing - 90) * Math . PI / 180;
 	while (bearing > Math . PI) bearing -= Math . PI + Math . PI;
 	while (bearing < - Math . PI) bearing += Math . PI + Math . PI;
-	console . log (bearing);
-	bearing = Math . cos (bearing * 0.5);
-	noise *= bearing * bearing;
+	noise = this . noiseLevelBearingCorrection (noise, bearing);
 	return noise;
 };
+
+vessel . prototype . noiseLevelBearingCorrection = function (noise, bearing) {bearing = Math . cos (bearing * 0.5); return noise * bearing * bearing;};
 
 var Virginia = function (name, country) {
 	if (country === undefined) country = 'USA';
