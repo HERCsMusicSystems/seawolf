@@ -78,13 +78,12 @@ vessel . prototype . targetDepth = function (depth, index) {
 		case 'periscope': this . depth_target = 60; break;
 		case 'down thermal':
 			for (var ind in thermoclines) {
-				if (thermoclines [ind] . depth > this . position . depth) this . depth_target = thermoclines . depth + 18;
-				return;
+				if (thermoclines [ind] . depth > this . position . depth) {this . depth_target = thermoclines [ind] . depth + 18; return;}
 			}
 			break;
 		case 'up thermal':
-			for (var ind = thermoclines . length - 1; ind >= 0; ind++) {
-				if (thermoclines [ind] . depth < this . position . depth) this . depth_target = thermoclines . depth - 18;
+			for (var ind = thermoclines . length - 1; ind >= 0; ind--) {
+				if (thermoclines [ind] . depth < this . position . depth) {this . depth_target = thermoclines [ind] . depth - 18; return;}
 			}
 			break;
 		default: break;
@@ -163,6 +162,15 @@ vessel . prototype . getNoiseOf = function (vessel) {
 	var vector = this . getRelativePositionOf (vessel);
 	noise = vessel . noiseLevel ();
 	if (vector . distance > 0) noise /= vector . distance * 1852;
+	for (var ind in thermoclines) {
+		if ((thermoclines [ind] . depth - vessel . position . depth) * (thermoclines [ind] . depth - this . position . depth) < 0) noise *= thermoclines [ind] . attenuation;
+	}
+	var bearing = vector . bearing - (this . position . bearing - 90) * Math . PI / 180;
+	while (bearing > Math . PI) bearing -= Math . PI + Math . PI;
+	while (bearing < - Math . PI) bearing += Math . PI + Math . PI;
+	console . log (bearing);
+	bearing = Math . cos (bearing * 0.5);
+	noise *= bearing * bearing;
 	return noise;
 };
 
