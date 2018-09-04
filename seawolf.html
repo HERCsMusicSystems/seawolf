@@ -46,7 +46,13 @@
 <div style="position: absolute; left: 10px; top: 10px; font-family: arial;">
 	<table bgcolor="white">
 		<tr>
-			<td>Bearing:</td><td><div id="simulation_bearing"></div></td>
+			<td>Bearing:</td><td><div id="simulation_bearing"/></td>
+		</tr>
+		<tr>
+			<td>Speed:</td><td><div id="simulation_speed"/></td>
+		</tr>
+		<tr>
+			<td>Depth:</td><td><div id="simulation_depth"/></td>
 		</tr>
 	</table>
 </div>
@@ -66,24 +72,30 @@ hawaii . position = {x: 2.5, y: 0, bearing: 40, depth: 150}; hawaii . setSpeed (
 texas . position = {x: 2.5, y: 0, bearing: 180, depth: 150}; texas . setSpeed ('flank'); texas . depth_target = 150;
 kuguar . position = {x: -2.5, y: 0, bearing: 100, depth: 150}; kuguar . setSpeed ('full'); kuguar . depth_target = 150;
 
+var simulated = texas;
+var selected = null;
 
 var time = Date . now ();
 
 var simulation_bearing = document . getElementById ('simulation_bearing');
+var simulation_speed = document . getElementById ('simulation_speed');
+var simulation_depth = document . getElementById ('simulation_depth');
 
 var resize = function () {
 	var now = Date . now ();
 	canvas . width = window . innerWidth;
 	canvas . height = window . innerHeight;
 	//console . log (canvas . width, canvas . height);
-	drawGrid (ctx, window . innerWidth, window . innerHeight, texas);
+	drawGrid (ctx, window . innerWidth, window . innerHeight, simulated);
 	simulate ((now - time) / 1000);
 	removeVessels ();
 	drawVessels (ctx);
 	time = now;
-	var bearing = texas . position . bearing;
+	var bearing = simulated . position . bearing;
 	if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
 	simulation_bearing . innerHTML = Math . round (bearing);
+	simulation_speed . innerHTML = simulated . speed . x;
+	simulation_depth . innerHTML = simulated . position . depth;
 };
 
 setInterval (resize, 50);
@@ -97,7 +109,8 @@ var ctrl = function (key) {
 var onWheel = function (e) {if (e . deltaY > 0) {if (scaling <= 0.32768) return; scaling /= 1.25;} else scaling *= 1.25; return false;};
 var onMouseDown = function (e) {
 	e . preventDefault ();
-	texas . targetBearing ({x: e . clientX - canvas . width * 0.5, y: e . clientY - canvas . height * 0.5});
+	if (e . buttons === 1) selected = simulationHitTest (e . clientX - canvas . width * 0.5, e . clientY - canvas . height * 0.5, simulated);
+	if (e . buttons === 2) simulated . targetBearing ({x: e . clientX - canvas . width * 0.5, y: e . clientY - canvas . height * 0.5});
 	return false;
 };
 
@@ -106,7 +119,7 @@ addVessel (hawaii);
 addVessel (virginia);
 addVessel (kuguar);
 
-classifyVessels (texas);
+classifyVessels (simulated);
 
 showVessels ();
 

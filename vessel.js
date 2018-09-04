@@ -39,7 +39,6 @@ vessel . prototype . move = function (delta) {
 	}
 	if (this . bearing_speed !== 0) {
 		if (this . bearing_target !== null) {
-			console . log (this . bearing_target);
 			var bspeed = this . bearing_speed * delta;
 			if (Math . abs (this . bearing_target - this . position . bearing) <= bspeed) {
 				this . position . bearing = this . bearing_target;

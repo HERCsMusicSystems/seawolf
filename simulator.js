@@ -11,6 +11,22 @@ var simulate = function (delta) {for (var ind in vessels) vessels [ind] . simula
 var drawVessels = function (ctx) {for (var ind in vessels) vessels [ind] . draw (ctx);};
 var classifyVessels = function (vessel) {for (var ind in vessels) vessels [ind] . status = vessels [ind] . checkStatusOf (vessel);};
 var constructRemotes = function () {remotes = {}; for (var ind in vessels) remotes [vessels [ind] . name] = vessels [ind] . position; return JSON . stringify (remotes);};
+var simulationHitTest = function (x, y, reference, minimum_distance) {
+  if (minimum_distance === undefined) minimum_distance = 8 / 128 / scaling;
+  x /= 128 * scaling; y /= 128 * scaling;
+  x += reference . position . x; y += reference . position . y;
+  var selected = reference, distance = 16384;
+  for (var ind in vessels) {
+    vessels [ind] . selected = false;
+    if (vessels [ind] !== reference) {
+      var xx = vessels [ind] . position . x - x, yy = vessels [ind] . position . y - y;
+      var d = Math . sqrt (xx * xx + yy * yy);
+      if (d < distance) {selected = vessels [ind]; distance = d;}
+    }
+  }
+  if (distance < minimum_distance) {selected . selected = true; return selected;}
+  return null;
+};
 
 var thermoclines = [{depth: 120, attenuation: 0.01}, {depth: 240, attenuation: 0.01}, {depth: 600, attenuation: 0.001}, {depth: 1200, attenuation: 0.001}];
 
