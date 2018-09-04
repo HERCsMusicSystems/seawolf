@@ -5,7 +5,7 @@ var vessel = function (country) {
 	this . diving_speed = 0;
 	this . bearing_speed = 0;
 	this . depth_target = 0;
-	this . bearing_target = 0;
+	this . bearing_target = null;
 	this . noise = 0;
 	this . trail_delta = 0;
 	this . selected = false;
@@ -37,17 +37,23 @@ vessel . prototype . move = function (delta) {
 			else this . position . depth -= dspeed;
 		}
 	}
-	if (this . bearing_target != this . position . bearing) {
-		var bspeed = this . bearing_speed * delta;
-		if (Math . abs (this . bearing_target - this . position . bearing) <= bspeed) {this . position . bearing = this . bearing_target; this . bearing_speed = 0;}
-		else {
-			if (this . bearing_target > this . position . bearing) this . position . bearing += bspeed;
-			else this . position . bearing -= bspeed;
+	if (this . bearing_speed !== 0) {
+		if (this . bearing_target !== null) {
+			console . log (this . bearing_target);
+			var bspeed = this . bearing_speed * delta;
+			if (Math . abs (this . bearing_target - this . position . bearing) <= bspeed) {
+				this . position . bearing = this . bearing_target;
+				this . bearing_speed = 0;
+				this . bearing_target = null;
+			} else {
+				if (this . bearing_target > this . position . bearing) this . position . bearing += bspeed;
+				else this . position . bearing -= bspeed;
+			}
+		} else {
+			this . position . bearing += this . bearing_speed * delta;
+			while (this . position . bearing > 360) this . position . bearing -= 360;
+			while (this . position . bearing < 0) this . position . bearing += 360;
 		}
-	} else if (this . bearing_speed !== 0){
-		this . position . bearing += this . bearing_speed * delta;
-		while (this . position . bearing > 360) this . position . bearing -= 360;
-		while (this . position . bearing < 0) this . position . bearing += 360;
 	}
 };
 
@@ -95,11 +101,12 @@ vessel . prototype . targetBearing = function (target, index) {
 	this . bearing_speed = this . bearing_speeds [index];
 	if (typeof (target) === 'number') this . bearing_target = target;
 	else this . bearing_target = Math . atan2 (target . y - this . position . y, target . x - this . position . x) * 180 / Math . PI + 90;
+	if (this . bearing_target < 0) this . bearing_target += 360;
 	if (this . bearing_target > 180 + this . position . bearing) this . position . bearing += 360;
 	if (this . bearing_target + 180 < this . position . bearing) this . position . bearing -= 360;
 };
 
-vessel . prototype . bearing = function (index) {this . bearing_speed = index > 0 ? this . bearing_speeds [index] : - this . bearing_speeds [- index];};
+vessel . prototype . bearing = function (index) {this . bearing_speed = index >= 0 ? this . bearing_speeds [index] : - this . bearing_speeds [- index]; this . bearing_target = null;};
 
 vessel . prototype . draw = function (ctx) {
 	ctx . strokeStyle = 'white';
