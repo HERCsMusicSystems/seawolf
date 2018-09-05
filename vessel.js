@@ -79,6 +79,7 @@ vessel . prototype . targetDepth = function (depth, index) {
 	if (index === undefined) index = this . diving_speeds . length - 1;
 	this . diving_speed = this . diving_speeds [index];
 	if (typeof (depth) === 'number') {this . depth_target = depth; return;}
+	if (! Number . isNaN (Number (depth))) {this . depth_target = Number (depth); return;}
 	switch (depth) {
 		case 'surface': this . depth_target = 0; break;
 		case 'periscope': this . depth_target = 60; break;

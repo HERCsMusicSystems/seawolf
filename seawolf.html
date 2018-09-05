@@ -38,10 +38,9 @@
 <body bgcolor="#000044" style = "margin: 0;"
 	onkeydown="javascript: return ctrl (event);"
 	onwheel="javascript: return onWheel (event);"
-	onmousedown="javascript: return onMouseDown (event);"
 	oncontextmenu="javascript: event . preventDefault ();"
 >
-<div><canvas id="seawolf" /></div>
+<div><canvas id="seawolf" onmousedown="javascript: return onMouseDown (event);"/></div>
 
 <div id="info" style="position: absolute; left: 8px; top: 8px; font-family: arial;">
 	<table style="background: #0000ffb0; color: yellow;">
@@ -71,7 +70,7 @@
 				<input type="button" value="1/2" onclick="javascript: simulated . setSpeed ('half');"/>
 				<input type="button" value="3/4" onclick="javascript: simulated . setSpeed ('three quarters');"/>
 				<input type="button" value="FULL" onclick="javascript: simulated . setSpeed ('full');"/>
-				<input type="button" value="FLANK" onlick="javascript: simulated . setSpeed ('flank');"/>
+				<input type="button" value="FLANK" onclick="javascript: simulated . setSpeed ('flank');"/>
 			</td>
 		</tr>
 		<tr>
@@ -135,7 +134,7 @@ var resize = function () {
 	var bearing = Math . round (simulated . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
 	simulation_bearing . innerHTML = bearing;
 	simulation_speed . innerHTML = simulated . speed . x;
-	simulation_depth . innerHTML = simulated . position . depth;
+	simulation_depth . innerHTML = simulated . position . depth . toFixed (0);
 	if (selected !== null) {
 		bearing = Math . round (selected . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
 		selected_bearing . innerHTML = bearing;
