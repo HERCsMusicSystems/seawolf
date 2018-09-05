@@ -46,13 +46,16 @@
 <div style="position: absolute; left: 10px; top: 10px; font-family: arial;">
 	<table bgcolor="white">
 		<tr>
-			<td>Bearing:</td><td><div id="simulation_bearing"/></td>
+			<td>Bearing:</td><td><div id="simulation_bearing"/></td><td><div id="selected_bearing"/></td>
 		</tr>
 		<tr>
-			<td>Speed:</td><td><div id="simulation_speed"/></td>
+			<td>Speed:</td><td><div id="simulation_speed"/></td><td><div id="selected_speed"/></td>
 		</tr>
 		<tr>
-			<td>Depth:</td><td><div id="simulation_depth"/></td>
+			<td>Depth:</td><td><div id="simulation_depth"/></td><td><div id="selected_depth"/></td>
+		</tr>
+		<tr>
+			<td><div id="selected_name"/></td><td><div id="selected_distance"/></td><td><div id="selected_heading"/></td>
 		</tr>
 	</table>
 </div>
@@ -80,6 +83,12 @@ var time = Date . now ();
 var simulation_bearing = document . getElementById ('simulation_bearing');
 var simulation_speed = document . getElementById ('simulation_speed');
 var simulation_depth = document . getElementById ('simulation_depth');
+var selected_bearing = document . getElementById ('selected_bearing');
+var selected_speed = document . getElementById ('selected_speed');
+var selected_depth = document . getElementById ('selected_depth');
+var selected_name = document . getElementById ('selected_name');
+var selected_distance = document . getElementById ('selected_distance');
+var selected_heading = document . getElementById ('selected_heading');
 
 var resize = function () {
 	var now = Date . now ();
@@ -91,11 +100,24 @@ var resize = function () {
 	removeVessels ();
 	drawVessels (ctx);
 	time = now;
-	var bearing = simulated . position . bearing;
-	if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
-	simulation_bearing . innerHTML = Math . round (bearing);
+	var bearing = Math . round (simulated . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
+	simulation_bearing . innerHTML = bearing;
 	simulation_speed . innerHTML = simulated . speed . x;
 	simulation_depth . innerHTML = simulated . position . depth;
+	if (selected !== null) {
+		bearing = Math . round (selected . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
+		selected_bearing . innerHTML = bearing;
+		selected_speed . innerHTML = selected . speed . x;
+		selected_depth . innerHTML = selected . position . depth;
+		selected_name . innerHTML = selected . name + ' (' + selected . class + ' class)';
+		var vector = simulated . getRelativePositionOf (selected);
+		selected_distance . innerHTML = vector . distance . toFixed (2);
+		bearing = Math . round (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
+		if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
+		selected_heading . innerHTML = bearing;
+	} else {
+		selected_name . innerHTML = '====';
+	}
 };
 
 setInterval (resize, 50);
