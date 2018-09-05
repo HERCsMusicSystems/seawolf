@@ -2,6 +2,10 @@
 var vessels = [];
 var remotes = {};
 
+var simulated = null;
+var selected = null;
+var simulation_ratio = 1;
+
 var addVessel = function (vessel) {vessels . push (vessel);};
 var getVessel = function (name) {for (var ind in vessels) {if (vessels [ind] . name === name) return vessels [ind];}; return null;};
 var removeVessel = function (vessel) {vessel . delete = true;};
@@ -10,6 +14,7 @@ var showVessels = function () {for (var ind in vessels) console . log (vessels [
 var simulate = function (delta) {for (var ind in vessels) vessels [ind] . simulate (delta);};
 var drawVessels = function (ctx) {for (var ind in vessels) vessels [ind] . draw (ctx);};
 var classifyVessels = function (vessel) {for (var ind in vessels) vessels [ind] . status = vessels [ind] . checkStatusOf (vessel);};
+var simulatedVessel = function (vessel) {simulated = vessel; classifyVessels (simulated);};
 var constructRemotes = function () {remotes = {}; for (var ind in vessels) remotes [vessels [ind] . name] = vessels [ind] . position; return JSON . stringify (remotes);};
 var simulationHitTest = function (x, y, reference, minimum_distance) {
   if (minimum_distance === undefined) minimum_distance = 8 / 128 / scaling;
@@ -69,4 +74,91 @@ var drawGrid = function (ctx, width, height, vessel) {
   for (var ind = grid_left; ind <= grid_right; ind += mile) {ctx . moveTo (ind, limit_top); ctx . lineTo (ind, limit_bottom);}
   for (var ind = grid_top; ind <= grid_bottom; ind += mile) {ctx . moveTo (limit_left, ind); ctx . lineTo (limit_right, ind);}
   ctx . stroke ();
+};
+
+var canvas = document . getElementById ('seawolf');
+var ctx = canvas . getContext ('2d');
+var simulation_bearing = document . getElementById ('simulation_bearing');
+var simulation_speed = document . getElementById ('simulation_speed');
+var simulation_depth = document . getElementById ('simulation_depth');
+var selected_bearing = document . getElementById ('selected_bearing');
+var selected_speed = document . getElementById ('selected_speed');
+var selected_depth = document . getElementById ('selected_depth');
+var selected_name = document . getElementById ('selected_name');
+var selected_distance = document . getElementById ('selected_distance');
+var selected_heading = document . getElementById ('selected_heading');
+var info = document . getElementById ('info');
+var control_panel = document . getElementById ('ctrl');
+
+var time = Date . now ();
+
+var resize = function () {
+	var now = Date . now ();
+	canvas . width = window . innerWidth;
+	canvas . height = window . innerHeight;
+	drawGrid (ctx, window . innerWidth, window . innerHeight, simulated);
+	simulate ((now - time) * simulation_ratio / 1000);
+	removeVessels ();
+	drawVessels (ctx);
+	time = now;
+	var bearing = Math . round (simulated . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
+	simulation_bearing . innerHTML = bearing;
+	simulation_speed . innerHTML = simulated . speed . x;
+	simulation_depth . innerHTML = simulated . position . depth . toFixed (0);
+	if (selected !== null) {
+		bearing = Math . round (selected . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
+		selected_bearing . innerHTML = bearing;
+		selected_speed . innerHTML = selected . speed . x;
+		selected_depth . innerHTML = selected . position . depth;
+		selected_name . innerHTML = selected . name + ' (' + selected . class + ' class)';
+		var vector = simulated . getRelativePositionOf (selected);
+		selected_distance . innerHTML = vector . distance . toFixed (2);
+		bearing = Math . round (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
+		if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
+		selected_heading . innerHTML = bearing;
+	} else {
+		selected_name . innerHTML = '====';
+	}
+};
+
+setInterval (resize, 50);
+
+var ctrl = function (e) {
+	var key = e . key . toLowerCase ();
+	if (key === 'control' || key === 'r') return true;
+	var ws = e . shiftKey ? control_panel . style : info . style;
+	switch (key) {
+		case '0': simulated . setSpeed ('stop'); return true;
+		case '1': simulated . setSpeed ('slow'); return true;
+		case '2': simulated . setSpeed ('one quarter'); return true;
+		case '3': simulated . setSpeed ('half'); return true;
+		case '4': simulated . setSpeed ('three quarters'); return true;
+		case '5': simulated . setSpeed ('full'); return true;
+		case '6': simulated . setSpeed ('flank'); return true;
+		case 'z': simulation_ratio = 1; return true;
+		case 'x': simulation_ratio = 2; return true;
+		case 'c': simulation_ratio = 4; return true;
+		case 'v': simulation_ratio = 8; return true;
+		case 'q': simulated . targetDepth ('surface'); return true;
+		case 'w': simulated . targetDepth ('periscope'); return true;
+		case 'e': simulated . targetDepth ('up thermal'); return true;
+		case 'r': simulated . targetDepth ('down thermal'); return true;
+		case 't': simulated . targetDepth ('test'); return true;
+		case 'y': simulated . targetDepth ('crush'); return true;
+		case 'arrowright': e . preventDefault (); ws . left = null; ws . right = '8px'; return true;
+		case 'arrowleft': e . preventDefault (); ws . right = null; ws . left = '8px'; return true;
+		case 'arrowdown': e . preventDefault (); ws . top = null; ws . bottom = '8px'; return true;
+		case 'arrowup': e . preventDefault (); ws . bottom = null; ws . top = '8px'; return true;
+		default: break;
+	}
+	console . log (key, e);
+	return true;
+};
+
+var onWheel = function (e) {if (e . deltaY > 0) {if (scaling <= 0.32768) return; scaling /= 1.25;} else scaling *= 1.25; return false;};
+var onMouseDown = function (e) {
+	e . preventDefault ();
+	if (e . buttons === 1) selected = simulationHitTest (e . clientX - canvas . width * 0.5, e . clientY - canvas . height * 0.5, simulated);
+	if (e . buttons === 2) simulated . targetBearing ({x: e . clientX - canvas . width * 0.5, y: e . clientY - canvas . height * 0.5});
+	return false;
 };
