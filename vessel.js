@@ -75,6 +75,7 @@ vessel . prototype . setSpeed = function (index) {
 };
 
 vessel . prototype . targetDepth = function (depth, index) {
+	if (depth == null) return;
 	if (index === undefined) index = this . diving_speeds . length - 1;
 	this . diving_speed = this . diving_speeds [index];
 	if (typeof (depth) === 'number') {this . depth_target = depth; return;}

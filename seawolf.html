@@ -36,15 +36,15 @@
 <script src="vessel.js" type="text/javascript" encoding="UTF-8"></script>
 
 <body bgcolor="#000044" style = "margin: 0;"
-	onkeydown="javascript: return ctrl (event . key . toLowerCase ());"
+	onkeydown="javascript: return ctrl (event);"
 	onwheel="javascript: return onWheel (event);"
 	onmousedown="javascript: return onMouseDown (event);"
 	oncontextmenu="javascript: event . preventDefault ();"
 >
 <div><canvas id="seawolf" /></div>
 
-<div style="position: absolute; left: 10px; top: 10px; font-family: arial;">
-	<table bgcolor="white">
+<div id="info" style="position: absolute; left: 8px; top: 8px; font-family: arial;">
+	<table style="background: #0000ffb0; color: yellow;">
 		<tr>
 			<td>Bearing:</td><td><div id="simulation_bearing"/></td><td><div id="selected_bearing"/></td>
 		</tr>
@@ -56,6 +56,35 @@
 		</tr>
 		<tr>
 			<td><div id="selected_name"/></td><td><div id="selected_distance"/></td><td><div id="selected_heading"/></td>
+		</tr>
+	</table>
+</div>
+
+<div id="ctrl" style="position: absolute; top: 8px; right: 8px; font-family: arial;">
+	<table style="background: #ff00ffb0; color: yellow;">
+		<tr>
+			<td>SPEED:</td>
+			<td>
+				<input type="button" value="STOP" onclick="javascript: simulated . setSpeed ('stop');"/>
+				<input type="button" value="SLOW" onclick="javascript: simulated . setSpeed ('slow');"/>
+				<input type="button" value="1/4" onclick="javascript: simulated . setSpeed ('one quarter');"/>
+				<input type="button" value="1/2" onclick="javascript: simulated . setSpeed ('half');"/>
+				<input type="button" value="3/4" onclick="javascript: simulated . setSpeed ('three quarters');"/>
+				<input type="button" value="FULL" onclick="javascript: simulated . setSpeed ('full');"/>
+				<input type="button" value="FLANK" onlick="javascript: simulated . setSpeed ('flank');"/>
+			</td>
+		</tr>
+		<tr>
+			<td>DEPTH:</td>
+			<td>
+				<input type="button" value="SURFACE" onclick="javascript: simulated . targetDepth ('surface');"/>
+				<input type="button" value="PERISCOPE" onclick="javascript: simulated . targetDepth ('periscope');"/>
+				<input type="button" value="UP THERMAL" onclick="javascript: simulated . targetDepth ('up thermal');"/>
+				<input type="button" value="DOWN THERMAL" onclick="javascript: simulated . targetDepth ('down thermal');"/>
+				<input type="button" value="TEST" onclick="javascript: simulated . targetDepth ('test');"/>
+				<input type="button" value="CRUSH" onclick="javascript: simulated . targetDepth ('crush');"/>
+				<input type="button" value="SPECIFY" onclick="javascript: simulated . targetDepth (prompt ('Enter depth'));"/>
+			</td>
 		</tr>
 	</table>
 </div>
@@ -90,6 +119,7 @@ var selected_depth = document . getElementById ('selected_depth');
 var selected_name = document . getElementById ('selected_name');
 var selected_distance = document . getElementById ('selected_distance');
 var selected_heading = document . getElementById ('selected_heading');
+var info = document . getElementById ('info');
 
 var resize = function () {
 	var now = Date . now ();
@@ -124,9 +154,9 @@ var resize = function () {
 setInterval (resize, 50);
 //resize ();
 
-var ctrl = function (key) {
+var ctrl = function (e) {
+	var key = e . key . toLowerCase ();
 	if (key === 'control' || key === 'r') return true;
-	console . log (key);
 	switch (key) {
 		case '0': simulated . setSpeed ('stop'); return true;
 		case '1': simulated . setSpeed ('slow'); return true;
@@ -145,8 +175,13 @@ var ctrl = function (key) {
 		case 'r': simulated . targetDepth ('down thermal'); return true;
 		case 't': simulated . targetDepth ('test'); return true;
 		case 'y': simulated . targetDepth ('crush'); return true;
+		case 'arrowright': e . preventDefault (); info . style . left = null; info . style . right = '8px'; return true;
+		case 'arrowleft': e . preventDefault (); info . style . right = null; info . style . left = '8px'; return true;
+		case 'arrowdown': e . preventDefault (); info . style . top = null; info . style . bottom = '8px'; return true;
+		case 'arrowup': e . preventDefault (); info . style . bottom = null; info . style . top = '8px'; return true;
 		default: break;
 	}
+	console . log (key, e);
 	return true;
 };
 
