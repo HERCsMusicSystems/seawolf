@@ -79,6 +79,7 @@ var simulated = texas;
 var selected = null;
 
 var time = Date . now ();
+var simulation_ratio = 1;
 
 var simulation_bearing = document . getElementById ('simulation_bearing');
 var simulation_speed = document . getElementById ('simulation_speed');
@@ -96,7 +97,7 @@ var resize = function () {
 	canvas . height = window . innerHeight;
 	//console . log (canvas . width, canvas . height);
 	drawGrid (ctx, window . innerWidth, window . innerHeight, simulated);
-	simulate ((now - time) / 1000);
+	simulate ((now - time) * simulation_ratio / 1000);
 	removeVessels ();
 	drawVessels (ctx);
 	time = now;
@@ -125,6 +126,27 @@ setInterval (resize, 50);
 
 var ctrl = function (key) {
 	if (key === 'control' || key === 'r') return true;
+	console . log (key);
+	switch (key) {
+		case '0': simulated . setSpeed ('stop'); return true;
+		case '1': simulated . setSpeed ('slow'); return true;
+		case '2': simulated . setSpeed ('one quarter'); return true;
+		case '3': simulated . setSpeed ('half'); return true;
+		case '4': simulated . setSpeed ('three quarters'); return true;
+		case '5': simulated . setSpeed ('full'); return true;
+		case '6': simulated . setSpeed ('flank'); return true;
+		case 'z': simulation_ratio = 1; return true;
+		case 'x': simulation_ratio = 2; return true;
+		case 'c': simulation_ratio = 4; return true;
+		case 'v': simulation_ratio = 8; return true;
+		case 'q': simulated . targetDepth ('surface'); return true;
+		case 'w': simulated . targetDepth ('periscope'); return true;
+		case 'e': simulated . targetDepth ('up thermal'); return true;
+		case 'r': simulated . targetDepth ('down thermal'); return true;
+		case 't': simulated . targetDepth ('test'); return true;
+		case 'y': simulated . targetDepth ('crush'); return true;
+		default: break;
+	}
 	return true;
 };
 
