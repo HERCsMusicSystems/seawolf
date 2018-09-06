@@ -148,6 +148,11 @@ vessel . prototype . draw = function (ctx) {
 				ctx . moveTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y);
 			}
 			break;
+		case 'torpedo':
+			ctx . beginPath ();
+			ctx . moveTo (x, y); ctx . lineTo (x, y - 8); ctx . moveTo (x - 4, y); ctx . lineTo (x + 4, y);
+			ctx . moveTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y);
+			break;
 		default: break;
 	}
 	ctx . stroke ();
@@ -184,6 +189,20 @@ vessel . prototype . getNoiseOf = function (vessel) {
 };
 
 vessel . prototype . noiseLevelBearingCorrection = function (noise, bearing) {bearing = Math . cos (bearing * 0.5); return noise * bearing * bearing;};
+
+vessel . prototype . fire = function () {
+	if (selected === null) return;
+	var torpedo = new Mark48 ('Fast');
+	torpedo . position . x = this . position . x;
+	torpedo . position . y = this . position . y;
+	torpedo . position . depth = this . position . depth;
+	var bearing = this . getRelativePositionOf (selected) . bearing * 180 / Math . PI + 90;
+	if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
+	console . log (bearing);
+	torpedo . position . bearing = bearing;
+	torpedo . setSpeed ('full');
+	addVessel (torpedo);
+};
 
 var tube = function (speed) {
 	if (speed === undefined) speed = 0.05;
