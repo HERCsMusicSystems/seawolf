@@ -18,6 +18,8 @@ var vessel = function (country) {
 	this . noises = [0, 120, 480, 4800, 30000, 190000, 1200000];
 	this . bearing_speeds = [0, 10, 20, 30, 40, 50, 60];
 	this . diving_speeds = [0, 10, 20, 30, 40, 50, 60];
+	this . tubes = [];
+	this . inventory = {};
 };
 
 vessel . prototype . noiseLevel = function () {return this . noise;};
@@ -54,6 +56,7 @@ vessel . prototype . move = function (delta) {
 			while (this . position . bearing < 0) this . position . bearing += 360;
 		}
 	}
+	for (var ind in this . tubes) this . tubes [ind] . move (delta);
 };
 
 vessel . prototype . simulate = function (delta) {this . move (delta);};
@@ -181,3 +184,25 @@ vessel . prototype . getNoiseOf = function (vessel) {
 };
 
 vessel . prototype . noiseLevelBearingCorrection = function (noise, bearing) {bearing = Math . cos (bearing * 0.5); return noise * bearing * bearing;};
+
+var tube = function (speed) {
+	if (speed === undefined) speed = 0.05;
+	this . flooded = 0;
+	this . flood_speed = speed;
+	this . command = null; // flood, dry, fire, empty
+	this . torpedo = null;
+};
+
+tube . prototype . move = function (delta) {
+	switch (this . command) {
+		case 'flood': if (this . flooded < 1) this . flooded += this . flood_speed * delta; else {this . flooded = 1; this . command = null;} break;
+		case 'dry': if (this . flooded > 0) this . flooded -= this . flood_speed * delta; else {this . flooded = 0; this . command = null;} break;
+		default: break;
+	}
+};
+
+var build_tubes = function (amount, speed) {
+	var tubes = [];
+	for (var ind = 0; ind < amount; ind++) tubes . push (new tube (speed));
+	return tubes;
+};
