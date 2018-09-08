@@ -1,4 +1,55 @@
 
+document . getElementById ('seawolf_game') . innerHTML = `
+<div><canvas id="seawolf" onmousedown="javascript: return onMouseDown (event);"/></div>
+
+<div id="info" style="position: absolute; left: 8px; top: 8px; font-family: arial;">
+	<table style="background: #0000ffb0; color: yellow;">
+		<tr>
+			<td>Bearing:</td><td><div id="simulation_bearing"/></td><td><div id="selected_bearing"/></td>
+		</tr>
+		<tr>
+			<td>Speed:</td><td><div id="simulation_speed"/></td><td><div id="selected_speed"/></td>
+		</tr>
+		<tr>
+			<td>Depth:</td><td><div id="simulation_depth"/></td><td><div id="selected_depth"/></td>
+		</tr>
+		<tr>
+			<td><div id="selected_name"/></td><td><div id="selected_distance"/></td><td><div id="selected_heading"/></td>
+		</tr>
+	</table>
+</div>
+
+<div id="ctrl" style="position: absolute; top: 8px; right: 8px; font-family: arial;">
+	<table style="background: #ff00ffb0; color: yellow;">
+		<tr>
+			<td>SPEED:</td>
+			<td>
+				<input type="button" value="STOP" onclick="javascript: simulated . setSpeed ('stop');"/>
+				<input type="button" value="SLOW" onclick="javascript: simulated . setSpeed ('slow');"/>
+				<input type="button" value="1/4" onclick="javascript: simulated . setSpeed ('one quarter');"/>
+				<input type="button" value="1/2" onclick="javascript: simulated . setSpeed ('half');"/>
+				<input type="button" value="3/4" onclick="javascript: simulated . setSpeed ('three quarters');"/>
+				<input type="button" value="FULL" onclick="javascript: simulated . setSpeed ('full');"/>
+				<input type="button" value="FLANK" onclick="javascript: simulated . setSpeed ('flank');"/>
+				<input type="button" value="FIRE" onclick="javascript: simulated . fire ();"/>
+			</td>
+		</tr>
+		<tr>
+			<td>DEPTH:</td>
+			<td>
+				<input type="button" value="SURFACE" onclick="javascript: simulated . targetDepth ('surface');"/>
+				<input type="button" value="PERISCOPE" onclick="javascript: simulated . targetDepth ('periscope');"/>
+				<input type="button" value="UP THERMAL" onclick="javascript: simulated . targetDepth ('up thermal');"/>
+				<input type="button" value="DOWN THERMAL" onclick="javascript: simulated . targetDepth ('down thermal');"/>
+				<input type="button" value="TEST" onclick="javascript: simulated . targetDepth ('test');"/>
+				<input type="button" value="CRUSH" onclick="javascript: simulated . targetDepth ('crush');"/>
+				<input type="button" value="SPECIFY" onclick="javascript: simulated . targetDepth (prompt ('Enter depth'));"/>
+			</td>
+		</tr>
+	</table>
+</div>
+`;
+
 var vessels = [];
 var remotes = {};
 
