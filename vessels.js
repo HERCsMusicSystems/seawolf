@@ -25,6 +25,15 @@ var Mark48 = function (name, country) {
   this . type = 'torpedo';
   this . class = 'Mark48';
   this . name = name;
-  this . speeds = [0, 2, 8, 40, 40, 55, 55]
+  this . speeds = [0, 2, 8, 40, 40, 55, 55];
 };
 Mark48 . prototype = Object . create (vessel . prototype);
+
+var torpedoAI = function (torpedo, target) {
+	return function () {
+		var bearing = torpedo . getRelativePositionOf (target) . bearing * 180 / Math . PI + 90;
+		if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
+		torpedo . position . bearing = bearing;
+	};
+};
+

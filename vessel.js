@@ -20,6 +20,7 @@ var vessel = function (country) {
 	this . diving_speeds = [0, 10, 20, 30, 40, 50, 60];
 	this . tubes = [];
 	this . inventory = {};
+	this . ai = null;
 };
 
 vessel . prototype . noiseLevel = function () {return this . noise;};
@@ -198,9 +199,9 @@ vessel . prototype . fire = function () {
 	torpedo . position . depth = this . position . depth;
 	var bearing = this . getRelativePositionOf (selected) . bearing * 180 / Math . PI + 90;
 	if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
-	console . log (bearing);
 	torpedo . position . bearing = bearing;
 	torpedo . setSpeed ('full');
+	torpedo . ai = torpedoAI (torpedo, selected);
 	addVessel (torpedo);
 };
 
