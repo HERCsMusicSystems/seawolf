@@ -213,3 +213,9 @@ var onMouseDown = function (e) {
 	if (e . buttons === 2) simulated . targetBearing ({x: e . clientX - canvas . width * 0.5, y: e . clientY - canvas . height * 0.5});
 	return false;
 };
+
+document . body . onkeydown = ctrl;
+document . body . onwheel = onWheel;
+document . body . oncontextmenu = function (event) {event . preventDefault ();};
+
+
