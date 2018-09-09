@@ -201,7 +201,7 @@ vessel . prototype . fire = function () {
 	if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
 	torpedo . position . bearing = bearing;
 	torpedo . setSpeed ('full');
-	torpedo . ai = torpedoAI (torpedo, selected);
+	torpedo . ai = new torpedoAI (torpedo, selected);
 	addVessel (torpedo);
 };
 

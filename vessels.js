@@ -30,8 +30,11 @@ var Mark48 = function (name, country) {
 Mark48 . prototype = Object . create (vessel . prototype);
 
 var torpedoAI = function (torpedo, target) {
-	return function () {
-		var bearing = torpedo . getRelativePositionOf (target) . bearing * 180 / Math . PI + 90;
+	var closest = 100;
+	this . code = function () {
+		var vector = torpedo . getRelativePositionOf (target);
+		if (vector . distance < 0.003) {removeVessel (torpedo); removeVessel (target); return;}
+		var bearing = vector . bearing * 180 / Math . PI + 90;
 		if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
 		torpedo . position . bearing = bearing;
 	};

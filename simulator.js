@@ -63,7 +63,7 @@ var removeVessel = function (vessel) {vessel . delete = true;};
 var removeVessels = function () {var ind = 0; while (ind < vessels . length) {if (vessels [ind] . delete) vessels . splice (ind, 1); else ind ++;}};
 var showVessels = function () {for (var ind in vessels) console . log (vessels [ind]); console . log ('====');};
 var simulate = function (delta) {for (var ind in vessels) vessels [ind] . simulate (delta);};
-var aiVessels = function (delta) {for (var ind in vessels) {if (vessels [ind] . ai !== null) vessels [ind] . ai (delta);}};
+var aiVessels = function (delta) {for (var ind in vessels) {if (vessels [ind] . ai !== null) vessels [ind] . ai . code (delta);}};
 var drawVessels = function (ctx) {for (var ind in vessels) vessels [ind] . draw (ctx);};
 var classifyVessels = function (vessel) {for (var ind in vessels) vessels [ind] . status = vessels [ind] . checkStatusOf (vessel);};
 var simulatedVessel = function (vessel) {simulated = vessel; classifyVessels (simulated);};
