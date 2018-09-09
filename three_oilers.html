@@ -26,25 +26,38 @@
 <html>
 
 <head>
-  <title>SEAWOLF</title>
-  <style>
-  a:link {color: gold;}
-  a:visited {color: gold;}
-  a:hover {color: red;}
-  a:active {color: red;}
-  </style>
+	<title>SEAWOLF = Three Oilers</title>
+	<style>
+	td {padding: 6px;}
+	</style>
 </head>
 
-<body bgcolor="#0000aa" style="font-family: arial; color: gold;">
-  <h1>SEAWOLF Submarine Simulator</h1>
-  <div>
-    <h2>Scenarios:</h2>
-    <ul>
-      <li><a href="three_oilers.html">Three Oilers</a>: sink a convoy of three oil tankers....</li>
-      <li><a href="akula_is_out_there.html">Aku&#x142;a is out there!</a></li>
-      <li><a href="alpha_is_out_there.html">Alpha is out there!</a></li>
-    </ul>
-  </div>
+<body bgcolor="#000044" style = "margin: 0;">
+
+<div id="seawolf_game"/>
+
 </body>
+
+<script src="simulator.js" type="text/javascript" encoding="UTF-8"></script>
+<script src="vessel.js" type="text/javascript" encoding="UTF-8"></script>
+<script src="vessels.js" type="text/javascript" encoding="UTF-8"></script>
+
+
+<script>
+
+var texas = new Virginia ('Texas');
+var oiler1 = new Oiler ('Aquarius');
+var oiler2 = new Oiler ('Atlantis');
+var oiler3 = new Oiler ('Triton');
+
+addVessel (texas);
+addVessel (oiler1);
+addVessel (oiler2);
+addVessel (oiler3);
+
+simulatedVessel (texas);
+
+
+</script>
 
 </html>
