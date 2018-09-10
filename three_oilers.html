@@ -42,6 +42,7 @@
 <script src="vessel.js" type="text/javascript" encoding="UTF-8"></script>
 <script src="vessels.js" type="text/javascript" encoding="UTF-8"></script>
 <script src="artificial_intelligence.js" type="text/javascript" encoding="UTF-8"></script>
+<script src="notifications.js" type="text/javascript" encoding="UTF-8"></script>
 
 
 <script>
@@ -67,6 +68,9 @@ addVessel (oiler3);
 
 simulatedVessel (texas);
 
+checkGameStatus = function () {
+	if (oiler1 . destroyed && oiler2 . destroyed && oiler3 . destroyed) console . log ("Victory!");
+};
 
 </script>
 

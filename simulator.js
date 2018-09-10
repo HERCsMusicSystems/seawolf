@@ -57,10 +57,12 @@ var simulated = null;
 var selected = null;
 var simulation_ratio = 1;
 
+var checkGameStatus = function () {console . log ("Checking end condition.");};
+
 var addVessel = function (vessel) {vessels . push (vessel);};
 var getVessel = function (name) {for (var ind in vessels) {if (vessels [ind] . name === name) return vessels [ind];}; return null;};
-var removeVessel = function (vessel) {vessel . delete = true;};
-var removeVessels = function () {var ind = 0; while (ind < vessels . length) {if (vessels [ind] . delete) vessels . splice (ind, 1); else ind ++;}};
+var removeVessel = function (vessel) {vessel . destroyed = true; if (simulated === vessel) simulated = null; if (selected === vessel) selected = null; notifyVesselLost (vessel);};
+var removeVessels = function () {var ind = 0; while (ind < vessels . length) {if (vessels [ind] . destroyed) vessels . splice (ind, 1); else ind ++;}};
 var showVessels = function () {for (var ind in vessels) console . log (vessels [ind]); console . log ('====');};
 var simulate = function (delta) {for (var ind in vessels) vessels [ind] . simulate (delta);};
 var aiVessels = function (delta) {for (var ind in vessels) {if (vessels [ind] . ai !== null) vessels [ind] . ai . code (delta);}};
