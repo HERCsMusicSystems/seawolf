@@ -39,12 +39,3 @@ var Mark48 = function (name, country) {
   this . speeds = [0, 2, 8, 40, 40, 55, 55];
 };
 Mark48 . prototype = Object . create (vessel . prototype);
-
-var torpedoAI = function (torpedo, target) {
-	var closest = 100;
-	this . code = function () {
-		var vector = torpedo . getRelativePositionOf (target);
-		if (vector . distance < 0.003) {removeVessel (torpedo); removeVessel (target); return;}
-		torpedo . position . bearing = nauticalBearing (vector . bearing);
-	};
-};
