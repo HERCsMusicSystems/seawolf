@@ -45,9 +45,6 @@ var torpedoAI = function (torpedo, target) {
 	this . code = function () {
 		var vector = torpedo . getRelativePositionOf (target);
 		if (vector . distance < 0.003) {removeVessel (torpedo); removeVessel (target); return;}
-		var bearing = vector . bearing * 180 / Math . PI + 90;
-		if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
-		torpedo . position . bearing = bearing;
+		torpedo . position . bearing = nauticalBearing (vector . bearing);
 	};
 };
-

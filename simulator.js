@@ -85,6 +85,9 @@ var simulationHitTest = function (x, y, reference, minimum_distance) {
   return null;
 };
 
+var nauticalBearing = function (angle) {angle *= 180 / Math . PI; angle += 90; while (angle < 0) angle += 360; while (angle >= 360) angle -= 360; return angle;};
+var displayBearing = function (bearing) {bearing = Math . round (bearing); while (bearing < 0) bearing += 360; while (bearing >= 360) bearing -= 360; return bearing;};
+
 var thermoclines = [{depth: 120, attenuation: 0.01}, {depth: 240, attenuation: 0.01}, {depth: 600, attenuation: 0.001}, {depth: 1200, attenuation: 0.001}];
 
 var friends = {
@@ -220,5 +223,3 @@ var onMouseDown = function (e) {
 document . body . onkeydown = ctrl;
 document . body . onwheel = onWheel;
 document . body . oncontextmenu = function (event) {event . preventDefault ();};
-
-

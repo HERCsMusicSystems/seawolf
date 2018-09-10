@@ -207,9 +207,8 @@ vessel . prototype . fire = function () {
 	torpedo . position . x = this . position . x;
 	torpedo . position . y = this . position . y;
 	torpedo . position . depth = this . position . depth;
-	var bearing = this . getRelativePositionOf (selected) . bearing * 180 / Math . PI + 90;
-	if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
-	torpedo . position . bearing = bearing;
+	torpedo . position . bearing = nauticalBearing (this . getRelativePositionOf (selected) . bearing);
+	console . log (bearing, nauticalBearing (this . getRelativePositionOf (selected) . bearing));
 	torpedo . setSpeed ('full');
 	torpedo . ai = new torpedoAI (torpedo, selected);
 	addVessel (torpedo);
