@@ -1,4 +1,15 @@
 
+var Oiler = function (name, country) {
+	if (country === undefined) country = 'Bahamas';
+	if (name === undefined) name = 'Oil Tanker';
+	vessel . call (this, country);
+	this . type = 'surface';
+	this . name = name;
+	this . class = 'Oil Tanker';
+	this . speeds = [0, 1, 4, 8, 12, 16, 18];
+};
+Oiler . prototype = Object . create (vessel . prototype);
+
 var Virginia = function (name, country) {
 	if (country === undefined) country = 'USA';
 	vessel . call (this, country);
