@@ -31,10 +31,10 @@ var Akula = function (name, country) {
 };
 Akula . prototype = Object . create (vessel . prototype);
 
-var Mark48 = function (vessel, name, country) {
-	if (country === undefined) country = vessel . country;
+var Mark48 = function (launched_by, name, country) {
+	if (country === undefined) country = launched_by . country;
 	vessel . call (this, country);
-	this . launched_by = vessel;
+	this . launched_by = launched_by;
 	this . type = 'torpedo';
 	this . class = 'Mark48';
 	this . name = name;
