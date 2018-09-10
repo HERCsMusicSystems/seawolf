@@ -49,13 +49,16 @@ var texas = new Virginia ('Texas');
 var hawaii = new Virginia ('Hawaii');
 var virginia = new Virginia ('Virginia');
 var kuguar = new Akula ('Kuguar');
+var orzel = new Akula ('Orze&#x142;', 'Poland');
 hawaii . position = {x: 2.5, y: 0, bearing: 40, depth: 150}; hawaii . setSpeed ('half'); hawaii . depth_target = 150;
 texas . position = {x: 2.5, y: 0, bearing: 180, depth: 150}; texas . setSpeed ('flank'); texas . depth_target = 150;
 kuguar . position = {x: -2.5, y: 0, bearing: 100, depth: 150}; kuguar . setSpeed ('full'); kuguar . depth_target = 150;
+orzel . position = {x: 1, y: 0, bearing: 240, depth: 150};
 addVessel (texas);
 addVessel (hawaii);
 addVessel (virginia);
 addVessel (kuguar);
+addVessel (orzel);
 
 simulatedVessel (texas);
 

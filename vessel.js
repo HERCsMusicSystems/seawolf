@@ -122,10 +122,19 @@ vessel . prototype . draw = function (ctx) {
 		ctx . stroke ();
 	}
 	var x = this . position . x * scaling * 128, y = this . position . y * scaling * 128;
+	if (this . status === 'simulation') {
+		var bearing = (this . position . bearing - 90) * Math . PI / 180;
+		var alpha = Math . cos (bearing) * 12, beta = Math . sin (bearing) * 12;
+		ctx . lineCap = 'round'
+		ctx . lineWidth = 4; ctx . moveTo (x - alpha, y - beta); ctx . lineTo (x + alpha, y + beta);
+		ctx . stroke ();
+		return;
+	}
 	switch (this . status) {
 		case 'friend': ctx . fillStyle = ctx . strokeStyle = 'lime'; break;
 		case 'enemy': ctx . fillStyle = ctx . strokeStyle = 'red'; break;
-		case 'neutral': ctx . fillStyle = ctx . strokeStyle = 'white'; break;
+		case 'neutral': ctx . fillStyle = ctx . strokeStyle = 'yellow'; break;
+		case 'unknown': ctx . fillStyle = ctx . strokeStyle = 'white'; break;
 		case 'simulation': ctx . fillStyle = ctx . strokeStyle = 'gray'; break;
 		default: ctx . strokeStyle = 'white'; break;
 	}
@@ -134,25 +143,26 @@ vessel . prototype . draw = function (ctx) {
 	ctx . beginPath ();
 	switch (this . type) {
 		case 'surface':
-			ctx . beginPath (); ctx . arc (x, y, 2, 0, 6.28); ctx . fill ();
-			ctx . moveTo (x + 8, y - 8); ctx . lineTo (x + 8, y + 8); ctx . lineTo (x - 8, y + 8);
-			ctx . lineTo (x - 8, y - 8);ctx . lineTo (x + 8, y - 8); break;
-		case 'submarine':
-			if (this . status === 'simulation') {
-				var bearing = (this . position . bearing - 90) * Math . PI / 180;
-				var alpha = Math . cos (bearing) * 12, beta = Math . sin (bearing) * 12;
-				ctx . lineCap = 'round'
-				ctx . lineWidth = 4; ctx . moveTo (x - alpha, y - beta); ctx . lineTo (x + alpha, y + beta);
+			ctx . beginPath (); ctx . arc (x, y, 2, 0, Math . PI * 2); ctx . fill ();
+			switch (this . status) {
+				case 'enemy': ctx . moveTo (x, y - 8); ctx . lineTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y); ctx . closePath (); break;
+				case 'friend': ctx . arc (x, y, 8, 0, Math . PI * 2); break;
+				default: ctx . moveTo (x + 8, y - 8); ctx . lineTo (x + 8, y + 8); ctx . lineTo (x - 8, y + 8); ctx . lineTo (x - 8, y - 8); ctx . closePath (); break;
 			}
-			else {
-				ctx . beginPath (); ctx . arc (x, y, 2, 0, 6.28); ctx . fill ();
-				ctx . moveTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y);
+			break;
+		case 'submarine':
+			ctx . beginPath (); ctx . arc (x, y, 2, 0, Math . PI * 2); ctx . fill ();
+			switch (this . status) {
+				case 'enemy': ctx . moveTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y); break;
+				case 'friend': ctx . arc (x, y, 8, 0, Math . PI); break;
+				default: ctx . moveTo (x + 8, y); ctx . lineTo (x + 8, y + 8); ctx . lineTo (x - 8, y + 8); ctx . lineTo (x - 8, y); break;
 			}
 			break;
 		case 'torpedo':
 			ctx . beginPath ();
 			ctx . moveTo (x, y); ctx . lineTo (x, y - 8); ctx . moveTo (x - 4, y); ctx . lineTo (x + 4, y);
-			ctx . moveTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y);
+			if (this . status === 'friend') ctx . arc (x, y, 8, 0, Math . PI);
+			else {ctx . moveTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y);}
 			break;
 		default: break;
 	}
@@ -161,8 +171,8 @@ vessel . prototype . draw = function (ctx) {
 
 vessel . prototype . checkStatusOf = function (vessel) {
 	if (this === vessel) return 'simulation';
-	if (friends [this . country] . includes (vessel . country)) return 'friend';
-	if (enemies [this . country] . includes (vessel . country)) return 'enemy';
+	if (friends [this . country] !== undefined && friends [this . country] . includes (vessel . country)) return 'friend';
+	if (enemies [this . country] !== undefined && enemies [this . country] . includes (vessel . country)) return 'enemy';
 	return 'neutral';
 };
 
