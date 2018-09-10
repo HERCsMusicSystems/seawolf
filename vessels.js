@@ -7,6 +7,7 @@ var Oiler = function (name, country) {
 	this . name = name;
 	this . class = 'Oil Tanker';
 	this . speeds = [0, 1, 4, 8, 12, 16, 18];
+	this . strength = 5;
 };
 Oiler . prototype = Object . create (vessel . prototype);
 
@@ -37,5 +38,6 @@ var Mark48 = function (name, country) {
   this . class = 'Mark48';
   this . name = name;
   this . speeds = [0, 2, 8, 40, 40, 55, 55];
+	this . strength = 1;
 };
 Mark48 . prototype = Object . create (vessel . prototype);

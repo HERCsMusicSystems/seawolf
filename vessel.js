@@ -2,6 +2,7 @@
 var vessel = function (country) {
 	this . position = {x: 0, y: 0, depth: 0, bearing: 0};
 	this . speed = {x: 0, y: 0};
+	this . speed_index = 0;
 	this . diving_speed = 0;
 	this . bearing_speed = 0;
 	this . depth_target = 0;
@@ -21,6 +22,8 @@ var vessel = function (country) {
 	this . tubes = [];
 	this . inventory = {};
 	this . ai = null;
+	this . strength = 3;
+	this . damage_delta = 0;
 };
 
 vessel . prototype . noiseLevel = function () {return this . noise;};
@@ -58,6 +61,8 @@ vessel . prototype . move = function (delta) {
 		}
 	}
 	for (var ind in this . tubes) this . tubes [ind] . move (delta);
+	if (this . damage_delta > 0) this . damage (this . damage_delta);
+	if (this . strength <= 0) removeVessel (this);
 };
 
 vessel . prototype . simulate = function (delta) {this . move (delta);};
@@ -73,9 +78,8 @@ vessel . prototype . setSpeed = function (index) {
 		case 'flank': index = 6; break;
 		default: index = 0; break;
 	}
-	if (index < 0) {this . noise = this . noises [0]; this . speed = {x: 0, y: 0}; return;}
-	if (index >= this . speeds . length) {this . noise = this . noises [this . speeds . length - 1]; this . speed = {x: this . speeds [this . speeds . length - 1], y: 0}; return;}
-	this . noise = this . noises [index]; this . speed = {x: this . speeds [index], y: 0};
+	if (index < 0) index = 0; if (index >= this . speed . length) index = this . speeds . length - 1;
+	this . noise = this . noises [index]; this . speed = {x: this . speeds [index], y: 0}; this . speed_index = index;
 };
 
 vessel . prototype . targetDepth = function (depth, index) {
@@ -211,6 +215,17 @@ vessel . prototype . fire = function () {
 	torpedo . setSpeed ('full');
 	torpedo . ai = new torpedoAI (torpedo, selected);
 	addVessel (torpedo);
+};
+
+vessel . prototype . damage_speed = function () {
+	for (var ind in this . speeds) this . speeds [ind] *= 0.5;
+	this . speed . x = this . speeds [this . speed_index];
+};
+
+vessel . prototype . damage = function (level) {
+	this . strength -= level;
+	if (level > Math . random ()) this . damage_speed ();
+	if (level > 1.9) this . damage (level - 1.9);
 };
 
 var tube = function (speed) {
