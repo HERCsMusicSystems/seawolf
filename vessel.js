@@ -207,7 +207,7 @@ vessel . prototype . noiseLevelBearingCorrection = function (noise, bearing) {be
 
 vessel . prototype . fire = function () {
 	if (selected === null) return;
-	var torpedo = new Mark48 ('Fast');
+	var torpedo = new Mark48 (this, 'Fast');
 	torpedo . position . x = this . position . x;
 	torpedo . position . y = this . position . y;
 	torpedo . position . depth = this . position . depth;
