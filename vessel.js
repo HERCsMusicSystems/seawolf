@@ -249,3 +249,16 @@ var build_tubes = function (amount, speed) {
 	for (var ind = 0; ind < amount; ind++) tubes . push (new tube (speed));
 	return tubes;
 };
+
+var sonar = function (vessel) {
+	this . detected = {};
+	this . detect = function () {
+		for (var ind in vessels) {
+			var v = vessels [ind];
+			var noise = vessel . getNoiseOf (v);
+			if (this . detected . hasOwnProperty (v . name)) {
+			} else {
+			}
+		}
+	};
+};
