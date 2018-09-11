@@ -125,11 +125,11 @@ var drawGrid = function (ctx, width, height, vessel) {
   var limit_top = - shift . y - height;
   var limit_bottom = - shift . y + height;
   var grid_left = Math . floor (limit_left / mile) * mile + mile;
-  var grid_right = Math . floor (limit_right / mile) * mile;
+  var grid_right = Math . floor (limit_right / mile) * mile + 1;
   var grid_top = Math . floor (limit_top / mile) * mile + mile;
-  var grid_bottom = Math . floor (limit_bottom / mile) * mile;
-  for (var ind = grid_left; ind <= grid_right; ind += mile) {ctx . moveTo (ind, limit_top); ctx . lineTo (ind, limit_bottom);}
-  for (var ind = grid_top; ind <= grid_bottom; ind += mile) {ctx . moveTo (limit_left, ind); ctx . lineTo (limit_right, ind);}
+  var grid_bottom = Math . floor (limit_bottom / mile) * mile + 1;
+  for (var ind = grid_left; ind < grid_right; ind += mile) {ctx . moveTo (ind, limit_top); ctx . lineTo (ind, limit_bottom);}
+  for (var ind = grid_top; ind < grid_bottom; ind += mile) {ctx . moveTo (limit_left, ind); ctx . lineTo (limit_right, ind);}
   ctx . stroke ();
 };
 
@@ -174,7 +174,8 @@ var resize = function () {
 		selected_distance . innerHTML = vector . distance . toFixed (2);
 		bearing = Math . round (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
 		if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
-		selected_heading . innerHTML = bearing;
+		//selected_heading . innerHTML = bearing;
+		selected_heading . innerHTML = simulated . getNoiseOf (selected) . toFixed (4);
 	} else {
 		selected_name . innerHTML = '====';
 	}
