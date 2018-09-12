@@ -56,6 +56,8 @@ var remotes = {};
 var simulated = null;
 var selected = null;
 var simulation_ratio = 1;
+var trail_length = 24;
+var trail_delta = 15;
 
 var checkGameStatus = function () {console . log ("Checking end condition.");};
 

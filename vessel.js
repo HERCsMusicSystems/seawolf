@@ -30,8 +30,12 @@ var vessel = function (country) {
 vessel . prototype . noiseLevel = function () {return this . noise;};
 
 vessel . prototype . move = function (delta) {
-	this . trail_delta --;
-	if (this . trail_delta < 1) {this . trail . push ({x: this . position . x * 128, y: this . position . y * 128}); this . trail_delta = 2 / delta;}
+	this . trail_delta -= delta;
+	if (this . trail_delta < 1) {
+		this . trail . push ({x: this . position . x * 128, y: this . position . y * 128});
+		this . trail_delta = trail_delta;
+		while (this . trail . length > trail_length) this . trail . shift ();
+	}
 	var bearing = (this . position . bearing - 90) * Math . PI / 180;
 	var sdelta = delta / 3600;
 	this . position . x += sdelta * (Math . cos (bearing) * this . speed . x - Math . sin (bearing) * this . speed . y);
