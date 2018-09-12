@@ -12,7 +12,6 @@ var vessel = function (country) {
 	this . bearing_target = null;
 	this . noise = 0;
 	this . trail_delta = 0;
-	this . selected = false;
 	this . destroyed = false;
 	this . trail = [];
 	this . country = country;
@@ -145,7 +144,7 @@ vessel . prototype . draw = function (ctx, status) {
 		default: ctx . strokeStyle = 'white'; break;
 	}
 	ctx . lineCap = 'square';
-	ctx . lineWidth = this . selected ? 3 : 2;
+	ctx . lineWidth = (selected && selected . vessel === this) ? 3 : 2;
 	ctx . beginPath ();
 	switch (this . type) {
 		case 'surface':
@@ -197,9 +196,9 @@ vessel . prototype . fire = function () {
 	torpedo . position . x = this . position . x;
 	torpedo . position . y = this . position . y;
 	torpedo . position . depth = this . position . depth;
-	torpedo . position . bearing = nauticalBearing (this . getRelativePositionOf (selected) . bearing);
+	torpedo . position . bearing = nauticalBearing (this . getRelativePositionOf (selected . vessel) . bearing);
 	torpedo . setSpeed ('full');
-	torpedo . ai = new torpedoAI (torpedo, selected);
+	torpedo . ai = new torpedoAI (torpedo, selected . vessel);
 	addVessel (torpedo);
 };
 
@@ -242,21 +241,22 @@ var sonar = function (vessel) {
 	this . detection_threshold = 1;
 	this . identification_threshold = 2;
 	this . tracking_threshold = 0.25;
-	this . detect = function () {
-		for (var ind in vessels) {
-			var vessel = vessels [ind];
-			if (vessel !== this . vessel) {
-				var noise = this . getNoiseOf (vessel);
-				if (this . detected . hasOwnProperty (vessel . id)) {
-					if (noise < this . tracking_threshold) delete this . detected [vessel . id];
-					else if (this . detected [vessel . id] . status === 'unknown' && noise > this . identification_threshold) this . detected [vessel . id] . status = this . vessel . checkStatusOf (vessel);
-				} else {
-					if (noise >= this . detection_threshold)
-						this . detected [vessel . id] = {status: noise >= this . identification_threshold ? this . vessel . checkStatusOf (vessel) : 'unknown', vessel: vessel, noise: noise};
-				}
+};
+
+sonar . prototype . detect = function () {
+	for (var ind in vessels) {
+		var vessel = vessels [ind];
+		if (vessel !== this . vessel) {
+			var noise = this . getNoiseOf (vessel);
+			if (this . detected . hasOwnProperty (vessel . id)) {
+				if (noise < this . tracking_threshold) {if (selected && selected . vessel === vessel) selected = null; delete this . detected [vessel . id];}
+				else if (this . detected [vessel . id] . status === 'unknown' && noise > this . identification_threshold) this . detected [vessel . id] . status = this . vessel . checkStatusOf (vessel);
+			} else {
+				if (noise >= this . detection_threshold)
+					this . detected [vessel . id] = {status: noise >= this . identification_threshold ? this . vessel . checkStatusOf (vessel) : 'unknown', vessel: vessel, noise: noise};
 			}
 		}
-	};
+	}
 };
 
 sonar . prototype . getNoiseOf = function (source) {

@@ -74,16 +74,16 @@ var simulationHitTest = function (x, y, reference, minimum_distance) {
   if (minimum_distance === undefined) minimum_distance = 8 / 128 / scaling;
   x /= 128 * scaling; y /= 128 * scaling;
   x += reference . position . x; y += reference . position . y;
-  var selected = reference, distance = 16384;
-  for (var ind in vessels) {
-    vessels [ind] . selected = false;
-    if (vessels [ind] !== reference) {
-      var xx = vessels [ind] . position . x - x, yy = vessels [ind] . position . y - y;
+  var selected = null, distance = 16384;
+  for (var ind in reference . sonar . detected) {
+		var v = reference . sonar . detected [ind], vv = v . vessel;
+    if (vv !== reference) {
+      var xx = vv . position . x - x, yy = vv . position . y - y;
       var d = Math . sqrt (xx * xx + yy * yy);
-      if (d < distance) {selected = vessels [ind]; distance = d;}
+      if (d < distance) {selected = v; distance = d;}
     }
   }
-  if (distance < minimum_distance) {selected . selected = true; return selected;}
+  if (distance < minimum_distance) return selected;
   return null;
 };
 
@@ -165,19 +165,25 @@ var resize = function () {
 	simulation_speed . innerHTML = simulated . speed . x;
 	simulation_depth . innerHTML = simulated . position . depth . toFixed (0);
 	if (selected !== null) {
-		bearing = Math . round (selected . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
+		var sv = selected . vessel;
+		bearing = Math . round (sv . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
 		selected_bearing . innerHTML = bearing;
-		selected_speed . innerHTML = selected . speed . x;
-		selected_depth . innerHTML = selected . position . depth;
-		selected_name . innerHTML = selected . name + ' (' + selected . class + ' class)';
-		var vector = simulated . getRelativePositionOf (selected);
+		selected_speed . innerHTML = sv . speed . x;
+		selected_depth . innerHTML = sv . position . depth;
+		selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : sv . name + ' (' + sv . class + ' class)';
+		var vector = simulated . getRelativePositionOf (sv);
 		selected_distance . innerHTML = vector . distance . toFixed (2);
 		bearing = Math . round (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
 		if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
 		//selected_heading . innerHTML = bearing;
-		selected_heading . innerHTML = simulated . sonar . getNoiseOf (selected) . toFixed (4);
+		selected_heading . innerHTML = '[' + bearing + '/' + simulated . sonar . getNoiseOf (sv) . toFixed (4) + ']';
 	} else {
-		selected_name . innerHTML = '====';
+		selected_name . innerHTML = '<====>';
+		selected_heading . innerHTML = '<>';
+		selected_bearing . innerHTML = '<>';
+		selected_speed . innerHTML = '<>';
+		selected_depth . innerHTML = '<>';
+		selected_distance . innerHTML = '<>';
 	}
 };
 
