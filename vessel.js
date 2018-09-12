@@ -1,5 +1,8 @@
 
+var vessel_id = 0;
+
 var vessel = function (country) {
+	this . id = vessel_id ++;
 	this . position = {x: 0, y: 0, depth: 0, bearing: 0};
 	this . speed = {x: 0, y: 0};
 	this . speed_index = 0;
@@ -244,12 +247,12 @@ var sonar = function (vessel) {
 			var vessel = vessels [ind];
 			if (vessel !== this . vessel) {
 				var noise = this . getNoiseOf (vessel);
-				if (this . detected . hasOwnProperty (vessel . name)) {
-					if (noise < this . tracking_threshold) delete this . detected [vessel . name];
-					else if (this . detected [vessel . name] . status === 'unknown' && noise > this . identification_threshold) this . detected [vessel . name] . status = this . vessel . checkStatusOf (vessel);
+				if (this . detected . hasOwnProperty (vessel . id)) {
+					if (noise < this . tracking_threshold) delete this . detected [vessel . id];
+					else if (this . detected [vessel . id] . status === 'unknown' && noise > this . identification_threshold) this . detected [vessel . id] . status = this . vessel . checkStatusOf (vessel);
 				} else {
 					if (noise >= this . detection_threshold)
-						this . detected [vessel . name] = {status: noise >= this . identification_threshold ? this . vessel . checkStatusOf (vessel) : 'unknown', vessel: vessel, noise: noise};
+						this . detected [vessel . id] = {status: noise >= this . identification_threshold ? this . vessel . checkStatusOf (vessel) : 'unknown', vessel: vessel, noise: noise};
 				}
 			}
 		}
