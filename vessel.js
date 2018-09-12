@@ -14,7 +14,6 @@ var vessel = function (country) {
 	this . trail = [];
 	this . country = country;
 	this . type = 'submarine';
-	this . status = 'unknown';
 	this . speeds = [0, 2, 8, 16, 24, 32, 40];
 	this . noises = [0, 120, 480, 4800, 30000, 190000, 1200000];
 	this . bearing_speeds = [0, 10, 20, 30, 40, 50, 60];
@@ -117,7 +116,7 @@ vessel . prototype . targetBearing = function (target, index) {
 
 vessel . prototype . bearing = function (index) {this . bearing_speed = index >= 0 ? this . bearing_speeds [index] : - this . bearing_speeds [- index]; this . bearing_target = null;};
 
-vessel . prototype . draw = function (ctx) {
+vessel . prototype . draw = function (ctx, status) {
 	ctx . strokeStyle = 'white';
 	ctx . lineWidth = 1;
 	for (var ind in this . trail) {
@@ -126,15 +125,15 @@ vessel . prototype . draw = function (ctx) {
 		ctx . stroke ();
 	}
 	var x = this . position . x * scaling * 128, y = this . position . y * scaling * 128;
-	if (this . status === 'simulation') {
+	if (status === undefined) {
 		var bearing = (this . position . bearing - 90) * Math . PI / 180;
 		var alpha = Math . cos (bearing) * 12, beta = Math . sin (bearing) * 12;
 		ctx . lineCap = 'round'
-		ctx . lineWidth = 4; ctx . moveTo (x - alpha, y - beta); ctx . lineTo (x + alpha, y + beta);
-		ctx . stroke ();
+		ctx . lineWidth = 4; ctx . strokeStyle = 'gray';
+		ctx . beginPath (); ctx . moveTo (x - alpha, y - beta); ctx . lineTo (x + alpha, y + beta); ctx . stroke ();
 		return;
 	}
-	switch (this . status) {
+	switch (status) {
 		case 'friend': ctx . fillStyle = ctx . strokeStyle = 'lime'; break;
 		case 'enemy': ctx . fillStyle = ctx . strokeStyle = 'red'; break;
 		case 'neutral': ctx . fillStyle = ctx . strokeStyle = 'yellow'; break;
@@ -148,7 +147,7 @@ vessel . prototype . draw = function (ctx) {
 	switch (this . type) {
 		case 'surface':
 			ctx . beginPath (); ctx . arc (x, y, 2, 0, Math . PI * 2); ctx . fill ();
-			switch (this . status) {
+			switch (status) {
 				case 'enemy': ctx . moveTo (x, y - 8); ctx . lineTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y); ctx . closePath (); break;
 				case 'friend': ctx . arc (x, y, 8, 0, Math . PI * 2); break;
 				default: ctx . moveTo (x + 8, y - 8); ctx . lineTo (x + 8, y + 8); ctx . lineTo (x - 8, y + 8); ctx . lineTo (x - 8, y - 8); ctx . closePath (); break;
@@ -156,7 +155,7 @@ vessel . prototype . draw = function (ctx) {
 			break;
 		case 'submarine':
 			ctx . beginPath (); ctx . arc (x, y, 2, 0, Math . PI * 2); ctx . fill ();
-			switch (this . status) {
+			switch (status) {
 				case 'enemy': ctx . moveTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y); break;
 				case 'friend': ctx . arc (x, y, 8, 0, Math . PI); break;
 				default: ctx . moveTo (x + 8, y); ctx . lineTo (x + 8, y + 8); ctx . lineTo (x - 8, y + 8); ctx . lineTo (x - 8, y); break;
@@ -165,7 +164,7 @@ vessel . prototype . draw = function (ctx) {
 		case 'torpedo':
 			ctx . beginPath ();
 			ctx . moveTo (x, y); ctx . lineTo (x, y - 8); ctx . moveTo (x - 4, y); ctx . lineTo (x + 4, y);
-			if (this . status === 'friend') ctx . arc (x, y, 8, 0, Math . PI);
+			if (status === 'friend') ctx . arc (x, y, 8, 0, Math . PI);
 			else {ctx . moveTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y);}
 			break;
 		default: break;
@@ -188,26 +187,10 @@ vessel . prototype . getRelativePositionOf = function (vessel) {
 	vector . bearing = Math . atan2 (vector . y, vector . x);
 	return vector;
 };
-
-vessel . prototype . getNoiseOf = function (vessel) {
-	var vector = this . getRelativePositionOf (vessel);
-	noise = vessel . noiseLevel ();
-	if (vector . distance > 0) noise /= vector . distance * 1852;
-	for (var ind in thermoclines) {
-		if ((thermoclines [ind] . depth - vessel . position . depth) * (thermoclines [ind] . depth - this . position . depth) < 0) noise *= thermoclines [ind] . attenuation;
-	}
-	var bearing = vector . bearing - (this . position . bearing - 90) * Math . PI / 180;
-	while (bearing > Math . PI) bearing -= Math . PI + Math . PI;
-	while (bearing < - Math . PI) bearing += Math . PI + Math . PI;
-	noise = this . noiseLevelBearingCorrection (noise, bearing);
-	return noise;
-};
-
-vessel . prototype . noiseLevelBearingCorrection = function (noise, bearing) {bearing = Math . cos (bearing * 0.5); return noise * bearing * bearing;};
-
+var ind = 0;
 vessel . prototype . fire = function () {
 	if (selected === null) return;
-	var torpedo = new Mark48 (this, 'Fast');
+	var torpedo = new Mark48 (this, 'Fast' + (ind++));
 	torpedo . position . x = this . position . x;
 	torpedo . position . y = this . position . y;
 	torpedo . position . depth = this . position . depth;
@@ -251,14 +234,46 @@ var build_tubes = function (amount, speed) {
 };
 
 var sonar = function (vessel) {
+	this . vessel = vessel;
 	this . detected = {};
+	this . detection_threshold = 1;
+	this . identification_threshold = 2;
+	this . tracking_threshold = 0.25;
 	this . detect = function () {
 		for (var ind in vessels) {
-			var v = vessels [ind];
-			var noise = vessel . getNoiseOf (v);
-			if (this . detected . hasOwnProperty (v . name)) {
-			} else {
+			var vessel = vessels [ind];
+			if (vessel !== this . vessel) {
+				var noise = this . getNoiseOf (vessel);
+				if (this . detected . hasOwnProperty (vessel . name)) {
+					if (noise < this . tracking_threshold) delete this . detected [vessel . name];
+					else if (this . detected [vessel . name] . status === 'unknown' && noise > this . identification_threshold) this . detected [vessel . name] . status = this . vessel . checkStatusOf (vessel);
+				} else {
+					if (noise >= this . detection_threshold)
+						this . detected [vessel . name] = {status: noise >= this . identification_threshold ? this . vessel . checkStatusOf (vessel) : 'unknown', vessel: vessel, noise: noise};
+				}
 			}
 		}
 	};
+};
+
+sonar . prototype . getNoiseOf = function (source) {
+	var vector = this . vessel . getRelativePositionOf (source);
+	var noise = source . noiseLevel ();
+	if (vector . distance > 0) noise /= vector . distance * 1852;
+	for (var ind in thermoclines) {
+		if ((thermoclines [ind] . depth - source . position . depth) * (thermoclines [ind] . depth - this . vessel . position . depth) < 0) noise *= thermoclines [ind] . attenuation;
+	}
+	var bearing = vector . bearing - (this . vessel . position . bearing - 90) * Math . PI / 180;
+	while (bearing > Math . PI) bearing -= Math . PI = Math . PI; while (bearing < - Math . PI) bearing += Math . PI + Math . PI;
+	noise = this . noiseLevelBearingCorrection (noise, bearing);
+	return noise;
+};
+
+sonar . prototype . noiseLevelBearingCorrection = function (noise, bearing) {bearing = Math . cos (bearing * 0.5); return noise * bearing * bearing;};
+
+sonar . prototype . drawDetected = function (ctx) {
+	for (var ind in this . detected) {
+		var d = this . detected [ind];
+		if (d . vessel . destroyed) delete this . detected [ind]; else d . vessel . draw (ctx, d . status);
+	}
 };

@@ -1,4 +1,8 @@
 
+var sonarDetect = function (vessel) {
+	this . code = function () {vessel . sonar . detect ();};
+};
+
 var torpedoAI = function (torpedo, target) {
 	this . code = function () {
 		if (target . destroyed) return;

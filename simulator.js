@@ -66,9 +66,9 @@ var removeVessels = function () {var ind = 0; while (ind < vessels . length) {if
 var showVessels = function () {for (var ind in vessels) console . log (vessels [ind]); console . log ('====');};
 var simulate = function (delta) {for (var ind in vessels) vessels [ind] . simulate (delta);};
 var aiVessels = function (delta) {for (var ind in vessels) {if (vessels [ind] . ai !== null) vessels [ind] . ai . code (delta);}};
-var drawVessels = function (ctx) {for (var ind in vessels) vessels [ind] . draw (ctx);};
+var drawVessels = function (ctx) {simulated . draw (ctx); simulated . sonar . drawDetected (ctx);};
 var classifyVessels = function (vessel) {for (var ind in vessels) vessels [ind] . status = vessels [ind] . checkStatusOf (vessel);};
-var simulatedVessel = function (vessel) {simulated = vessel; classifyVessels (simulated);};
+var simulatedVessel = function (vessel) {simulated = vessel; vessel . ai = new sonarDetect (vessel);};
 var constructRemotes = function () {remotes = {}; for (var ind in vessels) remotes [vessels [ind] . name] = vessels [ind] . position; return JSON . stringify (remotes);};
 var simulationHitTest = function (x, y, reference, minimum_distance) {
   if (minimum_distance === undefined) minimum_distance = 8 / 128 / scaling;
@@ -175,7 +175,7 @@ var resize = function () {
 		bearing = Math . round (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
 		if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
 		//selected_heading . innerHTML = bearing;
-		selected_heading . innerHTML = simulated . getNoiseOf (selected) . toFixed (4);
+		selected_heading . innerHTML = simulated . sonar . getNoiseOf (selected) . toFixed (4);
 	} else {
 		selected_name . innerHTML = '====';
 	}
