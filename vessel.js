@@ -27,6 +27,7 @@ var vessel = function (country) {
 	this . damage_delta = 0;
 	this . test_depth = 1600;
 	this . collapse_depth = 2400;
+	this . target = null;
 };
 
 vessel . prototype . noiseLevel = function () {return this . noise;};
@@ -206,7 +207,7 @@ vessel . prototype . fire = function () {
 	torpedo . position . depth = this . position . depth;
 	torpedo . position . bearing = nauticalBearing (this . getRelativePositionOf (selected . vessel) . bearing);
 	torpedo . setSpeed ('full');
-	torpedo . ai = new torpedoAI (torpedo, selected . vessel);
+	torpedo . target = selected . vessel;
 	addVessel (torpedo);
 };
 
@@ -260,9 +261,9 @@ tube . prototype . load = function (selector) {
 	this . torpedo = new inventory . constructor (this . vessel, selector);
 };
 
-tube . prototype . fire = function (selector) {
-	if (selector === undefined && this . flooded === 1) {if (this . torpedo !== null) addVessel (this . torpedo); this . torpedo = null; return;}
-	this . load (selector); this . command = 'fire';
+tube . prototype . fire = function (target, selector) {
+	if (selector === undefined && this . flooded === 1) {if (this . torpedo !== null) {this . torpedo . target = target; addVessel (this . torpedo);} this . torpedo = null; return;}
+	this . load (selector); this . command = 'fire'; if (this . torpedo !== null) this . torpedo . target = target;
 };
 
 tube . prototype . flood = function () {this . command = 'flood';};

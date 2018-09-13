@@ -47,5 +47,6 @@ var Mark48 = function (launched_by, name, country) {
 	this . speeds = [0, 2, 8, 40, 40, 55, 55];
 	this . strength = 1;
 	this . sonar = new sonar (this);
+	this . ai = new torpedoAI (this);
 };
 Mark48 . prototype = Object . create (vessel . prototype);
