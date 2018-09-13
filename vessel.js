@@ -25,6 +25,8 @@ var vessel = function (country) {
 	this . ai = null;
 	this . strength = 3;
 	this . damage_delta = 0;
+	this . test_depth = 1600;
+	this . collapse_depth = 2400;
 };
 
 vessel . prototype . noiseLevel = function () {return this . noise;};
@@ -106,6 +108,8 @@ vessel . prototype . targetDepth = function (depth, index) {
 				if (thermoclines [ind] . depth < this . position . depth) {this . depth_target = thermoclines [ind] . depth - 18; return;}
 			}
 			break;
+		case 'test': this . depth_target = this . test_depth; break;
+		case 'crush': case 'collapse': this . depth_target = this . collapse_depth; break;
 		default: break;
 	}
 };
