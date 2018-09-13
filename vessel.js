@@ -197,10 +197,10 @@ vessel . prototype . getRelativePositionOf = function (vessel) {
 	vector . bearing = Math . atan2 (vector . y, vector . x);
 	return vector;
 };
-var ind = 0;
+
 vessel . prototype . fire = function () {
 	if (selected === null) return;
-	var torpedo = new Mark48 (this, 'Fast' + (ind++));
+	var torpedo = new Mark48 (this, 'Fast');
 	torpedo . position . x = this . position . x;
 	torpedo . position . y = this . position . y;
 	torpedo . position . depth = this . position . depth;
@@ -221,25 +221,56 @@ vessel . prototype . damage = function (level) {
 	if (level > 1.9) this . damage (level - 1.9);
 };
 
-var tube = function (speed) {
+var tube = function (vessel, settings, speed) {
 	if (speed === undefined) speed = 0.05;
 	this . flooded = 0;
 	this . flood_speed = speed;
 	this . command = null; // flood, dry, fire, empty
 	this . torpedo = null;
+	this . torpedoes = {};
+	this . vessel = vessel;
+	for (var ind in settings) {
+		for (var sub in settings [ind]) this . torpedoes [settings [ind] [sub]] = vessel . inventory [ind];
+	}
+	//for (var ind in settings) this . torpedoes [settings [ind]] = inventory;
 };
 
 tube . prototype . move = function (delta) {
 	switch (this . command) {
+		case 'fire':
+			if (this . flooded < 1) this . flooded += this . flood_speed * delta;
+			else {this . flooded = 1; this . command = null; if (this . torpedo !== null) {addVessel (this . torpedo); this . torpedo = null; this . flooded = 0;}}
+			break;
 		case 'flood': if (this . flooded < 1) this . flooded += this . flood_speed * delta; else {this . flooded = 1; this . command = null;} break;
 		case 'dry': if (this . flooded > 0) this . flooded -= this . flood_speed * delta; else {this . flooded = 0; this . command = null;} break;
+		case 'empty':
+			if (this . flooded > 0) this . flooded -= this . flood_speed * delta;
+			else {this . flooded = 0; this . command = null; if (this . torpedo !== null) this . torpedo = null;}
+			break;
 		default: break;
 	}
 };
 
-var build_tubes = function (amount, speed) {
+tube . prototype . load = function (selector) {
+	if (this . flooded > 0 || this . torpedo !== null) return;
+	if (selector === undefined) selector = Object . keys (this . torpedoes) [0];
+	var inventory = this . torpedoes [selector];
+	if (inventory == null || inventory . count < 1) return;
+	inventory . count --;
+	this . torpedo = new inventory . constructor (this . vessel, selector);
+};
+
+tube . prototype . fire = function (selector) {
+	if (selector === undefined && this . flooded === 1) {if (this . torpedo !== null) addVessel (this . torpedo); this . torpedo = null; return;}
+	this . load (selector); this . command = 'fire';
+};
+
+tube . prototype . flood = function () {this . command = 'flood';};
+tube . prototype . dry = function () {this . command = 'dry';};
+
+var build_tubes = function (vessel, settings, amount, speed) {
 	var tubes = [];
-	for (var ind = 0; ind < amount; ind++) tubes . push (new tube (speed));
+	for (var ind = 0; ind < amount; ind++) tubes . push (new tube (vessel, settings, speed));
 	return tubes;
 };
 

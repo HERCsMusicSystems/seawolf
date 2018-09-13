@@ -17,8 +17,12 @@ var Virginia = function (name, country) {
 	this . class = 'Virginia';
 	this . name = name;
 	this . speeds = [0, 2, 8, 15, 19, 25, 35];
-	this . tubes = build_tubes (4);
 	this . sonar = new sonar (this);
+	this . inventory = {
+		Mark48: {constructor: Mark48, count: 24},
+		Mark46: {constructor: Mark48, count: 6}
+	};
+	this . tubes = build_tubes (this, {Mark48: ['Fast', 'Long Range'], Mark46: ['Wakehoming']}, 4);
 };
 Virginia . prototype = Object . create (vessel . prototype);
 

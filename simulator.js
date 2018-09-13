@@ -31,7 +31,6 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<input type="button" value="3/4" onclick="javascript: simulated . setSpeed ('three quarters');"/>
 				<input type="button" value="FULL" onclick="javascript: simulated . setSpeed ('full');"/>
 				<input type="button" value="FLANK" onclick="javascript: simulated . setSpeed ('flank');"/>
-				<input type="button" value="FIRE" onclick="javascript: simulated . fire ();"/>
 			</td>
 		</tr>
 		<tr>
@@ -42,8 +41,23 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<input type="button" value="UP THERMAL" onclick="javascript: simulated . targetDepth ('up thermal');"/>
 				<input type="button" value="DOWN THERMAL" onclick="javascript: simulated . targetDepth ('down thermal');"/>
 				<input type="button" value="TEST" onclick="javascript: simulated . targetDepth ('test');"/>
-				<input type="button" value="CRUSH" onclick="javascript: simulated . targetDepth ('crush');"/>
+				<input type="button" value="COLLAPSE" onclick="javascript: simulated . targetDepth ('crush');"/>
 				<input type="button" value="SPECIFY" onclick="javascript: simulated . targetDepth (prompt ('Enter depth'));"/>
+			</td>
+		</tr>
+		<tr>
+			<td>SONAR:</td>
+			<td>
+				<input type="button" value="PING" onclick="javascript: simulated . sonar . ping ();"/>
+				<input type="button" value="DEPLOY TOWED ARRAY" onclick="javascript: simulated . sonar . deployTowedArray ();"/>
+				<input type="button" value="RETRIVE TOWED ARRAY" onclick="javascript: simulated . sonar . retrieveTowedArray ();"/>
+				<input type="button" value="CUT TOWED ARRAY" onclick="javascript: simulated . sonar . cutTowedArray ();"/>
+			</td>
+		</tr>
+		<tr>
+			<td>WEAPON:</td>
+			<td>
+				<input type="button" value="FIRE" onclick="javascript: simulated . fire ();"/>
 			</td>
 		</tr>
 	</table>
