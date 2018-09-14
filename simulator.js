@@ -62,7 +62,47 @@ document . getElementById ('seawolf_game') . innerHTML = `
 		</tr>
 	</table>
 </div>
+
+<div id="weapon" style="position: absolute; left: 8px; top: 8px; font-family: arial;">
+	<table id="weapon_table" style="background: #00ffffb0; color: yellow;">
+	</table>
+</div>
 `;
+
+var inventory_info = null;
+
+var update_inventory_info = function (vessel) {
+	var inventory = '';
+	for (var ind in vessel . inventory) inventory += `${ind}: ${vessel . inventory [ind] . count} `;
+	inventory_info . innerHTML = inventory;
+	console . log (vessel . inventory);
+};
+
+var fill_weapons_table = function (vessel) {
+	var content = '';
+	for (var ind in vessel . tubes) {
+		var tube = vessel . tubes [ind];
+		var commands = '';
+		for (var sub in tube . torpedoes) commands += `<option>${sub}</option>`;
+		content += `
+<tr>
+	<td bgcolor=black width="100" id="tube_${ind}"></td>
+	<td>
+		<select id="command_${ind}">${commands}</select>
+		<input type="button" value="LOAD" onclick="javascript: simulated . tubes [${ind}] . load (document . getElementById ('command_${ind}') . value);"/>
+		<input type="button" value="FLOOD" onclick="javascript: simulated . tubes [${ind}] . flood ();"/>
+		<input type="button" value="FIRE" onclick="javascript: simulated . tubes [${ind}] . fire (selected, document . getElementById ('command_${ind}') . value);"/>
+		<input type="button" value="EMPTY" onclick="javascript: simulated . tubes [${ind}] . empty ();"/>
+	</td>
+</tr>
+		`;
+	}
+	content += '<tr><td>Inventory</td><td id="inventory" bgcolor="blue"/></tr>';
+	document . getElementById ('weapon_table') . innerHTML = content;
+	for (var ind in vessel . tubes) vessel . tubes [ind] . display_element = document . getElementById (`tube_${ind}`);
+	inventory_info = document . getElementById ('inventory');
+	update_inventory_info (vessel);
+};
 
 var vessels = [];
 var remotes = {};
@@ -84,7 +124,7 @@ var simulate = function (delta) {for (var ind in vessels) vessels [ind] . simula
 var aiVessels = function (delta) {for (var ind in vessels) {if (vessels [ind] . ai !== null) vessels [ind] . ai . code (delta);}};
 var drawVessels = function (ctx) {simulated . draw (ctx); simulated . sonar . drawDetected (ctx);};
 var classifyVessels = function (vessel) {for (var ind in vessels) vessels [ind] . status = vessels [ind] . checkStatusOf (vessel);};
-var simulatedVessel = function (vessel) {simulated = vessel; vessel . ai = new sonarDetect (vessel);};
+var simulatedVessel = function (vessel) {simulated = vessel; vessel . ai = new sonarDetect (vessel); fill_weapons_table (vessel);};
 var constructRemotes = function () {remotes = {}; for (var ind in vessels) remotes [vessels [ind] . name] = vessels [ind] . position; return JSON . stringify (remotes);};
 var simulationHitTest = function (x, y, reference, minimum_distance) {
   if (minimum_distance === undefined) minimum_distance = 8 / 128 / scaling;

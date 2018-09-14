@@ -22,7 +22,7 @@ var Virginia = function (name, country) {
 		Mark48: {constructor: Mark48, count: 24},
 		Mark46: {constructor: Mark48, count: 6}
 	};
-	this . tubes = build_tubes (this, {Mark48: ['Fast', 'Long Range'], Mark46: ['Wakehoming']}, 4);
+	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming']}, 4);
 };
 Virginia . prototype = Object . create (vessel . prototype);
 
