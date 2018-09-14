@@ -2,7 +2,7 @@
 document . getElementById ('seawolf_game') . innerHTML = `
 <div><canvas id="seawolf" onmousedown="javascript: return onMouseDown (event);"/></div>
 
-<div id="info" style="position: absolute; left: 8px; top: 8px; font-family: arial;">
+<div id="info" style="position: absolute; left: 8px; bottom: 8px; font-family: arial;">
 	<table style="background: #0000ffb0; color: yellow;">
 		<tr>
 			<td>Bearing:</td><td><div id="simulation_bearing"/></td><td><div id="selected_bearing"/></td>
@@ -63,10 +63,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 	</table>
 </div>
 
-<div id="weapon" style="position: absolute; left: 8px; top: 8px; font-family: arial;">
-	<table id="weapon_table" style="background: #00ffffb0; color: yellow;">
-	</table>
-</div>
+<div id="weapon_table" style="position: absolute; right: 8px; bottom: 8px; font-family: arial;"/>
 `;
 
 var inventory_info = null;
@@ -79,7 +76,7 @@ var update_inventory_info = function (vessel) {
 };
 
 var fill_weapons_table = function (vessel) {
-	var content = '';
+	var content = '<table style="background: #00ffffb0; color: yellow;">';
 	for (var ind in vessel . tubes) {
 		var tube = vessel . tubes [ind];
 		var commands = '';
@@ -97,8 +94,8 @@ var fill_weapons_table = function (vessel) {
 </tr>
 		`;
 	}
-	content += '<tr><td>Inventory</td><td id="inventory" bgcolor="blue"/></tr>';
-	document . getElementById ('weapon_table') . innerHTML = content;
+	content += '<tr><td>Inventory</td><td id="inventory" bgcolor="blue"/></tr></table>';
+	weapons . innerHTML = content;
 	for (var ind in vessel . tubes) vessel . tubes [ind] . display_element = document . getElementById (`tube_${ind}`);
 	inventory_info = document . getElementById ('inventory');
 	update_inventory_info (vessel);
@@ -202,6 +199,7 @@ var selected_distance = document . getElementById ('selected_distance');
 var selected_heading = document . getElementById ('selected_heading');
 var info = document . getElementById ('info');
 var control_panel = document . getElementById ('ctrl');
+var weapons = document . getElementById ('weapon_table');
 
 var time = Date . now ();
 
@@ -248,7 +246,7 @@ setInterval (resize, 50);
 var ctrl = function (e) {
 	var key = e . key . toLowerCase ();
 	if (key === 'control' || key === 'r') return true;
-	var ws = e . shiftKey ? control_panel . style : info . style;
+	var ws = e . shiftKey ? control_panel . style : (e . ctrlKey || e . altKey) ? weapons . style : info . style;
 	switch (key) {
 		case '0': simulated . setSpeed ('stop'); return true;
 		case '1': simulated . setSpeed ('slow'); return true;
