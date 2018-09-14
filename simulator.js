@@ -87,7 +87,7 @@ var fill_weapons_table = function (vessel) {
 		<select id="command_${ind}">${commands}</select>
 		<input type="button" value="LOAD" onclick="javascript: simulated . tubes [${ind}] . load (document . getElementById ('command_${ind}') . value);"/>
 		<input type="button" value="FLOOD" onclick="javascript: simulated . tubes [${ind}] . flood ();"/>
-		<input type="button" value="FIRE" onclick="javascript: simulated . tubes [${ind}] . fire (selected, document . getElementById ('command_${ind}') . value);"/>
+		<input type="button" value="FIRE" onclick="javascript: simulated . tubes [${ind}] . fire (selected && selected . vessel, document . getElementById ('command_${ind}') . value);"/>
 		<input type="button" value="EMPTY" onclick="javascript: simulated . tubes [${ind}] . empty ();"/>
 	</td>
 </tr>
@@ -113,7 +113,7 @@ var checkGameStatus = function () {console . log ("Checking end condition.");};
 
 var addVessel = function (vessel) {vessels . push (vessel);};
 var getVessel = function (name) {for (var ind in vessels) {if (vessels [ind] . name === name) return vessels [ind];}; return null;};
-var removeVessel = function (vessel) {vessel . destroyed = true; if (simulated === vessel) simulated = null; if (selected === vessel) selected = null; notifyVesselLost (vessel);};
+var removeVessel = function (vessel) {vessel . destroyed = true; if (simulated === vessel) simulated = null; if (selected && selected . vessel === vessel) selected = null; notifyVesselLost (vessel);};
 var removeVessels = function () {var ind = 0; while (ind < vessels . length) {if (vessels [ind] . destroyed) vessels . splice (ind, 1); else ind ++;}};
 var showVessels = function () {for (var ind in vessels) console . log (vessels [ind]); console . log ('====');};
 var simulate = function (delta) {for (var ind in vessels) vessels [ind] . simulate (delta);};

@@ -263,7 +263,7 @@ tube . prototype . move = function (delta) {
 				this . flooded = 1; this . command = null;
 				if (this . torpedo !== null) launch_torpedo (this . torpedo, this . vessel);
 				this . torpedo = null; this . flooded = 0;
-				if (this . display_element !== null) this . display_element . innerHTML = '';
+				if (this . display_element !== null) {this . display_element . bgColor = 'black'; this . display_element . innerHTML = '';}
 			}
 			break;
 		case 'flood':
@@ -304,8 +304,9 @@ tube . prototype . fire = function (target, selector) {
 	if (this . torpedo !== null) {
 		if (this . flooded < 1) return;
 		if (this . torpedo !== null) launch_torpedo (this . torpedo, this . vessel, target);
-		this . torpedo = null;
-		this . flooded = 0; return;
+		this . torpedo = null; this . flooded = 0;
+		if (this . display_element !== null) {this . display_element . bgColor = 'black'; this . display_element . innerHTML = '';}
+		return;
 	}
 	this . load (selector); this . command = 'fire'; if (this . torpedo !== null) this . torpedo . target = target;
 };
@@ -334,7 +335,7 @@ sonar . prototype . detect = function () {
 	for (var ind in vessels) {
 		var vessel = vessels [ind];
 		if (vessel !== this . vessel) {
-			var noise = this . getNoiseOf (vessel);
+			var noise = vessel . position . depth === 0 && this . vessel . position . depth <= 60 ? this . identification_threshold : this . getNoiseOf (vessel);
 			if (this . detected . hasOwnProperty (vessel . id)) {
 				if (noise < this . tracking_threshold) {if (selected && selected . vessel === vessel) selected = null; delete this . detected [vessel . id];}
 				else if (this . detected [vessel . id] . status === 'unknown' && noise > this . identification_threshold) this . detected [vessel . id] . status = this . vessel . checkStatusOf (vessel);
