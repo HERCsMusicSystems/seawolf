@@ -72,7 +72,6 @@ var update_inventory_info = function (vessel) {
 	var inventory = '';
 	for (var ind in vessel . inventory) inventory += `${ind}: ${vessel . inventory [ind] . count} `;
 	inventory_info . innerHTML = inventory;
-	console . log (vessel . inventory);
 };
 
 var fill_weapons_table = function (vessel) {

@@ -1,3 +1,5 @@
+<meta charset="UTF-8"/>
+
 <!--
 ///////////////////////////////////////////////////////////////////////////////////
 //                     Copyright (C) 2018 Dr Robert P. Wolf                      //
@@ -20,7 +22,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
 // THE SOFTWARE.                                                                 //
 ///////////////////////////////////////////////////////////////////////////////////
-
 -->
 
 <html>
@@ -48,12 +49,14 @@
 <script>
 
 var texas = new Virginia ('Texas');
+texas . positionVessel (0, 0, 0, 800);
+
 var oiler1 = new Oiler ('Aquarius');
 var oiler2 = new Oiler ('Atlantis');
 var oiler3 = new Oiler ('Triton');
 
-var from = {x: Math . random () - 1, y: Math . random () - 1};
-var to = {x: Math . random () - 1, y: Math . random () - 1};
+var from = {x: Math . random () * 10 - 5, y: Math . random () * 6 - 3};
+var to = {x: Math . random () * 10 - 5, y: Math . random () * 6 - 3};
 from . bearing = nauticalBearing (Math . atan2 (to . y - from . y, to . x - from . x));
 
 oiler1 . position = {x: from . x - 0.1, y: from . y, bearing: from . bearing, depth: 0};

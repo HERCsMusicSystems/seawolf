@@ -32,6 +32,14 @@ var vessel = function (country) {
 
 vessel . prototype . noiseLevel = function () {return this . noise;};
 
+vessel . prototype . positionVessel = function (x, y, bearing, depth) {
+	if (depth === undefined) depth = 0;
+	if (bearing === undefined) bearing = 0;
+	this . position = {x: x, y: y, bearing: bearing, depth: depth};
+	this . depth_target = depth;
+	this . bearing_target = bearing;
+};
+
 vessel . prototype . move = function (delta) {
 	this . trail_delta -= delta;
 	if (this . trail_delta < 1) {
