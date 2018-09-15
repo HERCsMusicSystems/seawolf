@@ -131,9 +131,14 @@ vessel . prototype . targetBearing = function (target, index) {
 	if (this . bearing_target < 0) this . bearing_target += 360;
 	if (this . bearing_target > 180 + this . position . bearing) this . position . bearing += 360;
 	if (this . bearing_target + 180 < this . position . bearing) this . position . bearing -= 360;
+	if (this . speed_index < 1) this . setSpeed (1);
 };
 
-vessel . prototype . bearing = function (index) {this . bearing_speed = index >= 0 ? this . bearing_speeds [index] : - this . bearing_speeds [- index]; this . bearing_target = null;};
+vessel . prototype . bearing = function (index) {
+	this . bearing_speed = index >= 0 ? this . bearing_speeds [index] : - this . bearing_speeds [- index];
+	this . bearing_target = null;
+	if (this . speed_index < 1) this . setSpeed (1);
+};
 
 vessel . prototype . draw = function (ctx, status) {
 	ctx . strokeStyle = 'white';
