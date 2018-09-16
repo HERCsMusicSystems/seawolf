@@ -55,13 +55,13 @@ var oiler1 = new Oiler ('Aquarius');
 var oiler2 = new Oiler ('Atlantis');
 var oiler3 = new Oiler ('Triton');
 
-var from = {x: Math . random () * 10 - 5, y: Math . random () * 6 - 3};
-var to = {x: Math . random () * 10 - 5, y: Math . random () * 6 - 3};
+var from = {x: Math . random () * 10 - 5, y: Math . random () * 4 - 2};
+var to = {x: Math . random () * 10 - 5, y: Math . random () * 4 - 2};
 from . bearing = nauticalBearing (Math . atan2 (to . y - from . y, to . x - from . x));
 
-oiler1 . position = {x: from . x - 0.1, y: from . y, bearing: from . bearing, depth: 0};
-oiler2 . position = {x: from . x + 0.1, y: from . y, bearing: from . bearing, depth: 0};
-oiler3 . position = {x: from . x, y: from . y + 0.15, bearing: from . bearing, depth: 0};
+oiler1 . positionVessel (from . x - 0.1, from . y, from . bearing);
+oiler2 . positionVessel (from . x + 0.1, from . y, from . bearing);
+oiler3 . positionVessel (from . x, from . y + 0.15, from . bearing);
 oiler1 . setSpeed ('half');
 oiler2 . setSpeed ('half');
 oiler3 . setSpeed ('half');

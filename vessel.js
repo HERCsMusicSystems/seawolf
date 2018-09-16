@@ -131,9 +131,14 @@ vessel . prototype . targetBearing = function (target, index) {
 	if (this . bearing_target < 0) this . bearing_target += 360;
 	if (this . bearing_target > 180 + this . position . bearing) this . position . bearing += 360;
 	if (this . bearing_target + 180 < this . position . bearing) this . position . bearing -= 360;
+	if (this . speed_index < 1) this . setSpeed (1);
 };
 
-vessel . prototype . bearing = function (index) {this . bearing_speed = index >= 0 ? this . bearing_speeds [index] : - this . bearing_speeds [- index]; this . bearing_target = null;};
+vessel . prototype . bearing = function (index) {
+	this . bearing_speed = index >= 0 ? this . bearing_speeds [index] : - this . bearing_speeds [- index];
+	this . bearing_target = null;
+	if (this . speed_index < 1) this . setSpeed (1);
+};
 
 vessel . prototype . draw = function (ctx, status) {
 	ctx . strokeStyle = 'white';
@@ -335,10 +340,11 @@ sonar . prototype . detect = function () {
 	for (var ind in vessels) {
 		var vessel = vessels [ind];
 		if (vessel !== this . vessel) {
-			var noise = vessel . position . depth === 0 && this . vessel . position . depth <= 60 ? this . identification_threshold : this . getNoiseOf (vessel);
+			var noise = this . getNoiseOf (vessel);
+			if (noise < this . identification_threshold && this . vessel . position . depth <= 60 && vessel . position . depth === 0) noise = this . identification_threshold;
 			if (this . detected . hasOwnProperty (vessel . id)) {
 				if (noise < this . tracking_threshold) {if (selected && selected . vessel === vessel) selected = null; delete this . detected [vessel . id];}
-				else if (this . detected [vessel . id] . status === 'unknown' && noise > this . identification_threshold) this . detected [vessel . id] . status = this . vessel . checkStatusOf (vessel);
+				else if (this . detected [vessel . id] . status === 'unknown' && noise >= this . identification_threshold) this . detected [vessel . id] . status = this . vessel . checkStatusOf (vessel);
 			} else {
 				if (noise >= this . detection_threshold)
 					this . detected [vessel . id] = {status: noise >= this . identification_threshold ? this . vessel . checkStatusOf (vessel) : 'unknown', vessel: vessel, noise: noise};

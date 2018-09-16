@@ -16,6 +16,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 		<tr>
 			<td><div id="selected_name"/></td><td><div id="selected_distance"/></td><td><div id="selected_heading"/></td>
 		</tr>
+		<tr><td>Thermoclines:</td><td><div id="thermoclines"/></td></tr>
 	</table>
 </div>
 
@@ -201,6 +202,7 @@ var selected_depth = document . getElementById ('selected_depth');
 var selected_name = document . getElementById ('selected_name');
 var selected_distance = document . getElementById ('selected_distance');
 var selected_heading = document . getElementById ('selected_heading');
+var thermocline_info = document . getElementById ('thermoclines');
 var info = document . getElementById ('info');
 var control_panel = document . getElementById ('ctrl');
 var weapons = document . getElementById ('weapon_table');
@@ -222,6 +224,8 @@ var resize = function () {
 	simulation_bearing . innerHTML = bearing;
 	simulation_speed . innerHTML = simulated . speed . x;
 	simulation_depth . innerHTML = simulated . position . depth . toFixed (0);
+	var thermocline_string = ''; for (var ind in thermoclines) thermocline_string += ' ' + thermoclines [ind] . depth;
+	thermocline_info . innerHTML = thermocline_string;
 	if (selected !== null) {
 		var sv = selected . vessel;
 		bearing = Math . round (sv . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
