@@ -55,8 +55,13 @@ document . getElementById ('seawolf_game') . innerHTML = `
 			</td>
 		</tr>
 		<tr>
-			<td>WEAPON:</td>
+			<td>SIMULATION:</td>
 			<td>
+				<input type="button" value="&#xd7;1" onclick="javascript: simulation_ratio = 1;"/>
+				<input type="button" value="&#xd7;2" onclick="javascript: simulation_ratio = 2;"/>
+				<input type="button" value="&#xd7;4" onclick="javascript: simulation_ratio = 4;"/>
+				<input type="button" value="&#xd7;8" onclick="javascript: simulation_ratio = 8;"/>
+				WEAPON OVERRIDE:
 				<input type="button" value="FIRE" onclick="javascript: simulated . fire ();"/>
 			</td>
 		</tr>
