@@ -25,7 +25,7 @@ var vessel = function (country) {
 	this . ai = null;
 	this . strength = 3;
 	this . damage_delta = 0;
-	this . test_depth = 1600;
+	this . test_depth = 1600; // US Navy 2/3, Royal Navy: 4/7, German Kriegsmarine: 1/2
 	this . collapse_depth = 2400;
 	this . target = null;
 };

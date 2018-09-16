@@ -37,6 +37,13 @@ var Akula = function (name, country) {
 };
 Akula . prototype = Object . create (vessel . prototype);
 
+///////////////////////////////////////////////
+// Mark 48                                   //
+// Depth > 2600                              //
+// Fast: 38km/55kn  Long Range: 50km/40kn    //
+// Cable: 10nm / 5nm                         //
+// Detection cone: 20 - 22 degrees           //
+///////////////////////////////////////////////
 var Mark48 = function (launched_by, name, country) {
 	if (country === undefined) country = launched_by . country;
 	vessel . call (this, country);
