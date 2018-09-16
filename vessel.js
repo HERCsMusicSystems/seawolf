@@ -12,6 +12,8 @@ var vessel = function (country) {
 	this . bearing_target = null;
 	this . noise = 0;
 	this . trail_delta = 0;
+	this . initial_trail_delta = trail_delta;
+	this . trail_length = trail_length;
 	this . destroyed = false;
 	this . trail = [];
 	this . country = country;
@@ -28,6 +30,7 @@ var vessel = function (country) {
 	this . test_depth = 1600; // US Navy 2/3, Royal Navy: 4/7, German Kriegsmarine: 1/2
 	this . collapse_depth = 2400;
 	this . target = null;
+	this . on_leash = false;
 };
 
 vessel . prototype . noiseLevel = function () {return this . noise;};
@@ -44,8 +47,8 @@ vessel . prototype . move = function (delta) {
 	this . trail_delta -= delta;
 	if (this . trail_delta < 1) {
 		this . trail . push ({x: this . position . x * 128, y: this . position . y * 128});
-		this . trail_delta = trail_delta;
-		while (this . trail . length > trail_length) this . trail . shift ();
+		this . trail_delta = this . initial_trail_delta;
+		while (this . trail . length > this . trail_length) this . trail . shift ();
 	}
 	var bearing = (this . position . bearing - 90) * Math . PI / 180;
 	var sdelta = delta / 3600;

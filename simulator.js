@@ -32,6 +32,10 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<input type="button" value="3/4" onclick="javascript: simulated . setSpeed ('three quarters');"/>
 				<input type="button" value="FULL" onclick="javascript: simulated . setSpeed ('full');"/>
 				<input type="button" value="FLANK" onclick="javascript: simulated . setSpeed ('flank');"/>
+				<input type="button" value="&#xd7;1" onclick="javascript: simulation_ratio = 1;"/>
+				<input type="button" value="&#xd7;2" onclick="javascript: simulation_ratio = 2;"/>
+				<input type="button" value="&#xd7;4" onclick="javascript: simulation_ratio = 4;"/>
+				<input type="button" value="&#xd7;8" onclick="javascript: simulation_ratio = 8;"/>
 			</td>
 		</tr>
 		<tr>
@@ -53,17 +57,18 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<input type="button" value="DEPLOY TOWED ARRAY" onclick="javascript: simulated . sonar . deployTowedArray ();"/>
 				<input type="button" value="RETRIVE TOWED ARRAY" onclick="javascript: simulated . sonar . retrieveTowedArray ();"/>
 				<input type="button" value="CUT TOWED ARRAY" onclick="javascript: simulated . sonar . cutTowedArray ();"/>
+				<input type="button" value="FIRE OVERRIDE" onclick="javascript: simulated . fire ();"/>
 			</td>
 		</tr>
 		<tr>
-			<td>SIMULATION:</td>
+			<td>WEAPON:</td>
 			<td>
-				<input type="button" value="&#xd7;1" onclick="javascript: simulation_ratio = 1;"/>
-				<input type="button" value="&#xd7;2" onclick="javascript: simulation_ratio = 2;"/>
-				<input type="button" value="&#xd7;4" onclick="javascript: simulation_ratio = 4;"/>
-				<input type="button" value="&#xd7;8" onclick="javascript: simulation_ratio = 8;"/>
-				WEAPON OVERRIDE:
-				<input type="button" value="FIRE" onclick="javascript: simulated . fire ();"/>
+				<input type="button" value="DETONATE"/>
+				<input type="button" value="SEARCH SUB"/>
+				<input type="button" value="SEARCH SURFACE"/>
+				<input type="button" value="MATCH DEPTH"/>
+				<input type="button" value="SURFACE"/>
+				<input type="button" value="DEPTH"/>
 			</td>
 		</tr>
 	</table>
