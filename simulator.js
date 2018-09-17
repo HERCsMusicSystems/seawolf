@@ -4,18 +4,10 @@ document . getElementById ('seawolf_game') . innerHTML = `
 
 <div id="info" style="position: absolute; left: 8px; bottom: 8px; font-family: arial;">
 	<table style="background: #0000ffb0; color: yellow;">
-		<tr>
-			<td>Bearing:</td><td><div id="simulation_bearing"/></td><td><div id="selected_bearing"/></td>
-		</tr>
-		<tr>
-			<td>Speed:</td><td><div id="simulation_speed"/></td><td><div id="selected_speed"/></td>
-		</tr>
-		<tr>
-			<td>Depth:</td><td><div id="simulation_depth"/></td><td><div id="selected_depth"/></td>
-		</tr>
-		<tr>
-			<td><div id="selected_name"/></td><td><div id="selected_distance"/></td><td><div id="selected_heading"/></td>
-		</tr>
+		<tr><td>Bearing:</td><td><div id="simulation_bearing"/></td><td><div id="selected_bearing"/></td></tr>
+		<tr><td>Speed:</td><td><div id="simulation_speed"/></td><td><div id="selected_speed"/></td></tr>
+		<tr><td>Depth:</td><td><div id="simulation_depth"/></td><td><div id="selected_depth"/></td></tr>
+		<tr><td><div id="selected_name"/></td><td><div id="selected_distance"/></td><td><div id="selected_heading"/></td></tr>
 		<tr><td>Thermoclines:</td><td><div id="thermoclines"/></td></tr>
 	</table>
 </div>
@@ -63,12 +55,12 @@ document . getElementById ('seawolf_game') . innerHTML = `
 		<tr>
 			<td>WEAPON:</td>
 			<td>
-				<input type="button" value="DETONATE"/>
-				<input type="button" value="SEARCH SUB"/>
-				<input type="button" value="SEARCH SURFACE"/>
-				<input type="button" value="MATCH DEPTH"/>
-				<input type="button" value="SURFACE"/>
-				<input type="button" value="DEPTH"/>
+				<input type="button" value="DETONATE" onclick="javascript: detonateSelected ();"/>
+				<input type="button" value="SEARCH SUB" onclick="javascript: acquireSubmarineTarget ();"/>
+				<input type="button" value="SEARCH SURFACE" onclick="javascript: acquireSurfaceTarget ();"/>
+				<input type="button" value="MATCH DEPTH" onclick="javascript: matchDepth ();"/>
+				<input type="button" value="SURFACE" onclick="javascript: matchDepth (0);"/>
+				<input type="button" value="DEPTH" onclick="javascript: promptDepth ();"/>
 			</td>
 		</tr>
 	</table>
@@ -152,6 +144,30 @@ var simulationHitTest = function (x, y, reference, minimum_distance) {
 
 var nauticalBearing = function (angle) {angle *= 180 / Math . PI; angle += 90; while (angle < 0) angle += 360; while (angle >= 360) angle -= 360; return angle;};
 var displayBearing = function (bearing) {bearing = Math . round (bearing); while (bearing < 0) bearing += 360; while (bearing >= 360) bearing -= 360; return bearing;};
+
+var detonateSelected = function () {
+	if (selected === null || selected . vessel . class !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	selected . vessel . damage (selected . vessel . strength);
+};
+var matchDepth = function (depth) {
+	if (selected === null || selected . vessel . class !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	if (depth === undefined) {if (simulated === null) return; selected . vessel . targetDepth (simulated . position . depth);}
+	selected . vessel . targetDepth (depth);
+};
+var promptDepth = function () {
+	if (selected === null || selected . vessel . class !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	var depth = prompt ('Enter depth');
+	if (depth !== null) selected . vessel . targetDepth (depth);
+};
+var acquireSubmarineTarget = function () {
+	if (selected === null || selected . vessel . class !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	selected . vessel . target = null;
+};
+var acquireSurfaceTarget = function () {
+	if (selected === null || selected . vessel . class !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	selected . vessel . target = null;
+	selected . vessel . targetDepth (0);
+};
 
 var thermoclines = [{depth: 120, attenuation: 0.01}, {depth: 240, attenuation: 0.01}, {depth: 600, attenuation: 0.001}, {depth: 1200, attenuation: 0.001}];
 
