@@ -62,7 +62,6 @@ var Mark48 = function (cable, name, country) {
 	this . distance_travelled = 0;
 	this . distance_cable_travelled = 0;
 	this . cable_length = 1; this . cable_to_ship_length = 0.5;
-	this . on_cable = true;
 	this . initial_trail_delta = 2;
 	this . trail_length = 100;
 };

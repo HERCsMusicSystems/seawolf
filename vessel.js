@@ -30,7 +30,7 @@ var vessel = function (country) {
 	this . test_depth = 1600; // US Navy 2/3, Royal Navy: 4/7, German Kriegsmarine: 1/2
 	this . collapse_depth = 2400;
 	this . target = null;
-	this . on_cable = false;
+	this . cable = null;
 };
 
 vessel . prototype . noiseLevel = function () {return this . noise;};
@@ -343,7 +343,9 @@ sonar . prototype . detect = function () {
 		var vessel = vessels [ind];
 		if (vessel !== this . vessel) {
 			var noise = this . getNoiseOf (vessel);
-			if (noise < this . identification_threshold && this . vessel . position . depth <= 60 && vessel . position . depth === 0) noise = this . identification_threshold;
+			if (noise < this . identification_threshold &&
+				((this . vessel . position . depth <= 60 && vessel . position . depth === 0)
+				|| vessel . cable === this . vessel)) noise = this . identification_threshold;
 			if (this . detected . hasOwnProperty (vessel . id)) {
 				if (noise < this . tracking_threshold) {if (selected && selected . vessel === vessel) selected = null; delete this . detected [vessel . id];}
 				else if (this . detected [vessel . id] . status === 'unknown' && noise >= this . identification_threshold) this . detected [vessel . id] . status = this . vessel . checkStatusOf (vessel);

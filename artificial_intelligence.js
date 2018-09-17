@@ -8,12 +8,12 @@ var torpedoAI = function (torpedo) {
 		var sdelta = delta / 3600;
 		torpedo . distance_travelled += torpedo . speed . x * sdelta;
 		if (torpedo . distance_travelled >= this . range) {torpedo . damage (1); return;}
-		if (torpedo . on_cable) {
+		if (torpedo . cable !== null) {
 			torpedo . distance_cable_travelled += torpedo . cable . speed . x * sdelta;
 			if (torpedo . distance_travelled > torpedo . cable_length || torpedo . distance_cable_travelled > torpedo . cable_to_ship_length) {
-					torpedo . on_cable = false;
+					torpedo . cable = null;
 					torpedo . initial_trail_delta = trail_delta;
-					torpedo . trail_length = trial_length;
+					torpedo . trail_length = trail_length;
 			}
 		}
 		if (torpedo . target === null || torpedo . target . destroyed) return;
