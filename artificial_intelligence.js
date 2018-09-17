@@ -19,7 +19,7 @@ var torpedoAI = function (torpedo) {
 		if (torpedo . target === null || torpedo . target . destroyed) return;
 		var vector = torpedo . getRelativePositionOf (torpedo . target);
 		if (vector . distance < 0.003) {torpedo . damage (1); torpedo . target . damage (1 + Math . random ()); return;}
-		torpedo . targetBearing (nauticalBearing (vector . bearing));
+		torpedo . targetBearing (nauticalBearing (vector . bearing, 4));
 		torpedo . setSpeed (Math . abs (torpedo . bearing_target - torpedo . position . bearing) > 10 ? 'slow' : torpedo . name === 'Fast' ? 'flank' : 'full');
 	};
 };
