@@ -51,6 +51,7 @@ var Mark48 = function (cable, name, country) {
 	this . type = 'torpedo';
 	this . class = 'Mark48';
 	this . name = name;
+	this . bearing_speeds = [0, 5, 10, 15, 20, 25, 30];
 	this . speeds = [0, 2, 10, 20, 30, 40, 55];
 	if (name === 'Fast') this . range = 20;
 	if (name === 'Long Range') this . range = 27;

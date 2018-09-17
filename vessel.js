@@ -226,8 +226,7 @@ var launch_torpedo = function (torpedo, vessel, target) {
 	torpedo . position . x = vessel . position . x;
 	torpedo . position . y = vessel . position . y;
 	torpedo . position . depth = vessel . position . depth;
-	torpedo . position . bearing = nauticalBearing (vessel . getRelativePositionOf (torpedo . target) . bearing);
-	torpedo . setSpeed ('full');
+	torpedo . position . bearing = vessel . position . bearing;
 	addVessel (torpedo);
 };
 
