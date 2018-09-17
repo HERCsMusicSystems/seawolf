@@ -146,25 +146,25 @@ var nauticalBearing = function (angle) {angle *= 180 / Math . PI; angle += 90; w
 var displayBearing = function (bearing) {bearing = Math . round (bearing); while (bearing < 0) bearing += 360; while (bearing >= 360) bearing -= 360; return bearing;};
 
 var detonateSelected = function () {
-	if (selected === null || selected . vessel . class !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
 	selected . vessel . damage (selected . vessel . strength);
 };
 var matchDepth = function (depth) {
-	if (selected === null || selected . vessel . class !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
 	if (depth === undefined) {if (simulated === null) return; selected . vessel . targetDepth (simulated . position . depth);}
 	selected . vessel . targetDepth (depth);
 };
 var promptDepth = function () {
-	if (selected === null || selected . vessel . class !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
 	var depth = prompt ('Enter depth');
 	if (depth !== null) selected . vessel . targetDepth (depth);
 };
 var acquireSubmarineTarget = function () {
-	if (selected === null || selected . vessel . class !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
 	selected . vessel . target = null;
 };
 var acquireSurfaceTarget = function () {
-	if (selected === null || selected . vessel . class !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
 	selected . vessel . target = null;
 	selected . vessel . targetDepth (0);
 };
