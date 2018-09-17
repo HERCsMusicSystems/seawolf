@@ -5,12 +5,13 @@ var sonarDetect = function (vessel) {
 
 var torpedoAI = function (torpedo) {
 	this . code = function (delta) {
-		if (torpedo . on_leash) {
-			var sdelta = delta / 3600;
-			torpedo . distance_travelled += torpedo . speed . x * sdelta;
-			torpedo . distance_launched_by_travelled += torpedo . launched_by . speed . x * sdelta;
-			if (torpedo . distance_travelled > torpedo . cable_length || torpedo . distance_launched_by_travelled > torpedo . launched_by_cable_length) {
-					torpedo . on_leash = false;
+		var sdelta = delta / 3600;
+		torpedo . distance_travelled += torpedo . speed . x * sdelta;
+		if (torpedo . distance_travelled >= this . range) {torpedo . damage (1); return;}
+		if (torpedo . on_cable) {
+			torpedo . distance_cable_travelled += torpedo . cable . speed . x * sdelta;
+			if (torpedo . distance_travelled > torpedo . cable_length || torpedo . distance_cable_travelled > torpedo . cable_to_ship_length) {
+					torpedo . on_cable = false;
 					torpedo . initial_trail_delta = trail_delta;
 					torpedo . trail_length = trial_length;
 			}

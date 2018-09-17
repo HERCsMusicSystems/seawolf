@@ -30,7 +30,7 @@ var vessel = function (country) {
 	this . test_depth = 1600; // US Navy 2/3, Royal Navy: 4/7, German Kriegsmarine: 1/2
 	this . collapse_depth = 2400;
 	this . target = null;
-	this . on_leash = false;
+	this . on_cable = false;
 };
 
 vessel . prototype . noiseLevel = function () {return this . noise;};

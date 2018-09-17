@@ -44,24 +44,25 @@ Akula . prototype = Object . create (vessel . prototype);
 // Cable: 10nm / 5nm                         //
 // Detection cone: 20 - 22 degrees           //
 ///////////////////////////////////////////////
-var Mark48 = function (launched_by, name, country) {
-	if (country === undefined) country = launched_by . country;
+var Mark48 = function (cable, name, country) {
+	if (country === undefined) country = cable . country;
 	vessel . call (this, country);
-	this . launched_by = launched_by;
+	this . cable = cable;
 	this . type = 'torpedo';
 	this . class = 'Mark48';
 	this . name = name;
-	if (name === 'Fast') this . speeds = [0, 2, 8, 40, 40, 55, 55];
-	if (name === 'Long Range') this . speeds = [0, 2, 10, 20, 30, 40];
+	this . speeds = [0, 2, 10, 20, 30, 40, 55];
+	if (name === 'Fast') this . range = 20;
+	if (name === 'Long Range') this . range = 27;
 	this . test_depth = 1800;
 	this . collapse_depth = 2700;
 	this . strength = 1;
 	this . sonar = new sonar (this);
 	this . ai = new torpedoAI (this);
 	this . distance_travelled = 0;
-	this . distance_launched_by_travelled = 0;
-	this . cable_length = 1; this . launched_by_cable_length = 0.5;
-	this . on_leash = true;
+	this . distance_cable_travelled = 0;
+	this . cable_length = 1; this . cable_to_ship_length = 0.5;
+	this . on_cable = true;
 	this . initial_trail_delta = 2;
 	this . trail_length = 100;
 };
