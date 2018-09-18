@@ -368,7 +368,7 @@ sonar . prototype . getNoiseOf = function (source) {
 	var bearing = vector . bearing - (this . vessel . position . bearing - 90) * Math . PI / 180;
 	while (bearing > Math . PI) bearing -= Math . PI = Math . PI; while (bearing < - Math . PI) bearing += Math . PI + Math . PI;
 	noise = this . noiseLevelBearingCorrection (noise, bearing);
-	return noise;
+	return noise * (1 + ping);
 };
 
 sonar . prototype . noiseLevelBearingCorrection = function (noise, bearing) {bearing = Math . cos (bearing * 0.5); return noise * bearing * bearing;};
@@ -379,6 +379,8 @@ sonar . prototype . drawDetected = function (ctx) {
 		if (d . vessel . destroyed) delete this . detected [ind]; else d . vessel . draw (ctx, d . status);
 	}
 };
+
+sonar . prototype . ping = function () {ping = 10000000;};
 
 var Waypoint = function (x, y, depth) {
 	vessel . call (this, 'JavaScript');

@@ -226,7 +226,6 @@ var drawGrid = function (ctx, width, height, vessel) {
 		ctx . moveTo (x, y - 8); ctx . lineTo (x, y - 2); ctx . moveTo (x, y + 2); ctx . lineTo (x, y + 8);
 		ctx . stroke ();
 	}
-	ping *= Math . pow (ping_attenuation, delta);
 };
 
 var canvas = document . getElementById ('seawolf');
@@ -257,6 +256,7 @@ var resize = function () {
 	removeVessels ();
 	drawGrid (ctx, window . innerWidth, window . innerHeight, simulated);
 	drawVessels (ctx);
+	ping *= Math . pow (ping_attenuation, delta);
 	time = now;
 	var bearing = Math . round (simulated . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
 	simulation_bearing . innerHTML = bearing;
