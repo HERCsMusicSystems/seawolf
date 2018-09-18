@@ -113,6 +113,8 @@ var waypoint = null;
 var simulation_ratio = 1;
 var trail_length = 24;
 var trail_delta = 15;
+var ping = 0;
+var ping_attenuation = 0.25;
 
 var checkGameStatus = function () {console . log ("Checking end condition.");};
 
@@ -224,6 +226,7 @@ var drawGrid = function (ctx, width, height, vessel) {
 		ctx . moveTo (x, y - 8); ctx . lineTo (x, y - 2); ctx . moveTo (x, y + 2); ctx . lineTo (x, y + 8);
 		ctx . stroke ();
 	}
+	ping *= Math . pow (ping_attenuation, delta);
 };
 
 var canvas = document . getElementById ('seawolf');
