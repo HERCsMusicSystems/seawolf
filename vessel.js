@@ -378,3 +378,12 @@ sonar . prototype . drawDetected = function (ctx) {
 		if (d . vessel . destroyed) delete this . detected [ind]; else d . vessel . draw (ctx, d . status);
 	}
 };
+
+var Waypoint = function (x, y, depth) {
+	vessel . call (this, 'JavaScript');
+	this . position . x = x;
+	this . position . y = y;
+	this . position . depth = depth;
+	this . type = 'waypoint';
+};
+Waypoint . porotype = Object . create (vessel . prototype);

@@ -1,6 +1,6 @@
 
 document . getElementById ('seawolf_game') . innerHTML = `
-<div><canvas id="seawolf" onmousedown="javascript: return onMouseDown (event);"/></div>
+<div><canvas id="seawolf" onmousedown="javascript: return onMouseDown (event);" ondblclick="javascript: setWaypoint (event);"/></div>
 
 <div id="info" style="position: absolute; left: 8px; bottom: 8px; font-family: arial;">
 	<table style="background: #0000ffb0; color: yellow;">
@@ -108,6 +108,7 @@ var remotes = {};
 
 var simulated = null;
 var selected = null;
+var waypoint = null;
 var simulation_ratio = 1;
 var trail_length = 24;
 var trail_delta = 15;
@@ -210,6 +211,13 @@ var drawGrid = function (ctx, width, height, vessel) {
   for (var ind = grid_left; ind < grid_right; ind += mile) {ctx . moveTo (ind, limit_top); ctx . lineTo (ind, limit_bottom);}
   for (var ind = grid_top; ind < grid_bottom; ind += mile) {ctx . moveTo (limit_left, ind); ctx . lineTo (limit_right, ind);}
   ctx . stroke ();
+	if (waypoint !== null) {
+		ctx . beginPath ();
+		var x = waypoint . position . x, y = waypoint . position . y;
+		ctx . moveTo (x - 8, y); ctx . lineTo (x - 2, y); ctx . moveTo (x + 2, y); ctx . lineTo (x + 8, y);
+		ctx . moveTo (x, y - 8); ctx . lineTo (x, y - 2); ctx . moveTo (x, y + 2); ctx . lineTo (x, y + 8);
+		ctx . stroke ();
+	}
 };
 
 var canvas = document . getElementById ('seawolf');
@@ -310,6 +318,9 @@ var onMouseDown = function (e) {
 	if (e . buttons === 1) selected = simulationHitTest (e . clientX - canvas . width * 0.5, e . clientY - canvas . height * 0.5, simulated);
 	if (e . buttons === 2) simulated . targetBearing ({x: e . clientX - canvas . width * 0.5, y: e . clientY - canvas . height * 0.5});
 	return false;
+};
+var setWaypoint = function (e) {
+	waypoint = new Waypoint (e . clientX - canvas . width * 0.5, e . clientY - canvas . height * 0.5, simulated . position . depth);
 };
 
 document . body . onkeydown = ctrl;
