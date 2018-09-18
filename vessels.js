@@ -61,7 +61,7 @@ var Mark48 = function (cable, name, country) {
 	this . ai = new torpedoAI (this);
 	this . distance_travelled = 0;
 	this . distance_cable_travelled = 0;
-	this . cable_length = 1; this . cable_to_ship_length = 0.5;
+	this . cable_length = 10; this . cable_to_ship_length = 5;
 	this . initial_trail_delta = 2;
 	this . trail_length = 100;
 };
