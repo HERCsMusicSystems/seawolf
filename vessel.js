@@ -216,9 +216,10 @@ vessel . prototype . getRelativePositionOf = function (vessel) {
 };
 
 vessel . prototype . fire = function () {
-	if (selected === null) return;
+	var target = (selected && selected . vessel) || waypoint;
+	if (target === null) return;
 	var torpedo = new Mark48 (this, 'Fast');
-	launch_torpedo (torpedo, this, selected . vessel);
+	launch_torpedo (torpedo, this, target);
 };
 
 var launch_torpedo = function (torpedo, vessel, target) {

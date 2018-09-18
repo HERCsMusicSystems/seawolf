@@ -91,7 +91,7 @@ var fill_weapons_table = function (vessel) {
 		<select id="command_${ind}">${commands}</select>
 		<input type="button" value="LOAD" onclick="javascript: simulated . tubes [${ind}] . load (document . getElementById ('command_${ind}') . value);"/>
 		<input type="button" value="FLOOD" onclick="javascript: simulated . tubes [${ind}] . flood ();"/>
-		<input type="button" value="FIRE" onclick="javascript: simulated . tubes [${ind}] . fire (selected && selected . vessel, document . getElementById ('command_${ind}') . value);"/>
+		<input type="button" value="FIRE" onclick="javascript: simulated . tubes [${ind}] . fire ((selected && selected . vessel) || waypoint, document . getElementById ('command_${ind}') . value);"/>
 		<input type="button" value="EMPTY" onclick="javascript: simulated . tubes [${ind}] . empty ();"/>
 	</td>
 </tr>
@@ -218,7 +218,8 @@ var drawGrid = function (ctx, width, height, vessel) {
   ctx . stroke ();
 	if (waypoint !== null) {
 		ctx . beginPath ();
-		var x = waypoint . position . x, y = waypoint . position . y;
+		var mile = 128 * scaling;
+		var x = waypoint . position . x * mile, y = waypoint . position . y * mile;
 		ctx . moveTo (x - 8, y); ctx . lineTo (x - 2, y); ctx . moveTo (x + 2, y); ctx . lineTo (x + 8, y);
 		ctx . moveTo (x, y - 8); ctx . lineTo (x, y - 2); ctx . moveTo (x, y + 2); ctx . lineTo (x, y + 8);
 		ctx . stroke ();
@@ -325,7 +326,8 @@ var onMouseDown = function (e) {
 	return false;
 };
 var setWaypoint = function (e) {
-	waypoint = new Waypoint (e . clientX - canvas . width * 0.5, e . clientY - canvas . height * 0.5, simulated . position . depth);
+	var mile = 128 * scaling;
+	waypoint = new Waypoint ((e . clientX - canvas . width * 0.5) / mile, (e . clientY - canvas . height * 0.5) / mile, simulated . position . depth);
 };
 
 document . body . onkeydown = ctrl;
