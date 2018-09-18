@@ -61,6 +61,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<input type="button" value="MATCH DEPTH" onclick="javascript: matchDepth ();"/>
 				<input type="button" value="SURFACE" onclick="javascript: matchDepth (0);"/>
 				<input type="button" value="DEPTH" onclick="javascript: promptDepth ();"/>
+				<input type="button" value="GOTO" onclick="javascript: gotoWaypoint ();"/>
 			</td>
 		</tr>
 	</table>
@@ -147,7 +148,7 @@ var nauticalBearing = function (angle) {angle *= 180 / Math . PI; angle += 90; w
 var displayBearing = function (bearing) {bearing = Math . round (bearing); while (bearing < 0) bearing += 360; while (bearing >= 360) bearing -= 360; return bearing;};
 
 var detonateSelected = function () {
-	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) {waypoint = null; return;}
 	selected . vessel . damage (selected . vessel . strength);
 };
 var matchDepth = function (depth) {
@@ -168,6 +169,10 @@ var acquireSurfaceTarget = function () {
 	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
 	selected . vessel . target = null;
 	selected . vessel . targetDepth (0);
+};
+var gotoWaypoint = function () {
+	if (waypoint === null || selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) {waypoint = null; return;}
+	selected . vessel . target = waypoint;
 };
 
 var thermoclines = [{depth: 120, attenuation: 0.01}, {depth: 240, attenuation: 0.01}, {depth: 600, attenuation: 0.001}, {depth: 1200, attenuation: 0.001}];
