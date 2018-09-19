@@ -368,7 +368,12 @@ sonar . prototype . getNoiseOf = function (source) {
 	var bearing = vector . bearing - (this . vessel . position . bearing - 90) * Math . PI / 180;
 	while (bearing > Math . PI) bearing -= Math . PI = Math . PI; while (bearing < - Math . PI) bearing += Math . PI + Math . PI;
 	noise = this . noiseLevelBearingCorrection (noise, bearing);
-	return noise * (1 + ping);
+	if (ping !== null) {
+		var dx = source . position . x - ping . x, dy = source . position . y - ping . y;
+		var ratio = dx * dx + dy * dy;
+		if (ratio > 0) noise += ping . ping / Math . sqrt (ratio) / 1852;
+	}
+	return noise;
 };
 
 sonar . prototype . noiseLevelBearingCorrection = function (noise, bearing) {bearing = Math . cos (bearing * 0.5); return noise * bearing * bearing;};
@@ -380,7 +385,7 @@ sonar . prototype . drawDetected = function (ctx) {
 	}
 };
 
-sonar . prototype . ping = function () {ping = 10000000;};
+sonar . prototype . ping = function () {ping = {x: this . vessel . position . x, y: this . vessel . position . y, depth: this . vessel . position . depth, ping: 1000000000, attenuation: 0.125};};
 
 var Waypoint = function (x, y, depth) {
 	vessel . call (this, 'JavaScript');

@@ -113,8 +113,7 @@ var waypoint = null;
 var simulation_ratio = 1;
 var trail_length = 24;
 var trail_delta = 15;
-var ping = 0;
-var ping_attenuation = 0.25;
+var ping = null;
 
 var checkGameStatus = function () {console . log ("Checking end condition.");};
 
@@ -256,7 +255,7 @@ var resize = function () {
 	removeVessels ();
 	drawGrid (ctx, window . innerWidth, window . innerHeight, simulated);
 	drawVessels (ctx);
-	ping *= Math . pow (ping_attenuation, delta);
+	if (ping !== null) {ping . ping *= Math . pow (ping . attenuation, delta); if (ping . ping < 10) ping = null;}
 	time = now;
 	var bearing = Math . round (simulated . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
 	simulation_bearing . innerHTML = bearing;
