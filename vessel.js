@@ -408,7 +408,7 @@ sonar . prototype . deployTowedArray = function () {
 };
 sonar . prototype . retrieveTowedArray = function () {if (this . towed_array_amplification <= 1) return; this . towed_array_current_amplification = 1; this . deploying_speed = -0.05;};
 sonar . prototype . cutTowedArray = function () {
-	this . towed_array_amplification = 1; this . towed_array_current_amplification = 1; this . towed_array_deployed = 0;
+	this . towed_array_amplification = 1; this . towed_array_current_amplification = 1; this . towed_array_deployed = 0; this . deploying_speed = 0;
 	this . vessel . speed_index_limit = this . vessel . speeds . length - 1;
 };
 
