@@ -329,7 +329,7 @@ var onMouseDown = function (e) {
 };
 var setWaypoint = function (e) {
 	var mile = 128 * scaling;
-	waypoint = new Waypoint ((e . clientX - canvas . width * 0.5) / mile, (e . clientY - canvas . height * 0.5) / mile, simulated . position . depth);
+	waypoint = new Waypoint ((e . clientX - canvas . width * 0.5) / mile + simulated . position . x, (e . clientY - canvas . height * 0.5) / mile + simulated . position . y, simulated . position . depth);
 };
 
 document . body . onkeydown = ctrl;
