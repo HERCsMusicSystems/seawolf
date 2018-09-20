@@ -1,6 +1,6 @@
 
 var sonarDetect = function (vessel) {
-	this . code = function () {vessel . sonar . detect ();};
+	this . code = function (delta) {vessel . sonar . detect (delta);};
 };
 
 var torpedoAI = function (torpedo) {

@@ -6,6 +6,7 @@ var vessel = function (country) {
 	this . position = {x: 0, y: 0, depth: 0, bearing: 0};
 	this . speed = {x: 0, y: 0};
 	this . speed_index = 0;
+	this . speed_index_limit = 6;
 	this . diving_speed = 0;
 	this . bearing_speed = 0;
 	this . depth_target = 0;
@@ -97,7 +98,7 @@ vessel . prototype . setSpeed = function (index) {
 		case 'flank': index = 6; break;
 		default: break;
 	}
-	if (index < 0) index = 0; if (index >= this . speed . length) index = this . speeds . length - 1;
+	if (index < 0) index = 0; if (index > this . speed_index_limit) index = this . speed_index_limit;
 	this . noise = this . noises [index]; this . speed = {x: this . speeds [index], y: 0}; this . speed_index = index;
 };
 
@@ -337,13 +338,27 @@ var sonar = function (vessel) {
 	this . detection_threshold = 1;
 	this . identification_threshold = 2;
 	this . tracking_threshold = 0.25;
+	this . towed_array_deployed = 0;
+	this . deploying_speed = 0;
+	this . towed_array_amplification = 100;
+	this . towed_array_current_amplification = 1;
 };
 
-sonar . prototype . detect = function () {
+sonar . prototype . detect = function (delta) {
+	if (this . deploying_speed !== 0) {
+		this . towed_array_deployed += this . deploying_speed * delta;
+		if (this . towed_array_deployed >= 1) {
+			this . towed_array_deployed = 1; this . deploying_speed = 0;
+			this . towed_array_current_amplification = this . towed_array_amplification;
+			this . vessel . speed_index_limit = this . vessel . speeds . length - 1;
+		}
+		if (this . towed_array_deployed <= 0) {this . towed_array_deployed = 0; this . deploying_speed = 0; this . towed_array_current_amplification = 1;}
+		console . log (this . towed_array_deployed);
+	}
 	for (var ind in vessels) {
 		var vessel = vessels [ind];
 		if (vessel !== this . vessel) {
-			var noise = this . getNoiseOf (vessel);
+			var noise = this . getNoiseOf (vessel) * this . towed_array_current_amplification;
 			if (noise < this . identification_threshold &&
 				((this . vessel . position . depth <= 60 && vessel . position . depth === 0)
 				|| vessel . cable === this . vessel)) noise = this . identification_threshold;
@@ -386,6 +401,16 @@ sonar . prototype . drawDetected = function (ctx) {
 };
 
 sonar . prototype . ping = function () {ping = {x: this . vessel . position . x, y: this . vessel . position . y, depth: this . vessel . position . depth, ping: 1000000000, attenuation: 0.125};};
+sonar . prototype . deployTowedArray = function () {
+	if (this . towed_array_amplification <= 1) return;
+	this . deploying_speed = 0.05; this . vessel . speed_index_limit = 3;
+	if (this . vessel . speed_index > 3) this . vessel . setSpeed (3);
+};
+sonar . prototype . retrieveTowedArray = function () {if (this . towed_array_amplification <= 1) return; this . towed_array_current_amplification = 1; this . deploying_speed = -0.05;};
+sonar . prototype . cutTowedArray = function () {
+	this . towed_array_amplification = 1; this . towed_array_current_amplification = 1; this . towed_array_deployed = 0;
+	this . vessel . speed_index_limit = this . vessel . speeds . length - 1;
+};
 
 var Waypoint = function (x, y, depth) {
 	vessel . call (this, 'JavaScript');
