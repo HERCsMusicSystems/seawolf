@@ -32,7 +32,11 @@ var Akula = function (name, country) {
 	this . class = 'Akula';
 	this . name = name;
 	this . speeds = [0, 2, 8, 15, 21, 28, 35];
-	this . tubes = build_tubes (6);
+	this . inventory = {
+		Mark48: {constructor: Mark48, count: 24},
+		Mark46: {constructor: Mark48, count: 6}
+	};
+	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming']}, 6);
 	this . sonar = new sonar (this);
 };
 Akula . prototype = Object . create (vessel . prototype);
