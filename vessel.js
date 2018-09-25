@@ -400,7 +400,7 @@ sonar . prototype . drawDetected = function (ctx) {
 	}
 };
 
-sonar . prototype . ping = function () {ping = {x: this . vessel . position . x, y: this . vessel . position . y, depth: this . vessel . position . depth, ping: 1000000000, attenuation: 0.125};};
+sonar . prototype . ping = function () {ping = {x: this . vessel . position . x, y: this . vessel . position . y, depth: this . vessel . position . depth, ping: 1000000000, attenuation: 0.125}; notifyPing (this . vessel);};
 sonar . prototype . deployTowedArray = function () {
 	if (this . towed_array_amplification <= 1) return;
 	this . deploying_speed = 0.05; this . vessel . speed_index_limit = 3;

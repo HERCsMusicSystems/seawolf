@@ -1,5 +1,13 @@
 
 document . getElementById ('seawolf_game') . innerHTML = `
+<audio id="background_music" loop >
+	<source src="audio/akula.wav" type="audio/wav" />
+	<source src="audio/akula.mp3" type="audio/mpeg" />
+</audio>
+<audio id="sonar_ping">
+	<source src="audio/ping/ping_1.wav" type="audio/wav" />
+	<source src="audio/ping/ping_1.mp3" type="audio/mpeg" />
+</audio>
 <div><canvas id="seawolf" onmousedown="javascript: return onMouseDown (event);" ondblclick="javascript: setWaypoint (event);" style="cursor: default;"/></div>
 
 <div id="info" style="position: absolute; left: 8px; bottom: 8px; font-family: arial;">
@@ -28,6 +36,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<button onclick="javascript: simulation_ratio = 2;">&#xd7;2</button>
 				<button onclick="javascript: simulation_ratio = 4;">&#xd7;4</button>
 				<button onclick="javascript: simulation_ratio = 8;">&#xd7;8</button>
+				<button onclick="javascript: if (music . paused) music . play (); else music . pause ();">MUSIC</button>
 			</td>
 		</tr>
 		<tr>
@@ -45,7 +54,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 		<tr>
 			<td>SONAR:</td>
 			<td>
-				<button onclick="javascript: simulated . sonar . ping (); ping_audio . play ();">PING</button>
+				<button onclick="javascript: simulated . sonar . ping ();">PING</button>
 				<button onclick="javascript: simulated . sonar . deployTowedArray ();">DEPLOY TOWED ARRAY</button>
 				<button onclick="javascript: simulated . sonar . retrieveTowedArray ();">RETRIVE TOWED ARRAY</button>
 				<button onclick="javascript: simulated . sonar . cutTowedArray ();">CUT TOWED ARRAY</button>
@@ -248,6 +257,8 @@ var thermocline_info = document . getElementById ('thermoclines');
 var info = document . getElementById ('info');
 var control_panel = document . getElementById ('ctrl');
 var weapons = document . getElementById ('weapon_table');
+var music = document . getElementById ('background_music');
+var sonar_ping = document . getElementById ('sonar_ping');
 
 var time = Date . now ();
 
