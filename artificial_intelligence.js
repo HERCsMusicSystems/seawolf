@@ -22,8 +22,8 @@ var torpedoAI = function (torpedo) {
 		if (vector . distance < 0.003 && Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 10) {
 			torpedo . damage (1); torpedo . target . damage (1 + Math . random ()); return;
 		}
-		torpedo . targetBearing (nauticalBearing (vector . bearing, 4));
-		torpedo . setSpeed (Math . abs (torpedo . bearing_target - torpedo . position . bearing) > 10 ? 'slow' : torpedo . name === 'Fast' ? 'flank' : 'full');
+		torpedo . targetBearing (nauticalBearing (vector . bearing, 2));
+		torpedo . setSpeed (Math . abs (torpedo . bearing_target - torpedo . position . bearing) > 10 ? 'half' : torpedo . name === 'Fast' ? 'flank' : 'full');
 		torpedo . targetDepth (torpedo . target . position . depth);
 	};
 };

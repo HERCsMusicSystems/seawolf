@@ -56,6 +56,7 @@ var Mark48 = function (cable, name, country) {
 	this . class = 'Mark48';
 	this . name = name;
 	this . speeds = [0, 2, 10, 20, 30, 40, 55];
+	this . bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
 	if (name === 'Fast') this . range = 20;
 	if (name === 'Long Range') this . range = 27;
 	this . test_depth = 1800;

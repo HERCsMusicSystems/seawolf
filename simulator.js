@@ -1,6 +1,6 @@
 
 document . getElementById ('seawolf_game') . innerHTML = `
-<div><canvas id="seawolf" onmousedown="javascript: return onMouseDown (event);" ondblclick="javascript: setWaypoint (event);"/></div>
+<div><canvas id="seawolf" onmousedown="javascript: return onMouseDown (event);" ondblclick="javascript: setWaypoint (event);" style="cursor: default;"/></div>
 
 <div id="info" style="position: absolute; left: 8px; bottom: 8px; font-family: arial;">
 	<table style="background: #0000ffb0; color: yellow;">
@@ -17,51 +17,52 @@ document . getElementById ('seawolf_game') . innerHTML = `
 		<tr>
 			<td>SPEED:</td>
 			<td>
-				<input type="button" value="STOP" onclick="javascript: simulated . setSpeed ('stop');"/>
-				<input type="button" value="SLOW" onclick="javascript: simulated . setSpeed ('slow');"/>
-				<input type="button" value="1/4" onclick="javascript: simulated . setSpeed ('one quarter');"/>
-				<input type="button" value="1/2" onclick="javascript: simulated . setSpeed ('half');"/>
-				<input type="button" value="3/4" onclick="javascript: simulated . setSpeed ('three quarters');"/>
-				<input type="button" value="FULL" onclick="javascript: simulated . setSpeed ('full');"/>
-				<input type="button" value="FLANK" onclick="javascript: simulated . setSpeed ('flank');"/>
-				<input type="button" value="&#xd7;1" onclick="javascript: simulation_ratio = 1;"/>
-				<input type="button" value="&#xd7;2" onclick="javascript: simulation_ratio = 2;"/>
-				<input type="button" value="&#xd7;4" onclick="javascript: simulation_ratio = 4;"/>
-				<input type="button" value="&#xd7;8" onclick="javascript: simulation_ratio = 8;"/>
+				<button onclick="javascript: simulated . setSpeed ('stop');">STOP</button>
+				<button onclick="javascript: simulated . setSpeed ('slow');">SLOW</button>
+				<button onclick="javascript: simulated . setSpeed ('one quarter');">1/4</button>
+				<button onclick="javascript: simulated . setSpeed ('half');">1/2</button>
+				<button onclick="javascript: simulated . setSpeed ('three quarters');">3/4</button>
+				<button onclick="javascript: simulated . setSpeed ('full');">Full</button>
+				<button onclick="javascript: simulated . setSpeed ('flank');">FLANK</button>
+				<button onclick="javascript: simulation_ratio = 1;">&#xd7;1</button>
+				<button onclick="javascript: simulation_ratio = 2;">&#xd7;2</button>
+				<button onclick="javascript: simulation_ratio = 4;">&#xd7;4</button>
+				<button onclick="javascript: simulation_ratio = 8;">&#xd7;8</button>
 			</td>
 		</tr>
 		<tr>
 			<td>DEPTH:</td>
 			<td>
-				<input type="button" value="SURFACE" onclick="javascript: simulated . targetDepth ('surface');"/>
-				<input type="button" value="PERISCOPE" onclick="javascript: simulated . targetDepth ('periscope');"/>
-				<input type="button" value="UP THERMAL" onclick="javascript: simulated . targetDepth ('up thermal');"/>
-				<input type="button" value="DOWN THERMAL" onclick="javascript: simulated . targetDepth ('down thermal');"/>
-				<input type="button" value="TEST" onclick="javascript: simulated . targetDepth ('test');"/>
-				<input type="button" value="COLLAPSE" onclick="javascript: simulated . targetDepth ('crush');"/>
-				<input type="button" value="SPECIFY" onclick="javascript: simulated . targetDepth (prompt ('Enter depth'));"/>
+				<button onclick="javascript: simulated . targetDepth ('surface');">SURFACE</button>
+				<button onclick="javascript: simulated . targetDepth ('periscope');">PERISCOPE</button>
+				<button onclick="javascript: simulated . targetDepth ('up thermal');">UP THERMAL</button>
+				<button onclick="javascript: simulated . targetDepth ('down thermal');">DOWN THERMAL</button>
+				<button onclick="javascript: simulated . targetDepth ('test');">TEST</button>
+				<button onclick="javascript: simulated . targetDepth ('crush');">COLLAPSE</button>
+				<button onclick="javascript: simulated . targetDepth (prompt ('Enter depth'));">SPECIFY</button>
 			</td>
 		</tr>
 		<tr>
 			<td>SONAR:</td>
 			<td>
-				<input type="button" value="PING" onclick="javascript: simulated . sonar . ping ();"/>
-				<input type="button" value="DEPLOY TOWED ARRAY" onclick="javascript: simulated . sonar . deployTowedArray ();"/>
-				<input type="button" value="RETRIVE TOWED ARRAY" onclick="javascript: simulated . sonar . retrieveTowedArray ();"/>
-				<input type="button" value="CUT TOWED ARRAY" onclick="javascript: simulated . sonar . cutTowedArray ();"/>
-				<input type="button" value="FIRE OVERRIDE" onclick="javascript: simulated . fire ();"/>
+				<button onclick="javascript: simulated . sonar . ping (); ping_audio . play ();">PING</button>
+				<button onclick="javascript: simulated . sonar . deployTowedArray ();">DEPLOY TOWED ARRAY</button>
+				<button onclick="javascript: simulated . sonar . retrieveTowedArray ();">RETRIVE TOWED ARRAY</button>
+				<button onclick="javascript: simulated . sonar . cutTowedArray ();">CUT TOWED ARRAY</button>
+				<button onclick="javascript: simulated . fire ();">FIRE OVERRIDE</button>
 			</td>
 		</tr>
 		<tr>
 			<td>WEAPON:</td>
 			<td>
-				<input type="button" value="DETONATE" onclick="javascript: detonateSelected ();"/>
-				<input type="button" value="SEARCH SUB" onclick="javascript: acquireSubmarineTarget ();"/>
-				<input type="button" value="SEARCH SURFACE" onclick="javascript: acquireSurfaceTarget ();"/>
-				<input type="button" value="MATCH DEPTH" onclick="javascript: matchDepth ();"/>
-				<input type="button" value="SURFACE" onclick="javascript: matchDepth (0);"/>
-				<input type="button" value="DEPTH" onclick="javascript: promptDepth ();"/>
-				<input type="button" value="GOTO" onclick="javascript: gotoWaypoint ();"/>
+				<button onclick="javascript: detonateSelected ();">DETONATE</button>
+				<button onclick="javascript: acquireSubmarineTarget ();">SEARCH SUB</button>
+				<button onclick="javascript: acquireSurfaceTarget ();">SEARCH SURFACE</button>
+				<button onclick="javascript: matchDepth ();">MATCH DEPTH</button>
+				<button onclick="javascript: matchDepth (0);">SURFACE</button>
+				<button onclick="javascript: promptDepth ();">DEPTH</button>
+				<button onclick="javascript: gotoWaypoint ();">GOTO</button>
+				<button onclick="javascript: targetSelect ();">TARGET</button>
 			</td>
 		</tr>
 	</table>
@@ -89,10 +90,10 @@ var fill_weapons_table = function (vessel) {
 	<td bgcolor=black width="100" id="tube_${ind}"></td>
 	<td>
 		<select id="command_${ind}">${commands}</select>
-		<input type="button" value="LOAD" onclick="javascript: simulated . tubes [${ind}] . load (document . getElementById ('command_${ind}') . value);"/>
-		<input type="button" value="FLOOD" onclick="javascript: simulated . tubes [${ind}] . flood ();"/>
-		<input type="button" value="FIRE" onclick="javascript: simulated . tubes [${ind}] . fire ((selected && selected . vessel) || waypoint, document . getElementById ('command_${ind}') . value);"/>
-		<input type="button" value="EMPTY" onclick="javascript: simulated . tubes [${ind}] . empty ();"/>
+		<button onclick="javascript: simulated . tubes [${ind}] . load (document . getElementById ('command_${ind}') . value);">LOAD</button>
+		<button onclick="javascript: simulated . tubes [${ind}] . flood ();">FLOOD</button>
+		<button onclick="javascript: simulated . tubes [${ind}] . fire ((selected && selected . vessel) || waypoint, document . getElementById ('command_${ind}') . value);">FIRE</button>
+		<button onclick="javascript: simulated . tubes [${ind}] . empty ();">EMPTY</button>
 	</td>
 </tr>
 		`;
@@ -174,6 +175,11 @@ var acquireSurfaceTarget = function () {
 var gotoWaypoint = function () {
 	if (waypoint === null || selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) {waypoint = null; return;}
 	selected . vessel . target = waypoint;
+};
+var default_select = true;
+var targetSelect = function () {
+	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	default_select = false; canvas . style . cursor = 'crosshair';
 };
 
 var thermoclines = [{depth: 120, attenuation: 0.01}, {depth: 240, attenuation: 0.01}, {depth: 600, attenuation: 0.001}, {depth: 1200, attenuation: 0.001}];
@@ -323,7 +329,14 @@ var ctrl = function (e) {
 var onWheel = function (e) {if (e . deltaY > 0) {if (scaling <= 0.32768) return; scaling /= 1.25;} else scaling *= 1.25; return false;};
 var onMouseDown = function (e) {
 	e . preventDefault ();
-	if (e . buttons === 1) selected = simulationHitTest (e . clientX - canvas . width * 0.5, e . clientY - canvas . height * 0.5, simulated);
+	if (e . buttons === 1) {
+		var target = simulationHitTest (e . clientX - canvas . width * 0.5, e . clientY - canvas . height * 0.5, simulated);
+		if (default_select || selected === null || selected . vessel . name !== 'torpedo' && selected . vessel . cable !== simulated) selected = target;
+		else {
+			if (target === null) return;
+			default_select = true; selected . vessel . target = target . vessel; canvas . style . cursor = 'default';
+		}
+	}
 	if (e . buttons === 2) simulated . targetBearing ({x: e . clientX - canvas . width * 0.5, y: e . clientY - canvas . height * 0.5});
 	return false;
 };

@@ -28,13 +28,19 @@
 <head>
 	<title>SEAWOLF => Aku&#x142;a is out there!</title>
 	<style>
-	td {padding: 6px;}
+	td {padding: 2px;}
+	button {padding: 0px 0px;}
 	</style>
 </head>
 
 <body bgcolor="#000044" style = "margin: 0;">
+<audio loop >
+	<source src="audio/akula.wav" type="audio/wav" />
+	<source src="audio/akula.mp3" type="audio/mpeg" />
+</audio>
 
 <div id="seawolf_game"/>
+
 
 </body>
 
@@ -46,6 +52,9 @@
 
 
 <script>
+
+var ping_audio = new Audio ('audio/ping/ping_1.wav');
+//ping . play ();
 
 var texas = new Virginia ('Texas');
 texas . positionVessel (0, 0, 0, 800);
@@ -60,6 +69,8 @@ addVessel (kuguar);
 simulatedVessel (texas);
 
 checkGameStatus = function () {};
+
+kuguar . tubes [0] . fire (texas, 'Long Range');
 
 </script>
 
