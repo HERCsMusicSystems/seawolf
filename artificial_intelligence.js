@@ -4,6 +4,7 @@ var sonarDetect = function (vessel) {
 };
 
 var torpedoAI = function (torpedo) {
+	this . armed = false;
 	this . code = function (delta) {
 		var sdelta = delta / 3600;
 		torpedo . distance_travelled += torpedo . speed . x * sdelta;
@@ -22,7 +23,12 @@ var torpedoAI = function (torpedo) {
 		if (vector . distance < 0.003 && Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 10) {
 			torpedo . damage (1); torpedo . target . damage (1 + Math . random ()); return;
 		}
-		torpedo . targetBearing (nauticalBearing (vector . bearing, 2));
+		if (! this . armed) {
+			if (torpedo . bearing_target !== null && Math . abs (torpedo . position . bearing - torpedo . bearing_target) < 20) {console . log ('armed'); this . armed = true;}
+			else console . log (torpedo . position . bearing - torpedo . bearing_target, torpedo . position . bearing, torpedo . bearing_target);
+		}
+		torpedo . targetBearing (nauticalBearing (vector . bearing), 2);
+		if (this . armed && Math . abs (torpedo . position . bearing - torpedo . bearing_target) > 20) {torpedo . target = null; console . log ('target lost');}
 		torpedo . setSpeed (Math . abs (torpedo . bearing_target - torpedo . position . bearing) > 10 ? 'half' : torpedo . name === 'Fast' ? 'flank' : 'full');
 		torpedo . targetDepth (torpedo . target . position . depth);
 	};
