@@ -220,16 +220,18 @@ vessel . prototype . fire = function () {
 	var target = (selected && selected . vessel) || waypoint;
 	if (target === null) return;
 	var torpedo = new Mark48 (this, 'Fast');
-	launch_torpedo (torpedo, this, target);
+	torpedo  . launch (this, target);
 };
 
-var launch_torpedo = function (torpedo, vessel, target) {
-	if (target !== undefined) torpedo . target = target;
-	torpedo . position . x = vessel . position . x;
-	torpedo . position . y = vessel . position . y;
-	torpedo . position . depth = vessel . position . depth;
-	torpedo . position . bearing = vessel . position . bearing;
-	addVessel (torpedo);
+vessel . prototype . launch = function (vessel, target) {
+	if (target !== undefined) this . target = target;
+	if (this . target === null) return false;
+	this . position . x = vessel . position . x;
+	this . position . y = vessel . position . y;
+	this . position . depth = vessel . position . depth;
+	this . position . bearing = vessel . position . bearing;
+	addVessel (this);
+	return true;
 };
 
 vessel . prototype . damage_speed = function () {
@@ -270,9 +272,10 @@ tube . prototype . move = function (delta) {
 				}
 			} else {
 				this . flooded = 1; this . command = null;
-				if (this . torpedo !== null) launch_torpedo (this . torpedo, this . vessel);
-				this . torpedo = null; this . flooded = 0;
-				if (this . display_element !== null) {this . display_element . bgColor = 'black'; this . display_element . innerHTML = '';}
+				if (this . torpedo . launch (this . vessel)) {
+					this . torpedo = null; this . flooded = 0;
+					if (this . display_element !== null) {this . display_element . bgColor = 'black'; this . display_element . innerHTML = '';}
+				}
 			}
 			break;
 		case 'flood':
@@ -309,10 +312,9 @@ tube . prototype . load = function (selector) {
 };
 
 tube . prototype . fire = function (target, selector) {
-	if (target === null) return;
 	if (this . torpedo !== null) {
 		if (this . flooded < 1) return;
-		if (this . torpedo !== null) launch_torpedo (this . torpedo, this . vessel, target);
+		if (! this . torpedo . launch (this . vessel, target)) return;
 		this . torpedo = null; this . flooded = 0;
 		if (this . display_element !== null) {this . display_element . bgColor = 'black'; this . display_element . innerHTML = '';}
 		return;
