@@ -5,6 +5,7 @@ var sonarDetect = function (vessel) {
 
 var torpedoAI = function (torpedo) {
 	this . armed = false;
+	this . ping = 0;
 	this . code = function (delta) {
 		var sdelta = delta / 3600;
 		torpedo . distance_travelled += torpedo . speed . x * sdelta;
@@ -17,19 +18,31 @@ var torpedoAI = function (torpedo) {
 					torpedo . trail_length = trail_length;
 			}
 		}
-		if (torpedo . target === null || torpedo . target . destroyed) return;
+		if (torpedo . target === null) {
+			if (this . ping <= 0) {
+				torpedo . sonar . ping ();
+				this . ping = 44;
+				torpedo . sonar . detect (delta);
+				for (var ind in torpedo . sonar . detected) {console . log (torpedo . sonar . detected [ind]);}
+			}
+			this . ping -= delta;
+			return;
+		}
+		if (torpedo . target . destroyed) torpedo . target = null;
 		var vector = torpedo . getRelativePositionOf (torpedo . target);
 		if (vector . distance < 0.01 && torpedo . target . type === 'waypoint') {torpedo . target = null; return;}
 		if (vector . distance < 0.003 && Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 10) {
 			torpedo . damage (1); torpedo . target . damage (1 + Math . random ()); return;
 		}
-		if (! this . armed) {
-			if (torpedo . bearing_target !== null && Math . abs (torpedo . position . bearing - torpedo . bearing_target) < 20) {console . log ('armed'); this . armed = true;}
-			else console . log (torpedo . position . bearing - torpedo . bearing_target, torpedo . position . bearing, torpedo . bearing_target);
-		}
-		torpedo . targetBearing (nauticalBearing (vector . bearing), 2);
-		if (this . armed && Math . abs (torpedo . position . bearing - torpedo . bearing_target) > 20) {torpedo . target = null; console . log ('target lost');}
-		torpedo . setSpeed (Math . abs (torpedo . bearing_target - torpedo . position . bearing) > 10 ? 'half' : torpedo . name === 'Fast' ? 'flank' : 'full');
 		torpedo . targetDepth (torpedo . target . position . depth);
+		torpedo . targetBearing (nauticalBearing (vector . bearing), 2);
+		var frontAngle = Math . abs (torpedo . bearing_target - torpedo . position . bearing);
+		if (frontAngle < 10) {
+			torpedo . setSpeed (torpedo . name === 'Fast' ? 'flank' : 'full');
+			if (! this . armed) {this . armed = true; console . log ('armed');}
+		} else {
+			torpedo . setSpeed ('half');
+			if (this . armed) {torpedo . target = null; console . log ('target lost');}
+		}
 	};
 };
