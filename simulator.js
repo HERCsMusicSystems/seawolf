@@ -263,18 +263,18 @@ var sonar_ping = document . getElementById ('sonar_ping');
 
 var time = Date . now ();
 
-var resize = function () {
+var resize = function (delta) {
 	var now = Date . now ();
+	if (delta === undefined) delta = (now - time) * simulation_ratio / 1000;
+	time = now;
 	canvas . width = window . innerWidth;
 	canvas . height = window . innerHeight;
-	var delta = (now - time) * simulation_ratio / 1000;
 	aiVessels (delta);
 	simulate (delta);
 	removeVessels ();
 	drawGrid (ctx, window . innerWidth, window . innerHeight, simulated);
 	drawVessels (ctx);
 	if (ping !== null) {ping . ping *= Math . pow (ping . attenuation, delta); if (ping . ping < 10) ping = null;}
-	time = now;
 	var bearing = Math . round (simulated . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
 	simulation_bearing . innerHTML = bearing;
 	simulation_speed . innerHTML = simulated . speed . x;
@@ -304,7 +304,7 @@ var resize = function () {
 	}
 };
 
-setInterval (resize, 50);
+var simulation_interval = setInterval (resize, 50);
 
 var ctrl = function (e) {
 	var key = e . key . toLowerCase ();
