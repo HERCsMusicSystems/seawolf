@@ -28,7 +28,7 @@ var torpedoAI = function (torpedo) {
 			this . ping -= delta;
 			return;
 		}
-		if (torpedo . target . destroyed) torpedo . target = null;
+		if (torpedo . target . destroyed) {torpedo . target = null; return;}
 		var vector = torpedo . getRelativePositionOf (torpedo . target);
 		if (vector . distance < 0.01 && torpedo . target . type === 'waypoint') {torpedo . target = null; return;}
 		if (vector . distance < 0.003 && Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 10) {
