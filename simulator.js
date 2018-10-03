@@ -48,7 +48,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<button onclick="javascript: simulated . targetDepth ('down thermal');">DOWN THERMAL</button>
 				<button onclick="javascript: simulated . targetDepth ('test');">TEST</button>
 				<button onclick="javascript: simulated . targetDepth ('crush');">COLLAPSE</button>
-				<button onclick="javascript: simulated . targetDepth (prompt ('Enter depth'));">SPECIFY</button>
+				<button onclick="javascript: simulated . targetDepth (prompt ('Enter depth')); time = Date . now ();">SPECIFY</button>
 			</td>
 		</tr>
 		<tr>
@@ -170,6 +170,7 @@ var matchDepth = function (depth) {
 var promptDepth = function () {
 	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
 	var depth = prompt ('Enter depth');
+	time = Date . now ();
 	if (depth !== null) selected . vessel . targetDepth (depth);
 };
 var acquireSubmarineTarget = function () {
