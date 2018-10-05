@@ -366,8 +366,10 @@ sonar . prototype . detect = function (delta) {
 				|| vessel . cable === this . vessel)) noise = this . identification_threshold;
 			if (this . detected . hasOwnProperty (vessel . id)) {
 				if (noise < this . tracking_threshold) {if (selected && selected . vessel === vessel) selected = null; delete this . detected [vessel . id];}
-				else if (this . detected [vessel . id] . status === 'unknown' && noise >= this . identification_threshold) this . detected [vessel . id] . status = this . vessel . checkStatusOf (vessel);
-				this . detected [vessel . id] . noise = noise;
+				else {
+					if (this . detected [vessel . id] . status === 'unknown' && noise >= this . identification_threshold) this . detected [vessel . id] . status = this . vessel . checkStatusOf (vessel);
+					this . detected [vessel . id] . noise = noise;
+				}
 			} else {
 				if (noise >= this . detection_threshold)
 					this . detected [vessel . id] = {status: noise >= this . identification_threshold ? this . vessel . checkStatusOf (vessel) : 'unknown', vessel: vessel, noise: noise};
@@ -380,17 +382,18 @@ sonar . prototype . getNoiseOf = function (source) {
 	var vector = this . vessel . getRelativePositionOf (source);
 	var noise = source . noiseLevel ();
 	if (vector . distance > 0) noise /= vector . distance * 1852;
+	if (ping !== null) {
+		var dx = source . position . x - ping . x, dy = source . position . y - ping . y;
+		var ratio = Math . sqrt (dx * dx + dy * dy);
+		if (ratio === 0) ratio = 1;
+		if (ratio > 0) noise += ping . ping / ratio / 1852;
+	}
 	for (var ind in thermoclines) {
 		if ((thermoclines [ind] . depth - source . position . depth) * (thermoclines [ind] . depth - this . vessel . position . depth) < 0) noise *= thermoclines [ind] . attenuation;
 	}
 	var bearing = vector . bearing - (this . vessel . position . bearing - 90) * Math . PI / 180;
-	while (bearing > Math . PI) bearing -= Math . PI = Math . PI; while (bearing < - Math . PI) bearing += Math . PI + Math . PI;
+	while (bearing > Math . PI) bearing -= Math . PI + Math . PI; while (bearing < - Math . PI) bearing += Math . PI + Math . PI;
 	noise = this . noiseLevelBearingCorrection (noise, bearing);
-	if (ping !== null) {
-		var dx = source . position . x - ping . x, dy = source . position . y - ping . y;
-		var ratio = dx * dx + dy * dy;
-		if (ratio > 0) noise += ping . ping / Math . sqrt (ratio) / 1852;
-	}
 	return noise;
 };
 

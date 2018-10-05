@@ -63,6 +63,14 @@ var Mark48 = function (cable, name, country) {
 	this . collapse_depth = 2700;
 	this . strength = 1;
 	this . sonar = new sonar (this);
+	this . sonar . noiseLevelBearingCorrection = function (noise, bearing) {
+		var org = bearing;
+		bearing *= 10;
+		if (bearing > Math . PI || bearing < - Math . PI) bearing = 0;
+		else bearing = Math . cos (bearing * 0.5);
+		console . log (noise, bearing, noise * bearing * bearing, org);
+		return noise * bearing * bearing;
+	};
 	this . ai = new torpedoAI (this);
 	this . distance_travelled = 0;
 	this . distance_cable_travelled = 0;
