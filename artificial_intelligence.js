@@ -19,14 +19,20 @@ var torpedoAI = function (torpedo) {
 			}
 		}
 		if (torpedo . target === null) {
-			if (torpedo . bearing_speed === 0) {torpedo . bearing (Math . random () < 0.5 ? -1 : 1); console . log ('set bearing....');}
+			if (torpedo . bearing_speed === 0) {torpedo . bearing (Math . random () < 0.5 ? -2 : 2); console . log ('set bearing....');}
 			if (this . ping <= 0) {
 				torpedo . sonar . ping ();
-				this . ping = 44;
-				torpedo . sonar . detect (delta);
-				for (var ind in torpedo . sonar . detected) {console . log (torpedo . sonar . detected [ind]);}
+				this . ping = 4;
 			}
 			this . ping -= delta;
+			torpedo . sonar . detect (delta);
+			var strongest = null;
+			for (var ind in torpedo . sonar . detected) {
+				if (strongest === null || torpedo . sonar . detected [ind] . noise > strongest . noise) strongest = torpedo . sonar . detected [ind];
+				//console . log (torpedo . sonar . detected [ind]);
+			}
+			//console . log (strongest);
+			if (strongest !== null) torpedo . target = strongest . vessel;
 			return;
 		}
 		if (torpedo . target . destroyed) {torpedo . target = null; return;}
