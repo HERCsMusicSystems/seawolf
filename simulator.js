@@ -275,7 +275,7 @@ var resize = function (delta) {
 	drawGrid (ctx, window . innerWidth, window . innerHeight, simulated);
 	drawVessels (ctx);
 	if (ping !== null) {ping . ping *= Math . pow (ping . attenuation, delta); if (ping . ping < 10) ping = null;}
-	var bearing = Math . round (simulated . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
+	var bearing = displayBearing (simulated . position . bearing);
 	simulation_bearing . innerHTML = bearing;
 	simulation_speed . innerHTML = simulated . speed . x;
 	simulation_depth . innerHTML = simulated . position . depth . toFixed (0);
@@ -283,15 +283,14 @@ var resize = function (delta) {
 	thermocline_info . innerHTML = thermocline_string;
 	if (selected !== null) {
 		var sv = selected . vessel;
-		bearing = Math . round (sv . position . bearing); if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
+		bearing = displayBearing (sv . position . bearing);
 		selected_bearing . innerHTML = bearing;
 		selected_speed . innerHTML = sv . speed . x;
 		selected_depth . innerHTML = sv . position . depth;
 		selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : sv . name + ' (' + sv . class + ' class)';
 		var vector = simulated . getRelativePositionOf (sv);
 		selected_distance . innerHTML = vector . distance . toFixed (2);
-		bearing = Math . round (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
-		if (bearing < 0) bearing += 360; if (bearing >= 360) bearing -= 360;
+		bearing = displayBearing (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
 		//selected_heading . innerHTML = bearing;
 		selected_heading . innerHTML = '[' + bearing + '/' + simulated . sonar . getNoiseOf (sv) . toFixed (4) + ']';
 	} else {
