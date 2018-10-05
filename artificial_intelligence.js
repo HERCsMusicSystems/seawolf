@@ -19,6 +19,7 @@ var torpedoAI = function (torpedo) {
 			}
 		}
 		if (torpedo . target === null) {
+			if (torpedo . bearing_speed === 0) {torpedo . bearing (Math . random () < 0.5 ? -1 : 1); console . log ('set bearing....');}
 			if (this . ping <= 0) {
 				torpedo . sonar . ping ();
 				this . ping = 44;
