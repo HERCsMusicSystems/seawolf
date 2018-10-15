@@ -184,7 +184,7 @@ var acquireSurfaceTarget = function () {
 };
 var gotoWaypoint = function () {
 	if (waypoint === null || selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) {waypoint = null; return;}
-	selected . vessel . target = waypoint;
+	selected . vessel . setTarget (waypoint);
 };
 var default_select = true;
 var targetSelect = function () {
@@ -345,7 +345,7 @@ var onMouseDown = function (e) {
 		if (default_select || selected === null || selected . vessel . name !== 'torpedo' && selected . vessel . cable !== simulated) selected = target;
 		else {
 			if (target === null) return;
-			default_select = true; selected . vessel . target = target . vessel; canvas . style . cursor = 'default';
+			default_select = true; selected . vessel . setTarget (target . vessel); canvas . style . cursor = 'default';
 		}
 	}
 	if (e . buttons === 2) simulated . targetBearing ({x: e . clientX - canvas . width * 0.5, y: e . clientY - canvas . height * 0.5});

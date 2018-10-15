@@ -245,6 +245,10 @@ vessel . prototype . damage = function (level) {
 	if (level > 1.9) this . damage (level - 1.9);
 };
 
+vessel . prototype . detectStrongest = function (delta) {this . target = this . sonar . detectStrongest (delta);};
+
+vessel . prototype . setTarget = function (target) {this . target = target;};
+
 var tube = function (vessel, settings, speed) {
 	if (speed === undefined) speed = 0.05;
 	this . flooded = 0;
@@ -430,6 +434,6 @@ var Waypoint = function (x, y, depth) {
 	this . position . x = x;
 	this . position . y = y;
 	this . position . depth = depth;
-	this . type = 'waypoint';
+	this . type = null;
 };
 Waypoint . porotype = Object . create (vessel . prototype);
