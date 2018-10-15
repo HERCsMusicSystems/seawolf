@@ -378,6 +378,13 @@ sonar . prototype . detect = function (delta) {
 	}
 };
 
+sonar . prototype . detectStrongest = function (delta) {
+	this . detect (delta);
+	var strongest = null;
+	for (var ind in this . detected) {if (strongest === null || this . detected [ind] . noise > strongest . noise) strongest = this . detected [ind];}
+	return strongest && strongest . vessel;
+};
+
 sonar . prototype . getNoiseOf = function (source) {
 	var vector = this . vessel . getRelativePositionOf (source);
 	var noise = source . noiseLevel ();

@@ -20,12 +20,7 @@ var torpedoAI = function (torpedo) {
 			if (torpedo . bearing_speed === 0) {torpedo . bearing (Math . random () < 0.5 ? -2 : 2); console . log ('set bearing....');}
 			if (this . ping <= 0) {torpedo . sonar . ping (); this . ping = 4;}
 			this . ping -= delta;
-			torpedo . sonar . detect (delta);
-			var strongest = null;
-			for (var ind in torpedo . sonar . detected) {
-				if (strongest === null || torpedo . sonar . detected [ind] . noise > strongest . noise) strongest = torpedo . sonar . detected [ind];
-			}
-			if (strongest !== null) torpedo . target = strongest . vessel;
+			torpedo . target = torpedo . sonar . detectStrongest (delta);
 			return;
 		}
 		if (torpedo . target . destroyed) {torpedo . target = null; return;}

@@ -68,7 +68,6 @@ var Mark48 = function (cable, name, country) {
 		bearing *= 10;
 		if (bearing > Math . PI || bearing < - Math . PI) bearing = 0;
 		else bearing = Math . cos (bearing * 0.5);
-		console . log (noise, bearing, noise * bearing * bearing, org);
 		return noise * bearing * bearing;
 	};
 	this . ai = new torpedoAI (this);
