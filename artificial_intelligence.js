@@ -10,7 +10,7 @@ var torpedoAI = function (torpedo) {
 	this . code = function (delta) {
 		var sdelta = delta / 3600;
 		torpedo . distance_travelled += torpedo . speed . x * sdelta;
-		if (torpedo . distance_travelled >= this . range) {removeVessel (torpedo); return;}
+		if (torpedo . distance_travelled >= this . range) {notifyRunOutOfFuel (torpedo); removeVessel (torpedo); return;}
 		if (torpedo . cable !== null) {
 			torpedo . distance_cable_travelled += torpedo . cable . speed . x * sdelta;
 			if (torpedo . distance_travelled > torpedo . cable_length || torpedo . distance_cable_travelled > torpedo . cable_to_ship_length) {
@@ -28,9 +28,7 @@ var torpedoAI = function (torpedo) {
 		var vector = torpedo . getRelativePositionOf (torpedo . target);
 		if (vector . distance < 0.01) {
 			if (torpedo . target . type === null) {torpedo . target = null; return;}
-			if (Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 40) {
-				removeVessel (torpedo); explode (torpedo, torpedo . target, 0.01, 40, 1 + Math . random ()); return;
-			}
+			if (Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 40) {torpedo . detonate (); return;}
 		}
 		torpedo . targetDepth (torpedo . target . position . depth);
 		torpedo . targetBearing (nauticalBearing (vector . bearing), 2);

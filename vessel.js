@@ -32,6 +32,7 @@ var vessel = function (country) {
 	this . collapse_depth = 2400;
 	this . target = null;
 	this . cable = null;
+	this . attacker = this;
 };
 
 vessel . prototype . noiseLevel = function () {return this . noise;};
@@ -248,6 +249,8 @@ vessel . prototype . damage = function (level) {
 vessel . prototype . detectStrongest = function (delta) {this . target = this . sonar . detectStrongest (delta);};
 
 vessel . prototype . setTarget = function (target) {this . target = target;};
+
+vessel . prototype . detonate = function () {removeVessel (this);};
 
 var tube = function (vessel, settings, speed) {
 	if (speed === undefined) speed = 0.05;

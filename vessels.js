@@ -52,6 +52,7 @@ var Mark48 = function (cable, name, country) {
 	if (country === undefined) country = cable . country;
 	vessel . call (this, country);
 	this . cable = cable;
+	this . attacker = cable;
 	this . type = 'torpedo';
 	this . class = 'Mark48';
 	this . name = name;
@@ -63,6 +64,8 @@ var Mark48 = function (cable, name, country) {
 	this . collapse_depth = 2700;
 	this . strength = 1;
 	this . sonar = new sonar (this);
+	this . sonar . detection_threshold = 0;
+	this . sonar . tracking_threshold = 0;
 	this . sonar . noiseLevelBearingCorrection = function (noise, bearing) {
 		var org = bearing;
 		bearing *= 10;
@@ -70,6 +73,7 @@ var Mark48 = function (cable, name, country) {
 		else bearing = Math . cos (bearing * 0.5);
 		return noise * bearing * bearing;
 	};
+	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());}
 	this . ai = new torpedoAI (this);
 	this . distance_travelled = 0;
 	this . distance_cable_travelled = 0;

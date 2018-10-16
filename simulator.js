@@ -154,11 +154,17 @@ var simulationHitTest = function (x, y, reference, minimum_distance) {
   if (distance < minimum_distance) return selected;
   return null;
 };
-var explode = function (torpedo, target, range, depth, damage) {
+var explode = function (torpedo, range, depth, damage) {
+	notifyExplosion (torpedo);
+	removeVessel (torpedo);
 	for (var ind in vessels) {
-		if (! vessels [ind] . destroyed) {
-			var vector = torpedo . getRelativePositionOf (vessels [ind]);
-			if (vector . distance < range && Math . abs (vessels [ind] . position . depth - torpedo . position . depth) < depth) vessel . damage (damage);
+		var vessel = vessels [ind];
+		if (! vessel . destroyed) {
+			var vector = torpedo . getRelativePositionOf (vessel);
+			if (vector . distance < range && Math . abs (vessel . position . depth - torpedo . position . depth) < depth) {
+				notifyHit (vessel, torpedo . attacker);
+				vessel . damage (damage);
+			}
 		}
 	}
 };
@@ -168,7 +174,8 @@ var displayBearing = function (bearing) {bearing = Math . round (bearing); while
 
 var detonateSelected = function () {
 	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) {waypoint = null; return;}
-	selected . vessel . damage (selected . vessel . strength);
+	notifyTargetDetonated (selected . vessel, simulated);
+	selected . vessel . detonate ();
 };
 var matchDepth = function (depth) {
 	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
