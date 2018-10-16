@@ -117,6 +117,9 @@ var fill_weapons_table = function (vessel) {
 var vessels = [];
 var remotes = {};
 
+var missionStart = new Date ();
+var missionTime = function () {return (new Date () - missionStart) / 1000;};
+
 var simulated = null;
 var selected = null;
 var waypoint = null;
