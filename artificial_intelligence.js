@@ -28,8 +28,8 @@ var torpedoAI = function (torpedo) {
 		var vector = torpedo . getRelativePositionOf (torpedo . target);
 		if (vector . distance < 0.01) {
 			if (torpedo . target . type === null) {torpedo . target = null; return;}
-			if (Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 60) {
-				removeVessel (torpedo); explode (torpedo, torpedo . target, 0.01, 60, 1 + Math . random ()); return;
+			if (Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 40) {
+				removeVessel (torpedo); explode (torpedo, torpedo . target, 0.01, 40, 1 + Math . random ()); return;
 			}
 		}
 		torpedo . targetDepth (torpedo . target . position . depth);
