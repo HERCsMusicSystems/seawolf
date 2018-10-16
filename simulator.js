@@ -154,6 +154,14 @@ var simulationHitTest = function (x, y, reference, minimum_distance) {
   if (distance < minimum_distance) return selected;
   return null;
 };
+var explode = function (torpedo, target, range, depth, damage) {
+	for (var ind in vessels) {
+		if (! vessels [ind] . destroyed) {
+			var vector = torpedo . getRelativePositionOf (vessels [ind]);
+			if (vector . distance < range && Math . abs (vessels [ind] . position . depth - torpedo . position . depth) < depth) vessel . damage (damage);
+		}
+	}
+};
 
 var nauticalBearing = function (angle) {angle *= 180 / Math . PI; angle += 90; while (angle < 0) angle += 360; while (angle >= 360) angle -= 360; return angle;};
 var displayBearing = function (bearing) {bearing = Math . round (bearing); while (bearing < 0) bearing += 360; while (bearing >= 360) bearing -= 360; return bearing;};
