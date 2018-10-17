@@ -131,6 +131,7 @@ var ping = null;
 var checkGameStatus = function () {console . log ("Checking end condition.");};
 
 var MissionVictory = function () {
+	alert ("Victory");
 	if (window . location . protocol . indexOf ('file') >= 0) {
 		var address = window . location . pathname;
 		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
@@ -139,6 +140,7 @@ var MissionVictory = function () {
 };
 
 var MissionDefeat = function () {
+	alert ("Defeat");
 	if (window . location . protocol . indexOf ('file') >= 0) {
 		var address = window . location . pathname;
 		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
@@ -314,6 +316,7 @@ var resize = function (delta) {
 	aiVessels (delta);
 	simulate (delta);
 	removeVessels ();
+	if (simulated === null) MissionDefeat ();
 	drawGrid (ctx, window . innerWidth, window . innerHeight, simulated);
 	drawVessels (ctx);
 	if (ping !== null) {ping . ping *= Math . pow (ping . attenuation, delta); if (ping . ping < 10) ping = null;}
