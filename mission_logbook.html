@@ -10,7 +10,7 @@
   </style>
 </head>
 
-<body>
+<body onstorage="javascript: window . location . reload ();">
   <table id="LogBook">
     <tr><td>Time</td><td>Entry</td></tr>
   </table>
@@ -19,10 +19,8 @@
 <script>
 
 var tbody = document . getElementById ('LogBook') . firstElementChild;
-console . log (tbody);
 
 var logbook = JSON . parse (localStorage . getItem ('logbook'));
-console . log (logbook);
 
 for (var ind in logbook) {
   var row = document . createElement ('tr');
