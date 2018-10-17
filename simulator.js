@@ -130,6 +130,30 @@ var ping = null;
 
 var checkGameStatus = function () {console . log ("Checking end condition.");};
 
+var MissionVictory = function () {
+	if (window . location . protocol . indexOf ('file') >= 0) {
+		var address = window . location . pathname;
+		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
+		window . location . assign (address . substring (0, index) + 'mission_victory.html');
+	} else window . location . assign ('/mission_victory.html');
+};
+
+var MissionDefeat = function () {
+	if (window . location . protocol . indexOf ('file') >= 0) {
+		var address = window . location . pathname;
+		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
+		window . location . assign (address . substring (0, index) + 'mission_defeat.html');
+	} else window . location . assign ('/mission_defeat.html');
+};
+
+var MissionAbort = function () {
+	if (window . location . protocol . indexOf ('file') >= 0) {
+		var address = window . location . pathname;
+		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
+		window . location . assign (address . substring (0, index) + 'mission_abort.html');
+	} else window . location . assign ('/mission_abort.html');
+};
+
 var addVessel = function (vessel) {vessels . push (vessel);};
 var getVessel = function (name) {for (var ind in vessels) {if (vessels [ind] . name === name) return vessels [ind];}; return null;};
 var removeVessel = function (vessel) {vessel . destroyed = true; if (simulated === vessel) simulated = null; if (selected && selected . vessel === vessel) selected = null; notifyVesselLost (vessel);};
