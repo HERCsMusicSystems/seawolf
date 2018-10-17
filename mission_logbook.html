@@ -1,0 +1,40 @@
+<meta charset="UTF-8"/>
+
+<html>
+
+<head>
+  <title>SEAWOLF Log Book</title>
+  <style>
+  table {font-family: arial;}
+  td {background-color: yellow;}
+  </style>
+</head>
+
+<body>
+  <table id="LogBook">
+    <tr><td>Time</td><td>Entry</td></tr>
+  </table>
+</body>
+
+<script>
+
+var tbody = document . getElementById ('LogBook') . firstElementChild;
+console . log (tbody);
+
+var logbook = JSON . parse (localStorage . getItem ('logbook'));
+console . log (logbook);
+
+for (var ind in logbook) {
+  var row = document . createElement ('tr');
+  var cell = document . createElement ('td');
+  cell . appendChild (document . createTextNode (logbook [ind] . time));
+  row . appendChild (cell);
+  cell = document . createElement ('td');
+  cell . appendChild (document . createTextNode (logbook [ind] . message));
+  row . appendChild (cell);
+  tbody . appendChild (row);
+}
+
+</script>
+
+</html>

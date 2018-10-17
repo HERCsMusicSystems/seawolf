@@ -1,6 +1,10 @@
 
 var logbook = [];
-var log = function (text) {console . log ("LOOGBOOK: " + text); logbook . push ({time: new Date () . toLocaleString ('pt-PT'), message: text});};
+var log = function (text) {
+  console . log ("LOOGBOOK: " + text);
+  logbook . push ({time: new Date () . toLocaleString ('pt-PT'), message: text});
+  localStorage . setItem ('logbook', JSON . stringify (logbook));
+};
 
 var notifyVesselLost = function (vessel) {log ("Vessel " + vessel . name + " (Class " + vessel . class + ") lost."); checkGameStatus ();};
 
