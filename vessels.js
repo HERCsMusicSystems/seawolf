@@ -64,8 +64,9 @@ var Mark48 = function (cable, name, country) {
 	this . collapse_depth = 2700;
 	this . strength = 1;
 	this . sonar = new sonar (this);
-	this . sonar . detection_threshold = 0;
-	this . sonar . tracking_threshold = 0;
+	// make everything visible
+	//this . sonar . detection_threshold = 0;
+	//this . sonar . tracking_threshold = 0;
 	this . sonar . noiseLevelBearingCorrection = function (noise, bearing) {
 		var org = bearing;
 		bearing *= 10;

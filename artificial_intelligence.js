@@ -18,7 +18,7 @@ var torpedoAI = function (torpedo) {
 			}
 		}
 		if (torpedo . target === null) {
-			if (torpedo . bearing_speed === 0) {torpedo . bearing (Math . random () < 0.5 ? -2 : 2); console . log ('set bearing....');}
+			if (torpedo . bearing_speed === 0) {torpedo . bearing (Math . random () < 0.5 ? -3 : 3); console . log ('set bearing....');}
 			if (this . ping <= 0) {torpedo . sonar . ping (); this . ping = 4;}
 			this . ping -= delta;
 			torpedo . detectStrongest (delta);
@@ -31,7 +31,7 @@ var torpedoAI = function (torpedo) {
 			if (Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 40) {torpedo . detonate (); return;}
 		}
 		torpedo . targetDepth (torpedo . target . position . depth);
-		torpedo . targetBearing (nauticalBearing (vector . bearing), 2);
+		torpedo . targetBearing (nauticalBearing (vector . bearing), 3);
 		var frontAngle = Math . abs (torpedo . bearing_target - torpedo . position . bearing);
 		if (frontAngle < 10) {
 			torpedo . setSpeed ('flank');
