@@ -40,6 +40,17 @@
 <body bgcolor="#0000aa" style="font-family: arial; color: green; background-image: url('images/virginiaclasssubmarine.jpg'); background-size: cover;">
   <h1>SEAWOLF Submarine Simulator</h1>
   <div>
+    Mission Type:
+    <select id="mission_type_selector" onchange="javascript: localStorage . setItem ('mission_type', this . value);">
+      <option selected >Simulated</option>
+      <option>Real</option>
+    </select>
+    <script type="text/javascript" charset="UTF-8">
+    var mission_type = localStorage . getItem ('mission_type');
+    var mission_type_selector = document . getElementById ('mission_type_selector');
+    if (mission_type !== null) document . getElementById ('mission_type_selector') . value = mission_type;
+    else localStorage . setItem ('mission_type', mission_type_selector . value);
+    </script>
     <h2>Scenarios:</h2>
     <ul>
       <li><a href="three_oilers.html">Three Oilers</a>: sink a convoy of three oil tankers....
