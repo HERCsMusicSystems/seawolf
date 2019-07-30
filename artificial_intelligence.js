@@ -10,7 +10,8 @@ var torpedoAI = function (torpedo) {
 	this . code = function (delta) {
 		var sdelta = delta / 3600;
 		torpedo . distance_travelled += torpedo . speed . x * sdelta;
-		if (torpedo . distance_travelled >= this . range) {notifyRunOutOfFuel (torpedo); removeVessel (torpedo); return;}
+		if (torpedo . target) console . log (torpedo . target . name, torpedo . target . type);
+		if (torpedo . distance_travelled >= torpedo . range) {notifyRunOutOfFuel (torpedo); removeVessel (torpedo); return;}
 		if (torpedo . cable !== null) {
 			torpedo . distance_cable_travelled += torpedo . cable . speed . x * sdelta;
 			if (torpedo . distance_travelled > torpedo . cable_length || torpedo . distance_cable_travelled > torpedo . cable_to_ship_length) {
@@ -18,7 +19,7 @@ var torpedoAI = function (torpedo) {
 			}
 		}
 		if (torpedo . target === null) {
-			if (torpedo . bearing_speed === 0) {torpedo . bearing (Math . random () < 0.5 ? -3 : 3); console . log ('set bearing....');}
+			if (torpedo . bearing_speed === 0) {torpedo . bearing (Math . random () < 0.5 ? -3 : 3);}
 			if (this . ping <= 0) {torpedo . sonar . ping (); this . ping = 4;}
 			this . ping -= delta;
 			torpedo . detectStrongest (delta);
@@ -36,10 +37,10 @@ var torpedoAI = function (torpedo) {
 		if (frontAngle < 10) {
 			torpedo . setSpeed ('flank');
 			if (torpedo . target . type !== null) torpedo . detectStrongest (delta);
-			if (! this . armed) {this . armed = true; console . log ('armed');}
+			if (! this . armed) {this . armed = true;}
 		} else {
 			torpedo . setSpeed ('half');
-			if (this . armed) {torpedo . target = null; console . log ('target lost');}
+			if (this . armed) {torpedo . target = null;}
 		}
 	};
 };
