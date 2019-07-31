@@ -39,8 +39,8 @@ var torpedoAI = function (torpedo) {
 			// if (torpedo . target . type !== null) {torpedo . detectStrongest (delta); console . log (frontAngle, 'possible change');}
 			if (! this . armed) {this . armed = true;}
 		} else {
-			torpedo . setSpeed ('half');
-			if (this . armed) {torpedo . target = null;}
+			torpedo . setSpeed ('slow');
+			if (this . armed && torpedo . cable === null) {torpedo . detectStrongest (delta);}
 		}
 	};
 };

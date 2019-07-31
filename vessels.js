@@ -83,3 +83,5 @@ var Mark48 = function (cable, name, country) {
 	this . trail_length = 100;
 };
 Mark48 . prototype = Object . create (vessel . prototype);
+
+var Mark46 = function (cable, name, country) {};
