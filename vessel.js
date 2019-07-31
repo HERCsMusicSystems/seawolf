@@ -310,10 +310,10 @@ tube . prototype . move = function (delta) {
 tube . prototype . load = function (selector) {
 	if (this . flooded > 0 || this . torpedo !== null) return;
 	if (selector === undefined) selector = Object . keys (this . torpedoes) [0];
-	if (this . display_element !== null) this . display_element . innerHTML = '<img src="Mark48.png" width="100"/>';
 	var inventory = this . torpedoes [selector];
-	if (inventory == null || inventory . count < 1) return;
+	if (inventory == null || inventory . count < 1) {notifyNoMoreTorpedoes (selector); return;}
 	inventory . count --;
+	if (this . display_element !== null) this . display_element . innerHTML = '<img src="Mark48.png" width="100"/>';
 	this . torpedo = new inventory . constructor (this . vessel, selector);
 	if (this . display_element) update_inventory_info (this . vessel);
 };
@@ -326,7 +326,7 @@ tube . prototype . fire = function (target, selector) {
 		if (this . display_element !== null) {this . display_element . bgColor = 'black'; this . display_element . innerHTML = '';}
 		return;
 	}
-	this . load (selector); this . command = 'fire'; if (this . torpedo !== null) this . torpedo . target = target;
+	this . load (selector); if (this . torpedo !== null) {this . command = 'fire', this . torpedo . target = target;}
 };
 
 tube . prototype . flood = function () {if (this . torpedo === null) return; this . command = 'flood';};
