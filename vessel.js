@@ -363,6 +363,7 @@ sonar . prototype . detect = function (delta) {
 		}
 		if (this . towed_array_deployed <= 0) {this . towed_array_deployed = 0; this . deploying_speed = 0; this . towed_array_current_amplification = 1;}
 	}
+	this . detected = {};
 	for (var ind in vessels) {
 		var vessel = vessels [ind];
 		if (vessel !== this . vessel) {

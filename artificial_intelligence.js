@@ -10,7 +10,6 @@ var torpedoAI = function (torpedo) {
 	this . code = function (delta) {
 		var sdelta = delta / 3600;
 		torpedo . distance_travelled += torpedo . speed . x * sdelta;
-		if (torpedo . target) console . log (torpedo . target . name, torpedo . target . type);
 		if (torpedo . distance_travelled >= torpedo . range) {notifyRunOutOfFuel (torpedo); removeVessel (torpedo); return;}
 		if (torpedo . cable !== null) {
 			torpedo . distance_cable_travelled += torpedo . cable . speed . x * sdelta;
