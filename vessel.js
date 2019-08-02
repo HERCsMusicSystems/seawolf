@@ -31,6 +31,7 @@ var vessel = function (country) {
 	this . test_depth = 1600; // US Navy 2/3, Royal Navy: 4/7, German Kriegsmarine: 1/2
 	this . collapse_depth = 2400;
 	this . target = null;
+	this . target_type = 'all';
 	this . cable = null;
 	this . attacker = this;
 };
@@ -227,6 +228,7 @@ vessel . prototype . fire = function () {
 vessel . prototype . launch = function (vessel, target) {
 	if (target !== undefined) this . target = target;
 	if (this . target === null) return false;
+	this . target_type = this . target . type || 'all';
 	this . position . x = vessel . position . x;
 	this . position . y = vessel . position . y;
 	this . position . depth = vessel . position . depth;
@@ -246,7 +248,7 @@ vessel . prototype . damage = function (level) {
 	if (level > 1.9) this . damage (level - 1.9);
 };
 
-vessel . prototype . detectStrongest = function (delta) {this . target = this . sonar . detectStrongest (delta);};
+vessel . prototype . detectStrongest = function (delta, type) {this . target = this . sonar . detectStrongest (delta, type);};
 
 vessel . prototype . setTarget = function (target) {this . target = target;};
 
@@ -385,10 +387,15 @@ sonar . prototype . detect = function (delta) {
 	}
 };
 
-sonar . prototype . detectStrongest = function (delta) {
+sonar . prototype . detectStrongest = function (delta, type) {
+	if (type === undefined) type = 'all';
 	this . detect (delta);
 	var strongest = null;
-	for (var ind in this . detected) {if (strongest === null || this . detected [ind] . noise > strongest . noise) strongest = this . detected [ind];}
+	for (var ind in this . detected) {
+		var detected = this . detected [ind];
+		if ((strongest === null || detected . noise > strongest . noise) && (type === 'all' || detected . vessel . type === type))
+			strongest = this . detected [ind];
+	}
 	return strongest && strongest . vessel;
 };
 
@@ -439,4 +446,5 @@ var Waypoint = function (x, y, depth) {
 	this . position . depth = depth;
 	this . type = null;
 };
-Waypoint . porotype = Object . create (vessel . prototype);
+Waypoint . prototype = Object . create (vessel . prototype);
+Waypoint . prototype . constructor = Waypoint;

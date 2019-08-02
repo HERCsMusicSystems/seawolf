@@ -21,7 +21,7 @@ var torpedoAI = function (torpedo) {
 			if (torpedo . bearing_speed === 0) {torpedo . bearing (Math . random () < 0.5 ? -3 : 3);}
 			if (this . ping <= 0) {torpedo . sonar . ping (); this . ping = 4;}
 			this . ping -= delta;
-			torpedo . detectStrongest (delta);
+			torpedo . detectStrongest (delta, torpedo . target_type);
 			return;
 		}
 		if (torpedo . target . destroyed) {torpedo . target = null; return;}
@@ -39,7 +39,7 @@ var torpedoAI = function (torpedo) {
 			if (! this . armed) {this . armed = true;}
 		} else {
 			torpedo . setSpeed ('slow');
-			if (this . armed && torpedo . cable === null) {torpedo . detectStrongest (delta);}
+			if (this . armed && torpedo . cable === null) {torpedo . detectStrongest (delta, torpedo . target_type);}
 		}
 	};
 };
