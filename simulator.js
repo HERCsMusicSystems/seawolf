@@ -220,10 +220,12 @@ var promptDepth = function () {
 var acquireSubmarineTarget = function () {
 	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
 	selected . vessel . target = null;
+	selected . vessel . target_type = 'submarine';
 };
 var acquireSurfaceTarget = function () {
 	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
 	selected . vessel . target = null;
+	selected . vessel . target_typs = 'surface';
 	selected . vessel . targetDepth (0);
 };
 var gotoWaypoint = function () {
