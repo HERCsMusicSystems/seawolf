@@ -41,7 +41,7 @@ var Akula = function (name, country) {
 };
 inherit (Akula, vessel);
 
-var Sovremennyy = function (name, country) {
+var Sovremenny = function (name, country) {
 	if (country === undefined) country = 'Russia';
 	vessel . call (this, country);
 	this . class = 'Современный'
@@ -49,7 +49,7 @@ var Sovremennyy = function (name, country) {
 	this . type = 'surface';
 	this . speeds = [0, 2, 8, 15, 21, 28, 32.7]
 }
-inherit (Sovremennyy, vessel);
+inherit (Sovremenny, vessel);
 
 ///////////////////////////////////////////////
 // Mark 48                                   //
