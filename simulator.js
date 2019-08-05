@@ -114,6 +114,13 @@ var fill_weapons_table = function (vessel) {
 	update_inventory_info (vessel);
 };
 
+var inherit = function (from, to) {
+  if (to === undefined) {to = from; from = function () {to . apply (this, arguments);}}
+  from . prototype = Object . create (to . prototype);
+  from . prototype . constructor = from;
+  return from;
+};
+
 var vessels = [];
 var remotes = {};
 

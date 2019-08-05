@@ -6,10 +6,10 @@ var Oiler = function (name, country) {
 	this . type = 'surface';
 	this . name = name;
 	this . class = 'Oil Tanker';
-	this . speeds = [0, 1, 4, 8, 12, 16, 18];
+	this . speeds = [0, 1, 4, 8, 12, 15, 18];
 	this . strength = 5;
 };
-Oiler . prototype = Object . create (vessel . prototype);
+inherit (Oiler, vessel);
 
 var Virginia = function (name, country) {
 	if (country === undefined) country = 'USA';
@@ -24,12 +24,12 @@ var Virginia = function (name, country) {
 	};
 	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming']}, 4);
 };
-Virginia . prototype = Object . create (vessel . prototype);
+inherit (Virginia, vessel);
 
 var Akula = function (name, country) {
 	if (country === undefined) country = 'Russia';
 	vessel . call (this, country);
-	this . class = 'Akula';
+	this . class = 'Акула';
 	this . name = name;
 	this . speeds = [0, 2, 8, 15, 21, 28, 35];
 	this . inventory = {
@@ -39,7 +39,17 @@ var Akula = function (name, country) {
 	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming']}, 6);
 	this . sonar = new sonar (this);
 };
-Akula . prototype = Object . create (vessel . prototype);
+inherit (Akula, vessel);
+
+var Sovremennyy = function (name, country) {
+	if (country === undefined) country = 'Russia';
+	vessel . call (this, country);
+	this . class = 'Современный'
+	this . name = name;
+	this . type = 'surface';
+	this . speeds = [0, 2, 8, 15, 21, 28, 32.7]
+}
+inherit (Sovremennyy, vessel);
 
 ///////////////////////////////////////////////
 // Mark 48                                   //

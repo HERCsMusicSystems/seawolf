@@ -43,3 +43,7 @@ var torpedoAI = function (torpedo) {
 		}
 	};
 };
+
+var escortAI = function () {
+	this . code = function (delta) {};
+};
