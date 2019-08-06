@@ -44,6 +44,34 @@ var torpedoAI = function (torpedo) {
 	};
 };
 
-var escortAI = function () {
-	this . code = function (delta) {};
+var escortAI = function (escort) {
+	this . code = function (delta) {
+		escort . sonar . detect ();
+		var target = null;
+		var noise = 0;
+		var targetNoLongerAudible = true;
+		for (var ind in escort . sonar . detected) {
+			var detected = escort . sonar . detected [ind];
+			if (detected . status === 'enemy') {
+				if (detected . vessel === escort . target) targetNoLongerAudible = false;
+				if (detected . noise > noise) {target = detected . vessel; noise = detected . noise;}
+			}
+		}
+		if (targetNoLongerAudible) escort . target = null;
+		if (escort . target === null && target !== null) {
+			escort . target = target;
+			var torpedo = new Mark48 (escort, 'SSNT', escort . country);
+			torpedo . cable_length = 0; torpedo . cable_to_ship_length = 0;
+			escort . fireRocketTorpedo (torpedo);
+			console . log ('target assigned', target . name);
+		}
+		if (escort . target !== null) {
+			escort . targetBearing (escort . target . position);
+			escort . setSpeed ('full');
+		}
+//		if (ping) {
+//			escort . targetBearing (ping);
+//			escort . setSpeed ('full');
+//		}
+	};
 };

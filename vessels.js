@@ -47,7 +47,8 @@ var Sovremenny = function (name, country) {
 	this . class = 'Современный'
 	this . name = name;
 	this . type = 'surface';
-	this . speeds = [0, 2, 8, 15, 21, 28, 32.7]
+	this . speeds = [0, 2, 8, 15, 21, 28, 32.7];
+	this . sonar = new sonar (this);
 }
 inherit (Sovremenny, vessel);
 

@@ -225,6 +225,15 @@ vessel . prototype . fire = function () {
 	torpedo  . launch (this, target);
 };
 
+vessel . prototype . fireRocketTorpedo = function (torpedo) {
+	if (this . target === null) return;
+	torpedo . position . x = this . target . position . x - 0.5;
+	torpedo . position . y = this . target . position . y;
+	torpedo . position . depth = this . target . position . depth;
+	torpedo . target_type = 'submarine';
+	addVessel (torpedo);
+};
+
 vessel . prototype . launch = function (vessel, target) {
 	if (target !== undefined) this . target = target;
 	if (this . target === null) return false;

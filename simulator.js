@@ -232,7 +232,7 @@ var acquireSubmarineTarget = function () {
 var acquireSurfaceTarget = function () {
 	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
 	selected . vessel . target = null;
-	selected . vessel . target_typs = 'surface';
+	selected . vessel . target_type = 'surface';
 	selected . vessel . targetDepth (0);
 };
 var gotoWaypoint = function () {
@@ -387,7 +387,7 @@ var ctrl = function (e) {
 		case 'arrowup': e . preventDefault (); ws . bottom = null; ws . top = '8px'; return true;
 		default: break;
 	}
-	console . log (key, e);
+//	console . log (key, e);
 	return true;
 };
 
