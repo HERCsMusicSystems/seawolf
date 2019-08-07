@@ -105,7 +105,37 @@
     <br /><br /><br /><br />
   </div>
 <script>
-var dir = `
+var goodLooking = `
+Submarine.jpg
+Submarine2.jpg
+virginiaclasssubmarine.jpg
+20190218ran8108462_108-e1564710258794.jpg
+39623bfdf8bce4cce8fa81648f73a3ff.jpeg
+7jhgs6hx-1413177864.jpg
+K61 (1).jpg
+142357_HMS-Vanguard-hero-new.jpg
+577689954321f1c72f8b4f43-2732-1366.jpg
+52OELMDLQFA6TM2HUG4THDWVOA.JPG
+1200px-К-560_«Северодвинск».jpg
+HMS-Vanguard-Major-Refit-behind-Schedule.jpg
+victor_iii_class_submarine.jpg
+vanguard_class[1].jpg
+1280px-hms_gotland_with_uss_ronald_reagan.jpg
+ATKHAT2COWOKWJHFPTJC5ODN5A.jpg
+BBN4ojo.img.jpeg
+US_Navy_040730-N-1234E-002_PCU_Virginia_(SSN_774)_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg
+typhoon-surfaced.jpg
+AAFimt3.img.jpeg
+collins.jpg
+Collins.jpg
+Kilo-Class_Russian_Submarine_MOD_45165128.jpg
+imagesvc.timeincapp.com.jpeg
+`;
+goodLooking += goodLooking;
+goodLooking += goodLooking;
+goodLooking += goodLooking;
+goodLooking += goodLooking;
+var dir = (`
 0021-DSC-4350_wqxga.jpg
 0029_DSC_4170_wqxga.jpg
 1200px-Mmi_S527.jpg
@@ -177,7 +207,7 @@ US_Navy_090112-N-7705S-061_Lt._Cmdr_Brad_Terry,_left,_executive_officer_of_the_L
 vanguard_class[1].jpg
 victor_iii_class_submarine.jpg
 virginiaclasssubmarine.jpg
-` . split ('\n');
+` + goodLooking) . split ('\n');
 var index;
 while ((index = dir . indexOf ('')) >= 0) dir . splice (index, 1);
 for (index in dir) dir [index] = "url('images/" + dir [index] + "')";
@@ -198,7 +228,7 @@ var backgrounds = [
 	"url('images/virginiaclasssubmarine.jpg')"
 ];
 backgrounds = dir;
-document . body . style . backgroundImage = backgrounds [Math . floor (Math . random () * backgrounds . length - 1)];
+document . body . style . backgroundImage = backgrounds [Math . floor (Math . random () * backgrounds . length)];
 console . log (document . body . style . backgroundImage);
 </script>
 </body>
