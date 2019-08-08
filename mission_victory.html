@@ -1,4 +1,31 @@
 <meta charset="UTF-8"/>
 
+<head>
+  <title>Victory</title>
+  <style>
+    table {font-family: arial;}
+    td {background-color: #00ff8866;}
+  </style>
+</head>
+
+<body bgcolor="#0000aa" style="font-family: arial; color: gold; text-shadow: 1px 1px black; background-image: url('images/Submarine2.jpg'); background-size: cover;">
 <h1>VICTORY</h1>
-<a href="mission_logbook.html">View LogBook</a>
+<font size="+1">
+  <div id="view_logbook">
+    <a onclick="document . getElementById ('hide_logbook') . style . display = 'inline'; document . getElementById ('view_logbook') . style . display = 'none'; event . preventDefault ();" style="cursor: pointer;">
+      <u>View LogBook</u>
+    </a>
+  </div>
+  <div id="hide_logbook" style="display: none;">
+    <a onclick="document . getElementById ('hide_logbook') . style . display = 'none'; document . getElementById ('view_logbook') . style . display = 'inline'; event . preventDefault ();" style="cursor: pointer;">
+      <u>Hide LogBook</u>
+    </a>
+    <table id="LogBook"/>
+    <script src="logbook.js"></script>
+  </div>
+
+</font>
+
+<script src="background_ctrl.js"></script>
+
+</body>
