@@ -20,9 +20,14 @@ var Virginia = function (name, country) {
 	this . sonar = new sonar (this);
 	this . inventory = {
 		Mark48: {constructor: Mark48, count: 24},
-		Mark46: {constructor: Mark48, count: 6}
+		Mark46: {constructor: Mark48, count: 6},
+		Harpoon: {constructor: Harpoon, count: 6}
 	};
-	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming']}, 4);
+	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon']}, 4);
+	this . silo = {
+		Tomahawk: {amount: 6, depth: 150},
+		Harpoon: {amount: 6, depth: 150}
+	}
 };
 inherit (Virginia, vessel);
 
@@ -52,6 +57,19 @@ var Sovremenny = function (name, country) {
 }
 inherit (Sovremenny, vessel);
 
+/////////////
+// Harpoon //
+/////////////
+
+var Harpoon = function (vessel, name, country) {
+	if (name === undefined) name = 'Harpoon';
+	if (country === undefined) country = vessel . country;
+	this . attacker = vessel;
+	this . type = 'rocket';
+	this . class = 'Harpoon';
+	this . name = name;
+};
+
 ///////////////////////////////////////////////
 // Mark 48                                   //
 // Depth > 2600                              //
@@ -59,6 +77,7 @@ inherit (Sovremenny, vessel);
 // Cable: 10nm / 5nm                         //
 // Detection cone: 20 - 22 degrees           //
 ///////////////////////////////////////////////
+
 var Mark48 = function (cable, name, country) {
 	if (country === undefined) country = cable . country;
 	vessel . call (this, country);

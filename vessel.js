@@ -25,6 +25,7 @@ var vessel = function (country) {
 	this . diving_speeds = [0, 10, 20, 30, 40, 50, 60];
 	this . tubes = [];
 	this . inventory = {};
+	this . silo = {};
 	this . ai = null;
 	this . strength = 3;
 	this . damage_delta = 0;
@@ -324,8 +325,8 @@ tube . prototype . load = function (selector) {
 	var inventory = this . torpedoes [selector];
 	if (inventory == null || inventory . count < 1) {notifyNoMoreTorpedoes (selector); return;}
 	inventory . count --;
-	if (this . display_element !== null) this . display_element . innerHTML = '<img src="Mark48.png" width="100"/>';
 	this . torpedo = new inventory . constructor (this . vessel, selector);
+	if (this . display_element !== null) this . display_element . innerHTML = `<img src="${this . torpedo . class}.png" width="100"/>`;
 	if (this . display_element) update_inventory_info (this . vessel);
 };
 
