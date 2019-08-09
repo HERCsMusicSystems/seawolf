@@ -69,6 +69,9 @@ var Harpoon = function (cable, name, country) {
 	this . type = 'rocket';
 	this . class = 'Harpoon';
 	this . name = name;
+	this . speeds = [600, 600, 600, 600, 600, 600, 600];
+	this . ai = new HarpoonAI (this);
+	this . target_type = 'surface';
 };
 inherit (Harpoon, vessel);
 

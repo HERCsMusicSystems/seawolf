@@ -1,6 +1,11 @@
 var goodLooking = `
 Submarine.jpg
 Submarine2.jpg
+Submarine2.jpg
+Submarine2.jpg
+Submarine2.jpg
+Submarine2.jpg
+Submarine2.jpg
 virginiaclasssubmarine.jpg
 seawolfclasssubmarine.jpg
 seawolfclasssubmarine.jpg
@@ -30,9 +35,6 @@ Collins.jpg
 Kilo-Class_Russian_Submarine_MOD_45165128.jpg
 imagesvc.timeincapp.com.jpeg
 `;
-goodLooking += goodLooking;
-goodLooking += goodLooking;
-goodLooking += goodLooking;
 goodLooking += goodLooking;
 var dir = (`
 0021-DSC-4350_wqxga.jpg

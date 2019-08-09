@@ -75,3 +75,19 @@ var escortAI = function (escort) {
 //		}
 	};
 };
+
+var HarpoonAI = function (rocket) {
+	this . code = function (delta) {
+		rocket . targetBearing (rocket . target . position);
+		var vector = rocket . getRelativePositionOf (rocket . target);
+		if (vector . distance < 0.1) {
+			if (rocket . target . type === null) {rocket . target = null; return;}
+			notifyExplosion (rocket);
+			removeVessel (rocket);
+			notifyHit (rocket . target, rocket . attacker);
+			rocket . target . damage (3 + 3 * Math . random ());
+			return;
+		}
+	};
+};
+

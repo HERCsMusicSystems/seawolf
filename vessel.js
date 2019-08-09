@@ -260,7 +260,7 @@ vessel . prototype . damage_speed = function () {
 vessel . prototype . damage = function (level) {
 	this . strength -= level;
 	if (level > Math . random ()) this . damage_speed ();
-	if (level > 1.9) this . damage (level - 1.9);
+//	if (level > 1.9) this . damage (level - 1.9);
 };
 
 vessel . prototype . detectStrongest = function (delta, type) {this . target = this . sonar . detectStrongest (delta, type);};
@@ -362,17 +362,15 @@ var silo_launch = function (html, ind) {
 	if (selected === null) return;
 	var silo = simulated . silo [ind];
 	if (silo . amount < 1) return;
-	console . log (html . textContent);
 	var rocket = new silo . constructor (simulated, ind, simulated . country);
+	if (selected . vessel . type !== rocket . target_type && rocket . target_type !== 'all') return;
 	silo . amount -= 1;
 	html . textContent = `LAUNCH ${ind}: ${silo . amount}`;
 	rocket . target = selected . vessel;
 	var sp = simulated . position;
-	console . log (sp);
-	rocket . position = {x: sp . x, y: sp . y, depth: -100, bearing: 0};
-	console . log (rocket . position);
+	rocket . position = {x: sp . x, y: sp . y, depth: 0, bearing: 0};
 	rocket . targetBearing (rocket . target . position);
-	rocket . speed = {x: 10, y: 0};
+	rocket . setSpeed ('full');
 	addVessel (rocket);
 };
 
@@ -405,7 +403,7 @@ sonar . prototype . detect = function (delta) {
 			var noise = this . getNoiseOf (vessel) * this . towed_array_current_amplification;
 			if (noise < this . identification_threshold &&
 				((this . vessel . position . depth <= 60 && vessel . position . depth === 0)
-				|| vessel . cable === this . vessel)) noise = this . identification_threshold;
+				|| vessel . cable === this . vessel || vessel . type === 'rocket')) noise = this . identification_threshold;
 			if (this . detected . hasOwnProperty (vessel . id)) {
 				if (noise < this . tracking_threshold) {if (selected && selected . vessel === vessel) selected = null; delete this . detected [vessel . id];}
 				else {
