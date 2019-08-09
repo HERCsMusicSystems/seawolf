@@ -198,6 +198,11 @@ vessel . prototype . draw = function (ctx, status) {
 			if (status === 'friend') ctx . arc (x, y, 8, 0, Math . PI);
 			else {ctx . moveTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y);}
 			break;
+		case 'rocket':
+			ctx . beginPath ();
+			ctx . moveTo (x - 8, y + 16); ctx . lineTo (x - 2, y + 10); ctx . lineTo (x - 2, y - 16); ctx . arc (x, y - 16, 2, Math . PI, 0);
+			ctx . lineTo (x + 2, y + 10); ctx . lineTo (x + 8, y + 16); ctx . closePath ();
+			break;
 		default: break;
 	}
 	ctx . stroke ();
@@ -351,6 +356,24 @@ var build_tubes = function (vessel, settings, amount, speed) {
 	var tubes = [];
 	for (var ind = 0; ind < amount; ind++) tubes . push (new tube (vessel, settings, speed));
 	return tubes;
+};
+
+var silo_launch = function (html, ind) {
+	if (selected === null) return;
+	var silo = simulated . silo [ind];
+	if (silo . amount < 1) return;
+	console . log (html . textContent);
+	var rocket = new silo . constructor (simulated, ind, simulated . country);
+	silo . amount -= 1;
+	html . textContent = `LAUNCH ${ind}: ${silo . amount}`;
+	rocket . target = selected . vessel;
+	var sp = simulated . position;
+	console . log (sp);
+	rocket . position = {x: sp . x, y: sp . y, depth: -100, bearing: 0};
+	console . log (rocket . position);
+	rocket . targetBearing (rocket . target . position);
+	rocket . speed = {x: 10, y: 0};
+	addVessel (rocket);
 };
 
 var sonar = function (vessel) {

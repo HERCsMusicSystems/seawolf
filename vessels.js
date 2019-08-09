@@ -25,8 +25,8 @@ var Virginia = function (name, country) {
 	};
 	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon']}, 4);
 	this . silo = {
-		Tomahawk: {amount: 6, depth: 150},
-		Harpoon: {amount: 6, depth: 150}
+		Tomahawk: {constructor: Harpoon, amount: 6, depth: 150},
+		Harpoon: {constructor: Harpoon, amount: 6, depth: 150}
 	}
 };
 inherit (Virginia, vessel);
@@ -61,14 +61,16 @@ inherit (Sovremenny, vessel);
 // Harpoon //
 /////////////
 
-var Harpoon = function (vessel, name, country) {
+var Harpoon = function (cable, name, country) {
 	if (name === undefined) name = 'Harpoon';
 	if (country === undefined) country = vessel . country;
-	this . attacker = vessel;
+	vessel . call (this, country);
+	this . attacker = cable;
 	this . type = 'rocket';
 	this . class = 'Harpoon';
 	this . name = name;
 };
+inherit (Harpoon, vessel);
 
 ///////////////////////////////////////////////
 // Mark 48                                   //
@@ -112,6 +114,6 @@ var Mark48 = function (cable, name, country) {
 	this . initial_trail_delta = 2;
 	this . trail_length = 100;
 };
-Mark48 . prototype = Object . create (vessel . prototype);
+inherit(Mark48, vessel);
 
 var Mark46 = function (cable, name, country) {};
