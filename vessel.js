@@ -363,6 +363,8 @@ var silo_launch = function (html, ind) {
 	var silo = simulated . silo [ind];
 	if (silo . amount < 1) return;
 	var rocket = new silo . constructor (simulated, ind, simulated . country);
+	var vector = simulated . getRelativePositionOf (selected . vessel);
+	if (vector . distance > rocket . range) return;
 	if (selected . vessel . type !== rocket . target_type && rocket . target_type !== 'all') return;
 	silo . amount -= 1;
 	html . textContent = `LAUNCH ${ind}: ${silo . amount}`;

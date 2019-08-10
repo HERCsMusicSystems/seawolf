@@ -46,6 +46,7 @@
       <option selected >Simulated</option>
       <option>Real</option>
     </select>
+    Music On/Off <input id="music_on_off" type="checkbox" checked onchange="javascript: if (this . checked) PlayMusic ('Beowulf'); else PauseMusic ('Beowulf');"/>
     <script type="text/javascript" charset="UTF-8">
     var mission_type = localStorage . getItem ('mission_type');
     var mission_type_selector = document . getElementById ('mission_type_selector');
@@ -110,6 +111,8 @@
     <br /><br /><br /><br />
   </div>
 <script src="background_ctrl.js"></script>
+<script src="music_ctrl.js"></script>
+<script>LoopMusic ('Beowulf', false); if (document . getElementById ('music_on_off') . checked) PlayMusic ('Beowulf'); </script>
 </body>
 
 </html>
