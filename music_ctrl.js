@@ -2,14 +2,17 @@
 
 var dialect = document . getElementById ('dialect');
 var dialects = speechSynthesis . getVoices ();
-if (dialect !== null) {
-	for (var ind in dialects) {
-		var el = document . createElement ('option');
-		el . textContent = dialects [ind] . name;
-		el . value = ind;
-		dialect . appendChild (el);
+var populateDialects = function () {
+	if (dialect !== null) {
+		for (var ind in dialects) {
+			var el = document . createElement ('option');
+			el . textContent = dialects [ind] . name;
+			el . value = ind;
+			dialect . appendChild (el);
+		}
 	}
-}
+};
+populateDialects ();
 
 var create_audio = function (file) {
 	var div = document . createElement ('div');
