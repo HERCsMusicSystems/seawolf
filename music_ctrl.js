@@ -37,5 +37,10 @@ var PauseMusic = function (id) {music [id] . pause ();};
 var LoopMusic = function (id, loop) {music [id] . loop = loop;};
 
 
-var say = function (word) {word = new SpeechSynthesisUtterance (word); word . voice = dialects [dialect . value]; speechSynthesis . speak (word);};
+var say = function (word) {
+	word = new SpeechSynthesisUtterance (word);
+	var dialect = Number (localStorage . getItem ('dialect'));
+	word . voice = dialects [dialect . value];
+	speechSynthesis . speak (word);
+};
 

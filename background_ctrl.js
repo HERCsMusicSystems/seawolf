@@ -30,7 +30,7 @@ BBN4ojo.img.jpeg
 US_Navy_040730-N-1234E-002_PCU_Virginia_(SSN_774)_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg
 typhoon-surfaced.jpg
 AAFimt3.img.jpeg
-collins.jpg
+collins2.jpg
 Collins.jpg
 Kilo-Class_Russian_Submarine_MOD_45165128.jpg
 imagesvc.timeincapp.com.jpeg
@@ -63,7 +63,7 @@ ATKHAT2COWOKWJHFPTJC5ODN5A.jpg
 BBN4ojo.img.jpeg
 BOREI-II_3d.jpg
 ccn9969.jpg
-collins.jpg
+collins2.jpg
 Collins.jpg
 DPYQt8HW4AA_CmM.jpg
 DqCM0xeW4AAb0sM.jpg
