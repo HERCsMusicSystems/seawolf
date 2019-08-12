@@ -26,7 +26,8 @@ var Virginia = function (name, country) {
 	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon']}, 4);
 	this . silo = {
 		Tomahawk: {constructor: Harpoon, amount: 6, depth: 150},
-		Harpoon: {constructor: Harpoon, amount: 6, depth: 150}
+		Harpoon: {constructor: Harpoon, amount: 6, depth: 150},
+		Decoy: {constructor: Decoy, amount: 6}
 	}
 };
 inherit (Virginia, vessel);
@@ -63,18 +64,60 @@ inherit (Sovremenny, vessel);
 
 var Harpoon = function (cable, name, country) {
 	if (name === undefined) name = 'Harpoon';
-	if (country === undefined) country = vessel . country;
+	if (country === undefined) country = cable . country;
 	vessel . call (this, country);
 	this . attacker = cable;
 	this . type = 'rocket';
 	this . class = 'Harpoon';
 	this . name = name;
+	this . country = country;
 	this . speeds = [467, 467, 467, 467, 467, 467, 467];
 	this . ai = new HarpoonAI (this);
 	this . target_type = 'surface';
 	this . range = 150;
 };
 inherit (Harpoon, vessel);
+Harpoon . prototype . siloLaunch = function (silo, vessel, target) {
+	if (target === null) return false;
+	if (silo . depth > vessel . position . depth) return false;
+	var vector = vessel . getRelativePositionOf (target);
+	if (vector . distance > this . range) return false;
+	if (target . type !== this . target_type && this . target_type !== 'all') return false;
+	this . target = selected . vessel;
+	var sp =  vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: -10, bearing: sp . bearing};
+	this . targetBearing (this . target . position);
+	this . setSpeed ('full');
+	addVessel (this);
+	return true;
+};
+
+///////////
+// Decoy //
+///////////
+
+var Decoy = function (cable, name, country) {
+	if (name === undefined) name = 'Decoy';
+	if (country === undefined) country = cable . country;
+	vessel . call (this, country);
+	this . type = 'submarine';
+	this . class = 'Decoy';
+	this . name = name;
+	this . speeds = cable . speeds;
+	this . noises = cable . noises;
+	this . range = 2;
+	var sp = cable . position;
+	this . position = {x: sp . x, y: sp . y, depth: sp . depth, bearing: sp . bearing};
+	console . log (this . position);
+	this . setSpeed ('full');
+	this . ai = new DecoyAI (this);
+};
+inherit (Decoy, vessel);
+Decoy . prototype . siloLaunch = function (silo, vessel, target) {
+	this . setSpeed ('full');
+	addVessel (this);
+	return true;
+};
 
 ///////////////////////////////////////////////
 // Mark 48                                   //

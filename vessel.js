@@ -359,21 +359,13 @@ var build_tubes = function (vessel, settings, amount, speed) {
 };
 
 var silo_launch = function (html, ind) {
-	if (selected === null) return;
 	var silo = simulated . silo [ind];
 	if (silo . amount < 1) return;
 	var rocket = new silo . constructor (simulated, ind, simulated . country);
-	var vector = simulated . getRelativePositionOf (selected . vessel);
-	if (vector . distance > rocket . range) return;
-	if (selected . vessel . type !== rocket . target_type && rocket . target_type !== 'all') return;
-	silo . amount -= 1;
-	html . textContent = `LAUNCH ${ind}: ${silo . amount}`;
-	rocket . target = selected . vessel;
-	var sp = simulated . position;
-	rocket . position = {x: sp . x, y: sp . y, depth: 0, bearing: 0};
-	rocket . targetBearing (rocket . target . position);
-	rocket . setSpeed ('full');
-	addVessel (rocket);
+	if (rocket . siloLaunch (silo, simulated, selected === null ? null : selected . vessel)) {
+		silo . amount -= 1;
+		html . textContent = `LAUNCH ${ind}: ${silo . amount}`;
+	}
 };
 
 var sonar = function (vessel) {
