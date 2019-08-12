@@ -93,7 +93,7 @@ var HarpoonAI = function (rocket) {
 
 var DecoyAI = function (decoy) {
 	this . code = function (delta) {
-		decoy . range -= delta / 3600;
+		decoy . range -= decoy . speed . x * delta / 3600;
 		if (decoy . range < 0) removeVessel (decoy);
 	}
 };
