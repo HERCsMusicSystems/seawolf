@@ -58,7 +58,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<button onclick="javascript: simulated . sonar . deployTowedArray ();">DEPLOY TOWED ARRAY</button>
 				<button onclick="javascript: simulated . sonar . retrieveTowedArray ();">RETRIVE TOWED ARRAY</button>
 				<button onclick="javascript: simulated . sonar . cutTowedArray ();">CUT TOWED ARRAY</button>
-				<button onclick="javascript: simulated . fire ();">FIRE OVERRIDE</button>
+				<!-- <button onclick="javascript: simulated . fire ();">FIRE OVERRIDE</button>-->
 			</td>
 		</tr>
 		<tr>

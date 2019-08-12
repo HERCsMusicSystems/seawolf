@@ -424,6 +424,13 @@ sonar . prototype . detectStrongest = function (delta, type) {
 	return strongest && strongest . vessel;
 };
 
+sonar . prototype . targetNoLongerAudible = function (target) {
+	for (var ind in this . detected) {
+		if (this . detected [ind] === target) return false;
+	}
+	return true;
+};
+
 sonar . prototype . getNoiseOf = function (source) {
 	var vector = this . vessel . getRelativePositionOf (source);
 	var noise = source . noiseLevel ();
