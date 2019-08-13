@@ -240,7 +240,7 @@ vessel . prototype . fireRocketTorpedo = function (torpedo) {
 	addVessel (torpedo);
 };
 
-vessel . prototype . launch = function (vessel, target) {
+vessel . prototype . launch = function (tube, vessel, target) {
 	if (target !== undefined) this . target = target;
 	if (this . target === null) return false;
 	this . target_type = this . target . type || 'all';
@@ -296,7 +296,7 @@ tube . prototype . move = function (delta) {
 				}
 			} else {
 				this . flooded = 1; this . command = null;
-				if (this . torpedo . launch (this . vessel)) {
+				if (this . torpedo . launch (this, this . vessel)) {
 					this . torpedo = null; this . flooded = 0;
 					if (this . display_element !== null) {this . display_element . bgColor = 'black'; this . display_element . innerHTML = '';}
 				}
@@ -338,7 +338,7 @@ tube . prototype . load = function (selector) {
 tube . prototype . fire = function (target, selector) {
 	if (this . torpedo !== null) {
 		if (this . flooded < 1) return;
-		if (! this . torpedo . launch (this . vessel, target)) return;
+		if (! this . torpedo . launch (this, this . vessel, target)) return;
 		this . torpedo = null; this . flooded = 0;
 		if (this . display_element !== null) {this . display_element . bgColor = 'black'; this . display_element . innerHTML = '';}
 		return;

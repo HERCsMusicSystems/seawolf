@@ -21,7 +21,7 @@ var Virginia = function (name, country) {
 	this . inventory = {
 		Mark48: {constructor: Mark48, count: 24},
 		Mark46: {constructor: Mark48, count: 6},
-		Harpoon: {constructor: Harpoon, count: 6}
+		Harpoon: {constructor: Harpoon, count: 6, depth: 150}
 	};
 	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon']}, 4);
 	this . silo = {
@@ -85,7 +85,18 @@ Harpoon . prototype . siloLaunch = function (silo, vessel, target) {
 	if (target . type !== this . target_type && this . target_type !== 'all') return false;
 	this . target = selected . vessel;
 	var sp =  vessel . position;
-	this . position = {x: sp . x, y: sp . y, depth: -10, bearing: sp . bearing};
+	this . position = {x: sp . x, y: sp . y, depth: -32, bearing: sp . bearing};
+	this . targetBearing (this . target . position);
+	this . setSpeed ('full');
+	addVessel (this);
+	return true;
+};
+Harpoon . prototype . launch = function (tube, vessel, target) {
+	if (target !== undefined) this . target = target;
+	if (this . target === null) return false;
+	if (tube . depth > vessel . position . depth) return false;
+	var sp = vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: -32, bearing: sp . bearing};
 	this . targetBearing (this . target . position);
 	this . setSpeed ('full');
 	addVessel (this);
