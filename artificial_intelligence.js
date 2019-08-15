@@ -44,6 +44,26 @@ var torpedoAI = function (torpedo) {
 	};
 };
 
+var akulaAI = function (akula) {
+	this . mode = 'initiate_search';
+	this . code = function (delta) {
+		switch (this . mode) {
+		case 'initiate_search':
+			akula . targetDepth ('test', 1);
+			akula . setSpeed ('slow');
+			akula . bearing (Math . random () < 0.5 ? 1 : -1);
+			akula . sonar . deployTowedArray ();
+			this . mode = 'searching';
+			break;
+		case 'searching':
+			if (akula . position . depth === akula . test_depth) akula . targetDepth ('periscope', 1);
+			if (akula . position . depth === 60) akula . targetDepth ('test', 1);
+			break;
+		case 'waypoint': break;
+		}
+	};
+};
+
 var escortAI = function (escort) {
 	this . code = function (delta) {
 		escort . sonar . detect ();

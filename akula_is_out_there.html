@@ -60,6 +60,7 @@ texas . positionVessel (0, 0, 0, 800);
 var kuguar = new Akula ('Kuguar');
 kuguar . positionVessel (Math . random () * 4 - 2, Math . random () * 4 - 2, Math . floor (Math . random () * 360), 800);
 kuguar . setSpeed ('half');
+kuguar . ai = new akulaAI (kuguar);
 
 
 addVessel (texas);

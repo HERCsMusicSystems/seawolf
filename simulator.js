@@ -345,9 +345,9 @@ var resize = function (delta) {
 	if (selected !== null) {
 		var sv = selected . vessel;
 		bearing = displayBearing (sv . position . bearing);
-		selected_bearing . innerHTML = bearing;
-		selected_speed . innerHTML = sv . speed . x;
-		selected_depth . innerHTML = sv . position . depth;
+		selected_bearing . innerHTML = bearing . toFixed (0);
+		selected_speed . innerHTML = sv . speed . x . toFixed (0);
+		selected_depth . innerHTML = sv . position . depth . toFixed (0);
 		selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : sv . name + ' (' + sv . class + ' class)';
 		var vector = simulated . getRelativePositionOf (sv);
 		selected_distance . innerHTML = vector . distance . toFixed (2);
