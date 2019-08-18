@@ -12,6 +12,8 @@ var populateDialects = function () {
 		}
 	}
 };
+
+speechSynthesis . onvoiceschanged = function () {dialects = speechSynthesis . getVoices (); populateDialects ();};
 populateDialects ();
 
 var create_audio = function (file) {

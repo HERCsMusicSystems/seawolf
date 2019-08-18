@@ -21,7 +21,8 @@ var Virginia = function (name, country) {
 	this . inventory = {
 		Mark48: {constructor: Mark48, count: 24},
 		Mark46: {constructor: Mark48, count: 6},
-		Harpoon: {constructor: Harpoon, count: 6, depth: 150}
+		Harpoon: {constructor: Harpoon, count: 6, depth: 150},
+        Tomahawk: {constructor: Harpoon, count: 6, depth: 150}
 	};
 	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon']}, 4);
 	this . silo = {
@@ -79,7 +80,7 @@ var Harpoon = function (cable, name, country) {
 inherit (Harpoon, vessel);
 Harpoon . prototype . siloLaunch = function (silo, vessel, target) {
 	if (target === null) return false;
-	if (silo . depth > vessel . position . depth) return false;
+	if (vessel . position . depth > silo . depth) return false;
 	var vector = vessel . getRelativePositionOf (target);
 	if (vector . distance > this . range) return false;
 	if (target . type !== this . target_type && this . target_type !== 'all') return false;
