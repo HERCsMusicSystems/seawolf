@@ -31,7 +31,8 @@ var create_audio = function (file) {
 var music = {
 	akula: create_audio ('akula'),
 	Beowulf: create_audio ('01 Beowulf Main Title'),
-	light: create_audio ('LetThereBeLight')
+	light: create_audio ('LetThereBeLight'),
+	harpoonLaunch: create_audio ('harpoon_launch')
 };
 
 var PlayMusic = function (id) {music [id] . play ();};

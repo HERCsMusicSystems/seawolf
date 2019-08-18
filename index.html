@@ -46,7 +46,7 @@
       <option selected >Simulated</option>
       <option>Real</option>
     </select>
-    Music On/Off <input id="music_on_off" type="checkbox" checked onchange="javascript: if (this . checked) PlayMusic ('Beowulf'); else PauseMusic ('Beowulf');"/>
+    Music On/Off <input id="music_on_off" type="checkbox" onchange="javascript: if (this . checked) PlayMusic ('Beowulf'); else PauseMusic ('Beowulf');"/>
     Dialect <select id="dialect" onchange="javascript: localStorage . setItem ('dialect', this . value);">
     </select>
     <script type="text/javascript" charset="UTF-8">

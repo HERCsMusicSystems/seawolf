@@ -199,9 +199,15 @@ vessel . prototype . draw = function (ctx, status) {
 			else {ctx . moveTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y);}
 			break;
 		case 'rocket':
+			ctx . save ();
 			ctx . beginPath ();
-			ctx . moveTo (x - 8, y + 16); ctx . lineTo (x - 2, y + 10); ctx . lineTo (x - 2, y - 16); ctx . arc (x, y - 16, 2, Math . PI, 0);
-			ctx . lineTo (x + 2, y + 10); ctx . lineTo (x + 8, y + 16); ctx . closePath ();
+			ctx . translate (x, y);
+			ctx . rotate (this . position . bearing * Math . PI / 180);
+			ctx . moveTo (-4, 16);
+			ctx . lineTo (-2, 10);
+			ctx . lineTo (-2, -16); ctx . arc (0, -16, 2, Math . PI, 0);
+			ctx . lineTo (2, 10); ctx . lineTo (4, 16); ctx . closePath ();
+			ctx . restore ();
 			break;
 		default: break;
 	}
