@@ -1,13 +1,6 @@
 
+if (localStorage . getItem ('music') === 'true') PlayMusic ('akula');
 document . getElementById ('seawolf_game') . innerHTML = `
-<audio id="background_music" loop >
-	<source src="audio/akula.wav" type="audio/wav" />
-	<source src="audio/akula.mp3" type="audio/mpeg" />
-</audio>
-<audio id="sonar_ping">
-	<source src="audio/ping/ping_1.wav" type="audio/wav" />
-	<source src="audio/ping/ping_1.mp3" type="audio/mpeg" />
-</audio>
 <div><canvas id="seawolf" onmousedown="javascript: return onMouseDown (event);" ondblclick="javascript: setWaypoint (event);" style="cursor: default;"/></div>
 
 <div id="info" style="position: absolute; left: 8px; bottom: 8px; font-family: arial;">
@@ -36,7 +29,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<button onclick="javascript: simulation_ratio = 2;">&#xd7;2</button>
 				<button onclick="javascript: simulation_ratio = 4;">&#xd7;4</button>
 				<button onclick="javascript: simulation_ratio = 8;">&#xd7;8</button>
-				<button onclick="javascript: if (music . paused) music . play (); else music . pause ();">MUSIC</button>
+				<button onclick="javascript: if (localStorage . getItem ('music') === 'true') PauseMusicAndRemember ('akula'); else PlayMusicAndRemember ('akula');">MUSIC</button>
 			</td>
 		</tr>
 		<tr>
@@ -198,6 +191,7 @@ var simulationHitTest = function (x, y, reference, minimum_distance) {
   return null;
 };
 var explode = function (torpedo, range, depth, damage) {
+	torpedo . explodeSound ();
 	notifyExplosion (torpedo);
 	removeVessel (torpedo);
 	for (var ind in vessels) {
@@ -318,8 +312,6 @@ var thermocline_info = document . getElementById ('thermoclines');
 var info = document . getElementById ('info');
 var control_panel = document . getElementById ('ctrl');
 var weapons = document . getElementById ('weapon_table');
-var music = document . getElementById ('background_music');
-var sonar_ping = document . getElementById ('sonar_ping');
 
 var time = Date . now ();
 

@@ -102,6 +102,7 @@ var HarpoonAI = function (rocket) {
 		var vector = rocket . getRelativePositionOf (rocket . target);
 		if (vector . distance < 0.1) {
 			if (rocket . target . type === null) {rocket . target = null; return;}
+			rocket . explodeSound ();
 			notifyExplosion (rocket);
 			removeVessel (rocket);
 			notifyHit (rocket . target, rocket . attacker);

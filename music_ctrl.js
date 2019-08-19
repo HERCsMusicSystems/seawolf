@@ -30,18 +30,20 @@ var create_audio = function (file, loop) {
 
 
 var music = {
+	ping_1: create_audio ('ping/ping_1'),
 	akula: create_audio ('akula', true),
 	Beowulf: create_audio ('01 Beowulf Main Title'),
 	light: create_audio ('LetThereBeLight'),
-	harpoonLaunch: create_audio ('harpoon_launch')
+	harpoonLaunch: create_audio ('harpoon_launch'),
+	harpoonHit: create_audio ('harpoon_hit')
 };
 
 var PlayMusic = function (id) {music [id] . currentTime = 0; music [id] . play ();};
 var PauseMusic = function (id) {music [id] . pause ();};
 var LoopMusic = function (id, loop) {music [id] . loop = loop;};
 
-var PlayMusicAndRemember = function (ind) {localStorage . setItem ('music', true); PlayMusic (ind);};
-var PauseMusicAndRemember = function (ind) {localStorage . setItem ('music', false); PauseMusic (ind);};
+var PlayMusicAndRemember = function (ind) {localStorage . setItem ('music', 'true'); PlayMusic (ind);};
+var PauseMusicAndRemember = function (ind) {localStorage . setItem ('music', 'false'); PauseMusic (ind);};
 
 
 var say = function (word) {

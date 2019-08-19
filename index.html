@@ -115,9 +115,7 @@
 <script src="background_ctrl.js"></script>
 <script src="music_ctrl.js"></script>
 <script>
-  var music_remembered = localStorage . getItem ('music');
-  if (music_remembered || music_remembered === null) document . getElementById ('music_on_off') . checked = true;
-  LoopMusic ('Beowulf', false);
+  if (localStorage . getItem ('music') !== 'false') document . getElementById ('music_on_off') . checked = true;
   if (document . getElementById ('music_on_off') . checked) PlayMusicAndRemember ('Beowulf');
 </script>
 </body>

@@ -275,6 +275,8 @@ vessel . prototype . setTarget = function (target) {this . target = target;};
 
 vessel . prototype . detonate = function () {removeVessel (this);};
 
+vessel . prototype . explodeSound = function () {PlayMusic ('harpoonHit');};
+
 var tube = function (vessel, settings, speed) {
 	if (speed === undefined) speed = 0.05;
 	this . flooded = 0;
@@ -465,7 +467,8 @@ sonar . prototype . drawDetected = function (ctx) {
 	}
 };
 
-sonar . prototype . ping = function () {ping = {x: this . vessel . position . x, y: this . vessel . position . y, depth: this . vessel . position . depth, ping: 1000000000, attenuation: 0.125}; notifyPing (this . vessel);};
+sonar . prototype . ping = function () {ping = {x: this . vessel . position . x, y: this . vessel . position . y, depth: this . vessel . position . depth, ping: 1000000000, attenuation: 0.125}; notifyPing (this . vessel); this . playPing ();};
+sonar . prototype . playPing = function () {PlayMusic (ping_1);};
 sonar . prototype . deployTowedArray = function () {
 	if (this . towed_array_amplification <= 1) return;
 	this . deploying_speed = 0.05; this . vessel . speed_index_limit = 3;

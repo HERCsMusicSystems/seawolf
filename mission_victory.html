@@ -31,6 +31,6 @@
 <script src="logbook.js"></script>
 
 <script src="music_ctrl.js"></script>
-<script>LoopMusic ('light', false); PlayMusic ('light');</script>
+<script>if (localStorage . getItem ('music') === 'true') PlayMusic ('light');</script>
 
 </body>

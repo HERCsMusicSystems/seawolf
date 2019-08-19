@@ -8,7 +8,7 @@ var log = function (text) {
 
 var notifyVesselLost = function (vessel) {log ("Vessel " + vessel . name + " (Class " + vessel . class + ") lost."); checkGameStatus ();};
 
-var notifyPing = function (vessel) {sonar_ping . play ();};
+var notifyPing = function (vessel) {};
 
 var notifyTargetDetonated = function (detonated, detonator) {log (`${detonated . name} was detonated by ${detonator . name}.`);};
 
