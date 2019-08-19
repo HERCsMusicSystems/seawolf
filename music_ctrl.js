@@ -16,10 +16,11 @@ var populateDialects = function () {
 speechSynthesis . onvoiceschanged = function () {dialects = speechSynthesis . getVoices (); populateDialects ();};
 populateDialects ();
 
-var create_audio = function (file) {
+var create_audio = function (file, loop) {
 	var div = document . createElement ('div');
+	if (loop === undefined) loop = false;
 	div . innerHTML = `
-		<audio id="${file}_music" loop >
+		<audio id="${file}_music" ${loop ? 'loop' : ''} >
 			<source src="audio/${file}.wav" type="audio/wav" />
 			<source src="audio/${file}.mp3" type="audio/mpeg" />
 		</audio>`;
@@ -29,15 +30,18 @@ var create_audio = function (file) {
 
 
 var music = {
-	akula: create_audio ('akula'),
+	akula: create_audio ('akula', true),
 	Beowulf: create_audio ('01 Beowulf Main Title'),
 	light: create_audio ('LetThereBeLight'),
 	harpoonLaunch: create_audio ('harpoon_launch')
 };
 
-var PlayMusic = function (id) {music [id] . play ();};
+var PlayMusic = function (id) {music [id] . currentTime = 0; music [id] . play ();};
 var PauseMusic = function (id) {music [id] . pause ();};
 var LoopMusic = function (id, loop) {music [id] . loop = loop;};
+
+var PlayMusicAndRemember = function (ind) {localStorage . setItem ('music', true); PlayMusic (ind);};
+var PauseMusicAndRemember = function (ind) {localStorage . setItem ('music', false); PauseMusic (ind);};
 
 
 var say = function (word) {

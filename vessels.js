@@ -90,6 +90,7 @@ Harpoon . prototype . siloLaunch = function (silo, vessel, target) {
 	this . targetBearing (this . target . position);
 	this . setSpeed ('full');
 	addVessel (this);
+	PlayMusic ('harpoonLaunch');
 	return true;
 };
 Harpoon . prototype . launch = function (tube, vessel, target) {

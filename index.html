@@ -46,7 +46,7 @@
       <option selected >Simulated</option>
       <option>Real</option>
     </select>
-    Music On/Off <input id="music_on_off" type="checkbox" onchange="javascript: if (this . checked) PlayMusic ('Beowulf'); else PauseMusic ('Beowulf');"/>
+    Music On/Off <input id="music_on_off" type="checkbox" onchange="javascript: if (this . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');"/>
     Dialect <select id="dialect" onchange="javascript: localStorage . setItem ('dialect', this . value);">
     </select>
     <script type="text/javascript" charset="UTF-8">
@@ -114,7 +114,12 @@
   </div>
 <script src="background_ctrl.js"></script>
 <script src="music_ctrl.js"></script>
-<script>LoopMusic ('Beowulf', false); if (document . getElementById ('music_on_off') . checked) PlayMusic ('Beowulf'); </script>
+<script>
+  var music_remembered = localStorage . getItem ('music');
+  if (music_remembered || music_remembered === null) document . getElementById ('music_on_off') . checked = true;
+  LoopMusic ('Beowulf', false);
+  if (document . getElementById ('music_on_off') . checked) PlayMusicAndRemember ('Beowulf');
+</script>
 </body>
 
 </html>
