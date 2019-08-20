@@ -30,6 +30,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<button onclick="javascript: simulation_ratio = 4;">&#xd7;4</button>
 				<button onclick="javascript: simulation_ratio = 8;">&#xd7;8</button>
 				<button onclick="javascript: if (localStorage . getItem ('music') === 'false') {PlayMusicAndRemember ('akula'); this . innerText = 'MUSIC OFF';} else {PauseMusicAndRemember ('akula'); this . innerText = 'MUSIC ON';}">${localStorage . getItem ('music') === 'false' ? 'MUSIC ON' : 'MUSIC OFF'}</button>
+				<button onclick="window . location . href = 'mission_abort.html';">ABORT</button>
 			</td>
 		</tr>
 		<tr>
