@@ -356,30 +356,30 @@ var resize = function (delta) {
 	simulation_depth . innerHTML = simulated . position . depth . toFixed (0);
 	var thermocline_string = ''; for (var ind in thermoclines) thermocline_string += ' ' + thermoclines [ind] . depth;
 	thermocline_info . innerHTML = thermocline_string;
-	if (selected !== previous_selected) {
-		if (selected !== null) {
-			var sv = selected . vessel;
-			bearing = displayBearing (sv . position . bearing);
-			selected_bearing . innerHTML = bearing . toFixed (0);
-			selected_speed . innerHTML = sv . speed . x . toFixed (0);
-			selected_depth . innerHTML = sv . position . depth . toFixed (0);
-			selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : `${sv . name} (${sv . class} class)`;
-			var vector = simulated . getRelativePositionOf (sv);
-			selected_distance . innerHTML = vector . distance . toFixed (2);
-			bearing = displayBearing (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
-			//selected_heading . innerHTML = bearing;
-			selected_heading . innerHTML = '[' + bearing + '/' + simulated . sonar . getNoiseOf (sv) . toFixed (4) + ']';
+	if (selected !== null) {
+		var sv = selected . vessel;
+		bearing = displayBearing (sv . position . bearing);
+		selected_bearing . innerHTML = bearing . toFixed (0);
+		selected_speed . innerHTML = sv . speed . x . toFixed (0);
+		selected_depth . innerHTML = sv . position . depth . toFixed (0);
+		selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : `${sv . name} (${sv . class} class)`;
+		var vector = simulated . getRelativePositionOf (sv);
+		selected_distance . innerHTML = vector . distance . toFixed (2);
+		bearing = displayBearing (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
+		//selected_heading . innerHTML = bearing;
+		selected_heading . innerHTML = '[' + bearing + '/' + simulated . sonar . getNoiseOf (sv) . toFixed (4) + ']';
+		if (previous_selected !== selected) {
 			selected_image . innerHTML = `<a href="${sv . info}" target="_blank"><img src="silhouettes/${sv . image}.png" width="100" /></a>`;
-		} else {
-			selected_name . innerHTML = '<====>';
-			selected_heading . innerHTML = '<>';
-			selected_bearing . innerHTML = '<>';
-			selected_speed . innerHTML = '<>';
-			selected_depth . innerHTML = '<>';
-			selected_distance . innerHTML = '<>';
-			selected_image . innerHTML = '';
+			previous_selected = selected;
 		}
-		previous_selected = selected;
+	} else {
+		selected_name . innerHTML = '<====>';
+		selected_heading . innerHTML = '<>';
+		selected_bearing . innerHTML = '<>';
+		selected_speed . innerHTML = '<>';
+		selected_depth . innerHTML = '<>';
+		selected_distance . innerHTML = '<>';
+		selected_image . innerHTML = '';
 	}
 };
 
