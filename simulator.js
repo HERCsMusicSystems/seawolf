@@ -442,3 +442,6 @@ var setWaypoint = function (e) {
 document . body . onkeydown = ctrl;
 document . body . onwheel = onWheel;
 document . body . oncontextmenu = function (event) {event . preventDefault ();};
+
+localStorage . setItem ('logbook', JSON . stringify ([]));
+

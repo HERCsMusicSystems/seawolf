@@ -83,7 +83,6 @@ var escortAI = function (escort) {
 			var torpedo = new Mark48 (escort, 'SSNT', escort . country);
 			torpedo . cable_length = 0; torpedo . cable_to_ship_length = 0;
 			escort . fireRocketTorpedo (torpedo);
-			console . log ('target assigned', target . name);
 		}
 		if (escort . target !== null) {
 			escort . targetBearing (escort . target . position);
