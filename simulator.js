@@ -123,6 +123,19 @@ var inherit = function (from, to) {
   return from;
 };
 
+var SelectRandom = function (list, amount) {
+	if (amount === undefined) return list [Math . floor (Math . random () * list . length)];
+	var ret = [];
+	while (amount > 0) {
+		amount -= 1;
+		var ind = Math . floor (Math . random () * list . length);
+		ret . push (list [ind]);
+		list . splice (ind, 1);
+		console . log (ind, ret, list);
+	}
+	return ret;
+};
+
 var vessels = [];
 var remotes = {};
 
