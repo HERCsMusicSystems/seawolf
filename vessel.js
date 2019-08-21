@@ -399,8 +399,9 @@ sonar . prototype . detect = function (delta) {
 			this . towed_array_deployed = 1; this . deploying_speed = 0;
 			this . towed_array_current_amplification = this . towed_array_amplification;
 			this . vessel . speed_index_limit = this . vessel . speeds . length - 1;
+			sayWords (this . vessel, 'Towed array deployed.');
 		}
-		if (this . towed_array_deployed <= 0) {this . towed_array_deployed = 0; this . deploying_speed = 0; this . towed_array_current_amplification = 1;}
+		if (this . towed_array_deployed <= 0) {this . towed_array_deployed = 0; this . deploying_speed = 0; this . towed_array_current_amplification = 1; sayWords (this . vessel, 'Towed array retrieved.');}
 	}
 	this . detected = {};
 	for (var ind in vessels) {
@@ -482,6 +483,7 @@ sonar . prototype . retrieveTowedArray = function () {if (this . towed_array_amp
 sonar . prototype . cutTowedArray = function () {
 	this . towed_array_amplification = 1; this . towed_array_current_amplification = 1; this . towed_array_deployed = 0; this . deploying_speed = 0;
 	this . vessel . speed_index_limit = this . vessel . speeds . length - 1;
+	sayWords (this . vessel, 'Towed array cut.');
 };
 
 var Waypoint = function (x, y, depth) {

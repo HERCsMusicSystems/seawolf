@@ -53,3 +53,5 @@ var say = function (word) {
 	speechSynthesis . speak (word);
 };
 
+var sayWords = function (vessel, words) {if (vessel === simulated) say (words);};
+

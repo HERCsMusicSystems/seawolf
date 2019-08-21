@@ -10,6 +10,8 @@ var Oiler = function (name, country) {
 	this . strength = 5;
 };
 inherit (Oiler, vessel);
+Oiler . prototype . image = 'OilTanker';
+Oiler . prototype . info = 'https://en.wikipedia.org/wiki/Oil_tanker';
 
 var Virginia = function (name, country) {
 	if (country === undefined) country = 'USA';
@@ -19,15 +21,13 @@ var Virginia = function (name, country) {
 	this . speeds = [0, 2, 8, 15, 19, 25, 35];
 	this . sonar = new sonar (this);
 	this . inventory = {
-		Mark48: {constructor: Mark48, count: 24},
-		Mark46: {constructor: Mark48, count: 6},
-		Harpoon: {constructor: Harpoon, count: 6, depth: 150},
-        Tomahawk: {constructor: Harpoon, count: 6, depth: 150}
+		Mark48: {constructor: Mark48, count: 29},
+		Harpoon: {constructor: Harpoon, count: 4, depth: 150},
+        Tomahawk: {constructor: Tomahawk, count: 4, depth: 150}
 	};
-	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon']}, 4);
+	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk']}, 4);
 	this . silo = {
-		Tomahawk: {constructor: Harpoon, amount: 6, depth: 150},
-		Harpoon: {constructor: Harpoon, amount: 6, depth: 150},
+		Tomahawk: {constructor: Harpoon, amount: 12, depth: 150},
 		Decoy: {constructor: Decoy, amount: 6}
 	}
 };
@@ -47,6 +47,8 @@ var Akula = function (name, country) {
 	this . sonar = new sonar (this);
 };
 inherit (Akula, vessel);
+Akula . prototype . image = 'Akula';
+Akula . prototype . info = 'https://en.wikipedia.org/wiki/Akula-class_submarine';
 
 var Sovremenny = function (name, country) {
 	if (country === undefined) country = 'Russia';
@@ -107,6 +109,52 @@ Harpoon . prototype . launch = function (tube, vessel, target) {
 	return true;
 };
 
+//////////////
+// Tomahawk //
+//////////////
+
+var Tomahawk = function (cable, name, country) {
+	if (name === undefined) name = 'Tomahawk';
+	if (country === undefined) country = cable . country;
+	vessel . call (this, country);
+	this . attacker = cable;
+	this . type = 'rocket';
+	this . class = 'Tomahawk';
+	this . name = name;
+	this . country = country;
+	this . speeds = [467, 467, 467, 467, 467, 467, 467];
+	this . ai = new HarpoonAI (this);
+	this . target_type = 'surface';
+	this . range = 150;
+};
+inherit (Tomahawk, vessel);
+Tomahawk . prototype . siloLaunch = function (silo, vessel, target) {
+	if (target === null) return false;
+	if (vessel . position . depth > silo . depth) return false;
+	var vector = vessel . getRelativePositionOf (target);
+	if (vector . distance > this . range) return false;
+	if (target . type !== this . target_type && this . target_type !== 'all') return false;
+	this . target = selected . vessel;
+	var sp =  vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: -32, bearing: sp . bearing};
+	this . targetBearing (this . target . position);
+	this . setSpeed ('full');
+	addVessel (this);
+	PlayMusic ('harpoonLaunch');
+	return true;
+};
+Tomahawk . prototype . launch = function (tube, vessel, target) {
+	if (target !== undefined) this . target = target;
+	if (this . target === null) return false;
+	if (tube . depth > vessel . position . depth) return false;
+	var sp = vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: -32, bearing: sp . bearing};
+	this . targetBearing (this . target . position);
+	this . setSpeed ('full');
+	addVessel (this);
+	return true;
+};
+
 ///////////
 // Decoy //
 ///////////
@@ -126,6 +174,7 @@ var Decoy = function (cable, name, country) {
 	console . log (this . position);
 	this . setSpeed ('full');
 	this . ai = new DecoyAI (this);
+	this . strength = 0.2;
 };
 inherit (Decoy, vessel);
 Decoy . prototype . siloLaunch = function (silo, vessel, target) {
