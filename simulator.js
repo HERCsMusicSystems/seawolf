@@ -30,7 +30,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<button onclick="javascript: simulation_ratio = 4;">&#xd7;4</button>
 				<button onclick="javascript: simulation_ratio = 8;">&#xd7;8</button>
 				<button onclick="javascript: if (localStorage . getItem ('music') === 'false') {PlayMusicAndRemember ('akula'); this . innerText = 'MUSIC OFF';} else {PauseMusicAndRemember ('akula'); this . innerText = 'MUSIC ON';}">${localStorage . getItem ('music') === 'false' ? 'MUSIC ON' : 'MUSIC OFF'}</button>
-				<button onclick="window . location . href = 'mission_abort.html';">ABORT</button>
+				<button onclick="javascript: MissionAbort ();">ABORT</button>
 			</td>
 		</tr>
 		<tr>
@@ -38,11 +38,12 @@ document . getElementById ('seawolf_game') . innerHTML = `
 			<td>
 				<button onclick="javascript: simulated . targetDepth ('surface');">SURFACE</button>
 				<button onclick="javascript: simulated . targetDepth ('periscope');">PERISCOPE</button>
+				<button onclick="javascript: simulated . targetDepth ('attack');">ATTACK</button>
 				<button onclick="javascript: simulated . targetDepth ('up thermal');">UP THERMAL</button>
 				<button onclick="javascript: simulated . targetDepth ('down thermal');">DOWN THERMAL</button>
 				<button onclick="javascript: simulated . targetDepth ('test');">TEST</button>
 				<button onclick="javascript: simulated . targetDepth ('crush');">COLLAPSE</button>
-				<button onclick="javascript: simulated . targetDepth (prompt ('Enter depth')); time = Date . now ();">SPECIFY</button>
+				<button onclick="javascript: PauseSimulation (); simulated . targetDepth (prompt ('Enter depth')); ResumeSimulation ();">SPECIFY</button>
 			</td>
 		</tr>
 		<tr>
@@ -157,11 +158,14 @@ var MissionDefeat = function () {
 };
 
 var MissionAbort = function () {
-	if (window . location . protocol . indexOf ('file') >= 0) {
-		var address = window . location . pathname;
-		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
-		window . location . assign (address . substring (0, index) + 'mission_abort.html');
-	} else window . location . assign ('/mission_abort.html');
+	PauseSimulation ();
+	if (confirm ('Do you wish to abort the mission?')) {
+		if (window . location . protocol . indexOf ('file') >= 0) {
+			var address = window . location . pathname;
+			var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
+			window . location . assign (address . substring (0, index) + 'mission_abort.html');
+		} else window . location . assign ('/mission_abort.html');
+	} else ResumeSimulation ();
 };
 
 var addVessel = function (vessel) {vessels . push (vessel);};
@@ -222,8 +226,9 @@ var matchDepth = function (depth) {
 };
 var promptDepth = function () {
 	if (selected === null || selected . vessel . type !== 'torpedo' || selected . vessel . cable !== simulated) return;
+	PauseSimulation ();
 	var depth = prompt ('Enter depth');
-	time = Date . now ();
+	ResumeSimulation ();
 	if (depth !== null) selected . vessel . targetDepth (depth);
 };
 var acquireSubmarineTarget = function () {
@@ -247,7 +252,7 @@ var targetSelect = function () {
 	default_select = false; canvas . style . cursor = 'crosshair';
 };
 
-var thermoclines = [{depth: 120, attenuation: 0.01}, {depth: 240, attenuation: 0.01}, {depth: 600, attenuation: 0.001}, {depth: 1200, attenuation: 0.001}];
+var thermoclines = [{depth: 160, attenuation: 0.01}, {depth: 320, attenuation: 0.01}, {depth: 600, attenuation: 0.001}, {depth: 1200, attenuation: 0.001}];
 
 var friends = {
   'USA': ['USA', 'Great Britain', 'Australia'],
@@ -358,6 +363,9 @@ var resize = function (delta) {
 };
 
 var simulation_interval = setInterval (resize, 50);
+
+var PauseSimulation = function () {clearInterval (simulation_interval);};
+var ResumeSimulation = function () {time = Date . now (); simulation_interval = setInterval (resize, 50);};
 
 var ctrl = function (e) {
 	var key = e . key . toLowerCase ();

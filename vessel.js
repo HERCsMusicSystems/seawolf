@@ -114,6 +114,7 @@ vessel . prototype . targetDepth = function (depth, index) {
 	switch (depth) {
 		case 'surface': this . depth_target = 0; break;
 		case 'periscope': this . depth_target = 60; break;
+		case 'attack': this . depth_target = 150; break;
 		case 'down thermal':
 			for (var ind in thermoclines) {
 				if (thermoclines [ind] . depth > this . position . depth) {this . depth_target = thermoclines [ind] . depth + 18; return;}
