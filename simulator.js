@@ -5,11 +5,11 @@ document . getElementById ('seawolf_game') . innerHTML = `
 
 <div id="info" style="position: absolute; left: 8px; bottom: 8px; font-family: arial;">
 	<table style="background: #0000ffb0; color: yellow;">
-		<tr><td>Bearing:</td><td><div id="simulation_bearing"/></td><td><div id="selected_bearing"/></td></tr>
+		<tr><td>Bearing:</td><td><div id="simulation_bearing"/></td><td><div id="selected_bearing"/></td><td rowspan="5"><div id="selected_image"/></td></tr>
 		<tr><td>Speed:</td><td><div id="simulation_speed"/></td><td><div id="selected_speed"/></td></tr>
 		<tr><td>Depth:</td><td><div id="simulation_depth"/></td><td><div id="selected_depth"/></td></tr>
 		<tr><td><div id="selected_name"/></td><td><div id="selected_distance"/></td><td><div id="selected_heading"/></td></tr>
-		<tr><td>Thermoclines:</td><td><div id="thermoclines"/></td></tr>
+		<tr><td>Thermoclines:</td><td colspan="2"><div id="thermoclines"/></td></tr>
 	</table>
 </div>
 
@@ -335,6 +335,8 @@ var weapons = document . getElementById ('weapon_table');
 
 var time = Date . now ();
 
+var previous_selected = null;
+
 var resize = function (delta) {
 	var now = Date . now ();
 	if (delta === undefined) delta = (now - time) * simulation_ratio / 1000;
@@ -354,25 +356,30 @@ var resize = function (delta) {
 	simulation_depth . innerHTML = simulated . position . depth . toFixed (0);
 	var thermocline_string = ''; for (var ind in thermoclines) thermocline_string += ' ' + thermoclines [ind] . depth;
 	thermocline_info . innerHTML = thermocline_string;
-	if (selected !== null) {
-		var sv = selected . vessel;
-		bearing = displayBearing (sv . position . bearing);
-		selected_bearing . innerHTML = bearing . toFixed (0);
-		selected_speed . innerHTML = sv . speed . x . toFixed (0);
-		selected_depth . innerHTML = sv . position . depth . toFixed (0);
-		selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : sv . name + ' (' + sv . class + ' class)';
-		var vector = simulated . getRelativePositionOf (sv);
-		selected_distance . innerHTML = vector . distance . toFixed (2);
-		bearing = displayBearing (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
-		//selected_heading . innerHTML = bearing;
-		selected_heading . innerHTML = '[' + bearing + '/' + simulated . sonar . getNoiseOf (sv) . toFixed (4) + ']';
-	} else {
-		selected_name . innerHTML = '<====>';
-		selected_heading . innerHTML = '<>';
-		selected_bearing . innerHTML = '<>';
-		selected_speed . innerHTML = '<>';
-		selected_depth . innerHTML = '<>';
-		selected_distance . innerHTML = '<>';
+	if (selected !== previous_selected) {
+		if (selected !== null) {
+			var sv = selected . vessel;
+			bearing = displayBearing (sv . position . bearing);
+			selected_bearing . innerHTML = bearing . toFixed (0);
+			selected_speed . innerHTML = sv . speed . x . toFixed (0);
+			selected_depth . innerHTML = sv . position . depth . toFixed (0);
+			selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : `${sv . name} (${sv . class} class)`;
+			var vector = simulated . getRelativePositionOf (sv);
+			selected_distance . innerHTML = vector . distance . toFixed (2);
+			bearing = displayBearing (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
+			//selected_heading . innerHTML = bearing;
+			selected_heading . innerHTML = '[' + bearing + '/' + simulated . sonar . getNoiseOf (sv) . toFixed (4) + ']';
+			selected_image . innerHTML = `<a href="${sv . info}" target="_blank"><img src="silhouettes/${sv . image}.png" width="100" /></a>`;
+		} else {
+			selected_name . innerHTML = '<====>';
+			selected_heading . innerHTML = '<>';
+			selected_bearing . innerHTML = '<>';
+			selected_speed . innerHTML = '<>';
+			selected_depth . innerHTML = '<>';
+			selected_distance . innerHTML = '<>';
+			selected_image . innerHTML = '';
+		}
+		previous_selected = selected;
 	}
 };
 

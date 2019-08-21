@@ -58,6 +58,8 @@ var Sovremenny = function (name, country) {
 	this . sonar = new sonar (this);
 }
 inherit (Sovremenny, vessel);
+Sovremenny . prototype . image = 'Sovremenny';
+Sovremenny . prototype . info = 'https://en.wikipedia.org/wiki/Sovremenny-class_destroyer';
 
 /////////////
 // Harpoon //

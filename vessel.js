@@ -37,6 +37,9 @@ var vessel = function (country) {
 	this . attacker = this;
 };
 
+vessel . prototype . image = 'Default';
+vessel . prototype . info = 'https://en.wikipedia.org/wiki/Warship'
+
 vessel . prototype . noiseLevel = function () {return this . noise;};
 
 vessel . prototype . positionVessel = function (x, y, bearing, depth) {
