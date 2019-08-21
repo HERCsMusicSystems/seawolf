@@ -340,7 +340,7 @@ tube . prototype . load = function (selector) {
 	if (inventory == null || inventory . count < 1) {notifyNoMoreTorpedoes (selector); return;}
 	inventory . count --;
 	this . torpedo = new inventory . constructor (this . vessel, selector);
-	if (this . display_element !== null) this . display_element . innerHTML = `<img src="${this . torpedo . class}.png" width="100"/>`;
+	if (this . display_element !== null) this . display_element . innerHTML = `<img src="silhouettes/${this . torpedo . class}.png" width="100"/>`;
 	if (this . display_element) update_inventory_info (this . vessel);
 };
 
