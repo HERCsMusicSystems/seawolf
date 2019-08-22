@@ -39,6 +39,7 @@
 
 <!--<body bgcolor="#0000aa" style="font-family: arial; color: green; background-image: url('images/virginiaclasssubmarine.jpg'); background-size: cover;">-->
 <body bgcolor="#0000aa" style="font-family: arial; color: gold; text-shadow: 1px 1px black; background-image: url('images/Submarine2.jpg'); background-size: cover;">
+  <script>var scenarios = {};</script>
   <h1>SEAWOLF Submarine Simulator</h1>
   <div>
     Mission Type:
@@ -46,19 +47,34 @@
       <option selected >Simulated</option>
       <option>Real</option>
     </select>
-    Music On/Off <input id="music_on_off" type="checkbox" onchange="javascript: if (this . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');"/>
-    Dialect <select id="dialect" onchange="javascript: localStorage . setItem ('dialect', this . value);">
+    Choose a side:
+    <select id="side_selector" onchange="javascript: localStorage . setItem ('side', this . value); populate_scenarios (); populate_captains ();">
+      <option selected>U.S.A.</option>
+      <option>Russia</option>
+      <option>United Kingdom</option>
+      <option>Germany</option>
+      <option>France</option>
+      <option>India</option>
+      <option>China</option>
     </select>
+    Music On/Off <input id="music_on_off" type="checkbox" onchange="javascript: if (this . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');"/>
+    Dialect <select id="dialect" onchange="javascript: localStorage . setItem ('dialect', this . value);"></select>
+    <button onclick="javascript: CreateCaptain ();">Create Captain</button>
     <script type="text/javascript" charset="UTF-8">
-    var mission_type = localStorage . getItem ('mission_type');
-    var mission_type_selector = document . getElementById ('mission_type_selector');
-    if (mission_type !== null) document . getElementById ('mission_type_selector') . value = mission_type;
-    else localStorage . setItem ('mission_type', mission_type_selector . value);
+      var mission_type = localStorage . getItem ('mission_type');
+      var mission_type_selector = document . getElementById ('mission_type_selector');
+      if (mission_type !== null) mission_type_selector . value = mission_type;
+      else localStorage . setItem ('mission_type', mission_type_selector . value);
+
+      var side = localStorage . getItem ('side');
+      var side_selector = document . getElementById ('side_selector');
+      if (side !== null) side_selector . value = side;
+      else localStorage . setItem ('side', side_selector . value);
     </script>
     <h2>Scenarios:</h2>
     <font size="+1">
-    <ul>
-      <li><a href="three_oilers.html">Three Oilers</a>: Iran has violated embargo on exporting oil.
+    <ul id="scenario_content">
+      <!--<li><a href="three_oilers.html">Three Oilers</a>: Iran has violated embargo on exporting oil.
         <br/>
         A convoy of three tankers needs to be eliminated.
       </li>
@@ -67,9 +83,12 @@
         A convoy needs to be eliminated, but this time there is a Russian escort involved.
       </li>
       <li><a href="akula_is_out_there.html">Aku&#x142;a is out there!</a> (this does not work so don't try it yet....)</li>
-      <li><a href="alpha_is_out_there.html">Alpha is out there!</a> (this scenario does not even exist yet....)</li>
+      <li><a href="alpha_is_out_there.html">Alpha is out there!</a> (this scenario does not even exist yet....)</li>-->
     </ul>
     </font>
+    <h2>Captains:</h2>
+    <table id="captains_table" border=1>
+    </table>
     <br /><br /><br /><br />
     <div style="color: gold; text-shadow: 2px 2px black; ">
       <font size="+1">
@@ -114,9 +133,55 @@
   </div>
 <script src="background_ctrl.js"></script>
 <script src="music_ctrl.js"></script>
+<script src="scenarios/U.S.A./scenarios.js"></script>
 <script>
   document . getElementById ('music_on_off') . checked = localStorage . getItem ('music') !== 'false' ? true : false;
   if (document . getElementById ('music_on_off') . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');
+  
+  var populate_scenarios = function () {
+    var side = localStorage . getItem ('side');
+    var scenario_content = document . getElementById ('scenario_content');
+    if (scenario_content === null) return;
+    scenario_content . innerHTML = '';
+    for (var ind in scenarios [side]) {
+      var title = scenarios [side] [ind] . Title;
+      var instructions = scenarios [side] [ind] . Instructions;
+      var li = document . createElement ('li');
+      li . innerHTML = `<a href="scenarios/${side}/${title}.html">${title}</a>: ${instructions}`;
+      scenario_content . appendChild (li);
+    }
+  };
+  populate_scenarios ();
+
+  var PopulateCaptains = function () {
+    var side = localStorage . getItem ('side');
+    var current_captain = localStorage . getItem (`captain:${side}`);
+  };
+  
+  var CreateCaptain = function () {
+    var captain = prompt ('Enter Captains\' Name');
+    if (captain === null) return;
+    var side_name = localStorage . getItem ('side'); if (side_name === null) return;
+    var side = JSON . parse (localStorage . getItem (side_name) || '{"captains": {}}');
+    side . captains [captain] = {score: 0, victory: 0, abort: 0, defeat: 0, scenarios: []};
+    side . captain = captain;
+    localStorage . setItem (side_name, JSON . stringify (side));
+    populate_captains ();
+  };
+
+  var populate_captains = function () {
+    document . getElementById ('captains_table') . innerHTML = '';
+    var side_name = localStorage . getItem ('side');
+    var side = JSON . parse (localStorage . getItem (side_name));
+    if (side === null) return;
+    var content = '<tr><td></td><td align="center">Name</td><td>Score</td><td>Victories</td><td>Aborts</td><td>Defeats</td></tr>'
+    for (var ind in side . captains) {
+      var captain = side . captains [ind];
+      content += `<tr><td><input type="radio" name="captains" ${side . captain === ind ? 'checked' : ''}/></td><td align="left">${ind}</td><td align="center">${captain . score}</td><td align="center">${captain . victory}</td><td align="center">${captain . abort}</td><td align="center">${captain . defeat}</td></tr>`;
+    }
+    document . getElementById ('captains_table') . innerHTML = content;
+  };
+  populate_captains ();
 </script>
 </body>
 

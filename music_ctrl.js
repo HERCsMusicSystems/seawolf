@@ -3,6 +3,7 @@
 var dialect = document . getElementById ('dialect');
 var dialects = speechSynthesis . getVoices ();
 var populateDialects = function () {
+	if (dialect === null) return;
 	if (dialect !== null) {
 		for (var ind in dialects) {
 			var el = document . createElement ('option');
@@ -11,6 +12,9 @@ var populateDialects = function () {
 			dialect . appendChild (el);
 		}
 	}
+	var d = localStorage . getItem ('dialect');
+	if (d !== null) dialect . value = d;
+	else localStorage . setItem ('dialect', dialect . value);
 };
 
 speechSynthesis . onvoiceschanged = function () {dialects = speechSynthesis . getVoices (); populateDialects ();};

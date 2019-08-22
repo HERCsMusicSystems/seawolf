@@ -268,21 +268,21 @@ var targetSelect = function () {
 var thermoclines = [{depth: 160, attenuation: 0.01}, {depth: 320, attenuation: 0.01}, {depth: 600, attenuation: 0.001}, {depth: 1200, attenuation: 0.001}];
 
 var friends = {
-  'USA': ['USA', 'Great Britain', 'Australia'],
-  'Great Britain': ['Great Britain', 'Australia', 'USA'],
-  'Australia': ['Australia', 'Great Britain', 'USA'],
+  'U.S.A.': ['U.S.A.', 'United Kingdom', 'Australia'],
+  'United Kingdom': ['United Kingdom', 'Australia', 'U.S.A.'],
+  'Australia': ['Australia', 'United Kingdom', 'U.S.A.'],
   'Russia': ['Russia', 'India', 'China'],
   'China': ['China', 'Russia', 'India'],
   'India': ['India', 'Russia', 'China']
 };
 
 var enemies = {
-  'USA': ['Russia', 'China', 'India'],
-  'Great Britain': ['Russia', 'China', 'India'],
+  'U.S.A.': ['Russia', 'China', 'India'],
+  'United Kingdom': ['Russia', 'China', 'India'],
   'Australia': ['Russia', 'China', 'India'],
-  'Russia': ['USA', 'Great Britain', 'Australia'],
-  'China': ['USA', 'Great Britain', 'Australia'],
-  'India': ['USA', 'Great Britain', 'Australia']
+  'Russia': ['U.S.A.', 'United Kingdom', 'Australia'],
+  'China': ['U.S.A.', 'Uniged Kingdom', 'Australia'],
+  'India': ['U.S.A.', 'United kingdom', 'Australia']
 };
 
 var scaling = 1;
