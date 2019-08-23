@@ -112,7 +112,7 @@ seawolfclasssubmarine.jpg
 ` + goodLooking) . split ('\n');
 var index;
 while ((index = dir . indexOf ('')) >= 0) dir . splice (index, 1);
-for (index in dir) dir [index] = "url('images/" + dir [index] + "')";
+for (index in dir) dir [index] = `url('/images/${dir [index]}')`;
 var backgrounds = dir;
 document . body . style . backgroundImage = backgrounds [Math . floor (Math . random () * backgrounds . length)];
 console . log (document . body . style . backgroundImage);

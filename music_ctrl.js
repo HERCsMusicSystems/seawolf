@@ -25,8 +25,8 @@ var create_audio = function (file, loop) {
 	if (loop === undefined) loop = false;
 	div . innerHTML = `
 		<audio id="${file}_music" ${loop ? 'loop' : ''} >
-			<source src="audio/${file}.wav" type="audio/wav" />
-			<source src="audio/${file}.mp3" type="audio/mpeg" />
+			<source src="/audio/${file}.wav" type="audio/wav" />
+			<source src="/audio/${file}.mp3" type="audio/mpeg" />
 		</audio>`;
 	document . body . appendChild (div);
 	return document . getElementById (`${file}_music`);
