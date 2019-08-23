@@ -39,7 +39,6 @@
 
 <!--<body bgcolor="#0000aa" style="font-family: arial; color: green; background-image: url('images/virginiaclasssubmarine.jpg'); background-size: cover;">-->
 <body bgcolor="#0000aa" style="font-family: arial; color: gold; text-shadow: 1px 1px black; background-image: url('images/Submarine2.jpg'); background-size: cover;">
-  <script>var scenarios = {};</script>
   <h1>SEAWOLF Submarine Simulator</h1>
   <div>
     Mission Type:
@@ -133,7 +132,7 @@
   </div>
 <script src="background_ctrl.js"></script>
 <script src="music_ctrl.js"></script>
-<script src="scenarios/U.S.A./scenarios.js"></script>
+<script src="scenarios.js"></script>
 <script>
   document . getElementById ('music_on_off') . checked = localStorage . getItem ('music') !== 'false' ? true : false;
   if (document . getElementById ('music_on_off') . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');
@@ -147,7 +146,7 @@
       var title = scenarios [side] [ind] . Title;
       var instructions = scenarios [side] [ind] . Instructions;
       var li = document . createElement ('li');
-      li . innerHTML = `<a href="scenarios/${side}/${title}.html">${title}</a>: ${instructions}`;
+      li . innerHTML = `<a href="scenarios_${side}_${title}.html">${title}</a>: ${instructions}`;
       scenario_content . appendChild (li);
     }
   };
