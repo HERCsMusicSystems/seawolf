@@ -14,7 +14,7 @@ Oiler . prototype . image = 'OilTanker';
 Oiler . prototype . info = 'https://en.wikipedia.org/wiki/Oil_tanker';
 
 var Virginia = function (name, country) {
-	if (country === undefined) country = 'USA';
+	if (country === undefined) country = 'U.S.A.';
 	vessel . call (this, country);
 	this . class = 'Virginia';
 	this . name = name;
@@ -23,7 +23,7 @@ var Virginia = function (name, country) {
 	this . inventory = {
 		Mark48: {constructor: Mark48, count: 29},
 		Harpoon: {constructor: Harpoon, count: 4, depth: 150},
-        Tomahawk: {constructor: Tomahawk, count: 4, depth: 150}
+		Tomahawk: {constructor: Tomahawk, count: 4, depth: 150}
 	};
 	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk']}, 4);
 	this . silo = {
@@ -32,6 +32,8 @@ var Virginia = function (name, country) {
 	}
 };
 inherit (Virginia, vessel);
+Virginia . prototype . image = 'Virginia';
+Virginia . prototype . info = 'https://en.wikipedia.org/wiki/Virginia-class_submarine';
 
 var Akula = function (name, country) {
 	if (country === undefined) country = 'Russia';
@@ -226,5 +228,7 @@ var Mark48 = function (cable, name, country) {
 	this . trail_length = 100;
 };
 inherit(Mark48, vessel);
+Mark48 . prototype . image = 'Mark48';
+Mark48 . prototype . info = 'https://en.wikipedia.org/wiki/Mark_48_torpedo';
 
 var Mark46 = function (cable, name, country) {};
