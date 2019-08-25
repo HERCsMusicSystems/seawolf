@@ -1,4 +1,24 @@
 
+var inherit = function (from, to) {
+  if (to === undefined) {to = from; from = function () {to . apply (this, arguments);}}
+  from . prototype = Object . create (to . prototype);
+  from . prototype . constructor = from;
+  return from;
+};
+
+var SelectRandom = function (list, amount) {
+	if (amount === undefined) return list [Math . floor (Math . random () * list . length)];
+	var ret = [];
+	while (amount > 0) {
+		amount -= 1;
+		var ind = Math . floor (Math . random () * list . length);
+		ret . push (list [ind]);
+		list . splice (ind, 1);
+		console . log (ind, ret, list);
+	}
+	return ret;
+};
+
 var vessel_id = 0;
 
 var vessel = function (country) {

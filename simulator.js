@@ -5,7 +5,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 
 <div id="info" style="position: absolute; left: 8px; bottom: 8px; font-family: arial;">
 	<table style="background: #0000ffb0; color: yellow;">
-		<tr><td>Bearing:</td><td><div id="simulation_bearing"/></td><td><div id="selected_bearing"/></td><td rowspan="5"><div id="selected_image"/></td></tr>
+		<tr><td>Bearing:</td><td><div id="simulation_bearing"/></td><td><div id="selected_bearing"/></td><td rowspan="5"><div id="selected_image" style="text-align: center;"/></td></tr>
 		<tr><td>Speed:</td><td><div id="simulation_speed"/></td><td><div id="selected_speed"/></td></tr>
 		<tr><td>Depth:</td><td><div id="simulation_depth"/></td><td><div id="selected_depth"/></td></tr>
 		<tr><td><div id="selected_name"/></td><td><div id="selected_distance"/></td><td><div id="selected_heading"/></td></tr>
@@ -114,26 +114,6 @@ var fill_weapons_table = function (vessel) {
 	for (var ind in vessel . tubes) vessel . tubes [ind] . display_element = document . getElementById (`tube_${ind}`);
 	inventory_info = document . getElementById ('inventory');
 	update_inventory_info (vessel);
-};
-
-var inherit = function (from, to) {
-  if (to === undefined) {to = from; from = function () {to . apply (this, arguments);}}
-  from . prototype = Object . create (to . prototype);
-  from . prototype . constructor = from;
-  return from;
-};
-
-var SelectRandom = function (list, amount) {
-	if (amount === undefined) return list [Math . floor (Math . random () * list . length)];
-	var ret = [];
-	while (amount > 0) {
-		amount -= 1;
-		var ind = Math . floor (Math . random () * list . length);
-		ret . push (list [ind]);
-		list . splice (ind, 1);
-		console . log (ind, ret, list);
-	}
-	return ret;
 };
 
 var vessels = [];
@@ -362,14 +342,15 @@ var resize = function (delta) {
 		selected_bearing . innerHTML = bearing . toFixed (0);
 		selected_speed . innerHTML = sv . speed . x . toFixed (0);
 		selected_depth . innerHTML = sv . position . depth . toFixed (0);
-		selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : `${sv . name} (${sv . class} class)`;
+//		selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : `${sv . name} (${sv . class} class)`;
+		selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : `${sv . class}:`;
 		var vector = simulated . getRelativePositionOf (sv);
 		selected_distance . innerHTML = vector . distance . toFixed (2);
 		bearing = displayBearing (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
-		//selected_heading . innerHTML = bearing;
-		selected_heading . innerHTML = '[' + bearing + '/' + simulated . sonar . getNoiseOf (sv) . toFixed (4) + ']';
+		selected_heading . innerHTML = bearing;
+//		selected_heading . innerHTML = '[' + bearing + '/' + simulated . sonar . getNoiseOf (sv) . toFixed (4) + ']';
 		if (previous_selected !== selected) {
-			selected_image . innerHTML = selected . status === 'unknown' ? '' : `<a href="${sv . info}" target="_blank"><img src="silhouettes/${sv . image}.png" width="100" /></a>`;
+			selected_image . innerHTML = selected . status === 'unknown' ? '' : `<a href="${sv . info}" target="_blank"><img src="silhouettes/${sv . image}.png" height="80" /></a><br/>${sv . name}`;
 			previous_selected = selected;
 		}
 	} else {
