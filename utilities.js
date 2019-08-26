@@ -10,7 +10,7 @@ var side = JSON . parse (localStorage . getItem (side_name));
 var captain = side . captains [side . captain];
 
 var promote = function () {
-  var ret = 'No promotion this time.';
+  var ret = '';
   if (captain . rank_id < ranks [side_name] . length - 1) {
     captain . rank_id += 1;
     ret = `${captain . rank} ${side . captain} will be promoted to ${ranks [side_name] [captain . rank_id]}`;

@@ -134,6 +134,7 @@ var checkGameStatus = function () {console . log ("Checking end condition.");};
 
 var MissionVictory = function () {
 	alert ("Victory");
+	localStorage . setItem ('ChangesAllowed', 'true');
 	if (window . location . protocol . indexOf ('file') >= 0) {
 		var address = window . location . pathname;
 		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
@@ -143,6 +144,7 @@ var MissionVictory = function () {
 
 var MissionDefeat = function () {
 	alert ("Defeat");
+	localStorage . setItem ('ChangesAllowed', 'true');
 	if (window . location . protocol . indexOf ('file') >= 0) {
 		var address = window . location . pathname;
 		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
@@ -153,6 +155,7 @@ var MissionDefeat = function () {
 var MissionAbort = function () {
 	PauseSimulation ();
 	if (confirm ('Do you wish to abort the mission?')) {
+		localStorage . setItem ('ChangesAllowed', 'true');
 		if (window . location . protocol . indexOf ('file') >= 0) {
 			var address = window . location . pathname;
 			var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;

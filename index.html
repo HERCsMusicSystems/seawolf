@@ -129,7 +129,9 @@
 
   var CheckCaptain = function () {
     var side = JSON . parse (localStorage . getItem (localStorage . getItem ('side')));
-    if (side . captain === '') {setTimeout (function () {alert ('You need to create/select a captain for your mission.');}, 1000); return false;}
+    if (side . captain === '') {alert ('You need to create/select a captain for your mission.'); return false;}
+    var captain = side . captains [side . captain];
+    if (captain . status !== 'Active') {alert ("You need to select a captain, who is Active in service."); return false;}
     return true;
   };
   
@@ -148,11 +150,6 @@
   };
   populate_scenarios ();
 
-  var PopulateCaptains = function () {
-    var side = localStorage . getItem ('side');
-    var current_captain = localStorage . getItem (`captain:${side}`);
-  };
-
   var DeleteCapitan = function (name) {
     var side_name = localStorage . getItem ('side');
     var side = JSON . parse (localStorage . getItem (side_name));
@@ -169,7 +166,7 @@
     if (captain === null) return;
     var side_name = localStorage . getItem ('side'); if (side_name === null) return;
     var side = JSON . parse (localStorage . getItem (side_name) || '{"captains": {}}');
-    side . captains [captain] = {rank: ranks [side_name] [0], rank_id: 0, score: 0, victory: 0, abort: 0, defeat: 0, scenarios: [], status: 'ACTIVE'};
+    side . captains [captain] = {rank: ranks [side_name] [0], rank_id: 0, score: 0, victory: 0, abort: 0, defeat: 0, scenarios: [], status: 'Active'};
     side . captain = captain;
     localStorage . setItem (side_name, JSON . stringify (side));
     populate_captains ();
