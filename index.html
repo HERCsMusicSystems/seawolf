@@ -70,24 +70,13 @@
       if (side !== null) side_selector . value = side;
       else localStorage . setItem ('side', side_selector . value);
     </script>
-    <h2>Scenarios:</h2>
-    <font size="+1">
-    <ul id="scenario_content">
-      <!--<li><a href="three_oilers.html">Three Oilers</a>: Iran has violated embargo on exporting oil.
-        <br/>
-        A convoy of three tankers needs to be eliminated.
-      </li>
-      <li><a href="easy_convoy.html">Easy Convoy</a>: Iran still violates embargo on exporting oil.
-        <br/>
-        A convoy needs to be eliminated, but this time there is a Russian escort involved.
-      </li>
-      <li><a href="akula_is_out_there.html">Aku&#x142;a is out there!</a> (this does not work so don't try it yet....)</li>
-      <li><a href="alpha_is_out_there.html">Alpha is out there!</a> (this scenario does not even exist yet....)</li>-->
-    </ul>
-    </font>
     <h2>Captains:</h2>
     <table id="captains_table" border=1>
     </table>
+    <h2>Scenarios:</h2>
+    <font size="+1">
+    <ul id="scenario_content"></ul>
+    </font>
     <br /><br /><br /><br />
     <div style="color: gold; text-shadow: 2px 2px black; ">
       <font size="+1">
@@ -133,9 +122,16 @@
 <script src="background_ctrl.js"></script>
 <script src="music_ctrl.js"></script>
 <script src="scenarios.js"></script>
+<script src="utilities.js"></script>
 <script>
   document . getElementById ('music_on_off') . checked = localStorage . getItem ('music') !== 'false' ? true : false;
   if (document . getElementById ('music_on_off') . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');
+
+  var CheckCaptain = function () {
+    var side = JSON . parse (localStorage . getItem (localStorage . getItem ('side')));
+    if (side . captain === '') {setTimeout (function () {alert ('You need to create/select a captain for your mission.');}, 1000); return false;}
+    return true;
+  };
   
   var populate_scenarios = function () {
     var side = localStorage . getItem ('side');
@@ -146,7 +142,7 @@
       var title = scenarios [side] [ind] . Title;
       var instructions = scenarios [side] [ind] . Instructions;
       var li = document . createElement ('li');
-      li . innerHTML = `<a href="scenarios_${side}_${title}.html">${title}</a>: ${instructions}`;
+      li . innerHTML = `<a href="scenarios_${side}_${title}.html" onclick="return CheckCaptain ();">${title}</a>: ${instructions}`;
       scenario_content . appendChild (li);
     }
   };
@@ -156,13 +152,24 @@
     var side = localStorage . getItem ('side');
     var current_captain = localStorage . getItem (`captain:${side}`);
   };
+
+  var DeleteCapitan = function (name) {
+    var side_name = localStorage . getItem ('side');
+    var side = JSON . parse (localStorage . getItem (side_name));
+    delete side . captains [name];
+    var keys = Object . keys (side . captains);
+    if (side . captain === name && keys . length > 0) side . captain = keys [0];
+    if (keys . length < 1) side . captain = '';
+    localStorage . setItem (side_name, JSON . stringify (side));
+    populate_captains ();
+  };
   
   var CreateCaptain = function () {
     var captain = prompt ('Enter Captains\' Name');
     if (captain === null) return;
     var side_name = localStorage . getItem ('side'); if (side_name === null) return;
     var side = JSON . parse (localStorage . getItem (side_name) || '{"captains": {}}');
-    side . captains [captain] = {score: 0, victory: 0, abort: 0, defeat: 0, scenarios: []};
+    side . captains [captain] = {rank: ranks [side_name] [0], rank_id: 0, score: 0, victory: 0, abort: 0, defeat: 0, scenarios: [], status: 'ACTIVE'};
     side . captain = captain;
     localStorage . setItem (side_name, JSON . stringify (side));
     populate_captains ();
@@ -173,10 +180,10 @@
     var side_name = localStorage . getItem ('side');
     var side = JSON . parse (localStorage . getItem (side_name));
     if (side === null) return;
-    var content = '<tr><td></td><td align="center">Name</td><td>Score</td><td>Victories</td><td>Aborts</td><td>Defeats</td></tr>'
+    var content = '<tr><td></td><td align="center">Name</td><td>Rank</td><td>Score</td><td>Victories</td><td>Aborts</td><td>Defeats</td><td>Status</td></tr>'
     for (var ind in side . captains) {
       var captain = side . captains [ind];
-      content += `<tr><td><input type="radio" name="captains" ${side . captain === ind ? 'checked' : ''}/></td><td align="left">${ind}</td><td align="center">${captain . score}</td><td align="center">${captain . victory}</td><td align="center">${captain . abort}</td><td align="center">${captain . defeat}</td></tr>`;
+      content += `<tr><td><input type="radio" name="captains" ${side . captain === ind ? 'checked' : ''}/></td><td align="left">${ind}</td><td align="center">${captain . rank}</td><td align="center">${captain . score}</td><td align="center">${captain . victory}</td><td align="center">${captain . abort}</td><td align="center">${captain . defeat}</td><td align="center">${captain . status}</td><td><input type="button" value="Delete" onclick="javascript: DeleteCapitan ('${ind}');" /></td></tr>`;
     }
     document . getElementById ('captains_table') . innerHTML = content;
   };
