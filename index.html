@@ -175,6 +175,13 @@
     populate_captains ();
   };
 
+  var SelectCaptain = function (name) {
+    var side_name = localStorage . getItem ('side'); if (side_name === null) return;
+    var side = JSON . parse (localStorage . getItem (side_name) || '{"captains": {}}');
+    side . captain = name;
+    localStorage . setItem (side_name, JSON . stringify (side));
+  };
+
   var populate_captains = function () {
     document . getElementById ('captains_table') . innerHTML = '';
     var side_name = localStorage . getItem ('side');
@@ -183,7 +190,7 @@
     var content = '<tr><td></td><td align="center">Name</td><td>Rank</td><td>Score</td><td>Victories</td><td>Aborts</td><td>Defeats</td><td>Status</td></tr>'
     for (var ind in side . captains) {
       var captain = side . captains [ind];
-      content += `<tr><td><input type="radio" name="captains" ${side . captain === ind ? 'checked' : ''}/></td><td align="left">${ind}</td><td align="center">${captain . rank}</td><td align="center">${captain . score}</td><td align="center">${captain . victory}</td><td align="center">${captain . abort}</td><td align="center">${captain . defeat}</td><td align="center">${captain . status}</td><td><input type="button" value="Delete" onclick="javascript: DeleteCapitan ('${ind}');" /></td></tr>`;
+      content += `<tr><td><input type="radio" name="captains" ${side . captain === ind ? 'checked' : ''} onclick="javascript: SelectCaptain ('${ind}');"/></td><td align="left">${ind}</td><td align="center">${captain . rank}</td><td align="center">${captain . score}</td><td align="center">${captain . victory}</td><td align="center">${captain . abort}</td><td align="center">${captain . defeat}</td><td align="center">${captain . status}</td><td><input type="button" value="Delete" onclick="javascript: DeleteCapitan ('${ind}');" /></td></tr>`;
     }
     document . getElementById ('captains_table') . innerHTML = content;
   };
