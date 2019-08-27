@@ -85,21 +85,6 @@ var Harpoon = function (cable, name, country) {
 	this . range = 150;
 };
 inherit (Harpoon, vessel);
-Harpoon . prototype . siloLaunch = function (silo, vessel, target) {
-	if (target === null) return false;
-	if (vessel . position . depth > silo . depth) return false;
-	var vector = vessel . getRelativePositionOf (target);
-	if (vector . distance > this . range) return false;
-	if (target . type !== this . target_type && this . target_type !== 'all') return false;
-	this . target = selected . vessel;
-	var sp =  vessel . position;
-	this . position = {x: sp . x, y: sp . y, depth: -32, bearing: sp . bearing};
-	this . targetBearing (this . target . position);
-	this . setSpeed ('full');
-	addVessel (this);
-	PlayMusic ('harpoonLaunch');
-	return true;
-};
 Harpoon . prototype . launch = function (tube, vessel, target) {
 	if (target !== undefined) this . target = target;
 	if (this . target === null) return false;
@@ -131,21 +116,6 @@ var Tomahawk = function (cable, name, country) {
 	this . range = 150;
 };
 inherit (Tomahawk, vessel);
-Tomahawk . prototype . siloLaunch = function (silo, vessel, target) {
-	if (target === null) return false;
-	if (vessel . position . depth > silo . depth) return false;
-	var vector = vessel . getRelativePositionOf (target);
-	if (vector . distance > this . range) return false;
-	if (target . type !== this . target_type && this . target_type !== 'all') return false;
-	this . target = selected . vessel;
-	var sp =  vessel . position;
-	this . position = {x: sp . x, y: sp . y, depth: -32, bearing: sp . bearing};
-	this . targetBearing (this . target . position);
-	this . setSpeed ('full');
-	addVessel (this);
-	PlayMusic ('harpoonLaunch');
-	return true;
-};
 Tomahawk . prototype . launch = function (tube, vessel, target) {
 	if (target !== undefined) this . target = target;
 	if (this . target === null) return false;
@@ -228,8 +198,17 @@ var Mark48 = function (cable, name, country) {
 	this . initial_trail_delta = 2;
 	this . trail_length = 100;
 };
-inherit(Mark48, vessel);
+inherit (Mark48, vessel);
 Mark48 . prototype . image = 'Mark48';
 Mark48 . prototype . info = 'https://en.wikipedia.org/wiki/Mark_48_torpedo';
 
 var Mark46 = function (cable, name, country) {};
+
+var SeaLance = function (cable, name, country) {
+	Mark48 . call (this, cable, name, country);
+	this . ai = new RocketTorpedoAI (this);
+	this . target_type = 'submarine';
+};
+inherit (SeaLance, Mark48);
+SeaLance . prototype . image = 'Mark48';
+SeaLance . prototype . info = 'https://en.wikipedia.org/wiki/UUM-125_Sea_Lance';

@@ -274,12 +274,25 @@ vessel . prototype . launch = function (tube, vessel, target) {
 	if (target !== undefined) this . target = target;
 	if (this . target === null) return false;
 	this . target_type = this . target . type || 'all';
-	this . position . x = vessel . position . x;
-	this . position . y = vessel . position . y;
-	this . position . depth = vessel . position . depth;
-	this . position . bearing = vessel . position . bearing;
+	var sp = vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: sp . depth, bearing: sp . bearing};
 	addVessel (this);
 	return true;
+};
+
+vessel . prototype . siloLaunch = function (silo, vessel, target) {
+  if (target === null || vessel . position . depth > silo . depth) return false;
+  var vector = vessel . getRelativePositionOf (target);
+  if (vector . distance !== this . range) return false;
+  if (target . type !== this . target_type && this . target_type !== 'all') return false;
+  this . target = target;
+  var sp = vessel . position;
+  this . position = {x: sp . x, y: sp . y, depth: -32, bearing: sp . bearing};
+  this . targetBearing (this . target . position);
+  this . setSpeed ('full');
+  addVessel (this);
+  PlayMusic ('harpoonLaunch');
+  return true;
 };
 
 vessel . prototype . damage_speed = function () {

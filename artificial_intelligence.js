@@ -111,6 +111,22 @@ var HarpoonAI = function (rocket) {
 	};
 };
 
+var RocketTorpedoAI = function (torpedo) {
+	this . code = function (delta) {
+		torpedo . targetBearing (torpedo . target . position);
+		var vector = torpedo . getRelativePositionOf (torpedo . target);
+		if (vector . distance < 0.1) {
+			var alpha = Math . random () * 2 * Math . PI;
+			var delta = Math . random () * 0.3 + 0.2;
+			torpedo . position . x = torpedo . target . position . x + Math . cos (alpha) * delta;
+			torpedo . position . y = torpedo . target . position . y + Math . sin (alpha) * delta;
+			torpedo . position . bearing = Math . random () * 360;
+			torpedo . targetDepth (torpedo . target . position . depth);
+			torpedo . ai = new torpedoAI (torpedo);
+		}
+	};
+};
+
 var DecoyAI = function (decoy) {
 	this . code = function (delta) {
 		decoy . range -= decoy . speed . x * delta / 3600;
