@@ -61,6 +61,9 @@ var Sovremenny = function (name, country) {
 	this . type = 'surface';
 	this . speeds = [0, 2, 8, 15, 21, 28, 32.7];
 	this . sonar = new sonar (this);
+	this . silo = {
+		SeaLance: {constructor: SeaLance, count: 8, depth: 150}
+	};
 }
 inherit (Sovremenny, vessel);
 Sovremenny . prototype . image = 'Sovremenny';
@@ -208,6 +211,8 @@ var SeaLance = function (cable, name, country) {
 	Mark48 . call (this, cable, name, country);
 	this . ai = new RocketTorpedoAI (this);
 	this . target_type = 'submarine';
+	this . cable_length = 0;
+	this . cable_to_ship_length = 0;
 };
 inherit (SeaLance, Mark48);
 SeaLance . prototype . image = 'Mark48';

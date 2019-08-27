@@ -80,9 +80,10 @@ var escortAI = function (escort) {
 		if (targetNoLongerAudible) escort . target = null;
 		if (escort . target === null && target !== null) {
 			escort . target = target;
-			var torpedo = new Mark48 (escort, 'SSNT', escort . country);
-			torpedo . cable_length = 0; torpedo . cable_to_ship_length = 0;
-			escort . fireRocketTorpedo (torpedo);
+			if (escort . silo . SeaLance != undefined && escort . silo . SeaLance . amount > 0) {
+				var torpedo = new escort . silo . constructor (escort, SeaLance, escort . country);
+				if (torpedo . siloLaunch (escort . silo . SeaLance, escort, escort . target)) escort . silo . SeaLance . amount -= 1;
+			}
 		}
 		if (escort . target !== null) {
 			escort . targetBearing (escort . target . position);

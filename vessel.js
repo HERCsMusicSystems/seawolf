@@ -261,15 +261,6 @@ vessel . prototype . fire = function () {
 	torpedo  . launch (this, target);
 };
 
-vessel . prototype . fireRocketTorpedo = function (torpedo) {
-	if (this . target === null) return;
-	torpedo . position . x = this . target . position . x - 0.5;
-	torpedo . position . y = this . target . position . y;
-	torpedo . position . depth = this . target . position . depth;
-	torpedo . target_type = 'submarine';
-	addVessel (torpedo);
-};
-
 vessel . prototype . launch = function (tube, vessel, target) {
 	if (target !== undefined) this . target = target;
 	if (this . target === null) return false;
@@ -286,6 +277,7 @@ vessel . prototype . siloLaunch = function (silo, vessel, target) {
   if (vector . distance !== this . range) return false;
   if (target . type !== this . target_type && this . target_type !== 'all') return false;
   this . target = target;
+  this . target_type = this . target . type || 'all';
   var sp = vessel . position;
   this . position = {x: sp . x, y: sp . y, depth: -32, bearing: sp . bearing};
   this . targetBearing (this . target . position);
