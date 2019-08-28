@@ -329,7 +329,7 @@ var resize = function (delta) {
 	aiVessels (delta);
 	simulate (delta);
 	removeVessels ();
-	if (simulated === null) MissionDefeat ();
+	if (simulated === null) {MissionDefeat (); return;}
 	drawGrid (ctx, window . innerWidth, window . innerHeight, simulated);
 	drawVessels (ctx);
 	if (ping !== null) {ping . ping *= Math . pow (ping . attenuation, delta); if (ping . ping < 10) ping = null;}
