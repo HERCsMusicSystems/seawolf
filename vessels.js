@@ -212,6 +212,9 @@ var SeaLance = function (cable, name, country) {
 	this . target_type = 'submarine';
 	this . cable_length = 0;
 	this . cable_to_ship_length = 0;
+	this . type = 'rocket';
+	this . speeds = [467, 467, 467, 467, 467, 467, 467];
+	this . torpedo_speeds = [0, 2, 10, 20, 30, 40, 55];
 };
 inherit (SeaLance, Mark48);
 SeaLance . prototype . image = 'Mark48';
