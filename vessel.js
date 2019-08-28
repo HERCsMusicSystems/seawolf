@@ -14,7 +14,6 @@ var SelectRandom = function (list, amount) {
 		var ind = Math . floor (Math . random () * list . length);
 		ret . push (list [ind]);
 		list . splice (ind, 1);
-		console . log (ind, ret, list);
 	}
 	return ret;
 };
@@ -274,8 +273,8 @@ vessel . prototype . launch = function (tube, vessel, target) {
 vessel . prototype . siloLaunch = function (silo, vessel, target) {
   if (target === null || vessel . position . depth > silo . depth) return false;
   var vector = vessel . getRelativePositionOf (target);
-  if (vector . distance !== this . range) return false;
-  if (target . type !== this . target_type && this . target_type !== 'all') return false;
+  if (vector . distance > this . range) return false;
+  // if (target . type !== this . target_type && this . target_type !== 'all') return false;
   this . target = target;
   this . target_type = this . target . type || 'all';
   var sp = vessel . position;
@@ -518,5 +517,4 @@ var Waypoint = function (x, y, depth) {
 	this . position . depth = depth;
 	this . type = null;
 };
-Waypoint . prototype = Object . create (vessel . prototype);
-Waypoint . prototype . constructor = Waypoint;
+inherit (Waypoint, vessel);

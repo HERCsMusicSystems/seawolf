@@ -62,7 +62,7 @@ var Sovremenny = function (name, country) {
 	this . speeds = [0, 2, 8, 15, 21, 28, 32.7];
 	this . sonar = new sonar (this);
 	this . silo = {
-		SeaLance: {constructor: SeaLance, count: 8, depth: 150}
+		SeaLance: {constructor: SeaLance, amount: 8, depth: 150}
 	};
 }
 inherit (Sovremenny, vessel);
@@ -147,7 +147,6 @@ var Decoy = function (cable, name, country) {
 	this . range = 2;
 	var sp = cable . position;
 	this . position = {x: sp . x, y: sp . y, depth: sp . depth, bearing: sp . bearing};
-	console . log (this . position);
 	this . setSpeed ('full');
 	this . ai = new DecoyAI (this);
 	this . strength = 0.2;
