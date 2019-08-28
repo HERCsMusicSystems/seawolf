@@ -128,7 +128,7 @@ var RocketTorpedoAI = function (torpedo) {
 			torpedo . targetDepth (torpedo . target . position . depth);
 			torpedo . ai = new torpedoAI (torpedo);
 			torpedo . type = 'torpedo';
-			torpedo . speed = torpedo . torpedo_speeds;
+			torpedo . speeds = torpedo . torpedo_speeds;
 			torpedo . setSpeed ('slow');
 		}
 	};

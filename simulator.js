@@ -273,7 +273,7 @@ var scaling = 1;
 var drawGrid = function (ctx, width, height, vessel) {
   width *= 0.5; height *= 0.5;
   var mile = 128 * scaling;
-  var shift = vessel === undefined ? {x: 0, y: 0} : {x: - vessel . position . x * mile, y: - vessel . position . y * mile};
+  var shift = vessel === null ? {x: 0, y: 0} : {x: - vessel . position . x * mile, y: - vessel . position . y * mile};
   ctx . translate (width + shift . x, height + shift . y);
   ctx . beginPath ();
   ctx . lineWidth = 1.5;
