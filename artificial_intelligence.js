@@ -146,6 +146,7 @@ var RocketTorpedoAI = function (torpedo) {
 			torpedo . type = 'torpedo';
 			torpedo . speeds = torpedo . torpedo_speeds;
 			torpedo . bearing_speeds = torpedo . torpedo_bearing_speeds;
+			torpedo . image = torpedo . image_alt;
 			torpedo . setSpeed ('slow');
 		}
 	};

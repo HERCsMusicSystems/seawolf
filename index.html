@@ -70,7 +70,7 @@
       if (side !== null) side_selector . value = side;
       else {
 				localStorage . setItem ('side', side_selector . value);
-				localStorage . setItem (side_selector . value, JSON . stringify ({captains: [], captain: ''}));
+				localStorage . setItem (side_selector . value, JSON . stringify ({captains: {}, captain: ''}));
 			}
     </script>
     <h2>Captains:</h2>

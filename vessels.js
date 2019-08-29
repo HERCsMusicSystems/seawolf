@@ -174,7 +174,7 @@ var Mark48 = function (cable, name, country) {
 		else bearing = Math . cos (bearing * 0.5);
 		return noise * bearing * bearing;
 	};
-	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());}
+	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
 	this . ai = new torpedoAI (this);
 	this . distance_travelled = 0;
 	this . distance_cable_travelled = 0;
@@ -199,7 +199,9 @@ var SeaLance = function (cable, name, country) {
 	this . torpedo_speeds = [0, 2, 10, 20, 30, 40, 55];
 	this . torpedo_bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
 	this . range = 100;
+	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
 };
 inherit (SeaLance, Harpoon);
 SeaLance . prototype . image = 'SeaLance_rocket';
+SeaLance . prototype . image_alt = 'SeaLance_torpedo';
 SeaLance . prototype . info = 'https://en.wikipedia.org/wiki/UUM-125_Sea_Lance';
