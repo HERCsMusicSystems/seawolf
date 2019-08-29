@@ -207,15 +207,15 @@ Mark48 . prototype . info = 'https://en.wikipedia.org/wiki/Mark_48_torpedo';
 var Mark46 = function (cable, name, country) {};
 
 var SeaLance = function (cable, name, country) {
-	Mark48 . call (this, cable, name, country);
+	Harpoon . call (this, cable, name, country);
+	this . class = 'SeaLance';
 	this . ai = new RocketTorpedoAI (this);
 	this . target_type = 'submarine';
 	this . cable_length = 0;
 	this . cable_to_ship_length = 0;
-	this . type = 'rocket';
-	this . speeds = [467, 467, 467, 467, 467, 467, 467];
 	this . torpedo_speeds = [0, 2, 10, 20, 30, 40, 55];
+	this . torpedo_bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
 };
-inherit (SeaLance, Mark48);
-SeaLance . prototype . image = 'Mark48';
+inherit (SeaLance, Harpoon);
+SeaLance . prototype . image = 'SeaLance_rocket';
 SeaLance . prototype . info = 'https://en.wikipedia.org/wiki/UUM-125_Sea_Lance';
