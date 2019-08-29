@@ -105,31 +105,13 @@ Harpoon . prototype . launch = function (tube, vessel, target) {
 //////////////
 
 var Tomahawk = function (cable, name, country) {
-	if (name === undefined) name = 'Tomahawk';
-	if (country === undefined) country = cable . country;
-	vessel . call (this, country);
-	this . attacker = cable;
-	this . type = 'rocket';
+	Harpoon . call (this, country);
 	this . class = 'Tomahawk';
-	this . name = name;
-	this . country = country;
-	this . speeds = [467, 467, 467, 467, 467, 467, 467];
-	this . ai = new HarpoonAI (this);
-	this . target_type = 'surface';
-	this . range = 150;
+	this . speeds = [480, 480, 480, 480, 480, 480, 480];
+	this . ai = new TomahawkAI (this);
+	this . range = 900;
 };
-inherit (Tomahawk, vessel);
-Tomahawk . prototype . launch = function (tube, vessel, target) {
-	if (target !== undefined) this . target = target;
-	if (this . target === null) return false;
-	if (tube . depth > vessel . position . depth) return false;
-	var sp = vessel . position;
-	this . position = {x: sp . x, y: sp . y, depth: -32, bearing: sp . bearing};
-	this . targetBearing (this . target . position);
-	this . setSpeed ('full');
-	addVessel (this);
-	return true;
-};
+inherit (Tomahawk, Harpoon);
 
 ///////////
 // Decoy //
@@ -213,8 +195,10 @@ var SeaLance = function (cable, name, country) {
 	this . target_type = 'submarine';
 	this . cable_length = 0;
 	this . cable_to_ship_length = 0;
+	this . speeds = [1000, 1000, 1000, 1000, 1000, 1000, 1000];
 	this . torpedo_speeds = [0, 2, 10, 20, 30, 40, 55];
 	this . torpedo_bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
+	this . range = 100;
 };
 inherit (SeaLance, Harpoon);
 SeaLance . prototype . image = 'SeaLance_rocket';

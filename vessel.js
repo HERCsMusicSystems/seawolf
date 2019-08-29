@@ -170,6 +170,8 @@ vessel . prototype . bearing = function (index) {
 	if (this . speed_index < 1) this . setSpeed (1);
 };
 
+var HarpoonImage = new Image (); HarpoonImage . src = 'silhouettes/Harpoon.png';
+
 vessel . prototype . draw = function (ctx, status) {
 	ctx . strokeStyle = 'white';
 	ctx . lineWidth = 1;
@@ -225,11 +227,10 @@ vessel . prototype . draw = function (ctx, status) {
 			ctx . save ();
 			ctx . beginPath ();
 			ctx . translate (x, y);
-			ctx . rotate (this . position . bearing * Math . PI / 180);
-			ctx . moveTo (-4, 16);
-			ctx . lineTo (-2, 10);
-			ctx . lineTo (-2, -16); ctx . arc (0, -16, 2, Math . PI, 0);
-			ctx . lineTo (2, 10); ctx . lineTo (4, 16); ctx . closePath ();
+			ctx . rotate (this . position . bearing * Math . PI / 180 + Math . PI / 2);
+			ctx . scale (0.0625, 0.0625);
+			ctx . translate (HarpoonImage . width * -0.5, HarpoonImage . height * -0.5);
+			ctx . drawImage (HarpoonImage, 0, 0);
 			ctx . restore ();
 			break;
 		default: break;
