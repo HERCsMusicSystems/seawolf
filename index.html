@@ -68,7 +68,10 @@
       var side = localStorage . getItem ('side');
       var side_selector = document . getElementById ('side_selector');
       if (side !== null) side_selector . value = side;
-      else localStorage . setItem ('side', side_selector . value);
+      else {
+				localStorage . setItem ('side', side_selector . value);
+				localStorage . setItem (side_selector . value, JSON . stringify ({captains: [], captain: ''}));
+			}
     </script>
     <h2>Captains:</h2>
     <table id="captains_table" border=1>
@@ -134,7 +137,7 @@
     if (captain . status !== 'Active') {alert ("You need to select a captain, who is Active in service."); return false;}
     return true;
   };
-  
+
   var populate_scenarios = function () {
     var side = localStorage . getItem ('side');
     var scenario_content = document . getElementById ('scenario_content');
