@@ -68,6 +68,10 @@ var Sovremenny = function (name, country) {
 inherit (Sovremenny, vessel);
 Sovremenny . prototype . image = 'Sovremenny';
 Sovremenny . prototype . info = 'https://en.wikipedia.org/wiki/Sovremenny-class_destroyer';
+Sovremenny . prototype . names = ['Sovremennyy', 'Otchayannyy', 'Otlichnyy',
+'Osmotritelnyy', 'Bezuprechnyy', 'Boevoy', 'Stoykiy', 'Okrylyonnyy', 'Burnyy', 'Gremyashchiy',
+'Veduschiy', 'Bystryy', 'Rastoropnyy','Bezboyaznennyy', 'Bezuderzhnyy',
+'Bespokoynyy', 'Nastoychivyy', 'Moskovskiy Komsomolets', 'Admiral Ushakov', 'Besstrashnyy'];
 
 /////////////
 // Harpoon //
