@@ -147,7 +147,7 @@
       var title = scenarios [side] [ind] . Title;
       var instructions = scenarios [side] [ind] . Instructions;
       var li = document . createElement ('li');
-      li . innerHTML = `<a href="scenarios_${side}_${title}.html" onclick="return CheckCaptain ();">${title}</a>: ${instructions}`;
+      li . innerHTML = `<a href="scenarios_${side}_${title}.html" onclick="return CheckAbort () && CheckCaptain ();">${title}</a>: ${instructions}`;
       scenario_content . appendChild (li);
     }
   };
