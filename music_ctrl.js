@@ -35,6 +35,7 @@ var create_audio = function (file, loop) {
 
 var music = {
 	ping_1: create_audio ('ping/ping_1'),
+	torpedo_ping: create_audio ('ping/torpedo'),
 	akula: create_audio ('akula', true),
 	Beowulf: create_audio ('01 Beowulf Main Title'),
 	light: create_audio ('LetThereBeLight'),

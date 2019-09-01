@@ -168,6 +168,7 @@ var Mark48 = function (cable, name, country) {
 	this . collapse_depth = 2700;
 	this . strength = 1;
 	this . sonar = new sonar (this);
+	this . sonar . ping_sound = 'torpedo_ping';
 	// make everything visible
 	//this . sonar . detection_threshold = 0;
 	//this . sonar . tracking_threshold = 0;
@@ -204,6 +205,7 @@ var SeaLance = function (cable, name, country) {
 	this . torpedo_bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
 	this . range = 100;
 	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
+	this . sonar = new sonar (this);
 };
 inherit (SeaLance, Harpoon);
 SeaLance . prototype . image = 'SeaLance_rocket';
