@@ -1,0 +1,18 @@
+#!/home/rama/bin/studio
+
+[add_search_directory "/home/rama/Desktop/dev/seawolf/"]
+[import "http"]
+
+[[router *req *res] [*req HTTP_URI : *route] [route *req *res : *route]]
+
+[[route *req *res : *command] [*res *command] fail]
+;//[[route *req *res GET : *command] [*res 'HTTP/1.1 200 OK\n\n'] [*res [] : 'index.html'] ];[*res [] : 'silhouettes/Akula.png']]
+[[route *req *res GET : *command] [*res 'HTTP/1.1 200 OK\n\n'] [list *req] [pp *command]]
+
+
+[res [http_request *req] [router *req http_responder]]
+
+
+
+[exit]
+
