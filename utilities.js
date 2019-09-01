@@ -24,3 +24,12 @@ var SimulatedMission = function () {
   if (localStorage . getItem ('mission_type') === 'Simulated' || captain . rank_id < 2) return true;
   return false;
 };
+
+var CheckAbort = function () {
+	if (localStorage . getItem ('changesAllowed')) {
+		if (confirm ('Abort')) location . href = 'mission_abort.html';
+		return false;
+	}
+	return true;
+};
+
