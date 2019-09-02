@@ -52,6 +52,7 @@ var Akula = function (name, country) {
 inherit (Akula, vessel);
 Akula . prototype . image = 'Akula';
 Akula . prototype . info = 'https://en.wikipedia.org/wiki/Akula-class_submarine';
+Akula . prototype . names = ['Akula', 'Bars', 'Ak Bars', 'Delfin', 'Barnaul', 'Kashalot', 'Pantera', 'Volk', 'Kit', 'Bratsk', 'Leopard', 'Tigr', 'Narval', 'Magadan', 'Vepr', 'Morzh', 'Kuzbass', 'Gepard', 'Kuguar', 'Rys', 'Drakon', 'Samara', 'Nerpa', 'Chakra', 'Iribis'];
 
 var Sovremenny = function (name, country) {
 	if (country === undefined) country = 'Russia';
