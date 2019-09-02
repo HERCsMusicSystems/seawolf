@@ -31,7 +31,7 @@ var torpedoAI = function (torpedo) {
 			if (Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 40) {torpedo . detonate (); return;}
 		}
 		torpedo . targetDepth (torpedo . target . position . depth);
-		torpedo . targetBearing (nauticalBearing (vector . bearing), 3);
+		torpedo . targetBearing (nauticalBearing (vector . bearing));
 		var frontAngle = Math . abs (torpedo . bearing_target - torpedo . position . bearing);
 		if (frontAngle < 10) {
 			torpedo . setSpeed ('flank');
@@ -80,11 +80,19 @@ var escortAI = function (escort) {
 		if (targetNoLongerAudible) escort . target = null;
 		if (escort . target === null && target !== null) {
 			escort . target = target;
-			if (escort . silo . SeaLance !== undefined && escort . silo . SeaLance . amount > 0) {
-				var torpedo = new escort . silo . SeaLance . constructor (escort, 'SeaLance', escort . country);
-				if (torpedo . siloLaunch (escort . silo . SeaLance, escort, escort . target)) {
-					escort . silo . SeaLance . amount -= 1;
-					torpedo . target_type = 'submarine';
+			var vector = escort . getRelativePositionOf (escort . target);
+			if (vector . distance < 2) {
+				if (escort . inventory !== undefined && escort . inventory . Mark48 !== undefined && escort . inventory . Mark48 . count > 0) {
+					var torpedo = new Mark48 (escort, 'SSN-12');
+					escort . fireTorpedo (torpedo);
+				}
+			} else {
+				if (escort . silo . SeaLance !== undefined && escort . silo . SeaLance . amount > 0) {
+					var torpedo = new escort . silo . SeaLance . constructor (escort, 'SeaLance', escort . country);
+					if (torpedo . siloLaunch (escort . silo . SeaLance, escort, escort . target)) {
+						escort . silo . SeaLance . amount -= 1;
+						torpedo . target_type = 'submarine';
+					}
 				}
 			}
 		}

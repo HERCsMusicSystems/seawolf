@@ -59,6 +59,7 @@
     Music On/Off <input id="music_on_off" type="checkbox" onchange="javascript: if (this . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');"/>
     Dialect <select id="dialect" onchange="javascript: localStorage . setItem ('dialect', this . value);"></select>
     <button onclick="javascript: CreateCaptain ();">Create Captain</button>
+    <button onclick="javascript: if (confirm ('Are you sure?')) {localStorage . clear (); location . reload ();}" style="position: absolute; right: 10px;">Reset System</button>
     <script type="text/javascript" charset="UTF-8">
       var mission_type = localStorage . getItem ('mission_type');
       var mission_type_selector = document . getElementById ('mission_type_selector');
@@ -74,17 +75,17 @@
 			}
     </script>
     <h2>Captains:</h2>
-    <table id="captains_table" border=1>
+    <table id="captains_table" border=1 style=" background-color: #00ff8866;">
     </table>
     <h2>Scenarios:</h2>
     <font size="+1">
-    <ul id="scenario_content"></ul>
+    <ul id="scenario_content" style=" background-color: #00ff8866; display: inline-block;"></ul>
     </font>
-    <div style="color: gold; text-shadow: 2px 2px black; ">
+    <div style="color: gold; text-shadow: 2px 2px black;">
       <font size="+1">
       <a href="doc/list_of_russian_submarines.html">List of Sovied and Russian Submarines</a>
       <h2>Quick Manual:</h2>
-      <ul>
+      <ul style=" background-color: #00ff8866; display: inline-block;">
         <li>Left-click selects a target, Right-click changes your course.</li>
         <li>Arrow keys change the position of control panels. Use SHIFT/CTRL keys with arrow keys to select which panel you wish to move.</li>
         <li>

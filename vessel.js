@@ -261,6 +261,16 @@ vessel . prototype . fire = function () {
 	torpedo  . launch (this, target);
 };
 
+vessel . prototype . fireTorpedo = function (torpedo) {
+	torpedo . target_type = this . target . target_type || 'all';
+	torpedo . target = this . target;
+	var sp = this . position;
+	var vector = this . getRelativePositionOf (this . target);
+	torpedo . position = {x: sp . x, y: sp . y, depth: sp . depth, bearing: vector . bearing};
+	torpedo . targetDepth (this . target . position . depth);
+	addVessel (torpedo);
+};
+
 vessel . prototype . launch = function (tube, vessel, target) {
 	if (target !== undefined) this . target = target;
 	if (this . target === null) return false;

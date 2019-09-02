@@ -65,6 +65,9 @@ var Sovremenny = function (name, country) {
 	this . silo = {
 		SeaLance: {constructor: SeaLance, amount: 8, depth: 150}
 	};
+	this . inventory = {
+		Mark48: {constructor: Mark48, count: 24}
+	}
 }
 inherit (Sovremenny, vessel);
 Sovremenny . prototype . image = 'Sovremenny';
