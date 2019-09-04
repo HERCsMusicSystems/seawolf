@@ -66,7 +66,6 @@ ccn9969.jpg
 collins2.jpg
 Collins.jpg
 DPYQt8HW4AA_CmM.jpg
-DqCM0xeW4AAb0sM.jpg
 ezJlVLo.jpg
 fbwi302dd4y01.jpg
 HMS-Alliance-Motor-engine-room-looking-forward.jpg
@@ -82,6 +81,7 @@ papercraft-submarino-typhoon-project-941-akula-D_NQ_NP_867343-MLB27839173523_072
 qn8hua2oig5tb1x8e17e.jpg
 Ru_Alfa_cutaway.jpg
 Ru_Pr885M_cutaway.jpg
+belgorod.jpg
 s821Jml.jpg
 shutterstock_347220944_1080.jpg
 shutterstock-711005029.jpg
