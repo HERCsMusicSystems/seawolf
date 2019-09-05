@@ -174,6 +174,7 @@ var aiVessels = function (delta) {for (var ind in vessels) {if (vessels [ind] . 
 var drawVessels = function (ctx) {simulated . draw (ctx); simulated . sonar . drawDetected (ctx);};
 var classifyVessels = function (vessel) {for (var ind in vessels) vessels [ind] . status = vessels [ind] . checkStatusOf (vessel);};
 var simulatedVessel = function (vessel) {
+	if (localStorage . getItem ('changesAllowed')) location . assign ('mission_abort.html');
 	simulated = vessel;
 	vessel . ai = new sonarDetect (vessel);
 	fill_weapons_table (vessel);
