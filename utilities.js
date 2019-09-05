@@ -26,7 +26,7 @@ var SimulatedMission = function () {
 };
 
 var CheckAbort = function () {
-	if (localStorage . getItem ('changesAllowed')) {
+	if (localStorage . getItem ('ChangesAllowed')) {
 		if (confirm ('Abort')) location . href = 'mission_abort.html';
 		return false;
 	}

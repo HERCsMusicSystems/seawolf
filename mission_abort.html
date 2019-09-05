@@ -13,7 +13,6 @@
 </head>
 
 <body bgcolor="#0000aa" style="font-family: arial; color: gold; text-shadow: 1px 1px black; background-image: url('images/Submarine2.jpg'); background-size: cover;">
-<script>localStorage . removeItem ('changesAllowed');</script>
 	<h1>ABORT</h1>
 	<font size="+1">
 		<div id="results"></div>
@@ -36,7 +35,7 @@
 	<script src="background_ctrl.js"></script>
 	<script src="utilities.js"></script>
 	<script>
-		if (localStorage . getItem ('ChangesAllowed')) {
+		if (localStorage . getItem ('ChangesAllowed') === 'true') {
 			if (SimulatedMission ()) {document . getElementById ('results') . innerHTML = `As this mission was simulated, there will be no penalty.<br/><br/>`;}
 			else {
 				document . getElementById ('results') . innerHTML = `As this was a real mission, there will be penalty<br/><br/>`;

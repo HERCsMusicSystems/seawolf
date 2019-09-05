@@ -174,11 +174,11 @@ var aiVessels = function (delta) {for (var ind in vessels) {if (vessels [ind] . 
 var drawVessels = function (ctx) {simulated . draw (ctx); simulated . sonar . drawDetected (ctx);};
 var classifyVessels = function (vessel) {for (var ind in vessels) vessels [ind] . status = vessels [ind] . checkStatusOf (vessel);};
 var simulatedVessel = function (vessel) {
-	if (localStorage . getItem ('changesAllowed')) location . assign ('mission_abort.html');
+	if (localStorage . getItem ('ChangesAllowed') === 'true') location . href = 'mission_abort.html';
 	simulated = vessel;
 	vessel . ai = new sonarDetect (vessel);
 	fill_weapons_table (vessel);
-	localStorage . setItem ('changesAllowed', true);
+	localStorage . setItem ('ChangesAllowed', true);
 	localStorage . removeItem ('SimulatedName');
 };
 var constructRemotes = function () {remotes = {}; for (var ind in vessels) remotes [vessels [ind] . name] = vessels [ind] . position; return JSON . stringify (remotes);};
