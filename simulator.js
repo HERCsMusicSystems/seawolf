@@ -173,7 +173,13 @@ var simulate = function (delta) {for (var ind in vessels) vessels [ind] . simula
 var aiVessels = function (delta) {for (var ind in vessels) {if (vessels [ind] . ai !== null) vessels [ind] . ai . code (delta);}};
 var drawVessels = function (ctx) {simulated . draw (ctx); simulated . sonar . drawDetected (ctx);};
 var classifyVessels = function (vessel) {for (var ind in vessels) vessels [ind] . status = vessels [ind] . checkStatusOf (vessel);};
-var simulatedVessel = function (vessel) {simulated = vessel; vessel . ai = new sonarDetect (vessel); fill_weapons_table (vessel); localStorage . setItem ('changesAllowed', true);};
+var simulatedVessel = function (vessel) {
+	simulated = vessel;
+	vessel . ai = new sonarDetect (vessel);
+	fill_weapons_table (vessel);
+	localStorage . setItem ('changesAllowed', true);
+	localStorage . removeItem ('SimulatedName');
+};
 var constructRemotes = function () {remotes = {}; for (var ind in vessels) remotes [vessels [ind] . name] = vessels [ind] . position; return JSON . stringify (remotes);};
 var simulationHitTest = function (x, y, reference, minimum_distance) {
   if (minimum_distance === undefined) minimum_distance = 8 / 128 / scaling;

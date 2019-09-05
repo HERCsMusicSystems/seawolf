@@ -12,11 +12,13 @@ var SelectRandom = function (list, amount) {
 	while (amount > 0) {
 		amount -= 1;
 		var ind = Math . floor (Math . random () * list . length);
+		while (ret . indexOf (list [ind]) >= 0) ind = Math . floor (Math . random () * list . length);
 		ret . push (list [ind]);
-		list . splice (ind, 1);
 	}
 	return ret;
 };
+
+var TakeRandom = function (list) {return list . splice (Math . floor (Math . random () * list . length), 1);};
 
 var vessel_id = 0;
 

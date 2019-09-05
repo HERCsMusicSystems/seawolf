@@ -28,13 +28,13 @@
 <html>
 
 <head>
-  <title>SEAWOLF</title>
-  <style>
-  a:link {color: blue; text-shadow: 1px 1px red;}
-  a:visited {color: blue;}
-  a:hover {color: red; text-shadow: 1px 1px blue;}
-  a:active {color: red;}
-  </style>
+	<title>SEAWOLF</title>
+	<style>
+	a:link {color: blue; text-shadow: 1px 1px red;}
+	a:visited {color: blue;}
+	a:hover {color: red; text-shadow: 1px 1px blue;}
+	a:active {color: red;}
+	</style>
 </head>
 
 <body bgcolor="#0000aa" style="font-family: arial; color: gold; text-shadow: 1px 1px black; background-image: url('images/Submarine2.jpg'); background-size: cover;">
@@ -43,9 +43,9 @@ Iran is violating embargo put on exporting petroleum. At the moment three Oil Ta
 <h2>Objective</h2>
 Sink the three Oil Tankers.
 <h2>Enemies</h2>
-  <table>
-    <tr><td align="center"><img src="silhouettes/OilTanker.png"/><br/>Oil Tanker</td></tr>
-  </table>
+	<table>
+		<tr><td align="center"><img src="silhouettes/OilTanker.png"/><br/>Oil Tanker</td></tr>
+	</table>
 <h2 id="name"></h2>
 <h2 id="mission_type"></h2>
 <a href="scenarios_U.S.A._three_oilers.html" onclick="javascript: return CheckAbort ();">Proceed</a>
@@ -57,7 +57,8 @@ Sink the three Oil Tankers.
 <script src="utilities.js"></script>
 <script>
 	localStorage . setItem ('mission', 'Three Oilers');
-	var name = SelectRandom (Virginia . prototype . names);
+	var simulated_name = localStorage . getItem ('SimulatedName');
+	var name = simulated_name || SelectRandom (Virginia . prototype . names);
 	localStorage . setItem ('SimulatedName', name);
 	document . getElementById ('name') . innerHTML = `Your captain <font color="red">${side . captains [side . captain] . rank} ${side . captain}</font> will be commanding Virginia class submarine <font color="red">${name}</font>`;
 	if (SimulatedMission ()) document . getElementById ('mission_type') . innerHTML = `This mission is simulated${captain . rank_id < 2 ? " as your captain's rank is too low to command a ship" : ''}.`;
