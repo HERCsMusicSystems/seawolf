@@ -16,7 +16,7 @@
 <script>localStorage . removeItem ('changesAllowed');</script>
   <h1>ABORT</h1>
   <font size="+1">
-		<div id="results"></div><br/>
+		<div id="results"></div>
     <div><a href="index.html">Back to Scenarios</a></div><br />
     <div id="view_logbook">
       <a onclick="document . getElementById ('hide_logbook') . style . display = 'inline'; document . getElementById ('view_logbook') . style . display = 'none'; event . preventDefault ();" style="cursor: pointer;">
@@ -37,9 +37,9 @@
   <script src="utilities.js"></script>
   <script>
     if (localStorage . getItem ('ChangesAllowed')) {
-			if (SimulatedMission ()) {document . getElementById ('results') . innerHTML = `As this mission was simulated, there will be no penalty.`;}
+			if (SimulatedMission ()) {document . getElementById ('results') . innerHTML = `As this mission was simulated, there will be no penalty.<br/><br/>`;}
 			else {
-				document . getElementById ('results') . innerHTML = `As this was a real mission, there will be penalty`;
+				document . getElementById ('results') . innerHTML = `As this was a real mission, there will be penalty<br/><br/>`;
 				var score = Number (side . captains [side . captain] . score) - 1;
 				if (score >= 0) side . captains [side . captain] . score = score;
 			}
