@@ -1,9 +1,9 @@
 
 var inherit = function (from, to) {
-  if (to === undefined) {to = from; from = function () {to . apply (this, arguments);}}
-  from . prototype = Object . create (to . prototype);
-  from . prototype . constructor = from;
-  return from;
+	if (to === undefined) {to = from; from = function () {to . apply (this, arguments);}}
+	from . prototype = Object . create (to . prototype);
+	from . prototype . constructor = from;
+	return from;
 };
 
 var SelectRandom = function (list, amount) {
@@ -265,7 +265,7 @@ vessel . prototype . fire = function () {
 	var target = (selected && selected . vessel) || waypoint;
 	if (target === null) return;
 	var torpedo = new Mark48 (this, 'Fast');
-	torpedo  . launch (this, target);
+	torpedo . launch (this, target);
 };
 
 vessel . prototype . fireTorpedo = function (torpedo) {
@@ -289,19 +289,19 @@ vessel . prototype . launch = function (tube, vessel, target) {
 };
 
 vessel . prototype . siloLaunch = function (silo, vessel, target) {
-  if (target === null || vessel . position . depth > silo . depth) return false;
-  var vector = vessel . getRelativePositionOf (target);
-  if (vector . distance > this . range) return false;
-  // if (target . type !== this . target_type && this . target_type !== 'all') return false;
-  this . target = target;
-  this . target_type = this . target . type || 'all';
-  var sp = vessel . position;
-  this . position = {x: sp . x, y: sp . y, depth: -32, bearing: sp . bearing};
-  this . targetBearing (this . target . position);
-  this . setSpeed ('full');
-  addVessel (this);
-  PlayMusic ('harpoonLaunch');
-  return true;
+	if (target === null || vessel . position . depth > silo . depth) return false;
+	var vector = vessel . getRelativePositionOf (target);
+	if (vector . distance > this . range) return false;
+	// if (target . type !== this . target_type && this . target_type !== 'all') return false;
+	this . target = target;
+	this . target_type = this . target . type || 'all';
+	var sp = vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: -32, bearing: sp . bearing};
+	this . targetBearing (this . target . position);
+	this . setSpeed ('full');
+	addVessel (this);
+	PlayMusic ('harpoonLaunch');
+	return true;
 };
 
 vessel . prototype . damage_speed = function () {

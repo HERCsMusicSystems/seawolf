@@ -28,172 +28,172 @@
 <html>
 
 <head>
-  <title>SEAWOLF</title>
-  <style>
-  a:link {color: blue; text-shadow: 1px 1px red;}
-  a:visited {color: blue;}
-  a:hover {color: red; text-shadow: 1px 1px blue;}
-  a:active {color: red;}
-  </style>
+	<title>SEAWOLF</title>
+	<style>
+	a:link {color: blue; text-shadow: 1px 1px red;}
+	a:visited {color: blue;}
+	a:hover {color: red; text-shadow: 1px 1px blue;}
+	a:active {color: red;}
+	</style>
 </head>
 
 <!--<body bgcolor="#0000aa" style="font-family: arial; color: green; background-image: url('images/virginiaclasssubmarine.jpg'); background-size: cover;">-->
 <body bgcolor="#0000aa" style="font-family: arial; color: gold; text-shadow: 1px 1px black; background-image: url('images/Submarine2.jpg'); background-size: cover;">
-  <h1>SEAWOLF Submarine Simulator</h1>
-  <div>
-    Mission Type:
-    <select id="mission_type_selector" onchange="javascript: localStorage . setItem ('mission_type', this . value);">
-      <option selected >Simulated</option>
-      <option>Real</option>
-    </select>
-    Choose a side:
-    <select id="side_selector" onchange="javascript: localStorage . setItem ('side', this . value); populate_scenarios (); populate_captains ();">
-      <option selected>U.S.A.</option>
-      <option>Russia</option>
-      <option>United Kingdom</option>
-      <option>Germany</option>
-      <option>France</option>
-      <option>India</option>
-      <option>China</option>
-    </select>
-    Music On/Off <input id="music_on_off" type="checkbox" onchange="javascript: if (this . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');"/>
-    Dialect <select id="dialect" onchange="javascript: localStorage . setItem ('dialect', this . value);"></select>
-    <button onclick="javascript: CreateCaptain ();">Create Captain</button>
-    <button onclick="javascript: if (confirm ('Are you sure?')) {localStorage . clear (); location . reload ();}" style="position: absolute; right: 10px;">Reset System</button>
-    <script type="text/javascript" charset="UTF-8">
-      var mission_type = localStorage . getItem ('mission_type');
-      var mission_type_selector = document . getElementById ('mission_type_selector');
-      if (mission_type !== null) mission_type_selector . value = mission_type;
-      else localStorage . setItem ('mission_type', mission_type_selector . value);
+	<h1>SEAWOLF Submarine Simulator</h1>
+	<div>
+		Mission Type:
+		<select id="mission_type_selector" onchange="javascript: localStorage . setItem ('mission_type', this . value);">
+			<option selected >Simulated</option>
+			<option>Real</option>
+		</select>
+		Choose a side:
+		<select id="side_selector" onchange="javascript: localStorage . setItem ('side', this . value); populate_scenarios (); populate_captains ();">
+			<option selected>U.S.A.</option>
+			<option>Russia</option>
+			<option>United Kingdom</option>
+			<option>Germany</option>
+			<option>France</option>
+			<option>India</option>
+			<option>China</option>
+		</select>
+		Music On/Off <input id="music_on_off" type="checkbox" onchange="javascript: if (this . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');"/>
+		Dialect <select id="dialect" onchange="javascript: localStorage . setItem ('dialect', this . value);"></select>
+		<button onclick="javascript: CreateCaptain ();">Create Captain</button>
+		<button onclick="javascript: if (confirm ('Are you sure?')) {localStorage . clear (); location . reload ();}" style="position: absolute; right: 10px;">Reset System</button>
+		<script type="text/javascript" charset="UTF-8">
+			var mission_type = localStorage . getItem ('mission_type');
+			var mission_type_selector = document . getElementById ('mission_type_selector');
+			if (mission_type !== null) mission_type_selector . value = mission_type;
+			else localStorage . setItem ('mission_type', mission_type_selector . value);
 
-      var side = localStorage . getItem ('side');
-      var side_selector = document . getElementById ('side_selector');
-      if (side !== null) side_selector . value = side;
-      else {
+			var side = localStorage . getItem ('side');
+			var side_selector = document . getElementById ('side_selector');
+			if (side !== null) side_selector . value = side;
+			else {
 				localStorage . setItem ('side', side_selector . value);
 				localStorage . setItem (side_selector . value, JSON . stringify ({captains: {}, captain: ''}));
 			}
-    </script>
-    <h2>Captains:</h2>
-    <table id="captains_table" border=1 style=" background-color: #00ff8866;">
-    </table>
-    <h2>Scenarios:</h2>
-    <font size="+1">
-    <ul id="scenario_content" style=" background-color: #00ff8866; display: inline-block;"></ul>
-    </font>
-    <div style="color: gold; text-shadow: 2px 2px black;">
-      <font size="+1">
-      <a href="doc/list_of_russian_submarines.html">List of Sovied and Russian Submarines</a>
-      <h2>Quick Manual:</h2>
-      <ul style=" background-color: #00ff8866; display: inline-block;">
-        <li>Left-click selects a target, Right-click changes your course.</li>
-        <li>Arrow keys change the position of control panels. Use SHIFT/CTRL keys with arrow keys to select which panel you wish to move.</li>
-        <li>
-          The information panel shows the current speed, bearing and depth of your vessel (and your target if selected).
-          It also shows you the depths of all thermal layers.
-        </li>
-        <li>The are two more panels: one for controlling your ship, another for controlling your torpedo tubes and inventory.</td>
-        <li>Use the STOP/SLOW/..../FLANK buttons to adjust the speed of your submarine.</li>
-        <li>Use the &#xd7;1 &#xd7;2 &#xd7;4 &#xd7;8 buttons to adjust the speed of simulation.</li>
-        <li>Use the UP THERMAL / DOWN THERMAL buttons to change your depth.
-          Ocean is divided into layers of water of different temperaturs, which attenuate propagation of sound waves.
-          Hence you may wish to dive below certain thermal layers to hide from enemy's sonar.
-        </li>
-        <li>You can send a loud PING impulse from your sonar, so you can detect other vessels easier.
-          Be careful! Ping also makes you audible to enemy's sonar.
-        </li>
-        <li>
-          You can deploy towed sonar array for better detection of enemy vessels.
-          This towed array slows down your submarine, so you may wish to retrieve it as soon as you know where your targets are located.
-          If you are in trouble and have no time for retrieving then simply cut it! (but you will no longer be able to use it later)
-        </li>
-        <li>To launch torpedos you need to first load them into your tubes, flood them, select a target and fire when they are armed.
-          Torpedo is attached to your submarine by a cable, so you have some control over it
-          (i.e. detonate, search other submarines or surface vessels, change depth or go to a waypoint).
-          Once the torpedo reaches the end of cable you loose control overit.
-          Be careful! It may actually detect your ship and get back on you!
-        </li>
-        <li>
-          Enjoy....
-        </li>
-      </ul>
-      </font>
-    </div>
-    <br /><br /><br /><br />
-  </div>
+		</script>
+		<h2>Captains:</h2>
+		<table id="captains_table" border=1 style=" background-color: #00ff8866;">
+		</table>
+		<h2>Scenarios:</h2>
+		<font size="+1">
+		<ul id="scenario_content" style=" background-color: #00ff8866; display: inline-block;"></ul>
+		</font>
+		<div style="color: gold; text-shadow: 2px 2px black;">
+			<font size="+1">
+			<a href="doc/list_of_russian_submarines.html">List of Sovied and Russian Submarines</a>
+			<h2>Quick Manual:</h2>
+			<ul style=" background-color: #00ff8866; display: inline-block;">
+				<li>Left-click selects a target, Right-click changes your course.</li>
+				<li>Arrow keys change the position of control panels. Use SHIFT/CTRL keys with arrow keys to select which panel you wish to move.</li>
+				<li>
+					The information panel shows the current speed, bearing and depth of your vessel (and your target if selected).
+					It also shows you the depths of all thermal layers.
+				</li>
+				<li>The are two more panels: one for controlling your ship, another for controlling your torpedo tubes and inventory.</td>
+				<li>Use the STOP/SLOW/..../FLANK buttons to adjust the speed of your submarine.</li>
+				<li>Use the &#xd7;1 &#xd7;2 &#xd7;4 &#xd7;8 buttons to adjust the speed of simulation.</li>
+				<li>Use the UP THERMAL / DOWN THERMAL buttons to change your depth.
+					Ocean is divided into layers of water of different temperaturs, which attenuate propagation of sound waves.
+					Hence you may wish to dive below certain thermal layers to hide from enemy's sonar.
+				</li>
+				<li>You can send a loud PING impulse from your sonar, so you can detect other vessels easier.
+					Be careful! Ping also makes you audible to enemy's sonar.
+				</li>
+				<li>
+					You can deploy towed sonar array for better detection of enemy vessels.
+					This towed array slows down your submarine, so you may wish to retrieve it as soon as you know where your targets are located.
+					If you are in trouble and have no time for retrieving then simply cut it! (but you will no longer be able to use it later)
+				</li>
+				<li>To launch torpedos you need to first load them into your tubes, flood them, select a target and fire when they are armed.
+					Torpedo is attached to your submarine by a cable, so you have some control over it
+					(i.e. detonate, search other submarines or surface vessels, change depth or go to a waypoint).
+					Once the torpedo reaches the end of cable you loose control overit.
+					Be careful! It may actually detect your ship and get back on you!
+				</li>
+				<li>
+					Enjoy....
+				</li>
+			</ul>
+			</font>
+		</div>
+		<br /><br /><br /><br />
+	</div>
 <script src="background_ctrl.js"></script>
 <script src="music_ctrl.js"></script>
 <script src="scenarios.js"></script>
 <script src="utilities.js"></script>
 <script>
-  document . getElementById ('music_on_off') . checked = localStorage . getItem ('music') !== 'false' ? true : false;
-  if (document . getElementById ('music_on_off') . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');
+	document . getElementById ('music_on_off') . checked = localStorage . getItem ('music') !== 'false' ? true : false;
+	if (document . getElementById ('music_on_off') . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');
 
-  var CheckCaptain = function () {
-    var side = JSON . parse (localStorage . getItem (localStorage . getItem ('side')));
-    if (side . captain === '') {alert ('You need to create/select a captain for your mission.'); return false;}
-    var captain = side . captains [side . captain];
-    if (captain . status !== 'Active') {alert ("You need to select a captain, who is Active in service."); return false;}
-    return true;
-  };
+	var CheckCaptain = function () {
+		var side = JSON . parse (localStorage . getItem (localStorage . getItem ('side')));
+		if (side . captain === '') {alert ('You need to create/select a captain for your mission.'); return false;}
+		var captain = side . captains [side . captain];
+		if (captain . status !== 'Active') {alert ("You need to select a captain, who is Active in service."); return false;}
+		return true;
+	};
 
-  var populate_scenarios = function () {
-    var side = localStorage . getItem ('side');
-    var scenario_content = document . getElementById ('scenario_content');
-    if (scenario_content === null) return;
-    scenario_content . innerHTML = '';
-    for (var ind in scenarios [side]) {
-      var title = scenarios [side] [ind] . Title;
-      var instructions = scenarios [side] [ind] . Instructions;
-      var li = document . createElement ('li');
-      li . innerHTML = `<a href="scenarios_${side}_${title}.html" onclick="return CheckAbort () && CheckCaptain ();">${title}</a>: ${instructions}`;
-      scenario_content . appendChild (li);
-    }
-  };
-  populate_scenarios ();
+	var populate_scenarios = function () {
+		var side = localStorage . getItem ('side');
+		var scenario_content = document . getElementById ('scenario_content');
+		if (scenario_content === null) return;
+		scenario_content . innerHTML = '';
+		for (var ind in scenarios [side]) {
+			var title = scenarios [side] [ind] . Title;
+			var instructions = scenarios [side] [ind] . Instructions;
+			var li = document . createElement ('li');
+			li . innerHTML = `<a href="scenarios_${side}_${title}.html" onclick="return CheckAbort () && CheckCaptain ();">${title}</a>: ${instructions}`;
+			scenario_content . appendChild (li);
+		}
+	};
+	populate_scenarios ();
 
-  var DeleteCapitan = function (name) {
-    var side_name = localStorage . getItem ('side');
-    var side = JSON . parse (localStorage . getItem (side_name));
-    delete side . captains [name];
-    var keys = Object . keys (side . captains);
-    if (side . captain === name && keys . length > 0) side . captain = keys [0];
-    if (keys . length < 1) side . captain = '';
-    localStorage . setItem (side_name, JSON . stringify (side));
-    populate_captains ();
-  };
-  
-  var CreateCaptain = function () {
-    var captain = prompt ('Enter Captains\' Name');
-    if (captain === null) return;
-    var side_name = localStorage . getItem ('side'); if (side_name === null) return;
-    var side = JSON . parse (localStorage . getItem (side_name) || '{"captains": {}}');
-    side . captains [captain] = {rank: ranks [side_name] [0], rank_id: 0, score: 0, victory: 0, abort: 0, defeat: 0, scenarios: [], status: 'Active'};
-    side . captain = captain;
-    localStorage . setItem (side_name, JSON . stringify (side));
-    populate_captains ();
-  };
+	var DeleteCapitan = function (name) {
+		var side_name = localStorage . getItem ('side');
+		var side = JSON . parse (localStorage . getItem (side_name));
+		delete side . captains [name];
+		var keys = Object . keys (side . captains);
+		if (side . captain === name && keys . length > 0) side . captain = keys [0];
+		if (keys . length < 1) side . captain = '';
+		localStorage . setItem (side_name, JSON . stringify (side));
+		populate_captains ();
+	};
 
-  var SelectCaptain = function (name) {
-    var side_name = localStorage . getItem ('side'); if (side_name === null) return;
-    var side = JSON . parse (localStorage . getItem (side_name) || '{"captains": {}}');
-    side . captain = name;
-    localStorage . setItem (side_name, JSON . stringify (side));
-  };
+	var CreateCaptain = function () {
+		var captain = prompt ('Enter Captains\' Name');
+		if (captain === null) return;
+		var side_name = localStorage . getItem ('side'); if (side_name === null) return;
+		var side = JSON . parse (localStorage . getItem (side_name) || '{"captains": {}}');
+		side . captains [captain] = {rank: ranks [side_name] [0], rank_id: 0, score: 0, victory: 0, abort: 0, defeat: 0, scenarios: [], status: 'Active'};
+		side . captain = captain;
+		localStorage . setItem (side_name, JSON . stringify (side));
+		populate_captains ();
+	};
 
-  var populate_captains = function () {
-    document . getElementById ('captains_table') . innerHTML = '';
-    var side_name = localStorage . getItem ('side');
-    var side = JSON . parse (localStorage . getItem (side_name));
-    if (side === null) return;
-    var content = '<tr><td></td><td align="center">Name</td><td>Rank</td><td>Score</td><td>Victories</td><td>Aborts</td><td>Defeats</td><td>Status</td></tr>'
-    for (var ind in side . captains) {
-      var captain = side . captains [ind];
-      content += `<tr><td><input type="radio" name="captains" ${side . captain === ind ? 'checked' : ''} onclick="javascript: SelectCaptain ('${ind}');"/></td><td align="left">${ind}</td><td align="center">${captain . rank}</td><td align="center">${captain . score}</td><td align="center">${captain . victory}</td><td align="center">${captain . abort}</td><td align="center">${captain . defeat}</td><td align="center">${captain . status}</td><td><input type="button" value="Delete" onclick="javascript: DeleteCapitan ('${ind}');" /></td></tr>`;
-    }
-    document . getElementById ('captains_table') . innerHTML = content;
-  };
-  populate_captains ();
+	var SelectCaptain = function (name) {
+		var side_name = localStorage . getItem ('side'); if (side_name === null) return;
+		var side = JSON . parse (localStorage . getItem (side_name) || '{"captains": {}}');
+		side . captain = name;
+		localStorage . setItem (side_name, JSON . stringify (side));
+	};
+
+	var populate_captains = function () {
+		document . getElementById ('captains_table') . innerHTML = '';
+		var side_name = localStorage . getItem ('side');
+		var side = JSON . parse (localStorage . getItem (side_name));
+		if (side === null) return;
+		var content = '<tr><td></td><td align="center">Name</td><td>Rank</td><td>Score</td><td>Victories</td><td>Aborts</td><td>Defeats</td><td>Status</td></tr>'
+		for (var ind in side . captains) {
+			var captain = side . captains [ind];
+			content += `<tr><td><input type="radio" name="captains" ${side . captain === ind ? 'checked' : ''} onclick="javascript: SelectCaptain ('${ind}');"/></td><td align="left">${ind}</td><td align="center">${captain . rank}</td><td align="center">${captain . score}</td><td align="center">${captain . victory}</td><td align="center">${captain . abort}</td><td align="center">${captain . defeat}</td><td align="center">${captain . status}</td><td><input type="button" value="Delete" onclick="javascript: DeleteCapitan ('${ind}');" /></td></tr>`;
+		}
+		document . getElementById ('captains_table') . innerHTML = content;
+	};
+	populate_captains ();
 </script>
 </body>
 

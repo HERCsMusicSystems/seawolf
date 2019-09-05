@@ -182,20 +182,20 @@ var simulatedVessel = function (vessel) {
 };
 var constructRemotes = function () {remotes = {}; for (var ind in vessels) remotes [vessels [ind] . name] = vessels [ind] . position; return JSON . stringify (remotes);};
 var simulationHitTest = function (x, y, reference, minimum_distance) {
-  if (minimum_distance === undefined) minimum_distance = 8 / 128 / scaling;
-  x /= 128 * scaling; y /= 128 * scaling;
-  x += reference . position . x; y += reference . position . y;
-  var selected = null, distance = 16384;
-  for (var ind in reference . sonar . detected) {
+	if (minimum_distance === undefined) minimum_distance = 8 / 128 / scaling;
+	x /= 128 * scaling; y /= 128 * scaling;
+	x += reference . position . x; y += reference . position . y;
+	var selected = null, distance = 16384;
+	for (var ind in reference . sonar . detected) {
 		var v = reference . sonar . detected [ind], vv = v . vessel;
-    if (vv !== reference) {
-      var xx = vv . position . x - x, yy = vv . position . y - y;
-      var d = Math . sqrt (xx * xx + yy * yy);
-      if (d < distance) {selected = v; distance = d;}
-    }
-  }
-  if (distance < minimum_distance) return selected;
-  return null;
+		if (vv !== reference) {
+			var xx = vv . position . x - x, yy = vv . position . y - y;
+			var d = Math . sqrt (xx * xx + yy * yy);
+			if (d < distance) {selected = v; distance = d;}
+		}
+	}
+	if (distance < minimum_distance) return selected;
+	return null;
 };
 var explode = function (torpedo, range, depth, damage) {
 	torpedo . explodeSound ();
@@ -257,44 +257,44 @@ var targetSelect = function () {
 var thermoclines = [{depth: 160, attenuation: 0.01}, {depth: 320, attenuation: 0.01}, {depth: 600, attenuation: 0.001}, {depth: 1200, attenuation: 0.001}];
 
 var friends = {
-  'U.S.A.': ['U.S.A.', 'United Kingdom', 'Australia'],
-  'United Kingdom': ['United Kingdom', 'Australia', 'U.S.A.'],
-  'Australia': ['Australia', 'United Kingdom', 'U.S.A.'],
-  'Russia': ['Russia', 'India', 'China'],
-  'China': ['China', 'Russia', 'India'],
-  'India': ['India', 'Russia', 'China']
+	'U.S.A.': ['U.S.A.', 'United Kingdom', 'Australia'],
+	'United Kingdom': ['United Kingdom', 'Australia', 'U.S.A.'],
+	'Australia': ['Australia', 'United Kingdom', 'U.S.A.'],
+	'Russia': ['Russia', 'India', 'China'],
+	'China': ['China', 'Russia', 'India'],
+	'India': ['India', 'Russia', 'China']
 };
 
 var enemies = {
-  'U.S.A.': ['Russia', 'China', 'India'],
-  'United Kingdom': ['Russia', 'China', 'India'],
-  'Australia': ['Russia', 'China', 'India'],
-  'Russia': ['U.S.A.', 'United Kingdom', 'Australia'],
-  'China': ['U.S.A.', 'Uniged Kingdom', 'Australia'],
-  'India': ['U.S.A.', 'United kingdom', 'Australia']
+	'U.S.A.': ['Russia', 'China', 'India'],
+	'United Kingdom': ['Russia', 'China', 'India'],
+	'Australia': ['Russia', 'China', 'India'],
+	'Russia': ['U.S.A.', 'United Kingdom', 'Australia'],
+	'China': ['U.S.A.', 'Uniged Kingdom', 'Australia'],
+	'India': ['U.S.A.', 'United kingdom', 'Australia']
 };
 
 var scaling = 1;
 
 var drawGrid = function (ctx, width, height, vessel) {
-  width *= 0.5; height *= 0.5;
-  var mile = 128 * scaling;
-  var shift = vessel === null ? {x: 0, y: 0} : {x: - vessel . position . x * mile, y: - vessel . position . y * mile};
-  ctx . translate (width + shift . x, height + shift . y);
-  ctx . beginPath ();
-  ctx . lineWidth = 1.5;
-  ctx . strokeStyle = 'yellow';
-  var limit_left = - shift . x - width;
-  var limit_right = - shift . x + width;
-  var limit_top = - shift . y - height;
-  var limit_bottom = - shift . y + height;
-  var grid_left = Math . floor (limit_left / mile) * mile + mile;
-  var grid_right = Math . floor (limit_right / mile) * mile + 1;
-  var grid_top = Math . floor (limit_top / mile) * mile + mile;
-  var grid_bottom = Math . floor (limit_bottom / mile) * mile + 1;
-  for (var ind = grid_left; ind < grid_right; ind += mile) {ctx . moveTo (ind, limit_top); ctx . lineTo (ind, limit_bottom);}
-  for (var ind = grid_top; ind < grid_bottom; ind += mile) {ctx . moveTo (limit_left, ind); ctx . lineTo (limit_right, ind);}
-  ctx . stroke ();
+	width *= 0.5; height *= 0.5;
+	var mile = 128 * scaling;
+	var shift = vessel === null ? {x: 0, y: 0} : {x: - vessel . position . x * mile, y: - vessel . position . y * mile};
+	ctx . translate (width + shift . x, height + shift . y);
+	ctx . beginPath ();
+	ctx . lineWidth = 1.5;
+	ctx . strokeStyle = 'yellow';
+	var limit_left = - shift . x - width;
+	var limit_right = - shift . x + width;
+	var limit_top = - shift . y - height;
+	var limit_bottom = - shift . y + height;
+	var grid_left = Math . floor (limit_left / mile) * mile + mile;
+	var grid_right = Math . floor (limit_right / mile) * mile + 1;
+	var grid_top = Math . floor (limit_top / mile) * mile + mile;
+	var grid_bottom = Math . floor (limit_bottom / mile) * mile + 1;
+	for (var ind = grid_left; ind < grid_right; ind += mile) {ctx . moveTo (ind, limit_top); ctx . lineTo (ind, limit_bottom);}
+	for (var ind = grid_top; ind < grid_bottom; ind += mile) {ctx . moveTo (limit_left, ind); ctx . lineTo (limit_right, ind);}
+	ctx . stroke ();
 	if (waypoint !== null) {
 		ctx . beginPath ();
 		var mile = 128 * scaling;

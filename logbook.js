@@ -9,12 +9,12 @@ cell = document . createElement ('td'); cell . appendChild (document . createTex
 tbody . appendChild (row);
 
 for (var ind in logbook) {
-  var row = document . createElement ('tr');
-  var cell = document . createElement ('td');
-  cell . appendChild (document . createTextNode (logbook [ind] . time));
-  row . appendChild (cell);
-  cell = document . createElement ('td');
-  cell . appendChild (document . createTextNode (logbook [ind] . message));
-  row . appendChild (cell);
-  tbody . appendChild (row);
+	var row = document . createElement ('tr');
+	var cell = document . createElement ('td');
+	cell . appendChild (document . createTextNode (logbook [ind] . time));
+	row . appendChild (cell);
+	cell = document . createElement ('td');
+	cell . appendChild (document . createTextNode (logbook [ind] . message));
+	row . appendChild (cell);
+	tbody . appendChild (row);
 }
