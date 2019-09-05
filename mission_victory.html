@@ -32,6 +32,7 @@ Captain
 <body bgcolor="#0000aa" style="font-family: arial; color: gold; text-shadow: 1px 1px black; background-image: url('images/Submarine2.jpg'); background-size: cover;">
 <h1>VICTORY</h1>
 <font size="+1">
+	<div id="results"></div>
 	<div><a href="index.html">Back to Scenarios</a></div><br />
 	<div id="view_logbook">
 		<a onclick="document . getElementById ('hide_logbook') . style . display = 'inline'; document . getElementById ('view_logbook') . style . display = 'none'; event . preventDefault ();" style="cursor: pointer;">
@@ -43,13 +44,26 @@ Captain
 			<u>Hide LogBook</u>
 		</a>
 		<table id="LogBook"/>
+		<script src="logbook.js"></script>
 	</div>
 
 </font>
 
 <script src="background_ctrl.js"></script>
-
-<script src="logbook.js"></script>
+<script src="utilities.js"></script>
+<script>
+	if (localStorage . getItem ('ChangesAllowed') === 'true') {
+		if (SimulatedMission ()) {document . getElementById ('results') . innerHTML = `As this mission was simulated, no points will be awarded.<br/><br/>`;}
+		else {
+			document . getElementById ('results') . innerHTML = `As this was a real mission, you will get points.<br/><br/>`;
+			side . captains [side . captain] . score = Number (side . captains [side . captain] . score) + 1;
+			console . log (side);
+		}
+		captain . scenarios . push ({mission: localStorage . getItem ('mission'), status: 'Victory'});
+		localStorage . setItem (side_name, JSON . stringify (side));
+		localStorage . removeItem ('ChangesAllowed');
+	}
+</script>
 
 <script src="music_ctrl.js"></script>
 <script>if (localStorage . getItem ('music') === 'true') PlayMusic ('light');</script>
