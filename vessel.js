@@ -18,7 +18,12 @@ var SelectRandom = function (list, amount) {
 	return ret;
 };
 
-var TakeRandom = function (list) {return list . splice (Math . floor (Math . random () * list . length), 1);};
+var TakeRandom = function (list, amount) {
+	if (amount === undefined) return list . splice (Math . floor (Math . random () * list . length), 1) [0];
+	var ret = [];
+	while (amount > 0) {ret . push (TakeRandom (list)); amount -= 1;}
+	return ret;
+};
 
 var vessel_id = 0;
 

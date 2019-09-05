@@ -47,17 +47,21 @@ Sink the three Oil Tankers.
     <tr><td align="center"><img src="silhouettes/Akula.png"/><br/>Akula Submarine</td></tr>
   </table>
 <h2 id="name"></h2>
-
+<h2 id="mission_type"></h2>
 <a href="scenarios_U.S.A._akula_is_out_there.html">Proceed</a>
 
 <script src="background_ctrl.js"></script>
 <script src="music_ctrl.js"></script>
 <script src="vessel.js"></script>
 <script src="vessels.js"></script>
+<script src="utilities.js"></script>
 <script>
-	var name = SelectRandom (Virginia . prototype . names);
+	localStorage . setItem ('mission', 'Akula is out threre.');
+	var simulated_name = localStorage . getItem ('SimulatedName');
+	var name = simulated_name || TakeRandom (Virginia . prototype . names);
 	localStorage . setItem ('SimulatedName', name);
-	document . getElementById ('name') . innerHTML = `You will be commanding Virginia class submarine: <font color="red">${name}</font>.`;
+	document . getElementById ('name') . innerHTML = `Your captain <font color="red">${side . captains [side . captain] . rank} ${side . captain}</font> will be commanding Virginia class submarine <font color="red">${name}</font>`;
+	if (SimulatedMission ()) document . getElementById ('mission_type') . innerHTML = `This mission is simulated${captain . rank_id < 2 ? " as your captain's rank is too low to command a ship" : ''}.`;
 </script>
 
 </body>
