@@ -56,10 +56,7 @@ Sink the three Oil Tankers.
 <script src="vessels.js"></script>
 <script src="utilities.js"></script>
 <script>
-	localStorage . setItem ('mission', 'Three Oilers');
-	var simulated_name = localStorage . getItem ('SimulatedName');
-	var name = simulated_name || TakeRandom (Virginia . prototype . names);
-	localStorage . setItem ('SimulatedName', name);
+	var name = GenerateName ('Three Oilers', Virginia);
 	document . getElementById ('name') . innerHTML = `Your captain <font color="red">${side . captains [side . captain] . rank} ${side . captain}</font> will be commanding Virginia class submarine <font color="red">${name}</font>`;
 	if (SimulatedMission ()) document . getElementById ('mission_type') . innerHTML = `This mission is simulated${captain . rank_id < 2 ? " as your captain's rank is too low to command a ship" : ''}.`;
 </script>

@@ -33,3 +33,12 @@ var CheckAbort = function () {
 	return true;
 };
 
+var GenerateName = function (mission_name, vessel) {
+	var mission = localStorage . getItem ('mission');
+	var simulated_name = localStorage . getItem ('SimulatedName');
+	var name = mission === mission_name ? simulated_name : TakeRandom (vessel . prototype . names);
+	localStorage . setItem ('SimulatedName', name);
+	localStorage . setItem ('mission', mission_name);
+	return name;
+};
+

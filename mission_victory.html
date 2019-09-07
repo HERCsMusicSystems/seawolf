@@ -62,6 +62,8 @@ Captain
 		captain . scenarios . push ({mission: localStorage . getItem ('mission'), status: 'Victory', type: SimulatedMission () ? 'Simulated' : 'Real'});
 		localStorage . setItem (side_name, JSON . stringify (side));
 		localStorage . removeItem ('ChangesAllowed');
+		localStorage . removeItem ('mission');
+		localStorage . removeItem ('SimulatedName');
 	}
 </script>
 
