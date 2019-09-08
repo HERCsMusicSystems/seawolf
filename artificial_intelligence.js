@@ -44,6 +44,10 @@ var torpedoAI = function (torpedo) {
 	};
 };
 
+var wakehomingAI = function (torpedo) {
+	this . code = function (delta) {}
+};
+
 var akulaAI = function (akula) {
 	this . mode = 'initiate_search';
 	this . code = function (delta) {
