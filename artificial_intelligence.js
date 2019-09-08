@@ -45,7 +45,9 @@ var torpedoAI = function (torpedo) {
 };
 
 var wakehomingAI = function (torpedo) {
-	this . code = function (delta) {}
+	this . code = function (delta) {
+		torpedo . targetBearing (torpedo . target_waypoint);
+	};
 };
 
 var akulaAI = function (akula) {

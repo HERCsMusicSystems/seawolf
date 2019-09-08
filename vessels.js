@@ -22,10 +22,11 @@ var Virginia = function (name, country) {
 	this . sonar = new sonar (this);
 	this . inventory = {
 		Mark48: {constructor: Mark48, count: 29},
+		Mark46: {constructor: Mark46, count: 4},
 		Harpoon: {constructor: Harpoon, count: 4, depth: 150},
 		Tomahawk: {constructor: Tomahawk, count: 4, depth: 150}
 	};
-	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk']}, 4);
+	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk']}, 4);
 	this . silo = {
 		Tomahawk: {constructor: Harpoon, amount: 12, depth: 150},
 		Decoy: {constructor: Decoy, amount: 6}
@@ -213,6 +214,20 @@ var Mark46 = function (cable, name, country) {
 	this . distance_travelled = 0;
 	this . initial_trail_delta = 2;
 	this . trail_length = 100;
+};
+inherit (Mark46, vessel);
+Mark46 . prototype . image = 'Mark46';
+Mark46 . prototype . info = 'https://en.wikipedia.org/wiki/Mark_46_torpedo';
+Mark46 . prototype . launch = function (tube, vessel, target) {
+	if (waypoint === null) return false;
+	this . target = null;
+	this . target_waypoint = {x: waypoint . position . x, y: waypoint . position . y};
+	var sp = vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: this . depth, bearing: sp . bearing};
+	this . targetBearing (this . target_waypoint);
+	this . setSpeed ('full');
+	addVessel (this);
+	return true;
 };
 
 var SeaLance = function (cable, name, country) {
