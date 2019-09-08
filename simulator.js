@@ -356,6 +356,7 @@ var resize = function (delta) {
 	simulation_depth . innerHTML = simulated . position . depth . toFixed (0);
 	var thermocline_string = ''; for (var ind in thermoclines) thermocline_string += ' ' + thermoclines [ind] . depth;
 	thermocline_info . innerHTML = thermocline_string;
+	if (selected !== null && simulated . sonar . targetNoLongerAudible (selected . vessel)) selected = null;
 	if (selected !== null) {
 		var sv = selected . vessel;
 		bearing = displayBearing (sv . position . bearing);

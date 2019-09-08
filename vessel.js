@@ -481,7 +481,7 @@ sonar . prototype . detectStrongest = function (delta, type) {
 
 sonar . prototype . targetNoLongerAudible = function (target) {
 	for (var ind in this . detected) {
-		if (this . detected [ind] === target) return false;
+		if (this . detected [ind]  . vessel === target) return false;
 	}
 	return true;
 };
