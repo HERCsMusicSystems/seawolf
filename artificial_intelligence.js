@@ -49,7 +49,7 @@ var wakehomingAI = function (torpedo) {
 	this . code = function (delta) {
 		switch (this . status) {
 			case 'waypoint':
-				torpedo . targetBearing (torpedo . target_waypoint . position);
+				torpedo . targetBearing (torpedo . target_waypoint . position, 5);
 				var vector = torpedo . getRelativePositionOf (torpedo . target_waypoint);
 				if (vector . distance < 0.01) {
 					this . status = 'trail';
@@ -59,6 +59,15 @@ var wakehomingAI = function (torpedo) {
 				}
 				break;
 			case 'trail':
+				var vector = torpedo . getRelativePositionFromVector (torpedo . target . trail [this . trail . index]);
+				while (vector . distance < 0.01) {
+					this . trail . index += 1;
+					if (this . trail . index >= torpedo . target . trail . length) {this . status = 'target'; return;}
+					vector = torpedo . getRelativePositionFromVector (torpedo . target . trail [this . trail . index]);
+				}
+				torpedo . targetBearing (torpedo . target . trail [this . trail . index]);
+				break;
+			case 'target':
 				torpedo . targetBearing (torpedo . target . position);
 				var vector = torpedo . getRelativePositionOf (torpedo . target);
 				if (vector . distance < 0.01) torpedo . detonate ();

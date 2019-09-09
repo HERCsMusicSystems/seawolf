@@ -79,7 +79,7 @@ vessel . prototype . positionVessel = function (x, y, bearing, depth) {
 vessel . prototype . move = function (delta) {
 	this . trail_delta -= delta;
 	if (this . trail_delta < 1) {
-		this . trail . push ({x: this . position . x * 128, y: this . position . y * 128});
+		this . trail . push ({x: this . position . x, y: this . position . y});
 		this . trail_delta = this . initial_trail_delta;
 		while (this . trail . length > this . trail_length) this . trail . shift ();
 	}
@@ -182,9 +182,10 @@ var HarpoonImage = new Image (); HarpoonImage . src = 'silhouettes/Harpoon.png';
 vessel . prototype . draw = function (ctx, status) {
 	ctx . strokeStyle = 'white';
 	ctx . lineWidth = 1;
+	var scc = scaling * 128;
 	for (var ind in this . trail) {
 		ctx . beginPath ();
-		ctx . arc (this . trail [ind] . x * scaling, this . trail [ind] . y * scaling, 1, 0, 6.28);
+		ctx . arc (this . trail [ind] . x * scc, this . trail [ind] . y * scc, 1, 0, 6.28);
 		ctx . stroke ();
 	}
 	var x = this . position . x * scaling * 128, y = this . position . y * scaling * 128;
@@ -256,6 +257,13 @@ vessel . prototype . getVectorFrom = function (vessel) {return {x: vessel . posi
 
 vessel . prototype . getRelativePositionOf = function (vessel) {
 	var vector = this . getVectorFrom (vessel);
+	vector . distance = Math . sqrt (vector . x * vector . x + vector . y * vector . y);
+	vector . bearing = Math . atan2 (vector . y, vector . x);
+	return vector;
+};
+
+vessel . prototype . getRelativePositionFromVector = function (vector) {
+	vector = {x: vector . x - this . position . x, y: vector . y - this . position . y};
 	vector . distance = Math . sqrt (vector . x * vector . x + vector . y * vector . y);
 	vector . bearing = Math . atan2 (vector . y, vector . x);
 	return vector;
