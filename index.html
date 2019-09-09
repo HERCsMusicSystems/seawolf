@@ -187,14 +187,14 @@
 		var side_name = localStorage . getItem ('side');
 		var side = JSON . parse (localStorage . getItem (side_name));
 		if (side === null) return;
-		var content = '<tr><td></td><td align="center">Name</td><td>Rank</td><td>Score</td><td>Victories</td><td>Aborts</td><td>Defeats</td><td>Status</td></tr>'
+		var content = '<tr><td></td><td align="center">Name</td><td>Rank</td><td>Ribbons</td><td>Score</td><td>Victories</td><td>Aborts</td><td>Defeats</td><td>Status</td></tr>'
 		for (var ind in side . captains) {
 			var captain = side . captains [ind];
 			var orders = '';
 			for (var ord in captain . orders) {
-				orders += `<img src="orders/${captain . orders [ord]}-ribbon.png" />`;
+				orders += `<img src="orders/${captain . orders [ord]}-ribbon.png" width="40"/>`;
 			}
-			content += `<tr><td><input type="radio" name="captains" ${side . captain === ind ? 'checked' : ''} onclick="javascript: SelectCaptain ('${ind}');"/></td><td align="left">${ind}</td><td align="center">${captain . rank}${orders}</td><td align="center">${captain . score}</td><td align="center">${captain . victory}</td><td align="center">${captain . abort}</td><td align="center">${captain . defeat}</td><td align="center">${captain . status}</td><td><input type="button" value="Delete" onclick="javascript: DeleteCapitan ('${ind}');" /></td></tr>`;
+			content += `<tr><td><input type="radio" name="captains" ${side . captain === ind ? 'checked' : ''} onclick="javascript: SelectCaptain ('${ind}');"/></td><td align="left">${ind}</td><td align="center">${captain . rank}</td><td>${orders}</td><td align="center">${captain . score}</td><td align="center">${captain . victory}</td><td align="center">${captain . abort}</td><td align="center">${captain . defeat}</td><td align="center">${captain . status}</td><td><input type="button" value="Delete" onclick="javascript: DeleteCapitan ('${ind}');" /></td></tr>`;
 		}
 		document . getElementById ('captains_table') . innerHTML = content;
 	};
