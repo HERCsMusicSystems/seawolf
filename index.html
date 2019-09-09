@@ -169,7 +169,7 @@
 		if (captain === null) return;
 		var side_name = localStorage . getItem ('side'); if (side_name === null) return;
 		var side = JSON . parse (localStorage . getItem (side_name) || '{"captains": {}}');
-		side . captains [captain] = {rank: ranks [side_name] [0], rank_id: 0, score: 0, victory: 0, abort: 0, defeat: 0, scenarios: [], status: 'Active'};
+		side . captains [captain] = {rank: ranks [side_name] [0], rank_id: 0, score: 0, victory: 0, abort: 0, defeat: 0, scenarios: [], orders: [], status: 'Active'};
 		side . captain = captain;
 		localStorage . setItem (side_name, JSON . stringify (side));
 		populate_captains ();
