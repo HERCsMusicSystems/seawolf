@@ -36,7 +36,7 @@ var CheckAbort = function () {
 var GenerateName = function (mission_name, vessel) {
 	var mission = localStorage . getItem ('mission');
 	var simulated_name = localStorage . getItem ('SimulatedName');
-	if (simulated_name === 'null') simulated_name = TakeRandom (vessel . prototype . names);
+	if (simulated_name === 'null' || ! simulated_name) simulated_name = TakeRandom (vessel . prototype . names);
 	var name = mission === mission_name ? simulated_name : TakeRandom (vessel . prototype . names);
 	localStorage . setItem ('SimulatedName', name);
 	localStorage . setItem ('mission', mission_name);
