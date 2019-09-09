@@ -221,10 +221,10 @@ Mark46 . prototype . info = 'https://en.wikipedia.org/wiki/Mark_46_torpedo';
 Mark46 . prototype . launch = function (tube, vessel, target) {
 	if (waypoint === null) return false;
 	this . target = null;
-	this . target_waypoint = {x: waypoint . position . x, y: waypoint . position . y};
+	this . target_waypoint = {position: {x: waypoint . position . x, y: waypoint . position . y}};
 	var sp = vessel . position;
-	this . position = {x: sp . x, y: sp . y, depth: this . depth, bearing: sp . bearing};
-	this . targetBearing (this . target_waypoint);
+	this . position = {x: sp . x, y: sp . y, depth: sp . depth, bearing: sp . bearing};
+	this . targetBearing (this . target_waypoint . position);
 	this . setSpeed ('full');
 	addVessel (this);
 	return true;

@@ -255,6 +255,25 @@ var targetSelect = function () {
 	default_select = false; canvas . style . cursor = 'crosshair';
 };
 
+var findClosestTrail = function (torpedo) {
+	var target = null;
+	var target_trail = null;
+	var distance = 1073741824;
+	for (var ind in vessels) {
+		var vessel = vessels [ind];
+		if (vessel . type === 'surface') {
+			for (var sub = 0; sub < vessel . trail . length; sub += 1) {
+				var trail = vessel . trail [sub];
+				var dx = torpedo . position . x - trail . x; dx *= dx;
+				var dy = torpedo . position . y - trail . y; dy *= dy;
+				var delta = dx + dy;
+				if (delta < distance) {target = vessel; target_trail = sub;}
+			}
+		}
+	}
+	return {target: target, index: target_trail};
+};
+
 var thermoclines = [{depth: 160, attenuation: 0.01}, {depth: 320, attenuation: 0.01}, {depth: 600, attenuation: 0.001}, {depth: 1200, attenuation: 0.001}];
 
 var friends = {

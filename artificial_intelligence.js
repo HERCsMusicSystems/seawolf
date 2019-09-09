@@ -45,8 +45,26 @@ var torpedoAI = function (torpedo) {
 };
 
 var wakehomingAI = function (torpedo) {
+	this . status = 'waypoint';
 	this . code = function (delta) {
-		torpedo . targetBearing (torpedo . target_waypoint);
+		switch (this . status) {
+			case 'waypoint':
+				torpedo . targetBearing (torpedo . target_waypoint . position);
+				var vector = torpedo . getRelativePositionOf (torpedo . target_waypoint);
+				if (vector . distance < 0.01) {
+					this . status = 'trail';
+					this . trail = findClosestTrail (torpedo);
+					torpedo . target = this . trail . target;
+					torpedo . targetDepth (0);
+				}
+				break;
+			case 'trail':
+				torpedo . targetBearing (torpedo . target . position);
+				var vector = torpedo . getRelativePositionOf (torpedo . target);
+				if (vector . distance < 0.01) torpedo . detonate ();
+				break;
+			default: break;
+		}
 	};
 };
 

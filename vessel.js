@@ -87,7 +87,7 @@ vessel . prototype . move = function (delta) {
 	var sdelta = delta / 3600;
 	this . position . x += sdelta * (Math . cos (bearing) * this . speed . x - Math . sin (bearing) * this . speed . y);
 	this . position . y += sdelta * (Math . cos (bearing) * this . speed . y + Math . sin (bearing) * this . speed . x);
-	if (this . position . depth != this . depth_target) {
+	if (this . position . depth !== this . depth_target) {
 		var dspeed = this . diving_speed * delta;
 		if (Math . abs (this . depth_target - this . position . depth) <= dspeed) {this . position . depth = this . depth_target; this . diving_speed = 0;}
 		else {
