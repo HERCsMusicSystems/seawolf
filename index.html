@@ -132,6 +132,7 @@
 <script src="utilities.js"></script>
 <script>
 	localStorage . removeItem ('ChangesAllowed');
+	localStorage . removeItem ('award');
 	document . getElementById ('music_on_off') . checked = localStorage . getItem ('music') !== 'false' ? true : false;
 	if (document . getElementById ('music_on_off') . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');
 
