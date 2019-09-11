@@ -43,3 +43,8 @@ var GenerateName = function (mission_name, vessel) {
 	return name;
 };
 
+var award = function (order) {
+	captain . orders . push (order);
+	localStorage . setItem (side_name, JSON . stringify (side));
+	localStorage . setItem ('award', order);
+};

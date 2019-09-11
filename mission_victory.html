@@ -53,12 +53,19 @@ Captain
 <script src="utilities.js"></script>
 <script>
 	if (localStorage . getItem ('ChangesAllowed') === 'true') {
-		if (SimulatedMission ()) {document . getElementById ('results') . innerHTML = `As this mission was simulated, no points will be awarded.<br/><br/>`;}
+		var results;
+		if (SimulatedMission ()) {results = `As this mission was simulated, no points will be awarded.<br/><br/>`;}
 		else {
 			document . getElementById ('results') . innerHTML = `As this was a real mission, you will get points.<br/><br/>`;
 			side . captains [side . captain] . score = Number (side . captains [side . captain] . score) + 1;
 			console . log (side);
 		}
+		var award = localStorage . getItem ('award');
+		if (award) {
+			var award_name = award . replace ('-', ' ') . replace ('0', '') . replace ('1', '') . replace ('2', '') . replace ('3', '') . replace ('4', '') . replace ('5', '') . replace ('6', '') . replace ('7', '') . replace ('8', '') . replace ('9', '');
+			results += `You have been awarded a <b>${award_name}</b>.<br /><img src="orders/${award}.png" height="100" hspace="100"/><br /><br />`;
+		}
+		document . getElementById ('results') . innerHTML = results;
 		captain . scenarios . push ({mission: localStorage . getItem ('mission'), status: 'Victory', type: SimulatedMission () ? 'Simulated' : 'Real'});
 		localStorage . setItem (side_name, JSON . stringify (side));
 		localStorage . removeItem ('ChangesAllowed');
