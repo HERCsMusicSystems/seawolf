@@ -34,6 +34,10 @@ collins2.jpg
 Collins.jpg
 Kilo-Class_Russian_Submarine_MOD_45165128.jpg
 imagesvc.timeincapp.com.jpeg
+Oscar_class.jpg
+Oscar_parade.jpg
+Oscar_return.jpg
+Oscar_Tomsk.jpg
 `;
 goodLooking += goodLooking;
 var dir = (`
