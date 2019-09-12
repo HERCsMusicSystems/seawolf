@@ -9,17 +9,6 @@ var side_name = localStorage . getItem ('side');
 var side = JSON . parse (localStorage . getItem (side_name));
 var captain = side . captains [side . captain];
 
-var promote = function () {
-	var ret = '';
-	if (captain . rank_id < ranks [side_name] . length - 1) {
-		captain . rank_id += 1;
-		ret = `${captain . rank} ${side . captain} will be promoted to ${ranks [side_name] [captain . rank_id]}`;
-		captain . rank = ranks [side_name] [captain . rank_id];
-		localStorage . setItem (side_name, JSON . stringify (side));
-	}
-	return ret;
-};
-
 var SimulatedMission = function () {
 	if (localStorage . getItem ('mission_type') === 'Simulated' || captain . rank_id < 2) return true;
 	return false;
@@ -47,4 +36,12 @@ var award = function (order) {
 	captain . orders . push (order);
 	localStorage . setItem (side_name, JSON . stringify (side));
 	localStorage . setItem ('award', order);
+};
+
+var promote = function () {
+	if (captain . rank_id >= ranks [side_name] . length - 1)  return;
+	captain . rank_id += 1;
+	captain . rank = ranks [side_name] [captain . rank_id];
+	localStorage . setItem (side_name, JSON . stringify (side));
+	localStorage . setItem ('promotion', captain . rank);
 };
