@@ -105,7 +105,7 @@ var escortAI = function (escort) {
 		var targetNoLongerAudible = true;
 		for (var ind in escort . sonar . detected) {
 			var detected = escort . sonar . detected [ind];
-			if (detected . status === 'enemy') {
+			if (detected . status === 'enemy' && detected . vessel . type === 'submarine') {
 				if (detected . vessel === escort . target) targetNoLongerAudible = false;
 				if (detected . noise > noise) {target = detected . vessel; noise = detected . noise;}
 			}
