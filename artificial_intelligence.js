@@ -130,8 +130,11 @@ var escortAI = function (escort) {
 			}
 		}
 		if (escort . target !== null) {
+			var vector = escort . getRelativePositionOf (escort . target);
 			escort . targetBearing (escort . target . position);
-			escort . setSpeed ('full');
+			if (vector . distance > 1) escort . setSpeed ('full');
+			else if (vector . distance > 0.5) escort . setSpeed ('half');
+			else escort . setSpeed ('stop');
 		}
 //		if (ping) {
 //			escort . targetBearing (ping);
