@@ -34,6 +34,7 @@ collins2.jpg
 Collins.jpg
 Kilo-Class_Russian_Submarine_MOD_45165128.jpg
 imagesvc.timeincapp.com.jpeg
+Ballistic_submarine_base-DIA.jpg
 Oscar_class.jpg
 Oscar_parade.jpg
 Oscar_return.jpg
@@ -55,7 +56,6 @@ var dir = (`
 35b2b7911e1d0139bd4c3941dd83b4f0.jpg
 39623bfdf8bce4cce8fa81648f73a3ff.jpeg
 _46888672_newclip10copy.jpg
-4i048z8nra201.jpg
 52OELMDLQFA6TM2HUG4THDWVOA.JPG
 577689954321f1c72f8b4f43-2732-1366.jpg
 5ed0fa7b1ec33ccb4b4d02d5aaca09f3.jpg
@@ -63,15 +63,11 @@ _46888672_newclip10copy.jpg
 AAFimt3.img.jpeg
 abcsfp63h03pvhmjqj7n.jpg
 Alfa-class_submarine.jpg
-ATKHAT2COWOKWJHFPTJC5ODN5A.jpg
+ATKHAT2COWOKWJHFPTJC5ODN5A.jpg [Math . floor (Math . random () * backgrounds . length)]
 BBN4ojo.img.jpeg
-BOREI-II_3d.jpg
-ccn9969.jpg
 collins2.jpg
 Collins.jpg
 DPYQt8HW4AA_CmM.jpg
-ezJlVLo.jpg
-fbwi302dd4y01.jpg
 HMS-Alliance-Motor-engine-room-looking-forward.jpg
 HMS-Vanguard-Major-Refit-behind-Schedule.jpg
 imagesvc.timeincapp.com.jpeg
@@ -81,12 +77,7 @@ K61 (1).jpg
 Kilo-Class_Russian_Submarine_MOD_45165128.jpg
 maxresdefault.jpg
 nuclear submarine interior control unit.jpg
-papercraft-submarino-typhoon-project-941-akula-D_NQ_NP_867343-MLB27839173523_072018-F.jpg
 qn8hua2oig5tb1x8e17e.jpg
-Ru_Alfa_cutaway.jpg
-Ru_Pr885M_cutaway.jpg
-belgorod.jpg
-s821Jml.jpg
 shutterstock_347220944_1080.jpg
 shutterstock-711005029.jpg
 sub1.jpg
@@ -100,7 +91,6 @@ Typhoon-39.jpg
 Typhoon-40.jpg
 Typhoon-42.jpg
 Typhoon-71.jpg
-Typhoon-75.jpg
 Typhoon-79.jpg
 typhoona11.jpg
 Typhoon-Class-Submarine3.jpg
@@ -114,8 +104,23 @@ victor_iii_class_submarine.jpg
 virginiaclasssubmarine.jpg
 seawolfclasssubmarine.jpg
 ` + goodLooking) . split ('\n');
+var other_images = `
+Ru_Pr885M_cutaway.jpg
+ezJlVLo.jpg
+fbwi302dd4y01.jpg
+s821Jml.jpg
+belgorod.jpg
+4i048z8nra201.jpg
+Ru_Alfa_cutaway.jpg
+papercraft-submarino-typhoon-project-941-akula-D_NQ_NP_867343-MLB27839173523_072018-F.jpg
+ccn9969.jpg
+BOREI-II_3d.jpg
+Typhoon-75.jpg
+`;
 var index;
 while ((index = dir . indexOf ('')) >= 0) dir . splice (index, 1);
 for (index in dir) dir [index] = "url('images/" + dir [index] + "')";
 var backgrounds = dir;
-document . body . style . backgroundImage = backgrounds [Math . floor (Math . random () * backgrounds . length)];
+var background = backgrounds [Math . floor (Math . random () * backgrounds . length)];
+console . log (background);
+document . body . style . backgroundImage = background;
