@@ -45,3 +45,10 @@ var promote = function () {
 	localStorage . setItem (side_name, JSON . stringify (side));
 	localStorage . setItem ('promotion', captain . rank);
 };
+
+var AwardName = function (award) {
+	award = award . split ('-');
+	award . shift ();
+	return award . join (' ');
+};
+

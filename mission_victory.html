@@ -65,7 +65,7 @@ Captain
 		if (promotion) results += `You have been promoted to the rank of <b><font color="red">${promotion}</font></b>.<br /><br />`;
 		var award = localStorage . getItem ('award');
 		if (award) {
-			var award_name = award . replace ('-', ' ') . replace ('0', '') . replace ('1', '') . replace ('2', '') . replace ('3', '') . replace ('4', '') . replace ('5', '') . replace ('6', '') . replace ('7', '') . replace ('8', '') . replace ('9', '');
+			var award_name = AwardName (award);
 			results += `You have been awarded a <b><font color="red">${award_name}</font></b>.<br /><img src="orders/${award}.png" height="100" hspace="100"/><br /><br />`;
 		}
 		document . getElementById ('results') . innerHTML = results;

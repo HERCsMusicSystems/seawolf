@@ -196,10 +196,11 @@
 		var content = '<tr><td></td><td align="center">Name</td><td>Rank</td><td>Ribbons</td><td>Score</td><td>Victories</td><td>Aborts</td><td>Defeats</td><td>Status</td></tr>'
 		for (var ind in side . captains) {
 			var captain = side . captains [ind];
+			captain . orders . sort ();
 			var orders = '';
 			var ol = captain . orders . length;
 			for (var ord = 0; ord < ol; ord += 1) {
-				orders += `<img src="orders/${captain . orders [ord]}-ribbon.png" width="60"/>`;
+				orders += `<img src="orders/${captain . orders [ord]}-ribbon.png" width="80" title="${AwardName (captain . orders [ord])}"/>`;
 				if ((ol - ord) % 3 === 1) orders += '<br />';
 				if (ord === 0 && ol % 3 === 0) orders += '<br />';
 			}
