@@ -22,13 +22,13 @@ var Virginia = function (name, country) {
 	this . sonar = new sonar (this);
 	this . inventory = {
 		Mark48: {constructor: Mark48, count: 29},
-		Mark46: {constructor: Mark46, count: 4},
+		Mark46: {constructor: Mark46, count: 16},
 		Harpoon: {constructor: Harpoon, count: 4, depth: 150},
 		Tomahawk: {constructor: Tomahawk, count: 4, depth: 150}
 	};
 	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk']}, 4);
 	this . silo = {
-		Tomahawk: {constructor: Harpoon, amount: 12, depth: 150},
+		Tomahawk: {constructor: Tomahawk, amount: 12, depth: 150},
 		Decoy: {constructor: Decoy, amount: 6}
 	}
 };
@@ -114,7 +114,7 @@ Harpoon . prototype . launch = function (tube, vessel, target) {
 //////////////
 
 var Tomahawk = function (cable, name, country) {
-	Harpoon . call (this, country);
+	Harpoon . call (this, cable, name, country);
 	this . class = 'Tomahawk';
 	this . speeds = [480, 480, 480, 480, 480, 480, 480];
 	this . ai = new TomahawkAI (this);

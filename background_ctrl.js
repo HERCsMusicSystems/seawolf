@@ -67,7 +67,6 @@ ATKHAT2COWOKWJHFPTJC5ODN5A.jpg [Math . floor (Math . random () * backgrounds . l
 BBN4ojo.img.jpeg
 collins2.jpg
 Collins.jpg
-DPYQt8HW4AA_CmM.jpg
 HMS-Alliance-Motor-engine-room-looking-forward.jpg
 HMS-Vanguard-Major-Refit-behind-Schedule.jpg
 imagesvc.timeincapp.com.jpeg
@@ -116,6 +115,7 @@ papercraft-submarino-typhoon-project-941-akula-D_NQ_NP_867343-MLB27839173523_072
 ccn9969.jpg
 BOREI-II_3d.jpg
 Typhoon-75.jpg
+DPYQt8HW4AA_CmM.jpg
 `;
 var index;
 while ((index = dir . indexOf ('')) >= 0) dir . splice (index, 1);
