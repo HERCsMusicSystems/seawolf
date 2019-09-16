@@ -179,7 +179,6 @@ var simulatedVessel = function (vessel) {
 	vessel . ai = new sonarDetect (vessel);
 	fill_weapons_table (vessel);
 	localStorage . setItem ('ChangesAllowed', true);
-	localStorage . removeItem ('SimulatedName');
 };
 var constructRemotes = function () {remotes = {}; for (var ind in vessels) remotes [vessels [ind] . name] = vessels [ind] . position; return JSON . stringify (remotes);};
 var simulationHitTest = function (x, y, reference, minimum_distance) {
