@@ -1,4 +1,6 @@
 
+var subImage = new Image (); subImage . src = 'silhouettes/LosAngelesTopView.png';
+
 var inherit = function (from, to) {
 	if (to === undefined) {to = from; from = function () {to . apply (this, arguments);}}
 	from . prototype = Object . create (to . prototype);
@@ -193,8 +195,15 @@ vessel . prototype . draw = function (ctx, status) {
 		var bearing = (this . position . bearing - 90) * Math . PI / 180;
 		var alpha = Math . cos (bearing) * 12, beta = Math . sin (bearing) * 12;
 		ctx . lineCap = 'round'
-		ctx . lineWidth = 4; ctx . strokeStyle = 'gray';
+		ctx . lineWidth = 4; ctx . strokeStyle = 'red';
 		ctx . beginPath (); ctx . moveTo (x - alpha, y - beta); ctx . lineTo (x + alpha, y + beta); ctx . stroke ();
+		// ctx . save ();
+		// ctx . translate (x, y);
+		// ctx . rotate (bearing);
+		// ctx . scale (0.0625, 0.0625);
+		// ctx . translate (subImage . width * -0.5, subImage . height * -0.5);
+		// ctx . drawImage (subImage, 0, 0);
+		// ctx . restore ();
 		return;
 	}
 	switch (status) {
