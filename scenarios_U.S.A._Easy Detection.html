@@ -22,61 +22,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
 // THE SOFTWARE.                                                                 //
 ///////////////////////////////////////////////////////////////////////////////////
+
 -->
 
 <html>
 
 <head>
-	<title>SEAWOLF => Three Oilers</title>
+	<title>SEAWOLF</title>
 	<style>
-	td {padding: 0px;}
-	button {padding: 0px 0px;}
+	a:link {color: blue; text-shadow: 1px 1px red;}
+	a:visited {color: blue;}
+	a:hover {color: red; text-shadow: 1px 1px blue;}
+	a:active {color: red;}
 	</style>
 </head>
 
-<body bgcolor="#000044" style = "margin: 0;">
+<body bgcolor="#0000aa" style="font-family: arial; color: gold; text-shadow: 1px 1px black; background-image: url('images/Submarine2.jpg'); background-size: cover;">
+<h2>Background Information</h2>
+Iran is violating embargo put on exporting petroleum, but we need a proof of this. Your mission is to detect an Oil Tanker, which we believe is there.
+<h2>Objective</h2>
+Detect an Oil Tanker.
+<h2>Enemies</h2>
+	<table>
+		<tr><td align="center"><img src="silhouettes/OilTanker.png"/><br/>Oil Tanker</td></tr>
+	</table>
+<h2 id="name"></h2>
+<h2 id="mission_type"></h2>
+<a href="scenarios_U.S.A._easy_detection.html" onclick="javascript: return CheckAbort ();">Proceed</a>
 
-<div id="seawolf_game"/>
-
-</body>
-
-<script src="music_ctrl.js" type="text/javascript" encoding="UTF-8"></script>
-<script src="simulator.js" type="text/javascript" encoding="UTF-8"></script>
-<script src="vessel.js" type="text/javascript" encoding="UTF-8"></script>
-<script src="vessels.js" type="text/javascript" encoding="UTF-8"></script>
-<script src="artificial_intelligence.js" type="text/javascript" encoding="UTF-8"></script>
-<script src="notifications.js" type="text/javascript" encoding="UTF-8"></script>
-
-
-<script type="text/javascript" encoding="UTF-8">
-
-var texas = new Virginia (localStorage . getItem ('SimulatedName'));
-texas . positionVessel (0, 0, 0, 800);
-
-var oiler1 = new Oiler ('Aquarius');
-var oiler2 = new Oiler ('Atlantis');
-var oiler3 = new Oiler ('Triton');
-
-var from = {x: Math . random () * 10 - 5, y: Math . random () * 4 - 2};
-var to = {x: Math . random () * 10 - 5, y: Math . random () * 4 - 2};
-from . bearing = nauticalBearing (Math . atan2 (to . y - from . y, to . x - from . x));
-
-oiler1 . positionVessel (from . x - 0.1, from . y, from . bearing);
-oiler2 . positionVessel (from . x + 0.1, from . y, from . bearing);
-oiler3 . positionVessel (from . x, from . y + 0.15, from . bearing);
-oiler1 . setSpeed ('half');
-oiler2 . setSpeed ('half');
-oiler3 . setSpeed ('half');
-
-addVessel (texas);
-addVessel (oiler1);
-addVessel (oiler2);
-addVessel (oiler3);
-
-simulatedVessel (texas);
-
-checkGameStatus = function () {if (oiler1 . destroyed && oiler2 . destroyed && oiler3 . destroyed) MissionVictory ();};
-
+<script src="background_ctrl.js"></script>
+<script src="music_ctrl.js"></script>
+<script src="vessel.js"></script>
+<script src="vessels.js"></script>
+<script src="utilities.js"></script>
+<script>
+	var name = GenerateName ('Easy Detection', Virginia);
+	document . getElementById ('name') . innerHTML = `Your captain <font color="red">${side . captains [side . captain] . rank} ${side . captain}</font> will be commanding Virginia class submarine <font color="red">${name}</font>`;
+	if (SimulatedMission ()) document . getElementById ('mission_type') . innerHTML = `This mission is simulated${captain . rank_id < 2 ? " as your captain's rank is too low to command a ship" : ''}.`;
 </script>
 
-</html>
+</body>

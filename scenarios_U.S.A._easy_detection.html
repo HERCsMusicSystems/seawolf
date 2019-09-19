@@ -27,18 +27,14 @@
 <html>
 
 <head>
-	<title>SEAWOLF => Three Oilers</title>
+	<title>SEAWOLF => Easy Detection</title>
 	<style>
 	td {padding: 0px;}
 	button {padding: 0px 0px;}
 	</style>
 </head>
 
-<body bgcolor="#000044" style = "margin: 0;">
-
-<div id="seawolf_game"/>
-
-</body>
+<body bgcolor="#000044" style = "margin: 0;"><div id="seawolf_game"/></body>
 
 <script src="music_ctrl.js" type="text/javascript" encoding="UTF-8"></script>
 <script src="simulator.js" type="text/javascript" encoding="UTF-8"></script>
@@ -46,37 +42,24 @@
 <script src="vessels.js" type="text/javascript" encoding="UTF-8"></script>
 <script src="artificial_intelligence.js" type="text/javascript" encoding="UTF-8"></script>
 <script src="notifications.js" type="text/javascript" encoding="UTF-8"></script>
-
+<script src="utilities.js" type="text/javascript" encoding="UTF-8"></script>
 
 <script type="text/javascript" encoding="UTF-8">
 
 var texas = new Virginia (localStorage . getItem ('SimulatedName'));
 texas . positionVessel (0, 0, 0, 800);
-
-var oiler1 = new Oiler ('Aquarius');
-var oiler2 = new Oiler ('Atlantis');
-var oiler3 = new Oiler ('Triton');
+var oiler = new Oiler (SelectRandom (['Aquarius', 'Atlantis', 'Tritoon']));
 
 var from = {x: Math . random () * 10 - 5, y: Math . random () * 4 - 2};
 var to = {x: Math . random () * 10 - 5, y: Math . random () * 4 - 2};
 from . bearing = nauticalBearing (Math . atan2 (to . y - from . y, to . x - from . x));
-
-oiler1 . positionVessel (from . x - 0.1, from . y, from . bearing);
-oiler2 . positionVessel (from . x + 0.1, from . y, from . bearing);
-oiler3 . positionVessel (from . x, from . y + 0.15, from . bearing);
-oiler1 . setSpeed ('half');
-oiler2 . setSpeed ('half');
-oiler3 . setSpeed ('half');
-
+oiler . positionVessel (from . x, from . y, from . bearing);
+oiler . setSpeed ('half');
 addVessel (texas);
-addVessel (oiler1);
-addVessel (oiler2);
-addVessel (oiler3);
-
+addVessel (oiler);
 simulatedVessel (texas);
 
-checkGameStatus = function () {if (oiler1 . destroyed && oiler2 . destroyed && oiler3 . destroyed) MissionVictory ();};
+checkGameStatus = function () {if (texas . sonar . detected [1] !== undefined) MissionVictory ();};
 
 </script>
-
 </html>

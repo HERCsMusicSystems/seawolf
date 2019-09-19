@@ -140,6 +140,7 @@ var MissionVictory = function () {
 		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
 		window . location . assign (address . substring (0, index) + 'mission_victory.html');
 	} else window . location . assign ('/mission_victory.html');
+	if (captain . rank_id < 2) {promote (); return;}
 };
 
 var MissionDefeat = function () {
@@ -401,6 +402,7 @@ var resize = function (delta) {
 		selected_distance . innerHTML = '<>';
 		selected_image . innerHTML = '';
 	}
+	checkGameStatus ();
 };
 
 var simulation_interval = setInterval (resize, 50);
