@@ -1,8 +1,8 @@
 
 var ranks = {
-	'U.S.A.': ['Lieutenant', 'Lieutenant Commander', 'Commander', 'Captain'],
-	'United Kingdom': ['Lieutenant', 'Lieutenant Commander', 'Commander', 'Captain', 'Commodore'],
-	Russia: ['Капитан-лейтенант', 'Капитан третьего ранга', 'Капитан второго ранга', 'Капитан']
+	'U.S.A.': ['Ensign', 'Lieutenant', 'Lieutenant Commander', 'Commander', 'Captain'],
+	'United Kingdom': ['Sub-lieutenant', 'Lieutenant', 'Lieutenant Commander', 'Commander', 'Captain', 'Commodore'],
+	Russia: ['Лейтенант', 'Старший лейтенант', 'Капитан-лейтенант', 'Капитан третьего ранга', 'Капитан второго ранга', 'Капитан']
 };
 
 var side_name = localStorage . getItem ('side');
@@ -10,7 +10,7 @@ var side = JSON . parse (localStorage . getItem (side_name));
 var captain = side . captains [side . captain];
 
 var SimulatedMission = function () {
-	if (localStorage . getItem ('mission_type') === 'Simulated' || captain . rank_id < 2) return true;
+	if (localStorage . getItem ('mission_type') === 'Simulated' || captain . rank_id < 2 || (captain . rank_id === 2 && localStorage . getItem ('promotion'))) return true;
 	return false;
 };
 

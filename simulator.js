@@ -133,6 +133,7 @@ var ping = null;
 var checkGameStatus = function () {console . log ("Checking end condition.");};
 
 var MissionVictory = function () {
+	PauseSimulation ();
 	alert ("Victory");
 	localStorage . setItem ('ChangesAllowed', 'true');
 	if (window . location . protocol . indexOf ('file') >= 0) {
@@ -146,7 +147,7 @@ var MissionVictory = function () {
 		var scenario = captain . scenarios [ind];
 		if (scenario . status === 'Victory' && scenario . type === 'Real') missions += 1;
 	}
-	if (captain . rank_id * 10 - 10 + Math . random () * 5 > missions) {promote (); return;}
+	if (captain . rank_id * 10 - 10 + Math . random () * 5 < missions) {promote (); return;}
 };
 
 var MissionDefeat = function () {
