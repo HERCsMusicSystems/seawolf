@@ -53,6 +53,7 @@ var Seawolf = function (name, country) {
 		Tomahawk: {constructor: Tomahawk, count: 12, depth: 150}
 	};
 	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk']}, 8);
+	this . silo = {Decoy: {constructor: Decoy, amount: 8}};
 };
 inherit (Seawolf, vessel);
 Seawolf . prototype . image = 'Virginia';
