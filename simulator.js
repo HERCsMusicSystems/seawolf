@@ -141,6 +141,12 @@ var MissionVictory = function () {
 		window . location . assign (address . substring (0, index) + 'mission_victory.html');
 	} else window . location . assign ('/mission_victory.html');
 	if (captain . rank_id < 2) {promote (); return;}
+	var missions = 0;
+	for (var ind in captain . scenarios) {
+		var scenario = captain . scenarios [ind];
+		if (scenario . status === 'Victory' && scenario . type === 'Real') missions += 1;
+	}
+	if (captain . rank_id * 10 - 10 + Math . random () * 5 > missions) {promote (); return;}
 };
 
 var MissionDefeat = function () {
