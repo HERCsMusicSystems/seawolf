@@ -18,7 +18,7 @@ var Virginia = function (name, country) {
 	vessel . call (this, country);
 	this . class = 'Virginia';
 	this . name = name;
-	this . speeds = [0, 2, 8, 15, 19, 25, 35];
+	this . speeds = [0, 2, 8, 15, 19, 25, 30];
 	this . sonar = new sonar (this);
 	this . inventory = {
 		Mark48: {constructor: Mark48, count: 29},
@@ -30,12 +30,34 @@ var Virginia = function (name, country) {
 	this . silo = {
 		Tomahawk: {constructor: Tomahawk, amount: 12, depth: 150},
 		Decoy: {constructor: Decoy, amount: 6}
-	}
+	};
+	this . test_depth = 800;
+	this . collapse_depth = 1200;
 };
 inherit (Virginia, vessel);
 Virginia . prototype . image = 'Virginia';
 Virginia . prototype . info = 'https://en.wikipedia.org/wiki/Virginia-class_submarine';
 Virginia . prototype . names = ['SSN-774 Virginia', 'SSN-775 Texas', 'SSN-776 Hawaii', 'SSN-777 North Carolina', 'SSN-778 New Hampshire', 'SSN-779 New Mexico', 'SSN-780 Missouri', 'SSN-781 California', 'SSN-782 Mississippi', 'SSN-783 Minnesota', 'SSN-784 North Dakota', 'SSN-785 John Warner', 'SSN-786 Illinois', 'SSN-787 Washington', 'SSN-788 Colorado', 'SSN-789 Indiana', 'SSN-790 South Dakota', 'SSN-791 Delaware', 'SSN-792 Vermont', 'SSN-793 Oregon', 'SSN-794 Montana', 'SSN-795 Hyman G. Rickover', 'SSN-796 New Jersey', 'SSN-797 Iowa', 'SSN-798 Massachusetts', 'SSN-799 Idaho', 'SSN-800 Arkansas', 'SSN-801 Utah'];
+
+var Seawolf = function (name, country) {
+	if (country === undefined) country = 'U.S.A.';
+	vessel . call (this, country);
+	this . class = 'Seawolf';
+	this . name = name;
+	this . speeds = [0, 2, 8, 15, 20, 25, 35];
+	this . noises = [10, 120, 480, 2400, 4800, 48000, 480000];
+	this . sonar = new sonar (this);
+	this . inventory = {
+		Mark48: {constructor: Mark48, count: 26},
+		Harpoon: {constructor: Harpoon, count: 12, depth: 150},
+		Tomahawk: {constructor: Tomahawk, count: 12, depth: 150}
+	};
+	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk']}, 8);
+};
+inherit (Seawolf, vessel);
+Seawolf . prototype . image = 'Virginia';
+Seawolf . prototype . info = 'https://en.wikipedia.org/wiki/Virginia-class_submarine';
+Seawolf . prototype . names = ['SSN-21 Seawolf', 'SSN-22 Connecticut', 'SSN-23 Jimmy Carter'];
 
 var Akula = function (name, country) {
 	if (country === undefined) country = 'Russia';
