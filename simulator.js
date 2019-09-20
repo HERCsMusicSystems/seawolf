@@ -377,8 +377,8 @@ var resize = function (delta) {
 		if (ping . ping < 10) ping = null;
 	}
 	var bearing = displayBearing (simulated . position . bearing);
-	simulation_bearing . innerHTML = bearing;
-	simulation_speed . innerHTML = simulated . speed . x;
+	simulation_bearing . innerHTML = bearing . toFixed (0);
+	simulation_speed . innerHTML = simulated . speed . x . toFixed (0);
 	simulation_depth . innerHTML = simulated . position . depth . toFixed (0);
 	var thermocline_string = ''; for (var ind in thermoclines) thermocline_string += ' ' + thermoclines [ind] . depth;
 	thermocline_info . innerHTML = thermocline_string;

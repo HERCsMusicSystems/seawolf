@@ -63,6 +63,10 @@ var vessel = function (country) {
 	this . target_type = 'all';
 	this . cable = null;
 	this . attacker = this;
+	this . flank_speed_warning = 100;
+	this . flank_speed_end = 120;
+	this . flank_speed = 0;
+	this . flank_speed_w = 16384;
 };
 
 vessel . prototype . image = 'Default';
@@ -85,6 +89,9 @@ vessel . prototype . move = function (delta) {
 		this . trail_delta = this . initial_trail_delta;
 		while (this . trail . length > this . trail_length) this . trail . shift ();
 	}
+	if (this . speed . x > this . speeds [5]) this . flank_speed += delta; else {this . flank_speed = 0; this . flank_speed_w = this . flank_speed_warning;}
+	if (this . flank_speed >= this . flank_speed_w) {this . flank_speed_w = 16384; sayWords (this, 'Engine is about to break');}
+	if (this . flank_speed >= this . flank_speed_end) {this . setSpeed ('stop'); this . damage_speed (0.8); sayWords (this, 'Damage');}
 	var bearing = (this . position . bearing - 90) * Math . PI / 180;
 	var sdelta = delta / 3600;
 	this . position . x += sdelta * (Math . cos (bearing) * this . speed . x - Math . sin (bearing) * this . speed . y);
@@ -321,8 +328,9 @@ vessel . prototype . siloLaunch = function (silo, vessel, target) {
 	return true;
 };
 
-vessel . prototype . damage_speed = function () {
-	for (var ind in this . speeds) this . speeds [ind] *= 0.5;
+vessel . prototype . damage_speed = function (fraction) {
+	if (fraction === undefined) fraction = 0.5;
+	for (var ind in this . speeds) this . speeds [ind] *= fraction;
 	this . speed . x = this . speeds [this . speed_index];
 };
 
