@@ -57,7 +57,7 @@ Captain
 		var results = '';
 		if (SimulatedMission ()) {results = `As this mission was simulated, no points will be awarded.<br/><br/>`;}
 		else {
-			result = `As this was a real mission, you have scored 1 point.<br/><br/>`;
+			results = `As this was a real mission, you have scored 1 point.<br/><br/>`;
 			side . captains [side . captain] . score = Number (side . captains [side . captain] . score) + 1;
 		}
 		var promotion = localStorage . getItem ('promotion');
