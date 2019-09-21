@@ -54,7 +54,7 @@ var PauseMusicAndRemember = function (ind) {localStorage . setItem ('music', 'fa
 var say = function (word) {
 	word = new SpeechSynthesisUtterance (word);
 	var dialect = Number (localStorage . getItem ('dialect'));
-	word . voice = dialects [dialect . value];
+	word . voice = dialects [dialect];
 	speechSynthesis . speak (word);
 };
 
