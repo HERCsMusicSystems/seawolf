@@ -6,7 +6,7 @@ var log = function (text) {
 	localStorage . setItem ('logbook', JSON . stringify (logbook));
 };
 
-var notifyVesselLost = function (vessel) {log ("Vessel " + vessel . name + " (Class " + vessel . class + ") lost.");};
+var notifyVesselLost = function (vessel) {log ("Vessel " + vessel . name + " (Class " + vessel . class + ") lost."); checkGameStatus ();};
 
 var notifyPing = function (vessel) {};
 

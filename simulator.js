@@ -133,21 +133,23 @@ var ping = null;
 var checkGameStatus = function () {console . log ("Checking end condition.");};
 
 var MissionVictory = function () {
-	PauseSimulation ();
-	alert ("Victory");
-	localStorage . setItem ('ChangesAllowed', 'true');
-	if (window . location . protocol . indexOf ('file') >= 0) {
-		var address = window . location . pathname;
-		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
-		window . location . assign (address . substring (0, index) + 'mission_victory.html');
-	} else window . location . assign ('/mission_victory.html');
-	if (captain . rank_id < 2) {promote (); return;}
-	var missions = 0;
-	for (var ind in captain . scenarios) {
-		var scenario = captain . scenarios [ind];
-		if (scenario . status === 'Victory' && scenario . type === 'Real') missions += 1;
-	}
-	if (captain . rank_id * 10 - 10 + Math . random () * 5 < missions) {promote (); return;}
+	setTimeout (function () {
+		PauseSimulation ();
+		alert ("Victory");
+		localStorage . setItem ('ChangesAllowed', 'true');
+		if (window . location . protocol . indexOf ('file') >= 0) {
+			var address = window . location . pathname;
+			var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
+			window . location . assign (address . substring (0, index) + 'mission_victory.html');
+		} else window . location . assign ('/mission_victory.html');
+		if (captain . rank_id < 2) {promote (); return;}
+		var missions = 0;
+		for (var ind in captain . scenarios) {
+			var scenario = captain . scenarios [ind];
+			if (scenario . status === 'Victory' && scenario . type === 'Real') missions += 1;
+		}
+		if (captain . rank_id * 10 - 10 + Math . random () * 5 < missions) {promote (); return;}
+	}, 3000);
 };
 
 var MissionDefeat = function () {
@@ -409,7 +411,6 @@ var resize = function (delta) {
 		selected_distance . innerHTML = '<>';
 		selected_image . innerHTML = '';
 	}
-	checkGameStatus ();
 };
 
 var simulation_interval = setInterval (resize, 50);
@@ -459,6 +460,7 @@ var onMouseDown = function (e) {
 			if (target === null) return;
 			default_select = true; selected . vessel . setTarget (target . vessel); canvas . style . cursor = 'default';
 		}
+		if (target !== null) checkGameStatus ();
 	}
 	if (e . buttons === 2) simulated . targetBearing ({x: e . clientX - canvas . width * 0.5, y: e . clientY - canvas . height * 0.5});
 	return false;
