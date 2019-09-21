@@ -59,6 +59,9 @@ var vessel = function (country) {
 	this . damage_delta = 0;
 	this . test_depth = 1600; // US Navy 2/3, Royal Navy: 4/7, German Kriegsmarine: 1/2
 	this . collapse_depth = 2400;
+	this . collapse_depth_warning = 2200;
+	this . test_depth_warning = true;
+	this . collapse_depth_w = true;
 	this . target = null;
 	this . target_type = 'all';
 	this . cable = null;
@@ -103,6 +106,11 @@ vessel . prototype . move = function (delta) {
 			if (this . depth_target > this . position . depth) this . position . depth += dspeed;
 			else this . position . depth -= dspeed;
 		}
+		if (this . position . depth > this . test_depth) {if (this . test_depth_warning) {this . test_depth_warning = false; sayWords (this, 'Captain, we are below the test depth');}}
+		else this . test_depth_warning = true;
+		if (this . position . depth >= this . collapse_depth_warning) {if (this . collapse_depth_w) {this . collapse_depth_w = false; sayWords (this, 'Captain, we are about to collapse.');}}
+		else this . collapse_depth_w = true;
+		if (this . position . depth > this . collapse_depth) {sayWords (this, 'Captain, the hull collapsed.'); MissionDefeat ();}
 	}
 	if (this . bearing_speed !== 0) {
 		if (this . bearing_target !== null) {

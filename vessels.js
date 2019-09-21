@@ -33,6 +33,7 @@ var Virginia = function (name, country) {
 	};
 	this . test_depth = 800;
 	this . collapse_depth = 1200;
+	this . collapse_depth_warning = 1000;
 };
 inherit (Virginia, vessel);
 Virginia . prototype . image = 'Virginia';
