@@ -205,7 +205,7 @@ vessel . prototype . draw = function (ctx, status) {
 		ctx . arc (this . trail [ind] . x * scc, this . trail [ind] . y * scc, 1, 0, 6.28);
 		ctx . stroke ();
 	}
-	var x = this . position . x * scaling * 128, y = this . position . y * scaling * 128;
+	var x = this . position . x * scc, y = this . position . y * scc;
 	if (status === undefined) {
 		var bearing = (this . position . bearing - 90) * Math . PI / 180;
 		var alpha = Math . cos (bearing) * 12, beta = Math . sin (bearing) * 12;
@@ -251,7 +251,7 @@ vessel . prototype . draw = function (ctx, status) {
 			break;
 		case 'torpedo':
 			ctx . beginPath ();
-			ctx . moveTo (x, y); ctx . lineTo (x, y - 8); ctx . moveTo (x - 4, y); ctx . lineTo (x + 4, y);
+			ctx . moveTo (x, y); ctx . lineTo (x, y - 6); ctx . moveTo (x - 4, y - 6); ctx . lineTo (x + 4, y - 6);
 			if (status === 'friend') ctx . arc (x, y, 8, 0, Math . PI);
 			else {ctx . moveTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y);}
 			break;
@@ -264,6 +264,12 @@ vessel . prototype . draw = function (ctx, status) {
 			ctx . translate (HarpoonImage . width * -0.5, HarpoonImage . height * -0.5);
 			ctx . drawImage (HarpoonImage, 0, 0);
 			ctx . restore ();
+			break;
+		case 'mine':
+			ctx . beginPath (); ctx . arc (x, y, 2, 0, Math . PI * 2); ctx . fill ();
+			ctx . beginPath ();
+			ctx . arc (x, y, this . range * scc, 0, Math . PI * 2);
+			ctx . strokeStyle = this . armed ? 'red' : 'blue';
 			break;
 		default: break;
 	}
@@ -485,7 +491,8 @@ sonar . prototype . detect = function (delta) {
 			var noise = this . getNoiseOf (vessel) * this . towed_array_current_amplification;
 			if (noise < this . identification_threshold &&
 				((this . vessel . position . depth <= 60 && vessel . position . depth === 0)
-				|| vessel . cable === this . vessel || vessel . type === 'rocket')) noise = this . identification_threshold;
+				|| vessel . cable === this . vessel || vessel . type === 'rocket'
+				|| (vessel . type === 'mine' && vessel . cable === this . vessel))) noise = this . identification_threshold;
 			if (this . detected . hasOwnProperty (vessel . id)) {
 				if (noise < this . tracking_threshold) {if (selected && selected . vessel === vessel) selected = null; delete this . detected [vessel . id];}
 				else {

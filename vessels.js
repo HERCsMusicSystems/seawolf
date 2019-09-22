@@ -24,9 +24,10 @@ var Virginia = function (name, country) {
 		Mark48: {constructor: Mark48, count: 29},
 		Mark46: {constructor: Mark46, count: 16},
 		Harpoon: {constructor: Harpoon, count: 4, depth: 150},
-		Tomahawk: {constructor: Tomahawk, count: 4, depth: 150}
+		Tomahawk: {constructor: Tomahawk, count: 4, depth: 150},
+		Mark60CAPTOR: {constructor: Mark60CAPTOR, count: 4}
 	};
-	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk']}, 4);
+	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk'], Mark60CAPTOR: ['Mark60CAPTOR']}, 4);
 	this . silo = {
 		Tomahawk: {constructor: Tomahawk, amount: 12, depth: 150},
 		Decoy: {constructor: Decoy, amount: 6}
@@ -169,6 +170,37 @@ var Decoy = function (cable, name, country) {
 inherit (Decoy, vessel);
 Decoy . prototype . siloLaunch = function (silo, vessel, target) {
 	this . setSpeed ('full');
+	addVessel (this);
+	return true;
+};
+
+/////////////////////////
+// Mark 60 CAPTOR mine //
+/////////////////////////
+
+var Mark60CAPTOR = function (cable, name, country) {
+	if (name === undefined) name = 'Mark60CAPTOR';
+	if (country === undefined) country = cable . country;
+	vessel . call (this, country);
+	this . type = 'mine';
+	this . class = 'Mark60CAPTOR';
+	this . name = name;
+	this . range = 0.5;
+	this . armed = false;
+	this . armed_time = 200;
+	this . cable = cable;
+	this . noise = 0;
+	this . ai = new mineAI (this);
+	var sp = cable . position;
+	this . position = {x: sp . x, y: sp . y, depth: 1000, bearing: sp . bearing};
+};
+inherit (Mark60CAPTOR, vessel);
+Mark60CAPTOR . prototype . image = 'Mark60CAPTOR';
+Mark60CAPTOR . prototype . info = 'https://en.wikipedia.org/wiki/Mark_60_CAPTOR';
+Mark60CAPTOR . prototype . launch = function (tube, vessel, target) {
+	var sp = vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: sp . depth, bearing: sp . bearing};
+	this . setSpeed ('stop');
 	addVessel (this);
 	return true;
 };

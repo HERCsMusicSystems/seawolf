@@ -80,6 +80,15 @@ var wakehomingAI = function (torpedo) {
 	};
 };
 
+var mineAI = function (mine) {
+	this . code = function (delta) {
+		if (! mine . armed) {
+			mine . armed_time -= delta;
+			if (mine . armed_time < 0) mine . armed = true;
+		}
+	};
+};
+
 var akulaAI = function (akula) {
 	this . mode = 'initiate_search';
 	this . code = function (delta) {
