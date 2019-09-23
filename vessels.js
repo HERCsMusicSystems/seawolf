@@ -204,6 +204,7 @@ Mark60CAPTOR . prototype . launch = function (tube, vessel, target) {
 	addVessel (this);
 	return true;
 };
+Mark60CAPTOR . prototype . NewCount = function (count) {return count - 2;};
 
 ///////////////////////////////////////////////
 // Mark 48                                   //

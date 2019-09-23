@@ -362,6 +362,8 @@ vessel . prototype . detonate = function () {removeVessel (this);};
 
 vessel . prototype . explodeSound = function () {PlayMusic ('harpoonHit');};
 
+vessel . prototype . NewCount = function (count) {return count - 1;};
+
 var tube = function (vessel, settings, speed) {
 	if (speed === undefined) speed = 0.05;
 	this . flooded = 0;
@@ -422,8 +424,8 @@ tube . prototype . load = function (selector) {
 	if (selector === undefined) selector = Object . keys (this . torpedoes) [0];
 	var inventory = this . torpedoes [selector];
 	if (inventory == null || inventory . count < 1) {notifyNoMoreTorpedoes (selector); return;}
-	inventory . count --;
 	this . torpedo = new inventory . constructor (this . vessel, selector);
+	inventory . count = this . torpedo . NewCount (inventory . count);
 	if (this . display_element !== null) this . display_element . innerHTML = `<img src="silhouettes/${this . torpedo . class}.png" width="100"/>`;
 	if (this . display_element) update_inventory_info (this . vessel);
 };
