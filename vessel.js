@@ -423,8 +423,9 @@ tube . prototype . load = function (selector) {
 	if (this . flooded > 0 || this . torpedo !== null) return;
 	if (selector === undefined) selector = Object . keys (this . torpedoes) [0];
 	var inventory = this . torpedoes [selector];
-	if (inventory == null || inventory . count < 1) {notifyNoMoreTorpedoes (selector); return;}
-	this . torpedo = new inventory . constructor (this . vessel, selector);
+	var torpedo = new inventory . constructor (this . vessel, selector);
+	if (inventory == null || inventory . count < 1) {notifyNoMoreTorpedoes (this . vessel, torpedo); return;}
+	this . torpedo = torpedo;
 	inventory . count = this . torpedo . NewCount (inventory . count);
 	if (this . display_element !== null) this . display_element . innerHTML = `<img src="silhouettes/${this . torpedo . class}.png" width="100"/>`;
 	if (this . display_element) update_inventory_info (this . vessel);
