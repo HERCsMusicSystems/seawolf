@@ -195,7 +195,7 @@ var Mark60CAPTOR = function (cable, name, country) {
 	this . position = {x: sp . x, y: sp . y, depth: 1000, bearing: sp . bearing};
 };
 inherit (Mark60CAPTOR, vessel);
-Mark60CAPTOR . prototype . image = 'Mark60CAPTOR';
+Mark60CAPTOR . prototype . image = 'Mark60CAPTOR_image';
 Mark60CAPTOR . prototype . info = 'https://en.wikipedia.org/wiki/Mark_60_CAPTOR';
 Mark60CAPTOR . prototype . launch = function (tube, vessel, target) {
 	var sp = vessel . position;
