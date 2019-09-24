@@ -396,9 +396,7 @@ tube . prototype . move = function (delta) {
 				}
 			} else {
 				this . flooded = 1; this . command = null;
-				if (this . torpedo . launch (this, this . vessel)) {
-					this . torpedo . postLaunch (this);
-				}
+				if (this . torpedo . launch (this, this . vessel)) this . torpedo . postLaunch (this);
 			}
 			break;
 		case 'flood':
@@ -438,9 +436,7 @@ tube . prototype . load = function (selector) {
 tube . prototype . fire = function (target, selector) {
 	if (this . torpedo !== null) {
 		if (this . flooded < 1) return;
-		if (! this . torpedo . launch (this, this . vessel, target)) return;
-		this . torpedo = null; this . flooded = 0;
-		if (this . display_element !== null) {this . display_element . bgColor = 'black'; this . display_element . innerHTML = '';}
+		if (this . torpedo . launch (this, this . vessel)) this . torpedo . postLaunch (this);
 		return;
 	}
 	this . load (selector); if (this . torpedo !== null) {this . command = 'fire', this . torpedo . target = target;}

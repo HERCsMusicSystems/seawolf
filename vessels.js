@@ -205,6 +205,21 @@ Mark60CAPTOR . prototype . launch = function (tube, vessel, target) {
 	return true;
 };
 Mark60CAPTOR . prototype . NewCount = function (count) {return count - 2;};
+Mark60CAPTOR . prototype . postLaunch = function (tube) {
+	if (tube . second_mine === undefined) {
+		tube . command = null;
+		tube . second_mine = true;
+		tube . flooded = 1;
+		tube . torpedo = new Mark60CAPTOR (tube . vessel);
+		if (tube . display_element !== null) {
+			tube . display_element . bgColor = 'red';
+			tube . display_element . innerHTML = `<img src="silhouettes/Mark60CAPTOR1.png" width="100"/>`;
+		}
+	} else {
+		delete tube . second_mine;
+		vessel . prototype . postLaunch (tube);
+	}
+};
 
 ///////////////////////////////////////////////
 // Mark 48                                   //
