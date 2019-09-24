@@ -251,9 +251,9 @@ vessel . prototype . draw = function (ctx, status) {
 			break;
 		case 'torpedo':
 			ctx . beginPath ();
-			ctx . moveTo (x, y); ctx . lineTo (x, y - 6); ctx . moveTo (x - 4, y - 6); ctx . lineTo (x + 4, y - 6);
 			if (status === 'friend') ctx . arc (x, y, 8, 0, Math . PI);
 			else {ctx . moveTo (x + 8, y); ctx . lineTo (x, y + 8); ctx . lineTo (x - 8, y);}
+			ctx . moveTo (x, y); ctx . lineTo (x, y - 6); ctx . moveTo (x - 4, y - 6); ctx . lineTo (x + 4, y - 6);
 			break;
 		case 'rocket':
 			ctx . save ();
@@ -364,6 +364,11 @@ vessel . prototype . explodeSound = function () {PlayMusic ('harpoonHit');};
 
 vessel . prototype . NewCount = function (count) {return count - 1;};
 
+vessel . prototype . postLaunch = function (tube) {
+	tube . torpedo = null; tube . flooded = 0;
+	if (tube . display_element !== null) {tube . display_element . bgColor = 'black'; tube . display_element . innerHTML = '';}
+};
+
 var tube = function (vessel, settings, speed) {
 	if (speed === undefined) speed = 0.05;
 	this . flooded = 0;
@@ -392,8 +397,7 @@ tube . prototype . move = function (delta) {
 			} else {
 				this . flooded = 1; this . command = null;
 				if (this . torpedo . launch (this, this . vessel)) {
-					this . torpedo = null; this . flooded = 0;
-					if (this . display_element !== null) {this . display_element . bgColor = 'black'; this . display_element . innerHTML = '';}
+					this . torpedo . postLaunch (this);
 				}
 			}
 			break;
