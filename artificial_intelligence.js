@@ -80,11 +80,24 @@ var wakehomingAI = function (torpedo) {
 	};
 };
 
-var mineAI = function (mine) {
+var mineAI = function (mine, constructor) {
 	this . code = function (delta) {
 		if (! mine . armed) {
 			mine . armed_time -= delta;
 			if (mine . armed_time < 0) mine . armed = true;
+		} else {
+			for (var ind in vessels) {
+				var vector = mine . getRelativePositionOf (vessels [ind]);
+				if (vector . distance <= mine . range && mine !== vessels [ind]) {
+					var torpedo = new constructor (mine . cable, mine . name);
+					torpedo . cable_length = 0; torpedo . cable_to_ship_length = 0;
+					var vs = mine . position;
+					torpedo . position = {x: vs . x, y: vs . y, depth: vs . depth, bearing: Math . random () * 360};
+					torpedo . setSpeed ('stop');
+					addVessel (torpedo);
+					mine . destroyed = true;
+				}
+			}
 		}
 	};
 };

@@ -59,7 +59,7 @@ addVessel (texas);
 addVessel (oiler);
 simulatedVessel (texas);
 
-checkGameStatus = function () {if (texas . sonar . detected [1] !== undefined) MissionVictory ();};
+checkGameStatus = function () {if (selected !== null && selected . vessel === oiler) MissionVictory ();};
 
 </script>
 </html>

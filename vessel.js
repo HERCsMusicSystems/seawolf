@@ -444,7 +444,7 @@ tube . prototype . fire = function (target, selector) {
 
 tube . prototype . flood = function () {if (this . torpedo === null) return; this . command = 'flood';};
 tube . prototype . empty = function () {
-	this . torpedo = null; this . command = null;
+	this . torpedo = null; this . command = null; this . flooded = 0;
 	if (this . display_element !== null) {this . display_element . bgColor = 'black'; this . display_element . innerHTML = '';}
 };
 

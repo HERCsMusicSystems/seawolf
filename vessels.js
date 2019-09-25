@@ -27,7 +27,7 @@ var Virginia = function (name, country) {
 		Tomahawk: {constructor: Tomahawk, count: 4, depth: 150},
 		Mark60CAPTOR: {constructor: Mark60CAPTOR, count: 4}
 	};
-	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk'], Mark60CAPTOR: ['Mark60CAPTOR']}, 4);
+	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk'], Mark60CAPTOR: ['Mark60 CAPTOR']}, 4);
 	this . silo = {
 		Tomahawk: {constructor: Tomahawk, amount: 12, depth: 150},
 		Decoy: {constructor: Decoy, amount: 6}
@@ -179,7 +179,7 @@ Decoy . prototype . siloLaunch = function (silo, vessel, target) {
 /////////////////////////
 
 var Mark60CAPTOR = function (cable, name, country) {
-	if (name === undefined) name = 'Mark60CAPTOR';
+	if (name === undefined) name = 'Mark60 CAPTOR';
 	if (country === undefined) country = cable . country;
 	vessel . call (this, country);
 	this . type = 'mine';
@@ -190,7 +190,7 @@ var Mark60CAPTOR = function (cable, name, country) {
 	this . armed_time = 200;
 	this . cable = cable;
 	this . noise = 0;
-	this . ai = new mineAI (this);
+	this . ai = new mineAI (this, Mark48);
 	var sp = cable . position;
 	this . position = {x: sp . x, y: sp . y, depth: 1000, bearing: sp . bearing};
 };
