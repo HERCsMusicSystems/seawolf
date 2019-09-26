@@ -21,6 +21,9 @@ var torpedoAI = function (torpedo) {
 			if (torpedo . bearing_speed === 0) {torpedo . bearing (Math . random () < 0.5 ? -3 : 3);}
 			if (this . ping <= 0) {torpedo . sonar . ping (); this . ping = 4;}
 			this . ping -= delta;
+			if (torpedo . depth_target === torpedo . position . depth && torpedo . position . depth > 0 && torpedo . position . depth < torpedo . test_depth) torpedo . targetDepth ('test', 1);
+			if (torpedo . position . depth === torpedo . test_depth) torpedo . targetDepth ('surface', 1);
+			if (torpedo . position . depth === 0) torpedo . targetDepth ('test', 1);
 			torpedo . detectStrongest (delta, torpedo . target_type);
 			return;
 		}
@@ -34,7 +37,7 @@ var torpedoAI = function (torpedo) {
 		torpedo . targetBearing (nauticalBearing (vector . bearing));
 		var frontAngle = Math . abs (torpedo . bearing_target - torpedo . position . bearing);
 		if (frontAngle < 10) {
-			torpedo . setSpeed ('flank');
+			torpedo . setSpeed ('full');
 			// if (torpedo . target . type !== null) {torpedo . detectStrongest (delta); console . log (frontAngle, 'possible change');}
 			if (! this . armed) {this . armed = true;}
 		} else {
@@ -93,6 +96,7 @@ var mineAI = function (mine, constructor) {
 					torpedo . cable_length = 0; torpedo . cable_to_ship_length = 0;
 					var vs = mine . position;
 					torpedo . position = {x: vs . x, y: vs . y, depth: vs . depth, bearing: Math . random () * 360};
+					torpedo . depth_target = vs . depth;
 					torpedo . setSpeed ('stop');
 					addVessel (torpedo);
 					mine . destroyed = true;

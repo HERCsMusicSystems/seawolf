@@ -237,10 +237,10 @@ var Mark48 = function (cable, name, country) {
 	this . type = 'torpedo';
 	this . class = 'Mark48';
 	this . name = name;
-	this . speeds = [0, 2, 10, 20, 30, 40, 55];
+	this . speeds = [0, 2, 10, 25, 40, 55, 55];
 	this . bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
 	if (name === 'Fast') this . range = 20;
-	if (name === 'Long Range') {this . range = 27; this . speeds [6] = this . speeds [5];}
+	if (name === 'Long Range') {this . range = 27; this . speeds [5] = this . speeds [4];}
 	this . test_depth = 1800;
 	this . collapse_depth = 2700;
 	this . strength = 1;
