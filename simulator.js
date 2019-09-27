@@ -5,9 +5,11 @@ document . getElementById ('seawolf_game') . innerHTML = `
 
 <div id="info" style="position: absolute; left: 8px; bottom: 8px; font-family: arial;">
 	<table style="background: #0000ffb0; color: yellow;">
-		<tr><td>Bearing:</td><td><div id="simulation_bearing"/></td><td><div id="selected_bearing"/></td><td rowspan="5"><div id="selected_image" style="text-align: center;"/></td></tr>
-		<tr><td>Speed:</td><td><div id="simulation_speed"/></td><td><div id="selected_speed"/></td></tr>
-		<tr><td>Depth:</td><td><div id="simulation_depth"/></td><td><div id="selected_depth"/></td></tr>
+		<tr><td>Bearing:</td><td><div id="selected_bearing"/></td><td><div id="simulation_bearing"/></td>
+			<td rowspan="5"><canvas id="thermocline_canvas" width="16"></td>
+			<td rowspan="5"><div id="selected_image" style="text-align: center;"/></td></tr>
+		<tr><td>Speed:</td><td><div id="selected_speed"/></td><td><div id="simulation_speed"/></td></tr>
+		<tr><td>Depth:</td><td><div id="selected_depth"/></td><td><div id="simulation_depth"/></td></tr>
 		<tr><td><div id="selected_name"/></td><td><div id="selected_distance"/></td><td><div id="selected_heading"/></td></tr>
 		<tr><td>Thermoclines:</td><td colspan="2"><div id="thermoclines"/></td></tr>
 	</table>
@@ -29,7 +31,6 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<button onclick="javascript: simulation_ratio = 2;">&#xd7;2</button>
 				<button onclick="javascript: simulation_ratio = 4;">&#xd7;4</button>
 				<button onclick="javascript: simulation_ratio = 8;">&#xd7;8</button>
-				<button onclick="javascript: if (localStorage . getItem ('music') === 'false') {PlayMusicAndRemember ('akula'); this . innerText = 'MUSIC OFF';} else {PauseMusicAndRemember ('akula'); this . innerText = 'MUSIC ON';}">${localStorage . getItem ('music') === 'false' ? 'MUSIC ON' : 'MUSIC OFF'}</button>
 				<button onclick="javascript: MissionAbort ();">ABORT</button>
 			</td>
 		</tr>
@@ -54,6 +55,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<button id=retrieveTowedArray onclick="javascript: simulated . sonar . retrieveTowedArray (); document . getElementById ('deployTowedArray') . disabled = false; this . disabled = true; document . getElementById ('cutTowedArray') . disabled = true;" disabled>RETRIVE TOWED ARRAY</button>
 				<button id=cutTowedArray onclick="javascript: simulated . sonar . cutTowedArray (); document . getElementById ('retrieveTowedArray') . disabled = true; this . disabled = true;" disabled>CUT TOWED ARRAY</button>
 				<!-- <button onclick="javascript: simulated . fire ();">FIRE OVERRIDE</button>-->
+				<button onclick="javascript: if (localStorage . getItem ('music') === 'false') {PlayMusicAndRemember ('akula'); this . innerText = 'MUSIC OFF';} else {PauseMusicAndRemember ('akula'); this . innerText = 'MUSIC ON';}">${localStorage . getItem ('music') === 'false' ? 'MUSIC ON' : 'MUSIC OFF'}</button>
 			</td>
 		</tr>
 		<tr>
@@ -336,6 +338,8 @@ var drawGrid = function (ctx, width, height, vessel) {
 
 var canvas = document . getElementById ('seawolf');
 var ctx = canvas . getContext ('2d');
+var thermocline_canvas = document . getElementById ('thermocline_canvas');
+var ctc = thermocline_canvas . getContext ('2d');
 var simulation_bearing = document . getElementById ('simulation_bearing');
 var simulation_speed = document . getElementById ('simulation_speed');
 var simulation_depth = document . getElementById ('simulation_depth');
@@ -411,6 +415,13 @@ var resize = function (delta) {
 		selected_distance . innerHTML = '<>';
 		selected_image . innerHTML = '';
 	}
+	ctc . fillStyle = 'green';
+	ctc . fillRect (0, 0, 16, 200);
+	ctc . strokeStyle = 'yellow';
+	ctc . beginPath ();
+	for (var ind in thermoclines) {var d = thermoclines [ind] . depth * 0.05; ctc . moveTo (16, d); ctc . lineTo (0, d);}
+	ctc . stroke ();
+	ctc . beginPath (); var d = simulated . position . depth * 0.05; ctc . moveTo (0, d); ctc . lineTo (16, d); ctc . strokeStyle = 'red'; ctc . stroke ();
 };
 
 var simulation_interval = setInterval (resize, 50);
