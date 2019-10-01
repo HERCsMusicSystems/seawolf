@@ -1,3 +1,16 @@
+////////////
+// Sonars //
+////////////
+
+var TorpedoSonar = function (vessel) {
+	sonar . call (this, vessel);
+};
+inherit (TorpedoSonar, sonar);
+TorpedoSonar . prototype . ping_sound = 'torpedo_ping';
+
+/////////////
+// Vessels //
+/////////////
 
 var Oiler = function (name, country) {
 	if (country === undefined) country = 'Bahamas';
@@ -244,8 +257,7 @@ var Mark48 = function (cable, name, country) {
 	this . test_depth = 1800;
 	this . collapse_depth = 2700;
 	this . strength = 1;
-	this . sonar = new sonar (this);
-	this . sonar . ping_sound = 'torpedo_ping';
+	this . sonar = new TorpedoSonar (this);
 	// make everything visible
 	//this . sonar . detection_threshold = 0;
 	//this . sonar . tracking_threshold = 0;
