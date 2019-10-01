@@ -472,8 +472,10 @@ var sonar = function (vessel) {
 	this . tracking_threshold = 0.25;
 	this . towed_array_deployed = 0;
 	this . deploying_speed = 0;
+	this . deploying_delta = 0.05;
 	this . towed_array_amplification = 100;
 	this . towed_array_current_amplification = 1;
+	this . towed_array_speed_limit = 3;
 };
 
 sonar . prototype . detect = function (delta) {
@@ -482,10 +484,14 @@ sonar . prototype . detect = function (delta) {
 		if (this . towed_array_deployed >= 1) {
 			this . towed_array_deployed = 1; this . deploying_speed = 0;
 			this . towed_array_current_amplification = this . towed_array_amplification;
-			this . vessel . speed_index_limit = this . vessel . speeds . length - 1;
 			sayWords (this . vessel, 'Towed array deployed.');
 		}
-		if (this . towed_array_deployed <= 0) {this . towed_array_deployed = 0; this . deploying_speed = 0; this . towed_array_current_amplification = 1; sayWords (this . vessel, 'Towed array retrieved.');}
+		if (this . towed_array_deployed <= 0) {
+			this . towed_array_deployed = 0;
+			this . deploying_speed = 0;
+			this . towed_array_current_amplification = 1;
+			this . vessel . speed_index_limit = this . vessel . speeds . length - 1;
+			sayWords (this . vessel, 'Towed array retrieved.');}
 	}
 	this . detected = {};
 	for (var ind in vessels) {
@@ -561,8 +567,8 @@ sonar . prototype . ping = function () {ping = {x: this . vessel . position . x,
 sonar . prototype . ping_sound = 'ping_1';
 sonar . prototype . deployTowedArray = function () {
 	if (this . towed_array_amplification <= 1) return;
-	this . deploying_speed = 0.05; this . vessel . speed_index_limit = 3;
-	if (this . vessel . speed_index > 3) this . vessel . setSpeed (3);
+	this . deploying_speed = this . deploying_delta; this . vessel . speed_index_limit = this . towed_array_speed_limit;
+	if (this . vessel . speed_index > this . towed_array_speed_limit) this . vessel . setSpeed (this . towed_array_speed_limit);
 };
 sonar . prototype . retrieveTowedArray = function () {if (this . towed_array_amplification <= 1) return; this . towed_array_current_amplification = 1; this . deploying_speed = -0.05;};
 sonar . prototype . cutTowedArray = function () {
