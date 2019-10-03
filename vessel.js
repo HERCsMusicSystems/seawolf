@@ -1,4 +1,22 @@
 
+var friends = {
+	'U.S.A.': ['U.S.A.', 'United Kingdom', 'Australia'],
+	'United Kingdom': ['United Kingdom', 'Australia', 'U.S.A.'],
+	'Australia': ['Australia', 'United Kingdom', 'U.S.A.'],
+	'Russia': ['Russia', 'India', 'China'],
+	'China': ['China', 'Russia', 'India'],
+	'India': ['India', 'Russia', 'China']
+};
+
+var enemies = {
+	'U.S.A.': ['Russia', 'China', 'India'],
+	'United Kingdom': ['Russia', 'China', 'India'],
+	'Australia': ['Russia', 'China', 'India'],
+	'Russia': ['U.S.A.', 'United Kingdom', 'Australia'],
+	'China': ['U.S.A.', 'Uniged Kingdom', 'Australia'],
+	'India': ['U.S.A.', 'United kingdom', 'Australia']
+};
+
 var subImage = new Image (); subImage . src = 'silhouettes/LosAngelesTopView.png';
 
 var inherit = function (from, to) {
@@ -73,7 +91,10 @@ var vessel = function (country) {
 };
 
 vessel . prototype . image = 'Default';
-vessel . prototype . info = 'https://en.wikipedia.org/wiki/Warship'
+vessel . prototype . info = 'https://en.wikipedia.org/wiki/Warship';
+
+vessel . prototype . Enemy = function (vessel) {return enemies [this . country] . includes (vessel . country);};
+vessel . prototype . Friend = function (vessel) {return friends [this . country] . includes (vessel . country);};
 
 vessel . prototype . noiseLevel = function () {return this . noise;};
 
@@ -355,6 +376,7 @@ vessel . prototype . damage = function (level) {
 };
 
 vessel . prototype . detectStrongest = function (delta, type) {this . target = this . sonar . detectStrongest (delta, type);};
+vessel . prototype . detectStrongestEnemy = function (delta, type) {this . target = this . sonar . detectStrongestEnemy (delta, type);};
 
 vessel . prototype . setTarget = function (target) {this . target = target;};
 
@@ -523,6 +545,18 @@ sonar . prototype . detectStrongest = function (delta, type) {
 	for (var ind in this . detected) {
 		var detected = this . detected [ind];
 		if ((strongest === null || detected . noise > strongest . noise) && (type === 'all' || detected . vessel . type === type))
+			strongest = this . detected [ind];
+	}
+	return strongest && strongest . vessel;
+};
+
+sonar . prototype . detectStrongestEnemy = function (delta, type) {
+	if (type === undefined) type = 'all';
+	this . detect (delta);
+	var strongest = null;
+	for (var ind in this . detected) {
+		var detected = this . detected [ind];
+		if ((strongest === null || detected . noise > strongest . noise) && (type === 'all' || detected . vessel . type === type) && this . vessel . Enemy (detected))
 			strongest = this . detected [ind];
 	}
 	return strongest && strongest . vessel;

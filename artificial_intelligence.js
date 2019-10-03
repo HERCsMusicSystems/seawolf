@@ -120,7 +120,7 @@ var akulaAI = function (akula) {
 		case 'searching':
 			if (akula . position . depth === akula . test_depth) akula . targetDepth ('periscope', 1);
 			if (akula . position . depth === 60) akula . targetDepth ('test', 1);
-			var target = akula . sonar . detectStrongest (delta, 'submarine');
+			var target = akula . sonar . detectStrongestEnemy (delta, 'submarine');
 			if (target !== null) {console . log (target); this . mode = 'waypoint';}
 			break;
 		case 'waypoint': break;
