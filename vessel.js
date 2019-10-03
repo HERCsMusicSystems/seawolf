@@ -556,7 +556,7 @@ sonar . prototype . detectStrongestEnemy = function (delta, type) {
 	var strongest = null;
 	for (var ind in this . detected) {
 		var detected = this . detected [ind];
-		if ((strongest === null || detected . noise > strongest . noise) && (type === 'all' || detected . vessel . type === type) && this . vessel . Enemy (detected))
+		if ((strongest === null || detected . noise > strongest . noise) && (type === 'all' || detected . vessel . type === type) && detected . status === 'enemy')
 			strongest = this . detected [ind];
 	}
 	return strongest && strongest . vessel;
