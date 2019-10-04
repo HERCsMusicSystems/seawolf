@@ -121,9 +121,19 @@ var akulaAI = function (akula) {
 			if (akula . position . depth === akula . test_depth) akula . targetDepth ('periscope', 1);
 			if (akula . position . depth === 60) akula . targetDepth ('test', 1);
 			var target = akula . sonar . detectStrongestEnemy (delta, 'submarine');
-			if (target !== null) {console . log (target); this . mode = 'waypoint';}
+			if (target !== null) {
+				var wp = target . position;
+				this . mode = 'waypoint';
+				this . waypoint = {x: wp . x, y: wp . y, depth: wp . depth};
+				akula . setSpeed ('full');
+				akula . targetDepth ('test');
+			}
 			break;
-		case 'waypoint': break;
+		case 'waypoint':
+			akula . targetBearing (this . waypoint);
+			var vector = akula . getRelativePositionFromVector (this . waypoint);
+			if (vector . distance < 0.1) this . mode = 'searching';
+			break;
 		}
 	};
 };
