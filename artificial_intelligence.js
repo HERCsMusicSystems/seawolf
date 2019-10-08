@@ -127,6 +127,7 @@ var akulaAI = function (akula) {
 				this . waypoint = {x: wp . x, y: wp . y, depth: wp . depth};
 				akula . setSpeed ('full');
 				akula . targetDepth ('test');
+				akula . sonar . retrieveTowedArray (function () {akula . setSpeed ('full');});
 			}
 			break;
 		case 'waypoint':
