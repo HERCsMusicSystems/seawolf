@@ -42,7 +42,9 @@ var torpedoAI = function (torpedo) {
 			if (! this . armed) {this . armed = true;}
 		} else {
 			torpedo . setSpeed ('slow');
-			if (this . armed && torpedo . cable === null) {torpedo . detectStrongest (delta, torpedo . target_type);}
+			if (this . armed) {
+				if (torpedo . cable === null || (torpedo . cable && torpedo . cable . sonar . targetNoLongerAudible (torpedo . target))) {torpedo . detectStrongest (delta, torpedo . target_type);}
+			}
 		}
 	};
 };
