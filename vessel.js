@@ -451,14 +451,14 @@ tube . prototype . load = function (selector) {
 	if (inventory == null || inventory . count < 1) {notifyNoMoreTorpedoes (this . vessel, torpedo); return;}
 	this . torpedo = torpedo;
 	inventory . count = this . torpedo . NewCount (inventory . count);
-	if (this . display_element !== null) this . display_element . innerHTML = `<img src="silhouettes/${this . torpedo . class}.png" width="100"/>`;
+	if (this . display_element !== null) this . display_element . innerHTML = `<img src="silhouettes/${this . torpedo . image}.png" width="100"/>`;
 	if (this . display_element) update_inventory_info (this . vessel);
 };
 
 tube . prototype . fire = function (target, selector) {
 	if (this . torpedo !== null) {
 		if (this . flooded < 1) return;
-		if (this . torpedo . launch (this, this . vessel)) this . torpedo . postLaunch (this);
+		if (this . torpedo . launch (this, this . vessel, target)) this . torpedo . postLaunch (this);
 		return;
 	}
 	this . load (selector); if (this . torpedo !== null) {this . command = 'fire', this . torpedo . target = target;}
