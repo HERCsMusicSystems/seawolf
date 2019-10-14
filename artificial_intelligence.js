@@ -141,7 +141,7 @@ var akulaAI = function (akula) {
 	};
 };
 
-var escortAI = function (escort) {
+var escortAI = function (escort, ROCKET, TORPEDO) {
 	this . code = function (delta) {
 		escort . sonar . detect ();
 		var target = null;
@@ -159,14 +159,14 @@ var escortAI = function (escort) {
 			escort . target = target;
 			var vector = escort . getRelativePositionOf (escort . target);
 			if (vector . distance < 2) {
-				if (escort . inventory !== undefined && escort . inventory . Mark48 !== undefined && escort . inventory . Mark48 . count > 0) {
-					var torpedo = new Mark48 (escort, 'SSN-12');
+				if (escort . inventory !== undefined && escort . inventory [TORPEDO] !== undefined && escort . inventory [TORPEDO] . count > 0) {
+					var torpedo = new escort . inventory [TORPEDO] . constructor (escort, 'SSN-12');
 					escort . fireTorpedo (torpedo);
 				}
 			} else {
 				if (escort . silo . SeaLance !== undefined && escort . silo . SeaLance . amount > 0) {
-					var torpedo = new escort . silo . SeaLance . constructor (escort, 'SeaLance', escort . country);
-					if (torpedo . siloLaunch (escort . silo . SeaLance, escort, escort . target)) {
+					var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
+					if (torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target)) {
 						escort . silo . SeaLance . amount -= 1;
 						torpedo . target_type = 'submarine';
 					}
