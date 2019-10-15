@@ -520,7 +520,8 @@ sonar . prototype . detect = function (delta) {
 			this . towed_array_current_amplification = 1;
 			this . vessel . speed_index_limit = this . vessel . speeds . length - 1;
 			if (this . lambda) {this . lambda (); this . lambda = null;}
-			sayWords (this . vessel, 'Towed array retrieved.');}
+			sayWords (this . vessel, 'Towed array retrieved.');
+		}
 	}
 	this . detected = {};
 	for (var ind in vessels) {

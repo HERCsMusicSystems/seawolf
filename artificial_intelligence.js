@@ -112,7 +112,7 @@ var akulaAI = function (akula) {
 	this . mode = 'initiate_search';
 	this . goto = function () {
 		akula . setSpeed ('full');
-		akula . setDepth ('test');
+		akula . targetDepth ('test');
 		akula . sonar . retrieveTowedArray (function () {akula . setSpeed ('full');});
 	};
 	this . code = function (delta) {
@@ -132,7 +132,7 @@ var akulaAI = function (akula) {
 				var wp = target . position;
 				this . mode = 'waypoint';
 				this . waypoint = {x: wp . x, y: wp . y, depth: wp . depth};
-				vector = getRelativePositionFromVector (this . waypoint);
+				vector = akula . getRelativePositionFromVector (this . waypoint);
 				if (vector . distance > 2) {
 					akula . setSpeed ('stop');
 					self = this;
@@ -149,7 +149,7 @@ var akulaAI = function (akula) {
 		case 'waypoint':
 			akula . targetBearing (this . waypoint);
 			var vector = akula . getRelativePositionFromVector (this . waypoint);
-			if (vector . distance < 0.1) this . mode = 'searching';
+			if (vector . distance < 0.1) this . mode = 'initiate_search';
 			break;
 		}
 	};
