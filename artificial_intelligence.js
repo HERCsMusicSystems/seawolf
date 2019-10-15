@@ -110,6 +110,11 @@ var mineAI = function (mine, constructor) {
 
 var akulaAI = function (akula) {
 	this . mode = 'initiate_search';
+	this . goto = function () {
+		akula . setSpeed ('full');
+		akula . setDepth ('test');
+		akula . sonar . retrieveTowedArray (function () {akula . setSpeed ('full');});
+	};
 	this . code = function (delta) {
 		switch (this . mode) {
 		case 'initiate_search':
@@ -127,9 +132,18 @@ var akulaAI = function (akula) {
 				var wp = target . position;
 				this . mode = 'waypoint';
 				this . waypoint = {x: wp . x, y: wp . y, depth: wp . depth};
-				akula . setSpeed ('full');
-				akula . targetDepth ('test');
-				akula . sonar . retrieveTowedArray (function () {akula . setSpeed ('full');});
+				vector = getRelativePositionFromVector (this . waypoint);
+				if (vector . distance > 2) {
+					akula . setSpeed ('stop');
+					self = this;
+					akula . targetDepth ('attack', akula . diving_speeds . length - 1, function () {
+						akula . tubes [0] . fire ({position: self . waypoint}, 'SeaLance');
+						self . goto ();
+					});
+				} else {
+					akula . tubes [0] . fire (target, 'Long Range');
+					this . goto ();
+				}
 			}
 			break;
 		case 'waypoint':

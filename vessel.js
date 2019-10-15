@@ -122,8 +122,11 @@ vessel . prototype . move = function (delta) {
 	this . position . y += sdelta * (Math . cos (bearing) * this . speed . y + Math . sin (bearing) * this . speed . x);
 	if (this . position . depth !== this . depth_target) {
 		var dspeed = this . diving_speed * delta;
-		if (Math . abs (this . depth_target - this . position . depth) <= dspeed) {this . position . depth = this . depth_target; this . diving_speed = 0;}
-		else {
+		if (Math . abs (this . depth_target - this . position . depth) <= dspeed) {
+			this . position . depth = this . depth_target;
+			this . diving_speed = 0;
+			if (this . depth_callback) {this . depth_callback (); this . depth_callback = null;}
+		} else {
 			if (this . depth_target > this . position . depth) this . position . depth += dspeed;
 			else this . position . depth -= dspeed;
 		}
@@ -172,7 +175,8 @@ vessel . prototype . setSpeed = function (index) {
 	this . noise = this . noises [index]; this . speed = {x: this . speeds [index], y: 0}; this . speed_index = index;
 };
 
-vessel . prototype . targetDepth = function (depth, index) {
+vessel . prototype . targetDepth = function (depth, index, callback) {
+	if (callback !== undefined) this . depth_callback = callback;
 	if (depth == null) return;
 	if (index === undefined) index = this . diving_speeds . length - 1;
 	this . diving_speed = this . diving_speeds [index];

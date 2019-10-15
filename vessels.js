@@ -83,9 +83,10 @@ var Akula = function (name, country) {
 	this . speeds = [0, 2, 8, 15, 21, 28, 35];
 	this . inventory = {
 		Mark48: {constructor: Mark48, count: 24},
-		Mark46: {constructor: Mark48, count: 6}
+		Mark46: {constructor: Mark48, count: 6},
+		SeaLance: {constructor: SeaLance, count: 6}
 	};
-	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming']}, 6);
+	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], SeaLance: ['Sea Lance']}, 6);
 	this . sonar = new sonar (this);
 };
 inherit (Akula, vessel);
