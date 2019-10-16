@@ -59,7 +59,7 @@ var texas = new Virginia (localStorage . getItem ('SimulatedName'));
 texas . positionVessel (0, 0, 0, 800);
 
 var kuguar = new Akula ('Kuguar');
-kuguar . positionVessel (Math . random () * 4 - 2, Math . random () * 4 - 2, Math . floor (Math . random () * 360), 800);
+kuguar . positionVessel (Math . random () * 8 - 2, Math . random () * 8 - 2, Math . floor (Math . random () * 360), 800);
 kuguar . setSpeed ('half');
 kuguar . ai = new akulaAI (kuguar);
 
@@ -68,7 +68,7 @@ addVessel (texas);
 addVessel (kuguar);
 simulatedVessel (texas);
 
-kuguar . tubes [0] . fire (texas, 'Long Range');
+// kuguar . tubes [0] . fire (texas, 'Long Range');
 
 // make everything visible:
 texas . sonar . detection_threshold = 0;

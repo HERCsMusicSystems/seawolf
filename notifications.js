@@ -18,4 +18,4 @@ var notifyHit = function (target, attacker) {log (`${target . name} was hit by $
 
 var notifyRunOutOfFuel = function (vessel) {log (`${vessel . name} run out of fuel.`);};
 
-var notifyNoMoreTorpedoes = function (vessel, torpedo) {console . log (vessel); sayWords (vessel, `No more ${torpedo . class} ${torpedo . type}s.`);};
+var notifyNoMoreTorpedoes = function (vessel, torpedo) {sayWords (vessel, `No more ${torpedo . class} ${torpedo . type}s.`);};

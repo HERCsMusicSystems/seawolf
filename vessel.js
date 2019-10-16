@@ -465,7 +465,7 @@ tube . prototype . fire = function (target, selector) {
 		if (this . torpedo . launch (this, this . vessel, target)) this . torpedo . postLaunch (this);
 		return;
 	}
-	this . load (selector); if (this . torpedo !== null) {this . command = 'fire', this . torpedo . target = target;}
+	this . load (selector); if (this . torpedo !== null) {this . command = 'fire'; this . torpedo . target = target;}
 };
 
 tube . prototype . flood = function () {if (this . torpedo === null) return; this . command = 'flood';};
