@@ -137,7 +137,7 @@ var akulaAI = function (akula) {
 					akula . setSpeed ('stop');
 					self = this;
 					akula . targetDepth ('attack', akula . diving_speeds . length - 1, function () {
-						akula . tubes [0] . fire ({position: self . waypoint}, 'Sea Lance');
+						akula . tubes [0] . fire ({position: self . waypoint}, 'Sea Lance', function () {self . goto ();});
 //						self . goto ();
 					});
 				} else {

@@ -423,6 +423,7 @@ tube . prototype . move = function (delta) {
 			} else {
 				this . flooded = 1; this . command = null;
 				if (this . torpedo . launch (this, this . vessel)) this . torpedo . postLaunch (this);
+				if (this . fire_callback) {this . fire_callback (); this . fire_callback = null;}
 			}
 			break;
 		case 'flood':
@@ -459,12 +460,14 @@ tube . prototype . load = function (selector) {
 	if (this . display_element) update_inventory_info (this . vessel);
 };
 
-tube . prototype . fire = function (target, selector) {
+tube . prototype . fire = function (target, selector, callback) {
 	if (this . torpedo !== null) {
 		if (this . flooded < 1) return;
 		if (this . torpedo . launch (this, this . vessel, target)) this . torpedo . postLaunch (this);
+		if (callback !== undefined) callback ();
 		return;
 	}
+	if (callback !== undefined) this . fire_callback = callback;
 	this . load (selector); if (this . torpedo !== null) {this . command = 'fire'; this . torpedo . target = target;}
 };
 
