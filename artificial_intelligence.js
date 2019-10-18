@@ -250,6 +250,7 @@ var RocketTorpedoAI = function (torpedo) {
 			torpedo . bearing_speeds = torpedo . torpedo_bearing_speeds;
 			torpedo . image = torpedo . image_alt;
 			torpedo . setSpeed ('slow');
+			torpedo . target = null;
 		}
 	};
 };
