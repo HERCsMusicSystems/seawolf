@@ -82,11 +82,11 @@ var Akula = function (name, country) {
 	this . name = name;
 	this . speeds = [0, 2, 8, 15, 21, 28, 35];
 	this . inventory = {
-		Mark48: {constructor: Mark48, count: 24},
+		Type65: {constructor: Type65, count: 24},
 		Mark46: {constructor: Mark48, count: 6},
 		SeaLance: {constructor: SeaLance, count: 6}
 	};
-	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], SeaLance: ['Sea Lance']}, 6);
+	this . tubes = build_tubes (this, {Type65: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], SeaLance: ['Sea Lance']}, 6);
 	this . sonar = new sonar (this);
 };
 inherit (Akula, vessel);
@@ -106,7 +106,7 @@ var Sovremenny = function (name, country) {
 		SeaLance: {constructor: SeaLance, amount: 8, depth: 150}
 	};
 	this . inventory = {
-		Mark48: {constructor: Mark48, count: 24}
+		Type65: {constructor: Type65, count: 24}
 	}
 }
 inherit (Sovremenny, vessel);
@@ -253,15 +253,12 @@ var Mark48 = function (cable, name, country) {
 	this . name = name;
 	this . speeds = [0, 2, 10, 25, 40, 55, 55];
 	this . bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
-	if (name === 'Fast') this . range = 20;
+	if (name === 'Fast') this . range = 21;
 	if (name === 'Long Range') {this . range = 27; this . speeds [5] = this . speeds [4];}
 	this . test_depth = 1800;
 	this . collapse_depth = 2700;
 	this . strength = 1;
 	this . sonar = new TorpedoSonar (this);
-	// make everything visible
-	//this . sonar . detection_threshold = 0;
-	//this . sonar . tracking_threshold = 0;
 	this . sonar . noiseLevelBearingCorrection = function (noise, bearing) {
 		var org = bearing;
 		bearing *= 10;
@@ -333,3 +330,39 @@ inherit (SeaLance, Harpoon);
 SeaLance . prototype . image = 'SeaLance_rocket';
 SeaLance . prototype . image_alt = 'SeaLance_torpedo';
 SeaLance . prototype . info = 'https://en.wikipedia.org/wiki/UUM-125_Sea_Lance';
+
+var Type65 = function (cable, name, country) {
+	if (country === undefined) country = cable . country;
+	vessel . call (this, country);
+	this . cable = cable;
+	this . attacker = cable;
+	this . type = 'torpedo';
+	this . class = 'Type65';
+	this . name = name;
+	this . speeds = [0, 2, 10, 20, 30, 50, 50];
+	this . bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
+	if (name === 'Fast') this . range = 27;
+	if (name === 'Long Range') {this . range = 54; this . speeds [5] = this . speeds [4];}
+	this . test_depth = 1800;
+	this . collapse_depth = 2700;
+	this . strength = 1;
+	this . sonar = new TorpedoSonar (this);
+	this . sonar . noiseLevelBearingCorrection = function (noise, bearing) {
+		var org = bearing;
+		bearing *= 10;
+		if (bearing > Math . PI || bearing < - Math . PI) bearing = 0;
+		else bearing = Math . cos (bearing * 0.5);
+		return noise * bearing * bearing;
+	};
+	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
+	this . ai = new torpedoAI (this);
+	this . distance_travelled = 0;
+	this . distance_cable_travelled = 0;
+	this . cable_length = 10; this . cable_to_ship_length = 5;
+	this . initial_trail_delta = 2;
+	this . trail_length = 100;
+};
+inherit (Type65, vessel);
+Type65 . prototype . image = 'Mark48';
+Type65 . prototype . info = 'https://en.wikipedia.org/wiki/Type_65_torpedo';
+
