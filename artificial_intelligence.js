@@ -58,6 +58,9 @@ var wakehomingAI = function (torpedo) {
 		torpedo . targetDepth (0);
 	};
 	this . code = function (delta) {
+		var sdelta = delta / 3600;
+		torpedo . distance_travelled += torpedo . speed . x * sdelta;
+		if (torpedo . distance_travelled >= torpedo . range) {notifyRunOutOfFuel (torpedo); removeVessel (torpedo); return;}
 		switch (this . status) {
 			case 'waypoint':
 				torpedo . targetBearing (torpedo . target_waypoint . position, 5);

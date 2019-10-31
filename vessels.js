@@ -83,10 +83,11 @@ var Akula = function (name, country) {
 	this . speeds = [0, 2, 8, 15, 21, 28, 35];
 	this . inventory = {
 		Type65: {constructor: Type65, count: 24},
-		Mark46: {constructor: Mark48, count: 6},
+		Type53: {constructor: Type53, count: 6},
 		SeaLance: {constructor: SeaLance, count: 6}
 	};
-	this . tubes = build_tubes (this, {Type65: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], SeaLance: ['Sea Lance']}, 6);
+	this . tubes = build_tubes (this, {Type65: ['Long Range', 'Fast'], Type53: ['Wakehoming'], SeaLance: ['Sea Lance']}, 4);
+	this . tubes = this . tubes . concat (build_tubes (this, {Type53: ['Wakehoming']}, 4));
 	this . sonar = new sonar (this);
 };
 inherit (Akula, vessel);
@@ -286,7 +287,8 @@ var Mark46 = function (cable, name, country) {
 	this . type = 'torpedo';
 	this . class = 'Mark46';
 	this . name = name;
-	this . speeds = [0, 2, 10, 20, 30, 40, 55];
+	this . range = 6;
+	this . speeds = [0, 2, 10, 20, 30, 40, 40];
 	this . bearing_speeds = [0, 1, 2, 3, 4, 5, 21];
 	this . test_depth = 1800;
 	this . collapse_depth = 2700;
@@ -365,4 +367,39 @@ var Type65 = function (cable, name, country) {
 inherit (Type65, vessel);
 Type65 . prototype . image = 'Mark48';
 Type65 . prototype . info = 'https://en.wikipedia.org/wiki/Type_65_torpedo';
+
+var Type53 = function (cable, name, country) {
+	if (country === undefined) country = cable . country;
+	vessel . call (this, country);
+	this . cable = null;
+	this . attacker = cable;
+	this . type = 'torpedo';
+	this . class = 'Type53';
+	this . name = name;
+	this . range = 11;
+	this . speeds = [0, 2, 10, 20, 30, 44, 44];
+	this . bearing_speeds = [0, 1, 2, 3, 4, 5, 21];
+	this . test_depth = 1800;
+	this . collapse_depth = 2700;
+	this . strength = 1;
+	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
+	this . ai = new wakehomingAI (this);
+	this . distance_travelled = 0;
+	this . initial_trail_delta = 2;
+	this . trail_length = 100;
+};
+inherit (Type53, vessel);
+Type53 . prototype . image = 'Mark46';
+Type53 . prototype . info = 'https://en.wikipedia.org/wiki/Type_53_torpedo';
+Type53 . prototype . launch = function (tube, vessel, target) {
+	if (waypoint === null) return false;
+	this . target = null;
+	this . target_waypoint = {position: {x: waypoint . position . x, y: waypoint . position . y}};
+	var sp = vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: sp . depth, bearing: sp . bearing};
+	this . targetBearing (this . target_waypoint . position);
+	this . setSpeed ('full');
+	addVessel (this);
+	return true;
+};
 
