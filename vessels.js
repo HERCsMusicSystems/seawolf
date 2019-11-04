@@ -84,9 +84,9 @@ var Akula = function (name, country) {
 	this . inventory = {
 		Type65: {constructor: Type65, count: 24},
 		Type53: {constructor: Type53, count: 6},
-		SeaLance: {constructor: SeaLance, count: 6}
+		SS_N_16: {constructor: SS_N_16, count: 6}
 	};
-	this . tubes = build_tubes (this, {Type65: ['Long Range', 'Fast'], Type53: ['Wakehoming'], SeaLance: ['Sea Lance']}, 4);
+	this . tubes = build_tubes (this, {Type65: ['Long Range', 'Fast'], Type53: ['Wakehoming'], SS_N_16: ['РПК-7 Ветер']}, 4);
 	this . tubes = this . tubes . concat (build_tubes (this, {Type53: ['Wakehoming']}, 4));
 	this . sonar = new sonar (this);
 };
@@ -210,6 +210,7 @@ var Mark60CAPTOR = function (cable, name, country) {
 	this . position = {x: sp . x, y: sp . y, depth: 1000, bearing: sp . bearing};
 };
 inherit (Mark60CAPTOR, vessel);
+Mark60CAPTOR . prototype . tube_image = 'Mark60CAPTOR';
 Mark60CAPTOR . prototype . image = 'Mark60CAPTOR_image';
 Mark60CAPTOR . prototype . info = 'https://en.wikipedia.org/wiki/Mark_60_CAPTOR';
 Mark60CAPTOR . prototype . launch = function (tube, vessel, target) {

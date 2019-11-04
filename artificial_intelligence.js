@@ -98,6 +98,7 @@ var mineAI = function (mine, constructor) {
 				var vector = mine . getRelativePositionOf (vessels [ind]);
 				if (vector . distance <= mine . range && mine !== vessels [ind]) {
 					var torpedo = new constructor (mine . cable, mine . name);
+					torpedo . image = mine . image;
 					torpedo . cable_length = 0; torpedo . cable_to_ship_length = 0;
 					var vs = mine . position;
 					torpedo . position = {x: vs . x, y: vs . y, depth: vs . depth, bearing: Math . random () * 360};
@@ -140,7 +141,7 @@ var akulaAI = function (akula) {
 					akula . setSpeed ('stop');
 					self = this;
 					akula . targetDepth ('attack', akula . diving_speeds . length - 1, function () {
-						akula . tubes [0] . fire ({position: self . waypoint}, 'Sea Lance', function () {self . goto ();});
+						akula . tubes [0] . fire ({position: self . waypoint}, 'РПК-7 Ветер', function () {self . goto ();});
 //						self . goto ();
 					});
 				} else {
