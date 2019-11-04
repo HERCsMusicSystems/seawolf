@@ -325,6 +325,7 @@ var SeaLance = function (cable, name, country) {
 	this . torpedo_speeds = [0, 2, 10, 20, 30, 40, 55];
 	this . torpedo_bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
 	this . range = 100;
+	this . torpedo_range = 6;
 	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
 	this . sonar = new sonar (this);
 };
@@ -402,4 +403,24 @@ Type53 . prototype . launch = function (tube, vessel, target) {
 	addVessel (this);
 	return true;
 };
+
+var SS_N_16 = function (cable, name, country) {
+	Harpoon . call (this, cable, name, country);
+	this . class = 'РПК-7 Ветер';
+	this . ai = new RocketTorpedoAI (this);
+	this . target_type = 'submarine';
+	this . cable_length = 0;
+	this . cable_to_ship_length = 0;
+	this . speeds = [1000, 1000, 1000, 1000, 1000, 1000, 1000];
+	this . torpedo_speeds = [0, 2, 10, 20, 30, 44, 44];
+	this . torpedo_bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
+	this . range = 65;
+	this . torpedo_range = 11;
+	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
+	this . sonar = new sonar (this);
+};
+inherit (SS_N_16, Harpoon);
+SS_N_16 . prototype . image = 'veter_rocket';
+SS_N_16 . prototype . image_alt = 'veter_torpedo';
+SS_N_16 . prototype . info = 'https://en.wikipedia.org/wiki/SS-N-16';
 
