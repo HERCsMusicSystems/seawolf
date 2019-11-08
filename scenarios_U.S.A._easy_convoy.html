@@ -57,7 +57,7 @@ texas . positionVessel (0, 0, 0, 800);
 var oiler1 = new Oiler ('Aquarius');
 var oiler2 = new Oiler ('Atlantis');
 var oiler3 = new Oiler ('Triton');
-var escort = new Sovremenny ('Настойчивый');
+var escort = new Sovremenny (TakeRandom (Sovremenny . prototype . names));
 
 var from = {x: Math . random () * 10 - 5, y: Math . random () * 4 - 2};
 var to = {x: Math . random () * 10 - 5, y: Math . random () * 4 - 2};
@@ -72,7 +72,7 @@ oiler3 . setSpeed ('full');
 
 escort . positionVessel (from . x - 0.2, from . y + 0.2, from . bearing);
 escort . setSpeed ('half');
-escort . ai = new escortAI (escort, 'SeaLance', 'Type65');
+escort . ai = new escortAI (escort, 'SS-N-16', 'Type 65');
 
 addVessel (texas);
 addVessel (oiler1);

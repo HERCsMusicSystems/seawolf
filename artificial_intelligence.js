@@ -178,14 +178,14 @@ var escortAI = function (escort, ROCKET, TORPEDO) {
 			var vector = escort . getRelativePositionOf (escort . target);
 			if (vector . distance < 2) {
 				if (escort . inventory !== undefined && escort . inventory [TORPEDO] !== undefined && escort . inventory [TORPEDO] . count > 0) {
-					var torpedo = new escort . inventory [TORPEDO] . constructor (escort, 'SSN-12');
+					var torpedo = new escort . inventory [TORPEDO] . constructor (escort, TORPEDO);
 					escort . fireTorpedo (torpedo);
 				}
 			} else {
 				if (escort . silo [ROCKET] !== undefined && escort . silo [ROCKET] . amount > 0) {
 					var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
 					if (torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target)) {
-						escort . silo . SeaLance . amount -= 1;
+						escort . silo [ROCKET] . amount -= 1;
 						torpedo . target_type = 'submarine';
 					}
 				}
