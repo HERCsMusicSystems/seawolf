@@ -104,10 +104,10 @@ var Sovremenny = function (name, country) {
 	this . speeds = [0, 2, 8, 15, 21, 28, 32.7];
 	this . sonar = new sonar (this);
 	this . silo = {
-		SeaLance: {constructor: SeaLance, amount: 8, depth: 150}
+		'SS-N-16': {constructor: SS_N_16, amount: 8, depth: 150}
 	};
 	this . inventory = {
-		Type65: {constructor: Type65, count: 24}
+		'Type 65': {constructor: Type65, count: 24}
 	}
 }
 inherit (Sovremenny, vessel);

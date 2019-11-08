@@ -182,7 +182,7 @@ var escortAI = function (escort, ROCKET, TORPEDO) {
 					escort . fireTorpedo (torpedo);
 				}
 			} else {
-				if (escort . silo . SeaLance !== undefined && escort . silo . SeaLance . amount > 0) {
+				if (escort . silo [ROCKET] !== undefined && escort . silo [ROCKET] . amount > 0) {
 					var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
 					if (torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target)) {
 						escort . silo . SeaLance . amount -= 1;
