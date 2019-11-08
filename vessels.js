@@ -148,6 +148,8 @@ Harpoon . prototype . launch = function (tube, vessel, target) {
 	addVessel (this);
 	return true;
 };
+Harpoon . prototype . image = 'Harpoon';
+Harpoon . prototype . info = 'https://en.wikipedia.org/wiki/Harpoon_(missile)';
 
 //////////////
 // Tomahawk //
@@ -161,6 +163,8 @@ var Tomahawk = function (cable, name, country) {
 	this . range = 900;
 };
 inherit (Tomahawk, Harpoon);
+Tomahawk . prototype . image = 'Tomahawk';
+Tomahawk . prototype . info = 'https://en.wikipedia.org/wiki/Tomahawk_(missile)';
 
 ///////////
 // Decoy //
