@@ -180,6 +180,7 @@ var escortAI = function (escort, ROCKET, TORPEDO) {
 				if (escort . inventory !== undefined && escort . inventory [TORPEDO] !== undefined && escort . inventory [TORPEDO] . count > 0) {
 					var torpedo = new escort . inventory [TORPEDO] . constructor (escort, TORPEDO);
 					escort . fireTorpedo (torpedo);
+					escort . inventory [TORPEDO] . count -= 1;
 				}
 			} else {
 				if (escort . silo [ROCKET] !== undefined && escort . silo [ROCKET] . amount > 0) {
