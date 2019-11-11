@@ -118,6 +118,29 @@ Sovremenny . prototype . names = ['Sovremennyy', 'Otchayannyy', 'Otlichnyy',
 'Veduschiy', 'Bystryy', 'Rastoropnyy','Bezboyaznennyy', 'Bezuderzhnyy',
 'Bespokoynyy', 'Nastoychivyy', 'Moskovskiy Komsomolets', 'Admiral Ushakov', 'Besstrashnyy'];
 
+var Udaloy = function (name, country) {
+	if (country === undefined) country = 'Russia';
+	vessel . call (this, country);
+	this . class = 'Удалой'
+	this . name = name;
+	this . type = 'surface';
+	this . speeds = [0, 2, 8, 15, 22, 30, 35];
+	this . sonar = new sonar (this);
+	this . silo = {
+		'SS-N-16': {constructor: SS_N_16, amount: 8, depth: 150}
+	};
+	this . inventory = {
+		'Type 65': {constructor: Type65, count: 24}
+	}
+}
+inherit (Udaloy, vessel);
+Udaloy . prototype . image = 'Sovremenny';
+Udaloy . prototype . info = 'https://en.wikipedia.org/wiki/Sovremenny-class_destroyer';
+Udaloy . prototype . names = ['Sovremennyy', 'Otchayannyy', 'Otlichnyy',
+'Osmotritelnyy', 'Bezuprechnyy', 'Boevoy', 'Stoykiy', 'Okrylyonnyy', 'Burnyy', 'Gremyashchiy',
+'Veduschiy', 'Bystryy', 'Rastoropnyy','Bezboyaznennyy', 'Bezuderzhnyy',
+'Bespokoynyy', 'Nastoychivyy', 'Moskovskiy Komsomolets', 'Admiral Ushakov', 'Besstrashnyy'];
+
 /////////////
 // Harpoon //
 /////////////
