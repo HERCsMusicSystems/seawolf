@@ -36,7 +36,7 @@ var torpedoAI = function (torpedo) {
 		torpedo . targetDepth (torpedo . target . position . depth);
 		torpedo . targetBearing (nauticalBearing (vector . bearing));
 		var frontAngle = Math . abs (torpedo . bearing_target - torpedo . position . bearing);
-		if (frontAngle < 10) {
+		if (frontAngle < 10 && Math . abs (vector . Vbearing) < 10) {
 			torpedo . setSpeed ('full');
 			// if (torpedo . target . type !== null) {torpedo . detectStrongest (delta); console . log (frontAngle, 'possible change');}
 			if (! this . armed) {this . armed = true;}

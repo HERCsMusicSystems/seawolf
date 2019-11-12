@@ -314,7 +314,7 @@ vessel . prototype . getRelativePositionOf = function (vessel) {
 	var vector = this . getVectorFrom (vessel);
 	vector . distance = Math . sqrt (vector . x * vector . x + vector . y * vector . y);
 	vector . bearing = Math . atan2 (vector . y, vector . x);
-	vector . Vbearing = Math . atan2 (this . position . depth - vessel . position . depth, vector . distance);
+	vector . Vbearing = Math . atan2 (this . position . depth - vessel . position . depth, vector . distance * 6076.12);
 	return vector;
 };
 
