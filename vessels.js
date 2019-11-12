@@ -239,7 +239,7 @@ var BUK = function (cable, name, country) {
 	this . name = name;
 	this . country = country;
 	this . speeds = [2000, 2000, 2000, 2000, 2000, 2000, 2000];
-	this . ai = new SS_N_22_AI (this);
+	this . ai = new BukAI (this);
 	this . target_type = 'rocket';
 	this . range = 16;
 	this . strength = 1;
@@ -250,7 +250,7 @@ BUK . prototype . siloLaunch = function (silo, vessel, target) {
 	if (target !== undefined) this . target = target;
 	if (this . target === null) return false;
 	if (this . depth > 0) return false;
-	if (target . depth > 0) return false;
+	if (target . depth >= 0) return false;
 	this . target_type = this . target . target_type;
 	var sp = vessel . position;
 	this . position = {x: sp . x, y: sp . y, depth: -65, bearing: sp . bearing};

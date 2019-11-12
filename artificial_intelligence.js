@@ -224,6 +224,24 @@ var HarpoonAI = function (rocket) {
 
 var SS_N_22_AI = function (rocket) {
 	this . code = function (delta) {
+		if (rocket . target . position . depth > 0) {removeVessel (rocket); return;}
+		rocket . targetBearing (rocket . target . position);
+		var vector = rocket . getRelativePositionOf (rocket . target);
+		if (vector . distance < 0.1) {
+			if (rocket . target . type === null) {rocket . target = null; return;}
+			rocket . explodeSound ();
+			notifyExplosion (rocket);
+			removeVessel (rocket);
+			notifyHit (rocket . target, rocket . attacker);
+			rocket . target . damage (2 + 3 * Math . random ());
+			return;
+		}
+	};
+};
+
+var BukAI = function (rocket) {
+	this . code = function (delta) {
+		if (rocket . target . position . depth >= 0) {removeVessel (rocket); return;}
 		rocket . targetBearing (rocket . target . position);
 		var vector = rocket . getRelativePositionOf (rocket . target);
 		if (vector . distance < 0.1) {
