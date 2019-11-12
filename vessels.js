@@ -158,6 +158,7 @@ var Harpoon = function (cable, name, country) {
 	this . ai = new HarpoonAI (this);
 	this . target_type = 'surface';
 	this . range = 150;
+	this . strength = 1;
 };
 inherit (Harpoon, vessel);
 Harpoon . prototype . launch = function (tube, vessel, target) {
@@ -174,6 +175,40 @@ Harpoon . prototype . launch = function (tube, vessel, target) {
 Harpoon . prototype . image = 'Harpoon';
 Harpoon . prototype . info = 'https://en.wikipedia.org/wiki/Harpoon_(missile)';
 
+/////////////
+// SS-N-22 //
+/////////////
+
+var SS_N_22 = function (cable, name, country) {
+	if (name === undefined) name = 'П-270 Москит';
+	if (country === undefined) country = cable . country;
+	vessel . call (this, country);
+	this . attacker = cable;
+	this . type = 'rocket';
+	this . class = 'П-270 Москит';
+	this . name = name;
+	this . country = country;
+	this . speeds = [2000, 2000, 2000, 2000, 2000, 2000, 2000];
+	this . ai = new SS_N_22_AI (this);
+	this . target_type = 'surface';
+	this . range = 65;
+	this . strength = 1;
+};
+inherit (SS_N_22, vessel);
+SS_N_22 . prototype . launch = function (tube, vessel, target) {
+	if (target !== undefined) this . target = target;
+	if (this . target === null) return false;
+	if (tube . depth > vessel . position . depth) return false;
+	var sp = vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: -65, bearing: sp . bearing};
+	this . targetBearing (this . target . position);
+	this . setSpeed ('full');
+	addVessel (this);
+	return true;
+};
+SS_N_22 . prototype . image = 'Moskit';
+SS_N_22 . prototype . info = 'https://en.wikipedia.org/wiki/P-270_Moskit';
+
 //////////////
 // Tomahawk //
 //////////////
@@ -184,10 +219,48 @@ var Tomahawk = function (cable, name, country) {
 	this . speeds = [480, 480, 480, 480, 480, 480, 480];
 	this . ai = new TomahawkAI (this);
 	this . range = 900;
+	this . strength = 1;
 };
 inherit (Tomahawk, Harpoon);
 Tomahawk . prototype . image = 'Tomahawk';
 Tomahawk . prototype . info = 'https://en.wikipedia.org/wiki/Tomahawk_(missile)';
+
+/////////////
+// Buk     //
+/////////////
+
+var BUK = function (cable, name, country) {
+	if (name === undefined) name = 'Ураган';
+	if (country === undefined) country = cable . country;
+	vessel . call (this, country);
+	this . attacker = cable;
+	this . type = 'rocket';
+	this . class = 'Бук';
+	this . name = name;
+	this . country = country;
+	this . speeds = [2000, 2000, 2000, 2000, 2000, 2000, 2000];
+	this . ai = new SS_N_22_AI (this);
+	this . target_type = 'rocket';
+	this . range = 16;
+	this . strength = 1;
+};
+inherit (BUK, vessel);
+BUK . prototype . launch = function () {return false;};
+BUK . prototype . siloLaunch = function (silo, vessel, target) {
+	if (target !== undefined) this . target = target;
+	if (this . target === null) return false;
+	if (this . depth > 0) return false;
+	if (target . depth > 0) return false;
+	this . target_type = this . target . target_type;
+	var sp = vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: -65, bearing: sp . bearing};
+	this . targetBearing (this . target . position);
+	this . setSpeed ('full');
+	addVessel (this);
+	return true;
+};
+BUK . prototype . image = 'Buk';
+BUK . prototype . info = 'https://en.wikipedia.org/wiki/Buk_missile_system';
 
 ///////////
 // Decoy //
