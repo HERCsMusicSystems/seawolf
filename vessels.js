@@ -288,6 +288,8 @@ Decoy . prototype . siloLaunch = function (silo, vessel, target) {
 	addVessel (this);
 	return true;
 };
+Decoy . prototype . image = 'Decoy';
+Decoy . prototype . info = 'https://en.wikipedia.org/wiki/Sonar_decoy';
 
 /////////////////////////
 // Mark 60 CAPTOR mine //
