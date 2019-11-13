@@ -457,7 +457,7 @@ tube . prototype . load = function (selector) {
 	if (inventory == null || inventory . count < 1) {notifyNoMoreTorpedoes (this . vessel, torpedo); return;}
 	this . torpedo = torpedo;
 	inventory . count = this . torpedo . NewCount (inventory . count);
-	var img = this . torpedo . tube_image; if (! img) img = this . torpedo . image;
+	var img = this . torpedo . tube_image || this . torpedo . image;
 	if (this . display_element !== null) this . display_element . innerHTML = `<img src="silhouettes/${img}.png" width="100"/>`;
 	if (this . display_element) update_inventory_info (this . vessel);
 };

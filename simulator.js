@@ -106,7 +106,7 @@ var fill_weapons_table = function (vessel) {
 	}
 	content += '<tr><td>Inventory</td><td id="inventory" bgcolor="blue"/></tr>';
 	for (var ind in vessel . silo) {
-		var image = vessel . silo [ind] . constructor . prototype . tube_image; if (! image) image = vessel . silo [ind] . constructor . prototype . image;
+		var image = vessel . silo [ind] . constructor . prototype . tube_image || vessel . silo [ind] . constructor . prototype . image;
 		content += `<tr><td bgcolor=black width="100"><img src=silhouettes/${image}.png width=100/></td><td bgcolor=blue>
 		<button style="width: 200px;" onclick="javascript: silo_launch (this, '${ind}');">LAUNCH ${ind}: ${vessel . silo [ind] . amount}</button>
 		Maximum Depth = ${vessel . silo [ind] . depth}
