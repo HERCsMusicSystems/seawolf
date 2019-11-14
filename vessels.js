@@ -104,7 +104,8 @@ var Sovremenny = function (name, country) {
 	this . speeds = [0, 2, 8, 15, 21, 28, 32.7];
 	this . sonar = new sonar (this);
 	this . silo = {
-		'SS-N-16': {constructor: SS_N_16, amount: 8, depth: 150}
+		'SS-N-16': {constructor: SS_N_16, amount: 8, depth: 150},
+		Buk: {constructor: BUK, amount: 8, depth: 0}
 	};
 	this . inventory = {
 		'Type 65': {constructor: Type65, count: 24}
@@ -252,8 +253,9 @@ BUK . prototype . siloLaunch = function (silo, vessel, target) {
 	if (this . depth > 0) return false;
 	if (target . depth >= 0) return false;
 	this . target_type = this . target . target_type;
+	var vector = vessel . getRelativePositionOf (this . target);
 	var sp = vessel . position;
-	this . position = {x: sp . x, y: sp . y, depth: -65, bearing: sp . bearing};
+	this . position = {x: sp . x, y: sp . y, depth: -65, bearing: nauticalBearing (vector . bearing)};
 	this . targetBearing (this . target . position);
 	this . setSpeed ('full');
 	addVessel (this);

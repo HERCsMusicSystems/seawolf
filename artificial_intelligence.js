@@ -159,8 +159,23 @@ var akulaAI = function (akula) {
 	};
 };
 
-var escortAI = function (escort, ROCKET, TORPEDO) {
+var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
+	var buk_fired = null;
 	this . code = function (delta) {
+		if (BUK !== undefined) {
+			var incoming = escort . findRocket ();
+			if (incoming !== null && this . buk_fired !== incoming) {
+				var vector = escort . getRelativePositionOf (incoming);
+				if (vector . distance < 3) {
+					this . buk_fired = incoming;
+					var buk = new escort . silo [BUK] . constructor (escort, BUK, escort . country);
+					if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) {
+						escort . silo [BUK] . amount -= 1;
+						escort . target_type = 'rocket';
+					}
+				}
+			}
+		}
 		escort . sonar . detect ();
 		var target = null;
 		var noise = 0;
@@ -208,6 +223,7 @@ var escortAI = function (escort, ROCKET, TORPEDO) {
 
 var HarpoonAI = function (rocket) {
 	this . code = function (delta) {
+		if (rocket . target . destroyed) {removeVessel (rocket); return;}
 		rocket . targetBearing (rocket . target . position);
 		var vector = rocket . getRelativePositionOf (rocket . target);
 		if (vector . distance < 0.1) {
@@ -224,6 +240,7 @@ var HarpoonAI = function (rocket) {
 
 var SS_N_22_AI = function (rocket) {
 	this . code = function (delta) {
+		if (rocket . target . destroyed) {removeVessel (rocket); return;}
 		if (rocket . target . position . depth > 0) {removeVessel (rocket); return;}
 		rocket . targetBearing (rocket . target . position);
 		var vector = rocket . getRelativePositionOf (rocket . target);
@@ -241,6 +258,7 @@ var SS_N_22_AI = function (rocket) {
 
 var BukAI = function (rocket) {
 	this . code = function (delta) {
+		if (rocket . target . destroyed) {removeVessel (rocket); return;}
 		if (rocket . target . position . depth >= 0) {removeVessel (rocket); return;}
 		rocket . targetBearing (rocket . target . position);
 		var vector = rocket . getRelativePositionOf (rocket . target);
@@ -258,6 +276,7 @@ var BukAI = function (rocket) {
 
 var TomahawkAI = function (rocket) {
 	this . code = function (delta) {
+		if (rocket . target . destroyed) {removeVessel (rocket); return;}
 		rocket . targetBearing (rocket . target . position);
 		var vector = rocket . getRelativePositionOf (rocket . target);
 		if (vector . distance < 0.1) {

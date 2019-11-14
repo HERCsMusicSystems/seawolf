@@ -396,6 +396,14 @@ vessel . prototype . postLaunch = function (tube) {
 	if (tube . display_element !== null) {tube . display_element . bgColor = 'black'; tube . display_element . innerHTML = '';}
 };
 
+vessel . prototype . findRocket = function () {
+	for (var ind in vessels) {
+		var rocket = vessels [ind];
+		if (rocket . type === 'rocket' && rocket . target === this) return rocket;
+	}
+	return null;
+};
+
 var tube = function (vessel, settings, speed) {
 	if (speed === undefined) speed = 0.05;
 	this . flooded = 0;
