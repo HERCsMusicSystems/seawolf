@@ -104,8 +104,9 @@ var Sovremenny = function (name, country) {
 	this . speeds = [0, 2, 8, 15, 21, 28, 32.7];
 	this . sonar = new sonar (this);
 	this . silo = {
-		'SS-N-16': {constructor: SS_N_16, amount: 8, depth: 150},
-		Buk: {constructor: BUK, amount: 8, depth: 0}
+		'SS-N-22': {constructor: SS_N_22, amount: 8},
+		'SS-N-16': {constructor: SS_N_16, amount: 12, depth: 150},
+		Buk: {constructor: BUK, amount: 48, depth: 0}
 	};
 	this . inventory = {
 		'Type 65': {constructor: Type65, count: 24}

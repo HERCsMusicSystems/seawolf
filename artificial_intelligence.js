@@ -164,7 +164,7 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 	this . code = function (delta) {
 		if (BUK !== undefined) {
 			var incoming = escort . findRocket ();
-			if (incoming !== null && this . buk_fired !== incoming) {
+			if (incoming !== null && this . buk_fired !== incoming && escort . silo [BUK] . amount > 0) {
 				var vector = escort . getRelativePositionOf (incoming);
 				if (vector . distance < 3) {
 					this . buk_fired = incoming;
