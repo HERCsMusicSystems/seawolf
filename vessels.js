@@ -128,20 +128,24 @@ var Udaloy = function (name, country) {
 	this . type = 'surface';
 	this . speeds = [0, 2, 8, 15, 22, 30, 35];
 	this . sonar = new sonar (this);
+	this . strength = 5;
 	this . silo = {
-		'SS-N-16': {constructor: SS_N_16, amount: 8, depth: 150}
+		'SS-N-22': {constructor: SS_N_22, amount: 8},
+		'SS-N-16': {constructor: SS_N_16, amount: 16, depth: 150},
+		Buk: {constructor: BUK, amount: 64, depth: 0}
 	};
 	this . inventory = {
-		'Type 65': {constructor: Type65, count: 24}
+		'Type 65': {constructor: Type65, count: 28}
 	}
 }
 inherit (Udaloy, vessel);
 Udaloy . prototype . image = 'Sovremenny';
 Udaloy . prototype . info = 'https://en.wikipedia.org/wiki/Sovremenny-class_destroyer';
-Udaloy . prototype . names = ['Sovremennyy', 'Otchayannyy', 'Otlichnyy',
-'Osmotritelnyy', 'Bezuprechnyy', 'Boevoy', 'Stoykiy', 'Okrylyonnyy', 'Burnyy', 'Gremyashchiy',
-'Veduschiy', 'Bystryy', 'Rastoropnyy','Bezboyaznennyy', 'Bezuderzhnyy',
-'Bespokoynyy', 'Nastoychivyy', 'Moskovskiy Komsomolets', 'Admiral Ushakov', 'Besstrashnyy'];
+Udaloy . prototype . names = [
+	'Udaloy', 'Vice-Admiral Kulakov', 'Marshal Vasilyevsky', 'Admiral Zakharov', 'Admiral Spiridonov',
+	'Admiral Tributs', 'Marshal Shaposhnikov', 'Severomorsk', 'Admiral Levchenko', 'Admiral Vinogradov',
+	'Admiral Kharlamov', 'Admiral Panteleyev', 'Admiral Chabanenko', 'Admiral Basisty', 'Admiral Kucherov'
+];
 
 /////////////
 // Harpoon //
