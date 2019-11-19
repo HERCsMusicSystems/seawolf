@@ -103,6 +103,7 @@ var Sovremenny = function (name, country) {
 	this . type = 'surface';
 	this . speeds = [0, 2, 8, 15, 21, 28, 32.7];
 	this . sonar = new sonar (this);
+	this . strength = 4;
 	this . silo = {
 		'SS-N-22': {constructor: SS_N_22, amount: 8},
 		'SS-N-16': {constructor: SS_N_16, amount: 12, depth: 150},
@@ -145,6 +146,32 @@ Udaloy . prototype . names = [
 	'Udaloy', 'Vice-Admiral Kulakov', 'Marshal Vasilyevsky', 'Admiral Zakharov', 'Admiral Spiridonov',
 	'Admiral Tributs', 'Marshal Shaposhnikov', 'Severomorsk', 'Admiral Levchenko', 'Admiral Vinogradov',
 	'Admiral Kharlamov', 'Admiral Panteleyev', 'Admiral Chabanenko', 'Admiral Basisty', 'Admiral Kucherov'
+];
+
+var Slava = function (name, country) {
+	if (country === undefined) country = 'Russia';
+	vessel . call (this, country);
+	this . class = 'Удалой'
+	this . name = name;
+	this . type = 'surface';
+	this . speeds = [0, 2, 8, 15, 22, 30, 35];
+	this . sonar = new sonar (this);
+	this . strength = 6;
+	this . silo = {
+		'SS-N-22': {constructor: SS_N_22, amount: 8},
+		'SS-N-16': {constructor: SS_N_16, amount: 16, depth: 150},
+		Buk: {constructor: BUK, amount: 64, depth: 0}
+	};
+	this . inventory = {
+		'Type 65': {constructor: Type65, count: 28}
+	}
+}
+inherit (Slava, vessel);
+Slava . prototype . image = 'Slava';
+Slava . prototype . info = 'https://en.wikipedia.org/wiki/Slava-class_cruiser';
+Slava . prototype . names = [
+	'Moskva', 'Slava', 'Marshal Ustinov', 'Admiral Lobov', 'Varyag', 'Chervona Ukrayina',
+	'Ukrayina', 'Komsomolets', 'Oktyabrskaya Revolutsiya', 'Admiral Gorshkov', 'Varyag', 'Sevastopol'
 ];
 
 /////////////
