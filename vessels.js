@@ -139,8 +139,8 @@ var Udaloy = function (name, country) {
 	}
 }
 inherit (Udaloy, vessel);
-Udaloy . prototype . image = 'Sovremenny';
-Udaloy . prototype . info = 'https://en.wikipedia.org/wiki/Sovremenny-class_destroyer';
+Udaloy . prototype . image = 'Udaloy';
+Udaloy . prototype . info = 'https://en.wikipedia.org/wiki/Udaloy-class_destroyer';
 Udaloy . prototype . names = [
 	'Udaloy', 'Vice-Admiral Kulakov', 'Marshal Vasilyevsky', 'Admiral Zakharov', 'Admiral Spiridonov',
 	'Admiral Tributs', 'Marshal Shaposhnikov', 'Severomorsk', 'Admiral Levchenko', 'Admiral Vinogradov',
