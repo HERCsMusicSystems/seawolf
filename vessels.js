@@ -214,7 +214,7 @@ var Harpoon = function (cable, name, country) {
 	this . name = name;
 	this . country = country;
 	this . speeds = [467, 467, 467, 467, 467, 467, 467];
-	this . ai = new HarpoonAI (this);
+	this . ai = new cruiseAI (this, 3, 3);
 	this . target_type = 'surface';
 	this . range = 150;
 	this . strength = 1;
@@ -310,7 +310,7 @@ var Tomahawk = function (cable, name, country) {
 	Harpoon . call (this, cable, name, country);
 	this . class = 'Tomahawk';
 	this . speeds = [480, 480, 480, 480, 480, 480, 480];
-	this . ai = new TomahawkAI (this);
+	this . ai = new cruiseAI (this, 5, 3);
 	this . range = 900;
 	this . strength = 1;
 };
@@ -332,7 +332,7 @@ var BUK = function (cable, name, country) {
 	this . name = name;
 	this . country = country;
 	this . speeds = [2000, 2000, 2000, 2000, 2000, 2000, 2000];
-	this . ai = new BukAI (this);
+	this . ai = new cruiseAI (this, 2, 3);
 	this . target_type = 'rocket';
 	this . range = 16;
 	this . strength = 1;
