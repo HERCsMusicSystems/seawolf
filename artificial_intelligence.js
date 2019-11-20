@@ -238,7 +238,7 @@ var HarpoonAI = function (rocket) {
 	};
 };
 
-var SS_N_22_AI = function (rocket) {
+var cruiseAI = function (rocket, shift, multiplier) {
 	this . code = function (delta) {
 		if (rocket . target . destroyed) {removeVessel (rocket); return;}
 		if (rocket . target . position . depth > 0) {removeVessel (rocket); return;}
@@ -250,7 +250,7 @@ var SS_N_22_AI = function (rocket) {
 			notifyExplosion (rocket);
 			removeVessel (rocket);
 			notifyHit (rocket . target, rocket . attacker);
-			rocket . target . damage (2 + 3 * Math . random ());
+			rocket . target . damage (shift + multiplier * Math . random ());
 			return;
 		}
 	};

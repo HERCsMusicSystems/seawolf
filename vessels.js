@@ -180,7 +180,7 @@ var Kirov = function (name, country) {
 	this . class = 'Орлан'
 	this . name = name;
 	this . type = 'surface';
-	this . speeds = [0, 2, 8, 15, 22, 30, 35];
+	this . speeds = [0, 2, 8, 15, 24, 32, 35];
 	this . sonar = new sonar (this);
 	this . strength = 6;
 	this . silo = {
@@ -235,6 +235,40 @@ Harpoon . prototype . image = 'Harpoon';
 Harpoon . prototype . info = 'https://en.wikipedia.org/wiki/Harpoon_(missile)';
 
 /////////////
+// SS-N-19 //
+/////////////
+
+var SS_N_19 = function (cable, name, country) {
+	if (name === undefined) name = ' П-700 Гранит';
+	if (country === undefined) country = cable . country;
+	vessel . call (this, country);
+	this . attacker = cable;
+	this . type = 'rocket';
+	this . class = ' П-700 Гранит';
+	this . name = name;
+	this . country = country;
+	this . speeds = [1100, 1100, 1100, 1100, 1100, 1100, 1100];
+	this . ai = new cruiseAI (this, 7, 3);
+	this . target_type = 'surface';
+	this . range = 65;
+	this . strength = 1;
+};
+inherit (SS_N_19, vessel);
+SS_N_19 . prototype . launch = function (tube, vessel, target) {
+	if (target !== undefined) this . target = target;
+	if (this . target === null) return false;
+	if (tube . depth > vessel . position . depth) return false;
+	var sp = vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: -65, bearing: sp . bearing};
+	this . targetBearing (this . target . position);
+	this . setSpeed ('full');
+	addVessel (this);
+	return true;
+};
+SS_N_19 . prototype . image = 'P-700 Granit';
+SS_N_19 . prototype . info = 'https://en.wikipedia.org/wiki/P-700_Granit';
+
+/////////////
 // SS-N-22 //
 /////////////
 
@@ -248,7 +282,7 @@ var SS_N_22 = function (cable, name, country) {
 	this . name = name;
 	this . country = country;
 	this . speeds = [2000, 2000, 2000, 2000, 2000, 2000, 2000];
-	this . ai = new SS_N_22_AI (this);
+	this . ai = new cruiseAI (this, 2, 3);
 	this . target_type = 'surface';
 	this . range = 65;
 	this . strength = 1;
