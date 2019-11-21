@@ -184,12 +184,12 @@ var Kirov = function (name, country) {
 	this . sonar = new sonar (this);
 	this . strength = 6;
 	this . silo = {
-		'SS-N-22': {constructor: SS_N_22, amount: 8},
-		'SS-N-16': {constructor: SS_N_16, amount: 16, depth: 150},
-		Buk: {constructor: BUK, amount: 64, depth: 0}
+		'SS-N-19': {constructor: SS_N_19, amount: 8},
+		'SS-N-15': {constructor: SS_N_15, amount: 16, depth: 150},
+		Fort: {constructor: FORT, amount: 96}
 	};
 	this . inventory = {
-		'Type 65': {constructor: Type65, count: 28}
+		'Type 65': {constructor: Type65, count: 64}
 	}
 }
 inherit (Kirov, vessel);
@@ -250,7 +250,7 @@ var SS_N_19 = function (cable, name, country) {
 	this . speeds = [1100, 1100, 1100, 1100, 1100, 1100, 1100];
 	this . ai = new cruiseAI (this, 7, 3);
 	this . target_type = 'surface';
-	this . range = 65;
+	this . range = 330;
 	this . strength = 1;
 };
 inherit (SS_N_19, vessel);
@@ -355,6 +355,44 @@ BUK . prototype . siloLaunch = function (silo, vessel, target) {
 };
 BUK . prototype . image = 'Buk';
 BUK . prototype . info = 'https://en.wikipedia.org/wiki/Buk_missile_system';
+
+/////////////
+// Fort    //
+/////////////
+
+var FORT = function (cable, name, country) {
+	if (name === undefined) name = 'С-300Ф Форт';
+	if (country === undefined) country = cable . country;
+	vessel . call (this, country);
+	this . attacker = cable;
+	this . type = 'rocket';
+	this . class = 'С-300Ф Форт';
+	this . name = name;
+	this . country = country;
+	this . speeds = [2600, 2600, 2600, 2600, 2600, 2600, 2600];
+	this . ai = new cruiseAI (this, 2, 3);
+	this . target_type = 'rocket';
+	this . range = 49;
+	this . strength = 1;
+};
+inherit (FORT, vessel);
+FORT . prototype . launch = function () {return false;};
+FORT . prototype . siloLaunch = function (silo, vessel, target) {
+	if (target !== undefined) this . target = target;
+	if (this . target === null) return false;
+	if (this . depth > 0) return false;
+	if (target . depth >= 0) return false;
+	this . target_type = this . target . target_type;
+	var vector = vessel . getRelativePositionOf (this . target);
+	var sp = vessel . position;
+	this . position = {x: sp . x, y: sp . y, depth: -65, bearing: nauticalBearing (vector . bearing)};
+	this . targetBearing (this . target . position);
+	this . setSpeed ('full');
+	addVessel (this);
+	return true;
+};
+FORT . prototype . image = 'Buk';
+FORT . prototype . info = 'https://en.wikipedia.org/wiki/S-300_missile_system#Sea-based_S-300FM_(SA-N-20)';
 
 ///////////
 // Decoy //
@@ -600,6 +638,26 @@ Type53 . prototype . launch = function (tube, vessel, target) {
 	addVessel (this);
 	return true;
 };
+
+var SS_N_15 = function (cable, name, country) {
+	Harpoon . call (this, cable, name, country);
+	this . class = 'РПК-7 Ветер';
+	this . ai = new RocketTorpedoAI (this);
+	this . target_type = 'submarine';
+	this . cable_length = 0;
+	this . cable_to_ship_length = 0;
+	this . speeds = [600, 600, 600, 600, 600, 600, 600];
+	this . torpedo_speeds = [0, 2, 10, 20, 30, 44, 44];
+	this . torpedo_bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
+	this . range = 24;
+	this . torpedo_range = 11;
+	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
+	this . sonar = new sonar (this);
+};
+inherit (SS_N_15, Harpoon);
+SS_N_15 . prototype . image = 'veter_rocket';
+SS_N_15 . prototype . image_alt = 'veter_torpedo';
+SS_N_15 . prototype . info = 'https://en.wikipedia.org/wiki/SS-N-16';
 
 var SS_N_16 = function (cable, name, country) {
 	Harpoon . call (this, cable, name, country);
