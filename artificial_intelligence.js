@@ -164,14 +164,69 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 	this . code = function (delta) {
 		if (BUK !== undefined) {
 			var incoming = escort . findRocket ();
-			if (incoming !== null && this . buk_fired !== incoming && escort . silo [BUK] . amount > 0) {
+			if (incoming !== null && buk_fired !== incoming && escort . silo [BUK] . amount > 0) {
 				var vector = escort . getRelativePositionOf (incoming);
 				if (vector . distance < 3) {
-					this . buk_fired = incoming;
+					buk_fired = incoming;
 					var buk = new escort . silo [BUK] . constructor (escort, BUK, escort . country);
-					if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) {
-						escort . silo [BUK] . amount -= 1;
-						escort . target_type = 'rocket';
+					if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) escort . silo [BUK] . amount -= 1;
+				}
+			}
+		}
+		escort . sonar . detect ();
+		var target = null;
+		var noise = 0;
+		var targetNoLongerAudible = true;
+		for (var ind in escort . sonar . detected) {
+			var detected = escort . sonar . detected [ind];
+			if (detected . status === 'enemy' && detected . vessel . type === 'submarine') {
+				if (detected . vessel === escort . target) targetNoLongerAudible = false;
+				if (detected . noise > noise) {target = detected . vessel; noise = detected . noise;}
+			}
+		}
+		if (targetNoLongerAudible) escort . target = null;
+		if (escort . target === null && target !== null) {
+			escort . target = target;
+			var vector = escort . getRelativePositionOf (escort . target);
+			if (vector . distance < 2) {
+				if (escort . inventory !== undefined && escort . inventory [TORPEDO] !== undefined && escort . inventory [TORPEDO] . count > 0) {
+					var torpedo = new escort . inventory [TORPEDO] . constructor (escort, TORPEDO);
+					escort . fireTorpedo (torpedo);
+					escort . inventory [TORPEDO] . count -= 1;
+				}
+			} else {
+				if (escort . silo [ROCKET] !== undefined && escort . silo [ROCKET] . amount > 0) {
+					var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
+					if (torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target)) {
+						escort . silo [ROCKET] . amount -= 1;
+						torpedo . target_type = 'submarine';
+					}
+				}
+			}
+		}
+		if (escort . target !== null) {
+			var vector = escort . getRelativePositionOf (escort . target);
+			escort . targetBearing (escort . target . position);
+			if (vector . distance > 1) escort . setSpeed ('full');
+			else if (vector . distance > 0.5) escort . setSpeed ('half');
+			else escort . setSpeed ('stop');
+		}
+	};
+};
+
+var superEscortAI = function (escort, ROCKET, TORPEDO, BUK) {
+	var buk_fired = [];
+	this . code = function (delta) {
+		if (BUK !== undefined) {
+			var incomings = escort . findEnemyRockets ();
+			for (var ind in incomings) {
+				var incoming = incomings [ind];
+				if (buk_fired . indexOf (incoming) < 0 && escort . silo [BUK] . amount > 0) {
+					var vector = escort . getRelativePositionOf (incoming);
+					if (vector . distance < 3) {
+						buk_fired . push (incoming);
+						var buk = new escort . silo [BUK] . constructor (escort, BUK, escort . country);
+						if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) escort . silo [BUK] . amount -= 1;
 					}
 				}
 			}
@@ -214,10 +269,6 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 			else if (vector . distance > 0.5) escort . setSpeed ('half');
 			else escort . setSpeed ('stop');
 		}
-//		if (ping) {
-//			escort . targetBearing (ping);
-//			escort . setSpeed ('full');
-//		}
 	};
 };
 

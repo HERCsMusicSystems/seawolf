@@ -404,6 +404,15 @@ vessel . prototype . findRocket = function () {
 	return null;
 };
 
+vessel . prototype . findEnemyRockets = function () {
+	var rockets = [];
+	for (var ind in vessels) {
+		var rocket = vessels [ind];
+		if (rocket . type === 'rocket' && this . Enemy (rocket)) rockets . push (rocket);
+	}
+	return rockets;
+};
+
 var tube = function (vessel, settings, speed) {
 	if (speed === undefined) speed = 0.05;
 	this . flooded = 0;
