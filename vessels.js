@@ -26,6 +26,35 @@ inherit (Oiler, vessel);
 Oiler . prototype . image = 'OilTanker';
 Oiler . prototype . info = 'https://en.wikipedia.org/wiki/Oil_tanker';
 
+var Alligator = function (name, country) {
+	if (country === undefined) country = 'Russia';
+	if (name === undefined) name = 'Alligator';
+	vessel . call (this, country);
+	this . type = 'surface';
+	this . name = name;
+	this . class = 'Large Landing Ship';
+	this . speeds = [0, 1, 4, 8, 16, 18];
+};
+inherit (Alligator, vessel);
+Alligator . prototype . image = 'Alligator';
+Alligator . prototype . info = 'https://en.wikipedia.org/wiki/Alligator-class_landing_ship';
+Alligator . prototype . names = [
+	'BDK-10', 'Voronezhskiy komsomolets', 'Saratov',
+	'BDK-6', 'Krymskiy komsomolets',
+	'BDK-13', 'Tomskiy komsomolets', 'BDK-25',
+	'BDK-62', 'Komsomolets Karelii',
+	'BDK-66', 'Sergey Lazo',
+	'BDK-69', 'Orsk',
+	'BDK-77', '50 let shefstva VLKSM', 'BDK-80', 'Donetckiy shakhter',
+	'BDK-100', 'Krasnaya Presnya',
+	'BDK-104', 'Ilya Azarov',
+	'Alexandr Tortcev',
+	'Petr Ilyichev',
+	'Nikolay Vilkov',
+	'Nikolay Filchenkov',
+	'Nikolay Golubkov'
+];
+
 var Virginia = function (name, country) {
 	if (country === undefined) country = 'U.S.A.';
 	vessel . call (this, country);
