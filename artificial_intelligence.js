@@ -96,10 +96,11 @@ var mineAI = function (mine, constructor) {
 		} else {
 			for (var ind in vessels) {
 				var vector = mine . getRelativePositionOf (vessels [ind]);
-				if (vector . distance <= mine . range && mine !== vessels [ind]) {
+				if (vector . distance <= mine . range && mine !== vessels [ind] && (vessels [ind] . type === 'surface' || vessels [ind] . type === 'submarine')) {
 					var torpedo = new constructor (mine . cable, mine . name);
 					torpedo . image = mine . image;
 					torpedo . cable_length = 0; torpedo . cable_to_ship_length = 0;
+					torpedo . target_type = vessels [ind] . type;
 					var vs = mine . position;
 					torpedo . position = {x: vs . x, y: vs . y, depth: vs . depth, bearing: Math . random () * 360};
 					torpedo . depth_target = vs . depth;

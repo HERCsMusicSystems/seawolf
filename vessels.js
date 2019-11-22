@@ -38,7 +38,7 @@ var Virginia = function (name, country) {
 		Mark46: {constructor: Mark46, count: 16},
 		Harpoon: {constructor: Harpoon, count: 4, depth: 150},
 		Tomahawk: {constructor: Tomahawk, count: 4, depth: 150},
-		Mark60CAPTOR: {constructor: Mark60CAPTOR, count: 4}
+		Mark60CAPTOR: {constructor: Mark60CAPTOR, count: 24}
 	};
 	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk'], Mark60CAPTOR: ['Mark60 CAPTOR']}, 4);
 	this . silo = {
