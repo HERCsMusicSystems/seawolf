@@ -1,0 +1,73 @@
+<meta charset="UTF-8"/>
+
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2018 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+
+<html>
+
+<head>
+  <title>SEAWOLF</title>
+  <style>
+  a:link {color: blue; text-shadow: 1px 1px red;}
+  a:visited {color: blue;}
+  a:hover {color: red; text-shadow: 1px 1px blue;}
+  a:active {color: red;}
+  </style>
+</head>
+
+
+<body bgcolor="#0000aa" style="font-family: arial; color: gold; text-shadow: 1px 1px black; background-image: url('images/Submarine2.jpg'); background-size: cover;">
+<h2>Background Information</h2>
+A Russian invasion has been detected. You are the only ship in the region and this invasion must be stopped at all cost.
+<h2>Objective</h2>
+Sink all the enemy ships.
+<h2>Enemies</h2>
+  <table>
+    <tr>
+      <td align="center"><img src="silhouettes/Alligator.png" height="160" /><br/>Alligator Large Landing Ship</td>
+      <td align="center"><img src="silhouettes/Sovremenny.png" height="160" /><br/>Sovremenny Destroyer</td>
+      <td align="center"><img src="silhouettes/Slava.png" height="160" /><br/>Slava Missile Cruiser</td>
+      <td align="center"><img src="silhouettes/Kirov.png" height="160" /><br/>Kirov Heavy Missile Cruiser</td>
+    </tr>
+  </table>
+<h2 id="name">sonda</h2>
+<h2 id="mission_type"></h2>
+<a href="scenarios_U.S.A._invasion.html" onclick="javascript: return CheckAbort ();">Proceed</a>
+
+<script src="background_ctrl.js"></script>
+<script src="music_ctrl.js"></script>
+<script src="vessel.js"></script>
+<script src="vessels.js"></script>
+<script src="utilities.js"></script>
+<script>
+	var name = GenerateName ('Easy Convoy', Virginia);
+	document . getElementById ('name') . innerHTML = `Your captain <font color="red">${side . captains [side . captain] . rank} ${side . captain}</font> will be commanding Virginia class submarine <font color="red">${name}</font>`;
+	if (SimulatedMission ()) document . getElementById ('mission_type') . innerHTML = `This mission is simulated${captain . rank_id < 2 ? " as your captain's rank is too low to command a ship" : ''}.`;
+</script>
+
+</body>
+
+</html>
+
