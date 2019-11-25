@@ -53,24 +53,25 @@ var Enemies = [];
 
 var CreateEnemy = function (enemy, position, x, y, angle) {
 	angle += Math . PI * 0.5;
-	console . log (position . bearing, angle);
 	enemy . positionVessel (
-		position . x + (Math . cos (x) + Math . sin (y)),
-		position . y + (Math . cos (y) - Math . sin (x)),
+		position . x + x * Math . cos (angle) - y * Math . sin (angle),
+		position . y + y * Math . cos (angle) + x * Math . sin (angle),
 		position . bearing);
 	enemy . setSpeed ('half');
 	addVessel (enemy);
 	Enemies . push (enemy);
 };
 
-var from = {x: Math . random () * 20 - 10, y: Math . random () * 10 - 5};
-var to = {x: Math . random () * 20 - 10, y: Math . random () * 10 - 5};
+var from = {x: Math . random () * 4 - 2, y: Math . random () * 4 - 2};
+var to = {x: Math . random () * 4 - 2, y: Math . random () * 4 - 2};
 var atan = Math . atan2 (to . y - from . y, to . x - from . x);
 from . bearing = nauticalBearing (atan);
 var Alligators = SelectRandom (Alligator . prototype . names, 12);
 CreateEnemy (new Alligator (Alligators [0]), from, 0, 0, atan);
 CreateEnemy (new Alligator (Alligators [1]), from, 0.2, 0, atan);
-CreateEnemy (new Alligator (Alligators [2]), from, -0.2, 0, atan);
+CreateEnemy (new Alligator (Alligators [2]), from, -0.4, 0, atan);
+CreateEnemy (new Alligator (Alligators [2]), from, 0.2, 0.3, atan);
+CreateEnemy (new Alligator (Alligators [2]), from, -0.4, 0.3, atan);
 
 addVessel (texas);
 simulatedVessel (texas);
