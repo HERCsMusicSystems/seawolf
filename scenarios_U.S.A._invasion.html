@@ -62,16 +62,38 @@ var CreateEnemy = function (enemy, position, x, y, angle) {
 	Enemies . push (enemy);
 };
 
-var from = {x: Math . random () * 4 - 2, y: Math . random () * 4 - 2};
-var to = {x: Math . random () * 4 - 2, y: Math . random () * 4 - 2};
+var from = {x: Math . random () * 20 - 10, y: Math . random () * 20 - 10};
+var to = {x: Math . random () * 14 - 7, y: Math . random () * 14 - 7};
 var atan = Math . atan2 (to . y - from . y, to . x - from . x);
 from . bearing = nauticalBearing (atan);
 var Alligators = SelectRandom (Alligator . prototype . names, 12);
 CreateEnemy (new Alligator (Alligators [0]), from, 0, 0, atan);
-CreateEnemy (new Alligator (Alligators [1]), from, 0.2, 0, atan);
-CreateEnemy (new Alligator (Alligators [2]), from, -0.4, 0, atan);
-CreateEnemy (new Alligator (Alligators [2]), from, 0.2, 0.3, atan);
-CreateEnemy (new Alligator (Alligators [2]), from, -0.4, 0.3, atan);
+CreateEnemy (new Alligator (Alligators [1]), from, 0.2, 0.2, atan);
+CreateEnemy (new Alligator (Alligators [2]), from, -0.2, 0.2, atan);
+CreateEnemy (new Alligator (Alligators [3]), from, 0, 0.4, atan);
+CreateEnemy (new Alligator (Alligators [4]), from, 0.2, 0.6, atan);
+CreateEnemy (new Alligator (Alligators [5]), from, -0.2, 0.6, atan);
+
+var global_missiles = [];
+
+var slava = new Slava (SelectRandom (Slava . prototype . names));
+slava . ai = new superEscortAI (slava, global_missiles, 'SS-N-16', 'Type 65', 'Buk');
+slava . setSpeed ('half');
+CreateEnemy (slava, from, 0.4, 0.3, atan);
+var distance = Math . random () * 6 + 2;
+var angle = Math . random () * Math . PI * 2;
+from . x += distance * Math . cos (angle);
+from . y += distance * Math . sin (angle);
+CreateEnemy (new Alligator (Alligators [6]), from, 0, 0, atan);
+CreateEnemy (new Alligator (Alligators [7]), from, 0.2, 0.2, atan);
+CreateEnemy (new Alligator (Alligators [8]), from, -0.2, 0.2, atan);
+CreateEnemy (new Alligator (Alligators [9]), from, 0, 0.4, atan);
+CreateEnemy (new Alligator (Alligators [10]), from, 0.2, 0.6, atan);
+CreateEnemy (new Alligator (Alligators [11]), from, -0.2, 0.6, atan);
+var kirov = new Kirov (SelectRandom (Kirov . prototype . names));
+kirov . ai = new superEscortAI (kirov, global_missiles, 'SS-N-15', 'Type 65', 'Fort');
+kirov . setSpeed ('half');
+CreateEnemy (kirov, from, -0.4, 0.3, atan);
 
 addVessel (texas);
 simulatedVessel (texas);

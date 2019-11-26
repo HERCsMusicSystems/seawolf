@@ -127,7 +127,7 @@ Akula . prototype . names = ['Akula', 'Bars', 'Ak Bars', 'Delfin', 'Barnaul', 'K
 var Sovremenny = function (name, country) {
 	if (country === undefined) country = 'Russia';
 	vessel . call (this, country);
-	this . class = 'Современный'
+	this . class = 'Сарыч';
 	this . name = name;
 	this . type = 'surface';
 	this . speeds = [0, 2, 8, 15, 21, 28, 32.7];
@@ -180,7 +180,7 @@ Udaloy . prototype . names = [
 var Slava = function (name, country) {
 	if (country === undefined) country = 'Russia';
 	vessel . call (this, country);
-	this . class = 'Удалой'
+	this . class = 'Атлант';
 	this . name = name;
 	this . type = 'surface';
 	this . speeds = [0, 2, 8, 15, 22, 30, 35];
@@ -209,7 +209,7 @@ var Kirov = function (name, country) {
 	this . class = 'Орлан'
 	this . name = name;
 	this . type = 'surface';
-	this . speeds = [0, 2, 8, 15, 24, 32, 35];
+	this . speeds = [0, 2, 8, 16, 24, 32, 35];
 	this . sonar = new sonar (this);
 	this . strength = 6;
 	this . silo = {

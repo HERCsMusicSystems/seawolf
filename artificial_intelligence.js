@@ -215,17 +215,16 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 	};
 };
 
-var superEscortAI = function (escort, ROCKET, TORPEDO, BUK) {
-	var buk_fired = [];
+var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
 	this . code = function (delta) {
 		if (BUK !== undefined) {
 			var incomings = escort . findEnemyRockets ();
 			for (var ind in incomings) {
 				var incoming = incomings [ind];
-				if (buk_fired . indexOf (incoming) < 0 && escort . silo [BUK] . amount > 0) {
+				if (missiles . indexOf (incoming) < 0 && escort . silo [BUK] . amount > 0) {
 					var vector = escort . getRelativePositionOf (incoming);
 					if (vector . distance < 3) {
-						buk_fired . push (incoming);
+						missiles . push (incoming);
 						var buk = new escort . silo [BUK] . constructor (escort, BUK, escort . country);
 						if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) escort . silo [BUK] . amount -= 1;
 					}
