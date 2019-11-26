@@ -57,7 +57,7 @@ var CreateEnemy = function (enemy, position, x, y, angle) {
 		position . x + x * Math . cos (angle) - y * Math . sin (angle),
 		position . y + y * Math . cos (angle) + x * Math . sin (angle),
 		position . bearing);
-	enemy . setSpeed ('half');
+	enemy . setSpeed ('Full');
 	addVessel (enemy);
 	Enemies . push (enemy);
 };
@@ -78,8 +78,8 @@ var global_missiles = [];
 
 var slava = new Slava (SelectRandom (Slava . prototype . names));
 slava . ai = new superEscortAI (slava, global_missiles, 'SS-N-16', 'Type 65', 'Buk');
-slava . setSpeed ('half');
 CreateEnemy (slava, from, 0.4, 0.3, atan);
+slava . setSpeed ('half');
 var distance = Math . random () * 6 + 2;
 var angle = Math . random () * Math . PI * 2;
 from . x += distance * Math . cos (angle);
@@ -92,8 +92,8 @@ CreateEnemy (new Alligator (Alligators [10]), from, 0.2, 0.6, atan);
 CreateEnemy (new Alligator (Alligators [11]), from, -0.2, 0.6, atan);
 var kirov = new Kirov (SelectRandom (Kirov . prototype . names));
 kirov . ai = new superEscortAI (kirov, global_missiles, 'SS-N-15', 'Type 65', 'Fort');
-kirov . setSpeed ('half');
 CreateEnemy (kirov, from, -0.4, 0.3, atan);
+kirov . setSpeed ('half');
 
 addVessel (texas);
 simulatedVessel (texas);
