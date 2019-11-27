@@ -57,7 +57,7 @@ var CreateEnemy = function (enemy, position, x, y, angle) {
 		position . x + x * Math . cos (angle) - y * Math . sin (angle),
 		position . y + y * Math . cos (angle) + x * Math . sin (angle),
 		position . bearing);
-	enemy . setSpeed ('Full');
+	enemy . setSpeed ('full');
 	addVessel (enemy);
 	Enemies . push (enemy);
 };
