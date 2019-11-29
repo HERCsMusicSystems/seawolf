@@ -344,19 +344,21 @@ var previous_selected = null;
 
 var resize = function (delta) {
 	var now = Date . now ();
-	if (delta === undefined) delta = (now - time) * simulation_ratio / 1000;
+	if (delta === undefined) delta = (now - time) / 1000;
 	time = now;
 	canvas . width = window . innerWidth;
 	canvas . height = window . innerHeight;
-	aiVessels (delta);
-	simulate (delta);
-	removeVessels ();
+	for (var ind = 0; ind < simulation_ratio; ind += 1) {
+		aiVessels (delta);
+		simulate (delta);
+		removeVessels ();
+	}
 	if (simulated === null) {MissionDefeat (); return;}
 	drawGrid (ctx, window . innerWidth, window . innerHeight, simulated);
 	drawVessels (ctx);
 	if (ping !== null) {
 		var mile = 128 * scaling;
-		ping . ping *= Math . pow (ping . attenuation, delta);
+		ping . ping *= Math . pow (ping . attenuation, delta * simulation_ratio);
 		ctx . beginPath ();
 			ctx . arc (ping . x * mile, ping . y * mile, Math . log10 (ping . ping) * 10, 0, Math . PI * 2);
 			ctx . lineWidth = 1; ctx . strokeStyle = 'yellow';
