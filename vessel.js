@@ -169,7 +169,7 @@ vessel . prototype . setSpeed = function (index) {
 		case 'three quarters': index = 4; break;
 		case 'full': index = 5; break;
 		case 'flank': index = 6; break;
-		default: index = 0; break;
+		default: break;
 	}
 	if (index < 0) index = 0; if (index > this . speed_index_limit) index = this . speed_index_limit;
 	this . noise = this . noises [index]; this . speed = {x: this . speeds [index], y: 0}; this . speed_index = index;

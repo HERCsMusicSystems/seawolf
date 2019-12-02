@@ -338,11 +338,51 @@ var info = document . getElementById ('info');
 var control_panel = document . getElementById ('ctrl');
 var weapons = document . getElementById ('weapon_table');
 
+var gamepads = [];
+var previous_buttons = [];
+var previous_axes = [];
+var joystick_connection = function () {
+	gamepads = navigator . getGamepads ();
+	for (var ind in gamepads) {
+		var gamepad = gamepads [ind];
+		previous_axes [ind] = []; previous_buttons [ind] = [];
+		for (var sub in gamepad . axes) previous_axes [ind] [sub] = gamepad . axes [sub];
+		for (var sub in gamepad . buttons) previous_buttons [ind] [sub] = gamepad . buttons [sub] . pressed;
+	}
+};
+window . addEventListener ('gamepadconnected', joystick_connection);
+window . addEventListener ('gamepaddisconnected', joystick_connection);
+var joystick_button = function (ind, value) {
+	if (! value) return;
+	switch (ind) {
+		case 1: simulated . sonar . ping (); break;
+		default: break;
+	}
+};
+var joystick_axis = function (ind, value) {
+	switch (ind) {
+		case 3: simulated . setSpeed (Math . round ((1 - value) * 6 / 2)); break;
+		default: break;
+	}
+};
+var joystick = function () {
+	for (var ind in gamepads) {
+		var gamepad = gamepads [ind];
+		for (var sub in gamepad . buttons) {
+			if (gamepad . buttons [sub] . pressed !== previous_buttons [ind] [sub]) {previous_buttons [ind] [sub] = gamepad . buttons [sub] . pressed; joystick_button (Number (sub), previous_buttons [ind] [sub]);}
+		}
+		for (var sub in gamepad . axes) {
+			if (gamepad . axes [sub] !== previous_axes [ind] [sub]) {previous_axes [ind] [sub] = gamepad . axes [sub]; joystick_axis (Number (sub), previous_axes [ind] [sub]);}
+		}
+	}
+};
+
 var time = Date . now ();
 
 var previous_selected = null;
 
 var resize = function (delta) {
+	joystick ();
 	var now = Date . now ();
 	if (delta === undefined) delta = (now - time) * simulation_ratio / 1000;
 	time = now;
