@@ -278,8 +278,8 @@ var findClosestTrail = function (torpedo) {
 				var trail = vessel . trail [sub];
 				var dx = torpedo . position . x - trail . x; dx *= dx;
 				var dy = torpedo . position . y - trail . y; dy *= dy;
-				var delta = dx + dy;
-				if (delta < distance) {target = vessel; target_trail = sub;}
+				var delta = Math . sqrt (dx + dy);
+				if (delta < distance) {target = vessel; target_trail = sub; distance = delta;}
 			}
 		}
 	}
