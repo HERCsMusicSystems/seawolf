@@ -272,6 +272,33 @@ var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
 	};
 };
 
+var torpedoAvoidanceAI = function (vessel) {
+	var delay = 0;
+	this . code = function (delta) {
+		var torpedoes = vessel . sonar . detectTorpedoes ();
+		if (torpedoes . length > 0) {
+			for (var ind in torpedoes) {
+				var torpedo = torpedoes [ind];
+				var vector = vessel . getRelativePositionOf (torpedo);
+				vector . bearing = nauticalBearing (vector . bearing);
+				var bearing = vector . bearing - vessel . position . bearing;
+				while (bearing > 180) bearing -= 360;
+				while (bearing < -180) bearing += 360;
+				if (vector . distance < 0.3) {
+					if (delay <= 0) {
+						vessel . targetBearing (torpedo . position . bearing + 140);
+						vessel . setSpeed ('full');
+						delay = 60;
+					} else {
+						console . log (delta);
+						delay -= delta;
+					}
+				}
+			}
+		}
+	};
+};
+
 var cruiseAI = function (rocket, shift, multiplier) {
 	this . code = function (delta) {
 		if (rocket . target . destroyed) {removeVessel (rocket); return;}

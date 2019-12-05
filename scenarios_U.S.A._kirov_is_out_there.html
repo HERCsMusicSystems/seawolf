@@ -59,8 +59,9 @@ var texas = new Virginia (localStorage . getItem ('SimulatedName'));
 texas . positionVessel (0, 0, 90, 800);
 
 var kirov = new Kirov (SelectRandom (Kirov . prototype . names));
-kirov . positionVessel (1, 0, 90);
+kirov . positionVessel (1, 0, 290);
 kirov . setSpeed ('half');
+kirov . ai = new torpedoAvoidanceAI (kirov);
 //kirov . ai = new akulaAI (kuguar);
 
 
