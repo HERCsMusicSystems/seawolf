@@ -76,7 +76,7 @@ texas . sonar . detection_threshold = 0;
 texas . sonar . tracking_threshold = 0;
 texas . sonar . identification_threshold = 0;
 
-checkGameStatus = function () {if (kirov . destroyed) MissionVictory ();}
+checkGameStatus = function () {if (kirov . destroyed) {PossibleAward ('02-Navy-Cross', 1, 2); promote (); MissionVictory ();}}
 
 </script>
 

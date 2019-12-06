@@ -38,6 +38,13 @@ var award = function (order) {
 	localStorage . setItem ('award', order);
 };
 
+var PossibleAward = function (order, probability, multiplier) {
+	var orders = captain . orders;
+	for (var ind in orders) {if (orders [ind] === order) probability *= multiplier;}
+	console . log ('probability', probability);
+	if (Math . random () * probability < 1) award (order);
+};
+
 var promote = function () {
 	if (captain . rank_id >= ranks [side_name] . length - 1)  return;
 	captain . rank_id += 1;
