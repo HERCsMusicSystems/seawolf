@@ -440,8 +440,10 @@ tube . prototype . move = function (delta) {
 				}
 			} else {
 				this . flooded = 1; this . command = null;
-				if (this . torpedo . launch (this, this . vessel)) this . torpedo . postLaunch (this);
-				if (this . fire_callback) {this . fire_callback (); this . fire_callback = null;}
+				if (this . torpedo . launch (this, this . vessel)) {
+					this . torpedo . postLaunch (this);
+					if (this . fire_callback) {this . fire_callback (); this . fire_callback = null;}
+				} else this . display_element . bgColor = 'red';
 			}
 			break;
 		case 'flood':

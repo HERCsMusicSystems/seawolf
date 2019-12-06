@@ -606,6 +606,7 @@ var Type65 = function (cable, name, country) {
 	this . type = 'torpedo';
 	this . class = 'Type65';
 	this . name = name;
+	this . noises = [10, 12, 48, 480, 300, 400, 500];
 	this . speeds = [0, 2, 10, 20, 30, 50, 50];
 	this . bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
 	if (name === 'Fast') this . range = 27;

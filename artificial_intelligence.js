@@ -33,7 +33,7 @@ var torpedoAI = function (torpedo) {
 			if (torpedo . target . type === null) {torpedo . target = null; return;}
 			if (Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 40) {torpedo . detonate (); return;}
 		}
-		torpedo . targetDepth (torpedo . target . position . depth);
+		torpedo . targetDepth (torpedo . target . position . depth > 0 ? torpedo . target . position . depth : 1);
 		torpedo . targetBearing (nauticalBearing (vector . bearing));
 		var frontAngle = Math . abs (torpedo . bearing_target - torpedo . position . bearing);
 		if (frontAngle < 10 && Math . abs (vector . Vbearing) < 10) {
@@ -277,6 +277,7 @@ var torpedoAvoidanceAI = function (vessel) {
 	this . code = function (delta) {
 		var torpedoes = vessel . sonar . detectTorpedoes ();
 		if (torpedoes . length > 0) {
+			console . log (delta);
 			for (var ind in torpedoes) {
 				var torpedo = torpedoes [ind];
 				var vector = vessel . getRelativePositionOf (torpedo);
@@ -290,10 +291,9 @@ var torpedoAvoidanceAI = function (vessel) {
 						vessel . setSpeed ('full');
 						delay = 60;
 					} else {
-						console . log (delta);
 						delay -= delta;
 					}
-				}
+				} else delay = 0;
 			}
 		}
 	};
