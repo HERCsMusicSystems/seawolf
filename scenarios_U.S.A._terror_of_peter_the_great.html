@@ -28,7 +28,7 @@
 <html>
 
 <head>
-	<title>SEAWOLF => Aku&#x142;a is out there!</title>
+	<title>SEAWOLF => Terror of Peter the Great</title>
 	<style>
 	td {padding: 2px;}
 	button {padding: 0px 0px;}
@@ -52,28 +52,24 @@
 
 <script type="text/javascript" encoding="UTF-8">
 
+var CreateShip = function (constructor, name, from, to) {
+	var distance = Math . random () * (to - from) + from;
+	var angle = Math . random () * Math . PI * 2;
+	var ship = new constructor (name);
+	ship . positionVessel (distance * Math . cos (angle), distance * Math . sin (angle), Math . random () * 360);
+	ship . setSpeed ('half');
+	addVessel (ship);
+};
+
+var Leaders = SelectRandom (Roro . prototype . names, Math . random () * 8 + 8);
+for (var ind in Leaders) CreateShip (Roro, Leaders [ind], 1, 4);
+var Oilers = SelectRandom (Roro . prototype . names, Math . random () * 8 + 8);
+for (var ind in Oilers) CreateShip (Oiler, Oilers [ind], 1, 4);
+
 var texas = new Virginia (localStorage . getItem ('SimulatedName'));
 texas . positionVessel (0, 0, 0, 800);
-
-var kuguar = new Akula ('Kuguar');
-kuguar . positionVessel (Math . random () * 8 - 2, Math . random () * 8 - 2, Math . floor (Math . random () * 360), 800);
-kuguar . setSpeed ('half');
-kuguar . ai = new akulaAI (kuguar);
-
-
 addVessel (texas);
-addVessel (kuguar);
 simulatedVessel (texas);
-
-// kuguar . tubes [0] . fire (texas, 'Long Range');
-
-// make everything visible:
-texas . sonar . detection_threshold = 0;
-texas . sonar . tracking_threshold = 0;
-texas . sonar . identification_threshold = 0;
-
-checkGameStatus = function () {if (kuguar . destroyed) MissionVictory ();}
 
 </script>
 
-</html>

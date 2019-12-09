@@ -20,11 +20,38 @@ var Oiler = function (name, country) {
 	this . name = name;
 	this . class = 'Oil Tanker';
 	this . speeds = [0, 1, 4, 8, 12, 15, 18];
-	this . strength = 5;
+	this . strength = 6;
 };
 inherit (Oiler, vessel);
 Oiler . prototype . image = 'OilTanker';
 Oiler . prototype . info = 'https://en.wikipedia.org/wiki/Oil_tanker';
+
+var Roro = function (name, country) {
+	if (country === undefined) countr = 'Bahamas';
+	if (name === undefined) name = 'RO-RO';
+	vessel . call (this, country);
+	this . type = 'surface';
+	this . name = name;
+	this . class = 'RO-RO';
+	this . speeds = [0, 1, 4, 8, 12, 15, 18];
+	this . strnegth = 5;
+};
+inherit (Roro, vessel);
+Roro . prototype . image = 'aquarius_leader';
+Roro . prototype . info = 'https://en.wikipedia.org/wiki/Roll-on/roll-off';
+Roro . prototype . names = [
+	'AEGEAN LEADER', 'ALIOTH LEADER', 'ALTAIR LEADER', 'ANDROMEDA LEADER', 'ANTARES LEADER', 'APHRODITE LEADER', 'APOLLON LEADER', 'AQUARIUS LEADER', 'ARIES LEADER', 'ARTEMIS LEADER', 'ASIAN LEADER', 'ASTERIA LEADER', 'ATLAS LEADER', 'AURIGA LEADER', 'BALTIC LEADER',
+	'CANOPUS LEADER', 'CAPRICORNUS LEADER', 'CASSIOPEIA LEADER', 'CASTOR LEADER', 'CENTAURUS LEADER', 'CENTURY LEADER NO.1', 'CENTURY LEADER NO.3', 'CENTURY LEADER NO.5', 'CEPHEUS LEADER', 'CETUS LEADER', 'COLUMBIA LEADER', 'CORAL LEADER', 'CRONUS LEADER', 'CYGNUS LEADER',
+	'DAEDALUS LEADER', 'DELPHINUS LEADER', 'DEMETER LEADER', 'DENEB LEADER', 'DIONE LEADER', 'DIONYSOS LEADER', 'DORADO LEADER',
+	'EMERALD LEADER', 'EQUULEUS LEADER', 'ERIDANUS LEADER', 'GAIA LEADER', 'GALAXY LEADER', 'GARNET LEADER', 'GEMINI LEADER', 'GENTLE LEADER', 'GLOBAL LEADER', 'GLORIOUS LEADER', 'GOLIATH LEADER', 'GRACEFUL LEADER', 'GUARDIAN LEADER',
+	'HARMONY LEADER', 'HARVEST LEADER', 'HELIOS LEADER', 'HERCULES LEADER', 'HERITAGE LEADER', 'HERMES LEADER', 'HEROIC LEADER', 'HESTIA LEADER', 'HORIZON LEADER', 'HUDSON LEADER', 'HYPERION LEADER',
+	'IRIS LEADER', 'JUPITER LEADER', 'KALIMANTAN LEADER', 'KARIYUSHI LEADER', 'LEADER', 'LEO LEADER', 'LIBRA LEADER', 'LOTUS LEADER', 'LYRA LEADER',
+	'MERCURY LEADER', 'METIS LEADER', 'MONOCEROS LEADER', 'NEPTUNE LEADER', 'OCEANUS LEADER', 'OPAL LEADER', 'ORION LEADER', 'PACIFIC LEADER',
+	'PEGASUS LEADER', 'PERSEUS LEADER', 'PHOENIX LEADER', 'PIONEER LEADER', 'PISCES LEADER', 'PLEIADES LEADER', 'PLUTO LEADER', 'POLARIS LEADER', 'POSEIDON LEADER', 'POSITIVE LEADER', 'PROCYON LEADER', 'PROMETHEUS LEADER', 'PYXIS LEADER',
+	'RHEA LEADER', 'RIGEL LEADER', 'SAGITTARIUS LEADER', 'SARA LEADER', 'SELENE LEADER', 'SIRIUS LEADER', 'SPICA LEADER', 'SULAWESI LEADER', 'SUMATERA LEADER',
+	'TAURUS LEADER', 'THEMIS LEADER', 'TIGRIS LEADER', 'TRANS LEADER', 'TRITON LEADER',
+	'VEGA LEADER', 'VENUS LEADER', 'VICTORY LEADER', 'VIRGO LEADER', 'VOLANS LEADER', 'ZENITH LEADER', 'ZEUS LEADER'
+];
 
 var Alligator = function (name, country) {
 	if (country === undefined) country = 'Russia';
