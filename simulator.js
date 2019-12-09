@@ -10,7 +10,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 			<td rowspan="5"><div id="selected_image" style="text-align: center;"/></td></tr>
 		<tr><td>Speed:</td><td><div id="selected_speed"/></td><td><div id="simulation_speed"/></td></tr>
 		<tr><td>Depth:</td><td><div id="selected_depth"/></td><td><div id="simulation_depth"/></td></tr>
-		<tr><td><div id="selected_name"/></td><td><div id="selected_distance"/></td><td><div id="selected_heading"/></td></tr>
+		<tr><td>Location:</td><td><div id="selected_distance"/></td><td><div id="selected_heading"/></td></tr>
 		<tr><td>Thermoclines:</td><td colspan="2"><div id="thermoclines"/></td></tr>
 	</table>
 </div>
@@ -133,7 +133,7 @@ var trail_length = 24;
 var trail_delta = 15;
 var ping = null;
 
-var checkGameStatus = function () {console . log ("Checking end condition.");};
+var checkGameStatus = function () {};
 
 var MissionVictory = function () {
 	setTimeout (function () {
@@ -329,7 +329,7 @@ var simulation_depth = document . getElementById ('simulation_depth');
 var selected_bearing = document . getElementById ('selected_bearing');
 var selected_speed = document . getElementById ('selected_speed');
 var selected_depth = document . getElementById ('selected_depth');
-var selected_name = document . getElementById ('selected_name');
+// var selected_name = document . getElementById ('selected_name');
 var selected_distance = document . getElementById ('selected_distance');
 var selected_heading = document . getElementById ('selected_heading');
 var selected_image = document . getElementById ('selected_image');
@@ -421,18 +421,18 @@ var resize = function (delta) {
 		selected_speed . innerHTML = sv . speed . x . toFixed (0);
 		selected_depth . innerHTML = sv . position . depth . toFixed (0);
 //		selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : `${sv . name} (${sv . class} class)`;
-		selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : `${sv . class}:`;
+		// selected_name . innerHTML = selected . status === 'unknown' ? '<====>' : `${sv . class}:`;
 		var vector = simulated . getRelativePositionOf (sv);
 		selected_distance . innerHTML = vector . distance . toFixed (2);
 		bearing = displayBearing (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
 		selected_heading . innerHTML = bearing;
 //		selected_heading . innerHTML = '[' + bearing + '/' + simulated . sonar . getNoiseOf (sv) . toFixed (4) + ']';
 		if (previous_selected !== selected) {
-			selected_image . innerHTML = selected . status === 'unknown' ? '' : `<a href="${sv . info}" target="_blank"><img src="silhouettes/${sv . image}.png" style="max-width: 300px; max-height: 80px; display: block; width: auto; height: auto"/></a>${sv . name} ${sv . type}`;
+			selected_image . innerHTML = selected . status === 'unknown' ? '' : `<a href="${sv . info}" target="_blank"><img src="silhouettes/${sv . image}.png" style="max-width: 300px; max-height: 80px; display: block; width: auto; height: auto; margin-left: auto; margin-right: auto;"/></a><nobr>${sv . name}<br/>${sv . class}</nobr>`;
 			previous_selected = selected;
 		}
 	} else {
-		selected_name . innerHTML = '<====>';
+		// selected_name . innerHTML = '<====>';
 		selected_heading . innerHTML = '<>';
 		selected_bearing . innerHTML = '<>';
 		selected_speed . innerHTML = '<>';

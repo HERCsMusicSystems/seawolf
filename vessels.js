@@ -32,7 +32,7 @@ var Roro = function (name, country) {
 	vessel . call (this, country);
 	this . type = 'surface';
 	this . name = name;
-	this . class = 'RO-RO';
+	this . class = 'Roll-on / Roll-off';
 	this . speeds = [0, 1, 4, 8, 12, 15, 18];
 	this . strnegth = 5;
 };
@@ -40,17 +40,17 @@ inherit (Roro, vessel);
 Roro . prototype . image = 'aquarius_leader';
 Roro . prototype . info = 'https://en.wikipedia.org/wiki/Roll-on/roll-off';
 Roro . prototype . names = [
-	'AEGEAN LEADER', 'ALIOTH LEADER', 'ALTAIR LEADER', 'ANDROMEDA LEADER', 'ANTARES LEADER', 'APHRODITE LEADER', 'APOLLON LEADER', 'AQUARIUS LEADER', 'ARIES LEADER', 'ARTEMIS LEADER', 'ASIAN LEADER', 'ASTERIA LEADER', 'ATLAS LEADER', 'AURIGA LEADER', 'BALTIC LEADER',
-	'CANOPUS LEADER', 'CAPRICORNUS LEADER', 'CASSIOPEIA LEADER', 'CASTOR LEADER', 'CENTAURUS LEADER', 'CENTURY LEADER NO.1', 'CENTURY LEADER NO.3', 'CENTURY LEADER NO.5', 'CEPHEUS LEADER', 'CETUS LEADER', 'COLUMBIA LEADER', 'CORAL LEADER', 'CRONUS LEADER', 'CYGNUS LEADER',
-	'DAEDALUS LEADER', 'DELPHINUS LEADER', 'DEMETER LEADER', 'DENEB LEADER', 'DIONE LEADER', 'DIONYSOS LEADER', 'DORADO LEADER',
-	'EMERALD LEADER', 'EQUULEUS LEADER', 'ERIDANUS LEADER', 'GAIA LEADER', 'GALAXY LEADER', 'GARNET LEADER', 'GEMINI LEADER', 'GENTLE LEADER', 'GLOBAL LEADER', 'GLORIOUS LEADER', 'GOLIATH LEADER', 'GRACEFUL LEADER', 'GUARDIAN LEADER',
-	'HARMONY LEADER', 'HARVEST LEADER', 'HELIOS LEADER', 'HERCULES LEADER', 'HERITAGE LEADER', 'HERMES LEADER', 'HEROIC LEADER', 'HESTIA LEADER', 'HORIZON LEADER', 'HUDSON LEADER', 'HYPERION LEADER',
-	'IRIS LEADER', 'JUPITER LEADER', 'KALIMANTAN LEADER', 'KARIYUSHI LEADER', 'LEADER', 'LEO LEADER', 'LIBRA LEADER', 'LOTUS LEADER', 'LYRA LEADER',
-	'MERCURY LEADER', 'METIS LEADER', 'MONOCEROS LEADER', 'NEPTUNE LEADER', 'OCEANUS LEADER', 'OPAL LEADER', 'ORION LEADER', 'PACIFIC LEADER',
-	'PEGASUS LEADER', 'PERSEUS LEADER', 'PHOENIX LEADER', 'PIONEER LEADER', 'PISCES LEADER', 'PLEIADES LEADER', 'PLUTO LEADER', 'POLARIS LEADER', 'POSEIDON LEADER', 'POSITIVE LEADER', 'PROCYON LEADER', 'PROMETHEUS LEADER', 'PYXIS LEADER',
-	'RHEA LEADER', 'RIGEL LEADER', 'SAGITTARIUS LEADER', 'SARA LEADER', 'SELENE LEADER', 'SIRIUS LEADER', 'SPICA LEADER', 'SULAWESI LEADER', 'SUMATERA LEADER',
-	'TAURUS LEADER', 'THEMIS LEADER', 'TIGRIS LEADER', 'TRANS LEADER', 'TRITON LEADER',
-	'VEGA LEADER', 'VENUS LEADER', 'VICTORY LEADER', 'VIRGO LEADER', 'VOLANS LEADER', 'ZENITH LEADER', 'ZEUS LEADER'
+	'Aegean Leader', 'Alioth Leader', 'Altair Leader', 'Andromeda Leader', 'Antares Leader', 'Aphrodite Leader', 'Apollon Leader', 'Aquarius Leader', 'Aries Leader', 'Artemis Leader', 'Asian Leader', 'Asteria Leader', 'Atlas Leader', 'Auriga Leader', 'Baltic Leader',
+	'Canopus Leader', 'Capricornus Leader', 'Cassiopeia Leader', 'Castor Leader', 'Centaurus Leader', 'Century Leader No.1', 'Century Leader No.3', 'Century Leader No.5', 'Cepheus Leader', 'Cetus Leader', 'Columbia Leader', 'Coral Leader', 'Cronus Leader', 'Cygnus Leader',
+	'Daedalus Leader', 'Delphinus Leader', 'Demeter Leader', 'Deneb Leader', 'Dione Leader', 'Dionysos Leader', 'Dorado Leader',
+	'Emerald Leader', 'Equuleus Leader', 'Eridanus Leader', 'Gaia Leader', 'Galaxy Leader', 'Garnet Leader', 'Gemini Leader', 'Gentle Leader', 'Global Leader', 'Glorious Leader', 'Goliath Leader', 'Graceful Leader', 'Guardian Leader',
+	'Harmony Leader', 'Harvest Leader', 'Helios Leader', 'Hercules Leader', 'Heritage Leader', 'Hermes Leader', 'Heroic Leader', 'Hestia Leader', 'Horizon Leader', 'Hudson Leader', 'Hyperion Leader',
+	'Iris Leader', 'Jupiter Leader', 'Kalimantan Leader', 'Kariyushi Leader', 'Leader', 'Leo Leader', 'Libra Leader', 'Lotus Leader', 'Lyra Leader',
+	'Mercury Leader', 'Metis Leader', 'Monoceros Leader', 'Neptune Leader', 'Oceanus Leader', 'Opal Leader', 'Orion Leader',
+	'Pacific Leader', 'Pegasus Leader', 'Perseus Leader', 'Phoenix Leader', 'Pioneer Leader', 'Pisces Leader', 'Pleiades Leader', 'Pluto Leader', 'Polaris Leader', 'Poseidon Leader', 'Positive Leader', 'Procyon Leader', 'Prometheus Leader', 'Pyxis Leader',
+	'Rhea Leader', 'Rigel Leader', 'Sagittarius Leader', 'Sara Leader', 'Selene Leader', 'Sirius Leader', 'Spica Leader', 'Sulawesi Leader', 'Sumatera Leader',
+	'Taurus Leader', 'Themis Leader', 'Tigris Leader', 'Trans Leader', 'Triton Leader',
+	'Vega Leader', 'Venus Leader', 'Victory Leader', 'Virgo Leader', 'Volans Leader', 'Zenith Leader', 'Zeus Leader'
 ];
 
 var Alligator = function (name, country) {
@@ -59,7 +59,7 @@ var Alligator = function (name, country) {
 	vessel . call (this, country);
 	this . type = 'surface';
 	this . name = name;
-	this . class = 'Large Landing Ship';
+	this . class = 'Alligator Large Landing Ship';
 	this . speeds = [0, 1, 4, 8, 16, 18];
 };
 inherit (Alligator, vessel);
@@ -85,18 +85,18 @@ Alligator . prototype . names = [
 var Virginia = function (name, country) {
 	if (country === undefined) country = 'U.S.A.';
 	vessel . call (this, country);
-	this . class = 'Virginia';
+	this . class = 'Virginia SSN';
 	this . name = name;
 	this . speeds = [0, 2, 8, 15, 19, 25, 30];
 	this . sonar = new sonar (this);
 	this . inventory = {
-		Mark48: {constructor: Mark48, count: 29},
-		Mark46: {constructor: Mark46, count: 16},
+		'Mark 48': {constructor: Mark48, count: 29},
+		'Mark 46': {constructor: Mark46, count: 16},
 		Harpoon: {constructor: Harpoon, count: 4, depth: 150},
 		Tomahawk: {constructor: Tomahawk, count: 4, depth: 150},
-		Mark60CAPTOR: {constructor: Mark60CAPTOR, count: 24}
+		'Mark 60 CAPTOR': {constructor: Mark60CAPTOR, count: 24}
 	};
-	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Mark46: ['Wakehoming'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk'], Mark60CAPTOR: ['Mark60 CAPTOR']}, 4);
+	this . tubes = build_tubes (this, {'Mark 48': ['Mark 48 Long Range', 'Mark 48 Fast'], 'Mark 46': ['Mark 46 Wakehoming'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk'], 'Mark 60 CAPTOR': ['Mark 60 CAPTOR']}, 4);
 	this . silo = {
 		Tomahawk: {constructor: Tomahawk, amount: 12, depth: 150},
 		Decoy: {constructor: Decoy, amount: 6}
@@ -113,17 +113,17 @@ Virginia . prototype . names = ['SSN-774 Virginia', 'SSN-775 Texas', 'SSN-776 Ha
 var Seawolf = function (name, country) {
 	if (country === undefined) country = 'U.S.A.';
 	vessel . call (this, country);
-	this . class = 'Seawolf';
+	this . class = 'Seawolf SSN';
 	this . name = name;
 	this . speeds = [0, 2, 8, 15, 20, 25, 35];
 	this . noises = [10, 120, 480, 2400, 4800, 48000, 480000];
 	this . sonar = new sonar (this);
 	this . inventory = {
-		Mark48: {constructor: Mark48, count: 26},
+		'Mark 48': {constructor: Mark48, count: 26},
 		Harpoon: {constructor: Harpoon, count: 12, depth: 150},
 		Tomahawk: {constructor: Tomahawk, count: 12, depth: 150}
 	};
-	this . tubes = build_tubes (this, {Mark48: ['Long Range', 'Fast'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk']}, 8);
+	this . tubes = build_tubes (this, {'Mark 48': ['Mark 48 Long Range', 'Mark 48 Fast'], Harpoon: ['Harpoon'], Tomahawk: ['Tomahawk']}, 8);
 	this . silo = {Decoy: {constructor: Decoy, amount: 8}};
 };
 inherit (Seawolf, vessel);
@@ -134,7 +134,7 @@ Seawolf . prototype . names = ['SSN-21 Seawolf', 'SSN-22 Connecticut', 'SSN-23 J
 var Akula = function (name, country) {
 	if (country === undefined) country = 'Russia';
 	vessel . call (this, country);
-	this . class = 'Акула';
+	this . class = 'Акула SSN';
 	this . name = name;
 	this . speeds = [0, 2, 8, 15, 21, 28, 35];
 	this . inventory = {
@@ -154,7 +154,7 @@ Akula . prototype . names = ['Akula', 'Bars', 'Ak Bars', 'Delfin', 'Barnaul', 'K
 var Sovremenny = function (name, country) {
 	if (country === undefined) country = 'Russia';
 	vessel . call (this, country);
-	this . class = 'Сарыч';
+	this . class = 'Сарыч Destroyer';
 	this . name = name;
 	this . type = 'surface';
 	this . speeds = [0, 2, 8, 15, 21, 28, 32.7];
@@ -180,7 +180,7 @@ Sovremenny . prototype . names = ['Sovremennyy', 'Otchayannyy', 'Otlichnyy',
 var Udaloy = function (name, country) {
 	if (country === undefined) country = 'Russia';
 	vessel . call (this, country);
-	this . class = 'Удалой'
+	this . class = 'Удалой Destroyer';
 	this . name = name;
 	this . type = 'surface';
 	this . speeds = [0, 2, 8, 15, 22, 30, 35];
@@ -207,7 +207,7 @@ Udaloy . prototype . names = [
 var Slava = function (name, country) {
 	if (country === undefined) country = 'Russia';
 	vessel . call (this, country);
-	this . class = 'Атлант';
+	this . class = 'Атлант Missile Cruiser';
 	this . name = name;
 	this . type = 'surface';
 	this . speeds = [0, 2, 8, 15, 22, 30, 35];
@@ -233,7 +233,7 @@ Slava . prototype . names = [
 var Kirov = function (name, country) {
 	if (country === undefined) country = 'Russia';
 	vessel . call (this, country);
-	this . class = 'Орлан'
+	this . class = 'Орлан Heavy Missile Cruiser'
 	this . name = name;
 	this . type = 'surface';
 	this . speeds = [0, 2, 8, 16, 24, 32, 35];
@@ -484,11 +484,11 @@ Decoy . prototype . info = 'https://en.wikipedia.org/wiki/Sonar_decoy';
 /////////////////////////
 
 var Mark60CAPTOR = function (cable, name, country) {
-	if (name === undefined) name = 'Mark60 CAPTOR';
+	if (name === undefined) name = 'Mark 60 CAPTOR';
 	if (country === undefined) country = cable . country;
 	vessel . call (this, country);
 	this . type = 'mine';
-	this . class = 'Mark60CAPTOR';
+	this . class = 'Mark 60 CAPTOR';
 	this . name = name;
 	this . range = 0.5;
 	this . armed = false;
@@ -541,7 +541,7 @@ var Mark48 = function (cable, name, country) {
 	this . cable = cable;
 	this . attacker = cable;
 	this . type = 'torpedo';
-	this . class = 'Mark48';
+	this . class = 'Mark 48';
 	this . name = name;
 	this . speeds = [0, 2, 10, 25, 40, 55, 55];
 	this . bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
@@ -576,7 +576,7 @@ var Mark46 = function (cable, name, country) {
 	this . cable = null;
 	this . attacker = cable;
 	this . type = 'torpedo';
-	this . class = 'Mark46';
+	this . class = 'Mark 46';
 	this . name = name;
 	this . range = 6;
 	this . speeds = [0, 2, 10, 20, 30, 40, 40];
@@ -607,7 +607,7 @@ Mark46 . prototype . launch = function (tube, vessel, target) {
 
 var SeaLance = function (cable, name, country) {
 	Harpoon . call (this, cable, name, country);
-	this . class = 'SeaLance';
+	this . class = 'Sea Lance';
 	this . ai = new RocketTorpedoAI (this);
 	this . target_type = 'submarine';
 	this . cable_length = 0;
@@ -631,7 +631,7 @@ var Type65 = function (cable, name, country) {
 	this . cable = cable;
 	this . attacker = cable;
 	this . type = 'torpedo';
-	this . class = 'Type65';
+	this . class = 'Type 65';
 	this . name = name;
 	this . noises = [10, 12, 48, 480, 300, 400, 500];
 	this . speeds = [0, 2, 10, 20, 30, 50, 50];
@@ -667,7 +667,7 @@ var Type53 = function (cable, name, country) {
 	this . cable = null;
 	this . attacker = cable;
 	this . type = 'torpedo';
-	this . class = 'Type53';
+	this . class = 'Type 53';
 	this . name = name;
 	this . range = 11;
 	this . speeds = [0, 2, 10, 20, 30, 44, 44];
@@ -698,7 +698,7 @@ Type53 . prototype . launch = function (tube, vessel, target) {
 
 var SS_N_15 = function (cable, name, country) {
 	Harpoon . call (this, cable, name, country);
-	this . class = 'РПК-7 Ветер';
+	this . class = 'РПК-2 Вьюга';
 	this . ai = new RocketTorpedoAI (this);
 	this . target_type = 'submarine';
 	this . cable_length = 0;
