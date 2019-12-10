@@ -53,6 +53,34 @@ Roro . prototype . names = [
 	'Vega Leader', 'Venus Leader', 'Victory Leader', 'Virgo Leader', 'Volans Leader', 'Zenith Leader', 'Zeus Leader'
 ];
 
+var ContainerVessel = function (name, country) {
+	if (country === undefined) countr = 'Bahamas';
+	if (name === undefined) name = 'RO-RO';
+	vessel . call (this, country);
+	this . type = 'surface';
+	this . name = name;
+	this . class = 'Roll-on / Roll-off';
+	this . speeds = [0, 1, 4, 8, 12, 15, 18];
+	this . strnegth = 5;
+};
+inherit (ContainerVessel, vessel);
+ContainerVessel . prototype . image = 'aquarius_leader';
+ContainerVessel . prototype . info = 'https://en.wikipedia.org/wiki/Roll-on/roll-off';
+ContainerVessel . prototype . names = [
+	'MSC Gülsün', 'MSC Samar', 'MSC Leni', 'MSC Mia', 'MSC Mina', 'MSC Isabella', 'MSC Arina', 'MSC Nela', 'MSC Sixin',
+	'OOCL Hong Kong', 'OOCL Germany', 'OOCL Japan', 'OOCL United Kingdom', 'OOCL Scandinavia', 'OOCL Indonesia',
+	'COSCO Shipping Universe', 'COSCO Shipping Nebula', 'COSCO Shipping Galaxy', 'COSCO Shipping Solar', 'COSCO Shipping Star', 'COSCO Shipping Planet',
+	'CMA CGM Antoine de Saint Exupery', 'CMA CGM Jean Mermoz', 'CMA CGM Louis Bleriot',
+	'Madrid Maersk', 'Munich Maersk', 'Moscow Maersk', 'Milan Maersk', 'Monaco Maersk', 'Marseille Maersk', 'Manchester Maersk', 'Murcia Maersk', 'Manila Maersk', 'Mumbai Maersk', 'Maastricht Maersk',
+	'Ever Golden', 'Ever Goods', 'Ever Genius', 'Ever Given', 'Ever Gifted', 'Ever Grade', 'Ever Gentle',
+	'MOL Truth', 'MOL Treasure', 'MOL Triumph', 'MOL Trust', 'MOL Tribute', 'MOL Tradition',
+	'Ever Glory', 'Ever Govern', 'Ever Globe', 'Ever Greet',
+	'COSCO Shipping Taurus', 'COSCO Shipping Gemini', 'COSCO Shipping Virgo', 'COSCO Shipping Libra', 'COSCO Shipping Sagittarius', 'Barzan',
+	'Al Muraykh', 'Al Nefud', 'Al Zubara', 'Al Dahna', 'Tihama', 'MSC Diana', 'MSC Ingy', 'MSC Eloane', 'MSC Mirjam', 'MSC Rifaya', 'MSC Leanne', 'MSC Reef', 'MSC Jade', 'MSC Ditte', 'MSC Mirja', 'MSC Erica', 'MSC Tina', 'MSC Anna', 'MSC Viviana',
+	'COSCO Shipping Aries', 'COSCO Shipping Leo', 'COSCO Shipping Capricorn', 'COSCO Shipping Scorpio', 'COSCO Shipping Pisces', 'COSCO Shipping Aquarius',
+	'MSC Oscar', 'MSC Oliver', 'MSC Zoe', 'MSC Maya', 'MSC Sveva', 'MSC Clara', 'CSCL Globe', 'CSCL Pacific Ocean', 'CSCL Indian Ocean', 'CSCL Arctic Ocean', 'CSCL Atlantic Ocean'
+];
+
 var Alligator = function (name, country) {
 	if (country === undefined) country = 'Russia';
 	if (name === undefined) name = 'Alligator';
