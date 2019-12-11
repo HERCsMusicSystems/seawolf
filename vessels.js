@@ -125,6 +125,59 @@ ContainerVessel . prototype . names = [
 	'MSC Oscar', 'MSC Oliver', 'MSC Zoe', 'MSC Maya', 'MSC Sveva', 'MSC Clara', 'CSCL Globe', 'CSCL Pacific Ocean', 'CSCL Indian Ocean', 'CSCL Arctic Ocean', 'CSCL Atlantic Ocean'
 ];
 
+var GeneralCargoVessel = function (name, country) {
+	if (country === undefined) countr = 'Bahamas';
+	if (name === undefined) name = 'Cargo Vessel';
+	vessel . call (this, country);
+	this . type = 'surface';
+	this . name = name;
+	this . class = 'General Cargo Vessel';
+	this . speeds = [0, 1, 4, 8, 12, 15, 18];
+	this . strnegth = 5;
+};
+inherit (GeneralCargoVessel, vessel);
+GeneralCargoVessel . prototype . image = 'GeneralCargoVessel';
+GeneralCargoVessel . prototype . info = 'https://en.wikipedia.org/wiki/Cargo_ship';
+GeneralCargoVessel . prototype . names = [
+	'Seatrade Orange', 'Seatrade Red', 'Seatrade White', 'Seatrade Blue', 'Seatrade Green',
+	'Lagoon Phoenix', 'Water Phoenix', 'Sierra Queen', 'Green Chile', 'Prince of Seas', 'Cool Expresso', 'Orange Stream', 'Orange Strait', 'Orange Spirit', 'Orange Sea', 'Nova Florida',
+	'Sierra King', 'Sierra Lara', 'Sierra Laurel', 'Sierra Leyre', 'Sierra Loba', 'Nova Zeelandia', 'New Takatsuki', 'Coppename'
+];
+
+var BulkCargoVessel = function (name, country) {
+	if (country === undefined) countr = 'Bahamas';
+	if (name === undefined) name = 'Bulk Vessel';
+	vessel . call (this, country);
+	this . type = 'surface';
+	this . name = name;
+	this . class = 'Bulk Cargo Vessel';
+	this . speeds = [0, 1, 4, 8, 12, 15, 18];
+	this . strnegth = 5;
+};
+inherit (BulkCargoVessel, vessel);
+BulkCargoVessel . prototype . image = 'BulkCargoVessel';
+BulkCargoVessel . prototype . info = 'https://en.wikipedia.org/wiki/Bulk_carrier';
+BulkCargoVessel . prototype . names = [
+	'Albuquerque', 'Achilles', 'Agat', 'Akademik Arkhangelskiy', 'Akademik Korolev', 'Albatros', 'Arctowski', 'Argonaut',
+	'Australian Trader', 'Blue Dolphin', 'Blue Water', 'Botany Bay', 'British Viking', 'California Rose', 'Calypso', 'City of San Diego',
+	'Ciudad De Salamanca', 'Columbus Wellington', 'Confidence', 'Delaware', 'Denebola', 'Discovery Bay', 'Dvina',
+	'Edinburgh', 'Ekliptika', 'Endeavour', 'Ewa', 'Falken', 'Florence', 'Francois Venture', 'Frontier', 'Fusami Maru',
+	'Garibaldi', 'Geiger', 'Golden Arrow', 'Golden Bear', 'Golden Eagle', 'Golden Gate Bridge', 'Golden Fleece',
+	'Golden Sun', 'Golden Tiger', 'Golden West', 'Gonazlez Ortega', 'Green Forest', 'Green Harbour', 'Green Island',
+	'Gulf Explorer', 'Gulf Queen', 'Hachiko Maru', 'Hachiryu Maru', 'Hachiyo Maru', 'Hakone Maru', 'Hakucho Maru',
+	'Hamburg Express', 'Hercules', 'Hermes', 'Hotaka Maru', 'Illustrious', 'Isokaze', 'Isonami', 'Itsuki Maru',
+	'Juno', 'Jupiter', 'Jutland', 'Kaiyo Maru', 'Kalmar', 'Katori Maru', 'Kofu Maru', 'Kyo Maru', 'La Argentina',
+	'Lion Heart', 'Lodijcke', 'Loeser', 'Luebeck', 'Luetjens',
+	'Makeda', 'Makinami', 'Marine Cruiser', 'Marine Surveyor', 'Melville', 'Meteor', 'Mikura', 'Minseborg', 'Miyagi Maru',
+	'Nanao Maru', 'Natsudomari', 'Nereida', 'Nordfjord', 'Oceaner', 'Ocean King',
+	'Odin', 'Okichidori', 'Oksfjord', 'Omega', 'Oyama Maru', 'Oyashio Maru', 'Pathfinder', 'Polar Duke', 'Polar Explorer',
+	'Polar Sea', 'Polar Star', 'Polarbjoern', 'Queensland Star', 'Reisui Maru', 'Rheinland', 'Rias Maru', 'Riasu Maru',
+	'Royal Atlantic', 'Ryoko Maru', 'Sasagake Maru', 'Sea Explorer', 'Sea Star', 'Sea Venture', 'Searcher', 'Senschu Maru',
+	'Sjollen', 'Skaggald', 'Southern Endeavour', 'Svenja', 'Tajima', 'Takanami', 'Tama Maru', 'Tamashima Maru', 'Toshi Maru',
+	'Ulysses', 'Unryo Maru', 'Valkenburg', 'Vysokogorsk', 'Wakachiba Maru', 'Wakatake Maru', 'Wikingen', 'Xiang Yang Hong',
+	'Xauen', 'Yamashin Maru', 'Yashio Maru', 'Yuryo Maru', 'Zandvoort', 'Zuiho Maru', 'Zuio Maru'
+];
+
 var Reefer = function (name, country) {
 	if (country === undefined) countr = 'Bahamas';
 	if (name === undefined) name = 'Reefer';
@@ -136,7 +189,7 @@ var Reefer = function (name, country) {
 	this . strnegth = 5;
 };
 inherit (Reefer, vessel);
-Reefer . prototype . image = 'ReeferVessel';
+Reefer . prototype . image = 'ReeferCargoVessel';
 Reefer . prototype . info = 'https://en.wikipedia.org/wiki/Reefer_ship';
 Reefer . prototype . names = [
 	'Baltic Klipper', 'Atlantic Klipper', 'Sweedish Reefer', 'Schweiz Reefer', 'Italia Reefer', 'Hellas Stream', 'Nederland Reefer',

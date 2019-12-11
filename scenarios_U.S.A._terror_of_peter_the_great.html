@@ -69,6 +69,12 @@ var GasTankers = SelectRandom (GasTanker . prototype . names, Math . random () *
 for (var ind in GasTankers) CreateShip (GasTanker, GasTankers [ind], 1, 4);
 var Containers = SelectRandom (ContainerVessel . prototype . names, Math .random () * 8 + 8);
 for (var ind in Containers) CreateShip (ContainerVessel, Containers [ind], 1, 4);
+var Bulkers = SelectRandom (BulkCargoVessel . prototype . names, Math . random () * 8 + 8);
+for (var ind in Bulkers) CreateShip (BulkCargoVessel, Bulkers [ind], 1, 4);
+var Generals = SelectRandom (GeneralCargoVessel . prototype . names, Math . random () * 8 + 8);
+for (var ind in Generals) CreateShip (GeneralCargoVessel, Generals [ind], 1, 4);
+var Reefers = SelectRandom (Reefer . prototype . names, Math . random () * 8 + 8);
+for (var ind in Reefers) CreateShip (Reefer, Reefers [ind], 1, 4);
 
 var texas = new Virginia (localStorage . getItem ('SimulatedName'));
 texas . positionVessel (0, 0, 0, 800);
