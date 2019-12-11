@@ -63,8 +63,12 @@ var CreateShip = function (constructor, name, from, to) {
 
 var Leaders = SelectRandom (Roro . prototype . names, Math . random () * 8 + 8);
 for (var ind in Leaders) CreateShip (Roro, Leaders [ind], 1, 4);
-var Oilers = SelectRandom (Roro . prototype . names, Math . random () * 8 + 8);
+var Oilers = SelectRandom (Oiler . prototype . names, Math . random () * 8 + 8);
 for (var ind in Oilers) CreateShip (Oiler, Oilers [ind], 1, 4);
+var GasTankers = SelectRandom (GasTanker . prototype . names, Math . random () * 8 + 8);
+for (var ind in GasTankers) CreateShip (GasTanker, GasTankers [ind], 1, 4);
+var Containers = SelectRandom (ContainerVessel . prototype . names, Math .random () * 8 + 8);
+for (var ind in Containers) CreateShip (ContainerVessel, Containers [ind], 1, 4);
 
 var texas = new Virginia (localStorage . getItem ('SimulatedName'));
 texas . positionVessel (0, 0, 0, 800);

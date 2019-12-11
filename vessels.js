@@ -25,6 +25,50 @@ var Oiler = function (name, country) {
 inherit (Oiler, vessel);
 Oiler . prototype . image = 'OilTanker';
 Oiler . prototype . info = 'https://en.wikipedia.org/wiki/Oil_tanker';
+Oiler . prototype . names = [
+	'Seawise Giant', 'Pierre Guillaumat', 'Prairial', 'Batillus', 'Bellamya', 'Esso Atlantic', 'Esso Pacific',
+	'TI Africa', 'TI Asia', 'TI Europe', 'TI Oceania', 'TI America', 'TI Australia', 'Berge Emperor', 'Berge Empress',
+	'Oceania', 'TI Oceania', 'Hellespont Fairfax', 'Hellespont Tara', 'Hellespont Alhambra', 'Hellespont Metropolis',
+	'Maersk Peary', 'MT Jutul', 'Exxon Valdez', 'Knock Nevis', 'Jahre Viking', 'Happy Giant', 'Hellas Fos', 'Sea Giant',
+	'Ulsan Master', 'Kapetan Giannis', 'Esso Pacific', 'Kapetan Michalis', 'Nai Superba', 'Nai Genova',
+	'Sea Saga', 'Sea Serenade', 'Sea Symphony', 'Sea Song', 'Sea Saint', 'Sea Scape', 'Sea Stratus', 'Torrey Canyon'
+];
+
+var GasTanker = function (name, country) {
+	if (country === undefined) country = 'Bahamas';
+	if (name === undefined) name = 'Gas Tanker';
+	vessel . call (this, country);
+	this . type = 'surface';
+	this . name = name;
+	this . class = 'Gas Tanker';
+	this . speeds = [0, 1, 4, 8, 12, 15, 18];
+	this . strength = 5;
+};
+inherit (GasTanker, vessel);
+GasTanker . prototype . image = 'GasTanker';
+GasTanker . prototype . info = 'https://en.wikipedia.org/wiki/Gas_carrier';
+GasTanker . prototype . names = [
+	'Al Barrah', 'Al Dafna', 'Al Jabirah', 'Al Oraic', 'Al Rayyan', 'Al Thakhira', 'Ayame', 'Almarona', 'Almajedah', 'Alrar', 'Althea Gas',
+	'Anafi', 'Annapurna', 'Antwerpen', 'Arctic Discoverer', 'Armada LNG Mediterrana', 'Asia Excellence', 'Australgas', 'Aurora Capricorn',
+	'Azeri Gas', 'Al Utouriya', 'Al Thumama', 'Al Sahla', 'Berlian Ekuator', 'Berge Ningbo', 'Berge Nantong',
+	'British Commerce', 'British Councillor', 'British Commerce', 'British Courage', 'British Diamond', 'British Emerald',
+	'British Innovator', 'British Merchant', 'British Ruby', 'British Sapphire', 'British Trader',
+	'BW Gemini', 'BW TYR', 'BW Empress', 'Yuyo Berge', 'Disha',
+	'Flanders Loyalty', 'Flanders Liberty', 'Flanders Harmony', 'Fuji LNG',
+	'Gaz Venezia', 'Gaz Victory', 'Gas miracle', 'Gas magic', 'Gas cat', 'Gas lıne', 'Gandria', 'Gimi',
+	'Golar arctic', 'Golar celsius', 'Golar freeze', 'Golar grand', 'Golar mazo', 'Golar maria', 'Golar seal',
+	'Golar spirit', 'Golar viking', 'Golar winter', 'Gas courage', 'Gas commerce',
+	'Gas stella', 'Grace Cosmos', 'Grace Acacia', 'Gas Diana', 'Hellas nautilus', 'Iris Glory', 'Independence',
+	'Jag vidhi', 'Jag vishnu', 'Jag Vijaya', 'Jag Viraat', 'Jag Vasanth', 'Jag Vayu', 'Kailash Gas', 'Kent', 'Lyne', 'Leto providence',
+	'Maharshi Labhatreya', 'Maharshi Shubhatreya', 'Maharshi Krishnatreya', 'Maharshi Devatreya', 'Maharshi Vamadeva', 'Maharshi Bhardwaj', 'Maharshi Devatreya',
+	'Maersk Venture', 'Maersk Jade', 'Mill House', 'Maersk jewel', 'Maersk Genesis', 'Maersk Galaxy', 'Maersk Gusto',
+	'Maersk Global', 'Maersk Glory', 'Maersk Visual', 'Maersk Value', 'Marshal Vasilevskiy',
+	'Marycam Swan', 'Mill Reef', 'Methane Princess', 'Malanje',
+	'Norgas Innovation', 'Norgas Unikum', 'Norgas Bahrain Vision', 'Norgas Invention', 'Norgas Creation', 'Norgas Conception', 'Ocean orchid',
+	'Pertamina Gas 1', 'Perseverance V', 'Progress', 'Prospect', 'BW Odin', 'Aurora Capricorn', 'Pacific Arcadia', 'Pampero', 'Raahi',
+	'Secreto', 'Sylvie', 'Sigas Sonja', 'Sigas Silvia', 'Sir Ivor', 'Stena Blue Sky', 'Stena Clear Sky', 'Stena Crystal Sky',
+	'SKARPOV', 'Sansovino', 'Seri Bijaksana', 'Soyo', 'Thetis Glory', 'Tenacity IV', 'Venus Glory', 'Yuhsan', 'Yuyo', 'Yuyo Spirits', 'Zekreet'
+];
 
 var Roro = function (name, country) {
 	if (country === undefined) countr = 'Bahamas';
@@ -55,17 +99,17 @@ Roro . prototype . names = [
 
 var ContainerVessel = function (name, country) {
 	if (country === undefined) countr = 'Bahamas';
-	if (name === undefined) name = 'RO-RO';
+	if (name === undefined) name = 'Container Vessel';
 	vessel . call (this, country);
 	this . type = 'surface';
 	this . name = name;
-	this . class = 'Roll-on / Roll-off';
+	this . class = 'Container Vessel';
 	this . speeds = [0, 1, 4, 8, 12, 15, 18];
 	this . strnegth = 5;
 };
 inherit (ContainerVessel, vessel);
-ContainerVessel . prototype . image = 'aquarius_leader';
-ContainerVessel . prototype . info = 'https://en.wikipedia.org/wiki/Roll-on/roll-off';
+ContainerVessel . prototype . image = 'ContainerVessel';
+ContainerVessel . prototype . info = 'https://en.wikipedia.org/wiki/Container_ship';
 ContainerVessel . prototype . names = [
 	'MSC Gülsün', 'MSC Samar', 'MSC Leni', 'MSC Mia', 'MSC Mina', 'MSC Isabella', 'MSC Arina', 'MSC Nela', 'MSC Sixin',
 	'OOCL Hong Kong', 'OOCL Germany', 'OOCL Japan', 'OOCL United Kingdom', 'OOCL Scandinavia', 'OOCL Indonesia',
@@ -79,6 +123,26 @@ ContainerVessel . prototype . names = [
 	'Al Muraykh', 'Al Nefud', 'Al Zubara', 'Al Dahna', 'Tihama', 'MSC Diana', 'MSC Ingy', 'MSC Eloane', 'MSC Mirjam', 'MSC Rifaya', 'MSC Leanne', 'MSC Reef', 'MSC Jade', 'MSC Ditte', 'MSC Mirja', 'MSC Erica', 'MSC Tina', 'MSC Anna', 'MSC Viviana',
 	'COSCO Shipping Aries', 'COSCO Shipping Leo', 'COSCO Shipping Capricorn', 'COSCO Shipping Scorpio', 'COSCO Shipping Pisces', 'COSCO Shipping Aquarius',
 	'MSC Oscar', 'MSC Oliver', 'MSC Zoe', 'MSC Maya', 'MSC Sveva', 'MSC Clara', 'CSCL Globe', 'CSCL Pacific Ocean', 'CSCL Indian Ocean', 'CSCL Arctic Ocean', 'CSCL Atlantic Ocean'
+];
+
+var Reefer = function (name, country) {
+	if (country === undefined) countr = 'Bahamas';
+	if (name === undefined) name = 'Reefer';
+	vessel . call (this, country);
+	this . type = 'surface';
+	this . name = name;
+	this . class = 'Reefer Vessel';
+	this . speeds = [0, 1, 4, 8, 12, 15, 18];
+	this . strnegth = 5;
+};
+inherit (Reefer, vessel);
+Reefer . prototype . image = 'ReeferVessel';
+Reefer . prototype . info = 'https://en.wikipedia.org/wiki/Reefer_ship';
+Reefer . prototype . names = [
+	'Baltic Klipper', 'Atlantic Klipper', 'Sweedish Reefer', 'Schweiz Reefer', 'Italia Reefer', 'Hellas Stream', 'Nederland Reefer',
+	'Lombok Strait', 'Luzon Strait', 'Atlantic Reefer', 'Pacific Reefer', 'Royal Klipper', 'Comoros Stream',
+	'Emerald', 'Elvira', 'Pacific Mermaid', 'Eastern Bay', 'Regal Bay', 'Atlantic Acanthus', 'Cold Stream',
+	'Runaway Bay', 'Aconcagua Bay', 'Humboldt Bay', 'Fuji Bay', 'Everest Bay', 'Whitney Bay', 'Breiz Klipper'
 ];
 
 var Alligator = function (name, country) {
