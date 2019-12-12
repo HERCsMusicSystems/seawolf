@@ -78,6 +78,7 @@ var Reefers = SelectRandom (Reefer . prototype . names, Math . random () * 8 + 8
 for (var ind in Reefers) CreateShip (Reefer, Reefers [ind], 1, 4);
 
 var peter = CreateShip (Kirov, ['Пётр Великий'], 3, 4);
+peter . ai = new superBukAI (peter, [], 'Fort', 1);
 
 var texas = new Virginia (localStorage . getItem ('SimulatedName'));
 texas . positionVessel (0, 0, 0, 800);

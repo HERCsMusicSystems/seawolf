@@ -160,6 +160,42 @@ var akulaAI = function (akula) {
 	};
 };
 
+var bukAI = function (escort, BUK, distance) {
+	var buk_fired = null;
+	if (distance === undefined) distance = 3;
+	this . code = function (delta) {
+		var incoming = escort . findRocket ();
+		if (incoming !== null && buk_fired !== incoming && escort . silo [BUK] . amount > 0) {
+			var vector = escort . getRelativePositionOf (incoming);
+			if (vector . distance < distance) {
+				buk_fired = incoming;
+				var buk = new escort . silo [BUK] . constructor (escort, BUK, escort . country);
+				if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) {escort . silo [BUK] . amount -= 1; return buk;}
+			}
+		}
+		return null;
+	};
+};
+
+var superBukAI = function (escort, missiles, BUK, distance) {
+	if (distance === undefined) distance = 3;
+	this . code = function (delta) {
+		var incomings = escort . findEnemyRockets ();
+		for (var ind in incomings) {
+			var incoming = incomings [ind];
+			if (missiles . indexOf (incoming) < 0 && escort . silo [BUK] . amount > 0) {
+				var vector = escort . getRelativePositionOf (incoming);
+				if (vector . distance < distance) {
+					missiles . push (incoming);
+					var buk = new escort . silo [BUK] . constructor (escort, BUK, escort . country);
+					if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) {escort . silo [BUK] . amount -= 1; return buk;}
+				}
+			}
+		}
+		return null;
+	};
+};
+
 var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 	var buk_fired = null;
 	this . code = function (delta) {
