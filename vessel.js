@@ -325,13 +325,6 @@ vessel . prototype . getRelativePositionFromVector = function (vector) {
 	return vector;
 };
 
-vessel . prototype . fire = function () {
-	var target = (selected && selected . vessel) || waypoint;
-	if (target === null) return;
-	var torpedo = new Mark48 (this, 'Fast');
-	torpedo . launch (this, target);
-};
-
 vessel . prototype . fireTorpedo = function (torpedo) {
 	torpedo . target_type = this . target . target_type || 'all';
 	torpedo . target = this . target;
