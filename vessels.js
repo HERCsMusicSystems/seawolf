@@ -541,6 +541,7 @@ var BUK = function (cable, name, country) {
 inherit (BUK, vessel);
 BUK . prototype . launch = function () {return false;};
 BUK . prototype . siloLaunch = function (silo, vessel, target) {
+	if (silo . amount <= 0) return false;
 	if (target !== undefined) this . target = target;
 	if (this . target === null) return false;
 	if (this . depth > 0) return false;
@@ -580,6 +581,7 @@ var FORT = function (cable, name, country) {
 inherit (FORT, vessel);
 FORT . prototype . launch = function () {return false;};
 FORT . prototype . siloLaunch = function (silo, vessel, target) {
+	if (silo . amount <= 0) return false;
 	if (target !== undefined) this . target = target;
 	if (this . target === null) return false;
 	if (this . depth > 0) return false;
@@ -619,6 +621,7 @@ var Decoy = function (cable, name, country) {
 };
 inherit (Decoy, vessel);
 Decoy . prototype . siloLaunch = function (silo, vessel, target) {
+	if (silo . amount <= 0) return false;
 	this . setSpeed ('full');
 	addVessel (this);
 	silo . amount -= 1;

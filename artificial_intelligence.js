@@ -165,7 +165,7 @@ var bukAI = function (escort, BUK, distance) {
 	if (distance === undefined) distance = 3;
 	this . code = function (delta) {
 		var incoming = escort . findRocket ();
-		if (incoming !== null && buk_fired !== incoming && escort . silo [BUK] . amount > 0) {
+		if (incoming !== null && buk_fired !== incoming) {
 			var vector = escort . getRelativePositionOf (incoming);
 			if (vector . distance < distance) {
 				buk_fired = incoming;
@@ -183,7 +183,7 @@ var superBukAI = function (escort, missiles, BUK, distance) {
 		var incomings = escort . findEnemyRockets ();
 		for (var ind in incomings) {
 			var incoming = incomings [ind];
-			if (missiles . indexOf (incoming) < 0 && escort . silo [BUK] . amount > 0) {
+			if (missiles . indexOf (incoming) < 0) {
 				var vector = escort . getRelativePositionOf (incoming);
 				if (vector . distance < distance) {
 					missiles . push (incoming);
@@ -201,7 +201,7 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 	this . code = function (delta) {
 		if (BUK !== undefined) {
 			var incoming = escort . findRocket ();
-			if (incoming !== null && buk_fired !== incoming && escort . silo [BUK] . amount > 0) {
+			if (incoming !== null && buk_fired !== incoming) {
 				var vector = escort . getRelativePositionOf (incoming);
 				if (vector . distance < 3) {
 					buk_fired = incoming;
@@ -232,7 +232,7 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 					escort . inventory [TORPEDO] . count -= 1;
 				}
 			} else {
-				if (escort . silo [ROCKET] !== undefined && escort . silo [ROCKET] . amount > 0) {
+				if (escort . silo [ROCKET] !== undefined) {
 					var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
 					if (torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target)) {
 						torpedo . target_type = 'submarine';
@@ -256,7 +256,7 @@ var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
 			var incomings = escort . findEnemyRockets ();
 			for (var ind in incomings) {
 				var incoming = incomings [ind];
-				if (missiles . indexOf (incoming) < 0 && escort . silo [BUK] . amount > 0) {
+				if (missiles . indexOf (incoming) < 0) {
 					var vector = escort . getRelativePositionOf (incoming);
 					if (vector . distance < 3) {
 						missiles . push (incoming);
@@ -288,7 +288,7 @@ var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
 					escort . inventory [TORPEDO] . count -= 1;
 				}
 			} else {
-				if (escort . silo [ROCKET] !== undefined && escort . silo [ROCKET] . amount > 0) {
+				if (escort . silo [ROCKET] !== undefined) {
 					var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
 					if (torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target)) {
 						torpedo . target_type = 'submarine';

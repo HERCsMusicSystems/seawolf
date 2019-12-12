@@ -353,7 +353,7 @@ vessel . prototype . launch = function (tube, vessel, target) {
 };
 
 vessel . prototype . siloLaunch = function (silo, vessel, target) {
-	if (target === null || vessel . position . depth > silo . depth) return false;
+	if (target === null || vessel . position . depth > silo . depth || silo . amount <= 0) return false;
 	var vector = vessel . getRelativePositionOf (target);
 	if (vector . distance > this . range) return false;
 	// if (target . type !== this . target_type && this . target_type !== 'all') return false;
