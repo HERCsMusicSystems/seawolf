@@ -60,11 +60,12 @@ Captain
 			results = `As this was a real mission, you have scored 1 point.<br/><br/>`;
 			side . captains [side . captain] . score = Number (side . captains [side . captain] . score) + 1;
 		}
+		var rank = localStorage . getItem ('previous_rank');
 		var promotion = localStorage . getItem ('promotion');
-		if (promotion) results += `You have been promoted to the rank of <b><font color="red">${promotion}</font></b>.<br /><br />`;
+		if (promotion) results += `<font color="red">${rank} ${side . captain}</font> have been promoted to the rank of <b><font color="red">${promotion}</font></b>.<br /><br />`;
 		var award = localStorage . getItem ('award');
 		if (award) {
-			results += `You have been awarded a <b><font color="red">${AwardName (award)}</font></b>.<br /><img src="orders/${award}.png" height="100" hspace="100"/><br /><br />`;
+			results += `<font color="red">${captain . rank} ${side . captain}</font> have been awarded a <b><font color="red">${AwardName (award)}</font></b>.<br /><img src="orders/${award}.png" height="100" hspace="100"/><br /><br />`;
 		}
 		document . getElementById ('results') . innerHTML = results;
 		captain . scenarios . push ({mission: localStorage . getItem ('mission'), status: 'Victory', type: SimulatedMission () ? 'Simulated' : 'Real'});

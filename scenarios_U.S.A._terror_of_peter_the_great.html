@@ -59,6 +59,7 @@ var CreateShip = function (constructor, name, from, to) {
 	ship . positionVessel (distance * Math . cos (angle), distance * Math . sin (angle), Math . random () * 360);
 	ship . setSpeed ('half');
 	addVessel (ship);
+	return ship;
 };
 
 var Leaders = SelectRandom (Roro . prototype . names, Math . random () * 8 + 8);
@@ -76,10 +77,14 @@ for (var ind in Generals) CreateShip (GeneralCargoVessel, Generals [ind], 1, 4);
 var Reefers = SelectRandom (Reefer . prototype . names, Math . random () * 8 + 8);
 for (var ind in Reefers) CreateShip (Reefer, Reefers [ind], 1, 4);
 
+var peter = CreateShip (Kirov, ['Пётр Великий'], 3, 4);
+
 var texas = new Virginia (localStorage . getItem ('SimulatedName'));
 texas . positionVessel (0, 0, 0, 800);
 addVessel (texas);
 simulatedVessel (texas);
+
+checkGameStatus = function () {if (peter . destroyed) {PossibleAward ('05-Defense-Superior-Service-Medal', 1, 1); MissionVictory ();}};
 
 </script>
 

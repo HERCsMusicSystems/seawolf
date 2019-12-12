@@ -135,7 +135,9 @@ var ping = null;
 
 var checkGameStatus = function () {};
 
+var victory_in_progress = false;
 var MissionVictory = function () {
+	if (victory_in_progress) return; victory_in_progress = true;
 	setTimeout (function () {
 		PauseSimulation ();
 		alert ("Victory");
