@@ -365,6 +365,7 @@ vessel . prototype . siloLaunch = function (silo, vessel, target) {
 	this . setSpeed ('full');
 	addVessel (this);
 	PlayMusic ('harpoonLaunch');
+	silo . amount -= 1;
 	return true;
 };
 
@@ -509,7 +510,6 @@ var silo_launch = function (html, ind) {
 	if (silo . amount < 1) return;
 	var rocket = new silo . constructor (simulated, ind, simulated . country);
 	if (rocket . siloLaunch (silo, simulated, selected === null ? null : selected . vessel)) {
-		silo . amount -= 1;
 		html . textContent = `LAUNCH ${ind}: ${silo . amount}`;
 	}
 };

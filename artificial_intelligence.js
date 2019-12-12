@@ -170,7 +170,7 @@ var bukAI = function (escort, BUK, distance) {
 			if (vector . distance < distance) {
 				buk_fired = incoming;
 				var buk = new escort . silo [BUK] . constructor (escort, BUK, escort . country);
-				if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) {escort . silo [BUK] . amount -= 1; return buk;}
+				if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) return buk;
 			}
 		}
 		return null;
@@ -188,7 +188,7 @@ var superBukAI = function (escort, missiles, BUK, distance) {
 				if (vector . distance < distance) {
 					missiles . push (incoming);
 					var buk = new escort . silo [BUK] . constructor (escort, BUK, escort . country);
-					if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) {escort . silo [BUK] . amount -= 1; return buk;}
+					if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) return buk;
 				}
 			}
 		}
@@ -206,7 +206,7 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 				if (vector . distance < 3) {
 					buk_fired = incoming;
 					var buk = new escort . silo [BUK] . constructor (escort, BUK, escort . country);
-					if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) escort . silo [BUK] . amount -= 1;
+					buk . siloLaunch (escort . silo [BUK], escort, incoming);
 				}
 			}
 		}
@@ -235,7 +235,6 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 				if (escort . silo [ROCKET] !== undefined && escort . silo [ROCKET] . amount > 0) {
 					var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
 					if (torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target)) {
-						escort . silo [ROCKET] . amount -= 1;
 						torpedo . target_type = 'submarine';
 					}
 				}
@@ -262,7 +261,7 @@ var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
 					if (vector . distance < 3) {
 						missiles . push (incoming);
 						var buk = new escort . silo [BUK] . constructor (escort, BUK, escort . country);
-						if (buk . siloLaunch (escort . silo [BUK], escort, incoming)) escort . silo [BUK] . amount -= 1;
+						buk . siloLaunch (escort . silo [BUK], escort, incoming);
 					}
 				}
 			}
@@ -292,7 +291,6 @@ var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
 				if (escort . silo [ROCKET] !== undefined && escort . silo [ROCKET] . amount > 0) {
 					var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
 					if (torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target)) {
-						escort . silo [ROCKET] . amount -= 1;
 						torpedo . target_type = 'submarine';
 					}
 				}

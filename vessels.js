@@ -552,6 +552,7 @@ BUK . prototype . siloLaunch = function (silo, vessel, target) {
 	this . targetBearing (this . target . position);
 	this . setSpeed ('full');
 	addVessel (this);
+	silo . amount -= 1;
 	return true;
 };
 BUK . prototype . image = 'Buk';
@@ -590,6 +591,7 @@ FORT . prototype . siloLaunch = function (silo, vessel, target) {
 	this . targetBearing (this . target . position);
 	this . setSpeed ('full');
 	addVessel (this);
+	silo . amount -= 1;
 	return true;
 };
 FORT . prototype . image = 'Buk';
@@ -619,6 +621,7 @@ inherit (Decoy, vessel);
 Decoy . prototype . siloLaunch = function (silo, vessel, target) {
 	this . setSpeed ('full');
 	addVessel (this);
+	silo . amount -= 1;
 	return true;
 };
 Decoy . prototype . image = 'Decoy';
