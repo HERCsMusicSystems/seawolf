@@ -198,18 +198,9 @@ var superBukAI = function (escort, missiles, BUK, distance) {
 
 var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 	var buk_fired = null;
+	var buk_code = new bukAI (escort, BUK);
 	this . code = function (delta) {
-		if (BUK !== undefined) {
-			var incoming = escort . findRocket ();
-			if (incoming !== null && buk_fired !== incoming) {
-				var vector = escort . getRelativePositionOf (incoming);
-				if (vector . distance < 3) {
-					buk_fired = incoming;
-					var buk = new escort . silo [BUK] . constructor (escort, BUK, escort . country);
-					buk . siloLaunch (escort . silo [BUK], escort, incoming);
-				}
-			}
-		}
+		if (BUK !== undefined) buk_code . code (delta);
 		escort . sonar . detect ();
 		var target = null;
 		var noise = 0;
@@ -250,21 +241,9 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 };
 
 var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
+	var buk_code = new superBukAI (escort, missiles, BUK);
 	this . code = function (delta) {
-		if (BUK !== undefined) {
-			var incomings = escort . findEnemyRockets ();
-			for (var ind in incomings) {
-				var incoming = incomings [ind];
-				if (missiles . indexOf (incoming) < 0) {
-					var vector = escort . getRelativePositionOf (incoming);
-					if (vector . distance < 3) {
-						missiles . push (incoming);
-						var buk = new escort . silo [BUK] . constructor (escort, BUK, escort . country);
-						buk . siloLaunch (escort . silo [BUK], escort, incoming);
-					}
-				}
-			}
-		}
+		if (BUK !== undefined) buk_code . code (delta);
 		escort . sonar . detect ();
 		var target = null;
 		var noise = 0;
