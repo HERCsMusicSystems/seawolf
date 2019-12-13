@@ -515,7 +515,7 @@ var sonar = function (vessel) {
 	this . detected = {};
 	this . detection_threshold = 1;
 	this . identification_threshold = 2;
-	this . tracking_threshold = 0.25;
+	this . tracking_threshold = 0.75;
 	this . towed_array_deployed = 0;
 	this . deploying_speed = 0;
 	this . deploying_delta = 0.05;
@@ -543,7 +543,7 @@ sonar . prototype . detect = function (delta) {
 			sayWords (this . vessel, 'Towed array retrieved.');
 		}
 	}
-	this . detected = {};
+	// this . detected = {};
 	for (var ind in vessels) {
 		var vessel = vessels [ind];
 		if (vessel !== this . vessel) {
