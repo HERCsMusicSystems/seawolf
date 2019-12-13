@@ -325,7 +325,8 @@ vessel . prototype . getRelativePositionFromVector = function (vector) {
 	return vector;
 };
 
-vessel . prototype . fireTorpedo = function (torpedo) {
+vessel . prototype . fireTorpedo = function (torpedo, inventory) {
+	if (inventory . count <= 0) return false;
 	torpedo . target_type = this . target . target_type || 'all';
 	torpedo . target = this . target;
 	var sp = this . position;
@@ -333,6 +334,8 @@ vessel . prototype . fireTorpedo = function (torpedo) {
 	torpedo . position = {x: sp . x, y: sp . y, depth: sp . depth, bearing: vector . bearing};
 	torpedo . targetDepth (this . target . position . depth);
 	addVessel (torpedo);
+	inventory . count -= 1;
+	return true;
 };
 
 vessel . prototype . launch = function (tube, vessel, target) {

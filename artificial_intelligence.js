@@ -226,10 +226,9 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 			escort . target = target;
 			var vector = escort . getRelativePositionOf (escort . target);
 			if (vector . distance < 2) {
-				if (escort . inventory !== undefined && escort . inventory [TORPEDO] !== undefined && escort . inventory [TORPEDO] . count > 0) {
+				if (escort . inventory !== undefined && escort . inventory [TORPEDO] !== undefined) {
 					var torpedo = new escort . inventory [TORPEDO] . constructor (escort, TORPEDO);
-					escort . fireTorpedo (torpedo);
-					escort . inventory [TORPEDO] . count -= 1;
+					escort . fireTorpedo (torpedo, escort . inventory [TORPEDO]);
 				}
 			} else {
 				if (escort . silo [ROCKET] !== undefined) {
@@ -282,10 +281,9 @@ var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
 			escort . target = target;
 			var vector = escort . getRelativePositionOf (escort . target);
 			if (vector . distance < 2) {
-				if (escort . inventory !== undefined && escort . inventory [TORPEDO] !== undefined && escort . inventory [TORPEDO] . count > 0) {
+				if (escort . inventory !== undefined && escort . inventory [TORPEDO] !== undefined) {
 					var torpedo = new escort . inventory [TORPEDO] . constructor (escort, TORPEDO);
-					escort . fireTorpedo (torpedo);
-					escort . inventory [TORPEDO] . count -= 1;
+					escort . fireTorpedo (torpedo, escort . inventory [TORPEDO]);
 				}
 			} else {
 				if (escort . silo [ROCKET] !== undefined) {
