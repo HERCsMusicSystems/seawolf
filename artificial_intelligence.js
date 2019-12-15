@@ -207,8 +207,10 @@ var corsair = function (escort, rocket, static_delay, random_delay) {
 		for (var ind in escort . sonar . detected) {
 			if (escort . sonar . detected [ind] . status === 'neutral') ids . push (ind);
 		}
+		var target = escort . sonar . detected [SelectRandom (ids)] . vessel;
+		escort . targetBearing (target . position);
 		var missile = new escort . silo [rocket] . constructor (escort, rocket, escort . country);
-		missile . siloLaunch (escort . silo [rocket], escort, escort . sonar . detected [SelectRandom (ids)] . vessel);
+		missile . siloLaunch (escort . silo [rocket], escort, target);
 	};
 };
 

@@ -82,7 +82,7 @@ var peter = CreateShip (Kirov, ['Пётр Великий'], 3, 4);
 
 peter . ai = new function (vessel) {
 	var buk_code = new superBukAI (vessel, [], 'Fort', 1);
-	var corsair_code = new corsair (vessel, 'SS-N-19', 10, 1);
+	var corsair_code = new corsair (vessel, 'SS-N-19', 40, 40);
 	this . code = function (delta) {
 		buk_code . code (delta);
 		vessel . sonar . detect ();
