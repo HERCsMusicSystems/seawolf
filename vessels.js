@@ -385,7 +385,7 @@ var Kirov = function (name, country) {
 	this . sonar = new sonar (this);
 	this . strength = 6;
 	this . silo = {
-		'SS-N-19': {constructor: SS_N_19, amount: 8},
+		'SS-N-19': {constructor: SS_N_19, amount: 20},
 		'SS-N-15': {constructor: SS_N_15, amount: 16, depth: 150},
 		Fort: {constructor: FORT, amount: 96}
 	};

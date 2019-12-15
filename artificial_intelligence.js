@@ -196,6 +196,22 @@ var superBukAI = function (escort, missiles, BUK, distance) {
 	};
 };
 
+var corsair = function (escort, rocket, static_delay, random_delay) {
+	var delay = static_delay + Math . random () * random_delay;
+	this . code = function (delta) {
+		delay -= delta;
+		if (delay > 0) return;
+		delay = static_delay + Math . random () * random_delay;
+		var detected = [];
+		var ids = [];
+		for (var ind in escort . sonar . detected) {
+			if (escort . sonar . detected [ind] . status === 'neutral') ids . push (ind);
+		}
+		var missile = new escort . silo [rocket] . constructor (escort, rocket, escort . country);
+		missile . siloLaunch (escort . silo [rocket], escort, escort . sonar . detected [SelectRandom (ids)] . vessel);
+	};
+};
+
 var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 	var buk_fired = null;
 	var buk_code = new bukAI (escort, BUK);
