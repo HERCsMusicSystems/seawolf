@@ -95,7 +95,10 @@ texas . positionVessel (0, 0, 0, 800);
 addVessel (texas);
 simulatedVessel (texas);
 
-checkGameStatus = function () {if (peter . destroyed) {PossibleAward ('05-Defense-Superior-Service-Medal', 1, 1); MissionVictory ();}};
+checkGameStatus = function (command, target, attacker) {
+	if (command === 'hit' && target !== peter && attacker === texas) {MissionDefeat ();}
+	if (peter . destroyed) {PossibleAward ('05-Defense-Superior-Service-Medal', 1, 1); MissionVictory ();}
+};
 
 </script>
 

@@ -497,7 +497,7 @@ var onMouseDown = function (e) {
 			if (target === null) return;
 			default_select = true; selected . vessel . setTarget (target . vessel); canvas . style . cursor = 'default';
 		}
-		if (target !== null) checkGameStatus ();
+		if (target !== null) checkGameStatus ('select', target . vessel);
 	}
 	if (e . buttons === 2) simulated . targetBearing ({x: e . clientX - canvas . width * 0.5, y: e . clientY - canvas . height * 0.5});
 	return false;

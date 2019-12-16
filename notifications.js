@@ -6,7 +6,10 @@ var log = function (text) {
 	localStorage . setItem ('logbook', JSON . stringify (logbook));
 };
 
-var notifyVesselLost = function (vessel) {log ("Vessel " + vessel . name + " (Class " + vessel . class + ") lost."); checkGameStatus ();};
+var notifyVesselLost = function (vessel) {
+	log ("Vessel " + vessel . name + " (Class " + vessel . class + ") lost.");
+	checkGameStatus ('lost', vessel);
+};
 
 var notifyPing = function (vessel) {};
 
@@ -14,7 +17,10 @@ var notifyTargetDetonated = function (detonated, detonator) {log (`${detonated .
 
 var notifyExplosion = function (vessel) {log (`${vessel . name} exploded.`);};
 
-var notifyHit = function (target, attacker) {log (`${target . name} was hit by ${attacker . name}.`);};
+var notifyHit = function (target, attacker) {
+	log (`${target . name} was hit by ${attacker . name}.`);
+	checkGameStatus ('hit', target, attacker);
+};
 
 var notifyRunOutOfFuel = function (vessel) {log (`${vessel . name} run out of fuel.`);};
 
