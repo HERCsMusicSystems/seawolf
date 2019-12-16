@@ -590,6 +590,17 @@ sonar . prototype . detectStrongestEnemy = function (delta, type) {
 	return strongest && strongest . vessel;
 };
 
+sonar . prototype . trackOrStrongestEnemy = function (tracked) {
+	var target = null;
+	var noise = 0;
+	for (var ind in this . detected) {
+		var detected = this . detected [ind];
+		if (detected . vessel === tracked) return tracked;
+		if (detected . noise > noise && detected . status === 'enemy' && detected . vessel . type === 'submarine') {noise = detected . noise; target = detected . vessel;}
+	}
+	return target;
+};
+
 sonar . prototype . detectTorpedoes = function () {
 	this . detect ();
 	var torpedoes = [];

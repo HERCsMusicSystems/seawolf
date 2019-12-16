@@ -214,24 +214,27 @@ var corsair = function (escort, rocket, static_delay, random_delay) {
 	};
 };
 
+var destroySubAI = function (escort, ROCKET, TORPEDO) {
+	var target = null;
+	var noise = 0;
+	var targetNoLongerAudible = true;
+	for (var ind in escort . sonar . detected) {
+		var detected = escord . sonar . detected [ind];
+		if (detected . status === 'enemy' && detected . vessel . type === 'submarine') {
+			if (detected . vessel === escort . target) targetNoLongerAudible = false;
+			if (detected . noise > noise) {target = detected . vessel; noise = detected . noise;}
+		}
+	}
+};
+
 var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 	var buk_fired = null;
 	var buk_code = new bukAI (escort, BUK);
 	this . code = function (delta) {
 		if (BUK !== undefined) buk_code . code (delta);
 		escort . sonar . detect ();
-		var target = null;
-		var noise = 0;
-		var targetNoLongerAudible = true;
-		for (var ind in escort . sonar . detected) {
-			var detected = escort . sonar . detected [ind];
-			if (detected . status === 'enemy' && detected . vessel . type === 'submarine') {
-				if (detected . vessel === escort . target) targetNoLongerAudible = false;
-				if (detected . noise > noise) {target = detected . vessel; noise = detected . noise;}
-			}
-		}
-		if (targetNoLongerAudible) escort . target = null;
-		if (escort . target === null && target !== null) {
+		var target = escort . sonar . trackOrStrongestEnemy (escort . target);
+		if (escort . target !== target && target !== null) {
 			escort . target = target;
 			var vector = escort . getRelativePositionOf (escort . target);
 			if (vector . distance < 2) {
@@ -263,18 +266,8 @@ var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
 	this . code = function (delta) {
 		if (BUK !== undefined) buk_code . code (delta);
 		escort . sonar . detect ();
-		var target = null;
-		var noise = 0;
-		var targetNoLongerAudible = true;
-		for (var ind in escort . sonar . detected) {
-			var detected = escort . sonar . detected [ind];
-			if (detected . status === 'enemy' && detected . vessel . type === 'submarine') {
-				if (detected . vessel === escort . target) targetNoLongerAudible = false;
-				if (detected . noise > noise) {target = detected . vessel; noise = detected . noise;}
-			}
-		}
-		if (targetNoLongerAudible) escort . target = null;
-		if (escort . target === null && target !== null) {
+		var target = escort . sonar . trackOrStrongestEnemy (escort . target);
+		if (escort . target !== target && target !== null) {
 			escort . target = target;
 			var vector = escort . getRelativePositionOf (escort . target);
 			if (vector . distance < 2) {
