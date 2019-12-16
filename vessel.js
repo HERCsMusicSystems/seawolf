@@ -377,8 +377,8 @@ vessel . prototype . damage = function (level) {
 //	if (level > 1.9) this . damage (level - 1.9);
 };
 
-vessel . prototype . detectStrongest = function (delta, type) {this . target = this . sonar . detectStrongest (delta, type);};
-vessel . prototype . detectStrongestEnemy = function (delta, type) {this . target = this . sonar . detectStrongestEnemy (delta, type);};
+vessel . prototype . detectStrongest = function (type) {this . target = this . sonar . detectStrongest (type);};
+vessel . prototype . detectStrongestEnemy = function (type) {this . target = this . sonar . detectStrongestEnemy (type);};
 
 vessel . prototype . setTarget = function (target) {this . target = target;};
 
@@ -566,9 +566,8 @@ sonar . prototype . detect = function (delta) {
 	}
 };
 
-sonar . prototype . detectStrongest = function (delta, type) {
+sonar . prototype . detectStrongest = function (type) {
 	if (type === undefined) type = 'all';
-	this . detect (delta);
 	var strongest = null;
 	for (var ind in this . detected) {
 		var detected = this . detected [ind];
@@ -578,9 +577,8 @@ sonar . prototype . detectStrongest = function (delta, type) {
 	return strongest && strongest . vessel;
 };
 
-sonar . prototype . detectStrongestEnemy = function (delta, type) {
+sonar . prototype . detectStrongestEnemy = function (type) {
 	if (type === undefined) type = 'all';
-	this . detect (delta);
 	var strongest = null;
 	for (var ind in this . detected) {
 		var detected = this . detected [ind];

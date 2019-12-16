@@ -8,6 +8,7 @@ var torpedoAI = function (torpedo) {
 	this . ping = 0;
 	this . setTarget = function (target) {this . target = target; this . armed = false;};
 	this . code = function (delta) {
+		torpedo . sonar . detect (delta);
 		var sdelta = delta / 3600;
 		torpedo . distance_travelled += torpedo . speed . x * sdelta;
 		if (torpedo . distance_travelled >= torpedo . range) {notifyRunOutOfFuel (torpedo); removeVessel (torpedo); return;}
@@ -24,7 +25,7 @@ var torpedoAI = function (torpedo) {
 			if (torpedo . depth_target === torpedo . position . depth && torpedo . position . depth > 0 && torpedo . position . depth < torpedo . test_depth) torpedo . targetDepth ('test', 1);
 			if (torpedo . position . depth === torpedo . test_depth) torpedo . targetDepth ('surface', 1);
 			if (torpedo . position . depth === 0) torpedo . targetDepth ('test', 1);
-			torpedo . detectStrongest (delta, torpedo . target_type);
+			torpedo . detectStrongest (torpedo . target_type);
 			return;
 		}
 		if (torpedo . target . destroyed) {torpedo . target = null; return;}
@@ -38,12 +39,11 @@ var torpedoAI = function (torpedo) {
 		var frontAngle = Math . abs (torpedo . bearing_target - torpedo . position . bearing);
 		if (frontAngle < 10 && Math . abs (vector . Vbearing) < 10) {
 			torpedo . setSpeed ('full');
-			// if (torpedo . target . type !== null) {torpedo . detectStrongest (delta); console . log (frontAngle, 'possible change');}
 			if (! this . armed) {this . armed = true;}
 		} else {
 			torpedo . setSpeed ('slow');
 			if (this . armed) {
-				if (torpedo . cable === null || (torpedo . cable && torpedo . cable . sonar . targetNoLongerAudible (torpedo . target))) {torpedo . detectStrongest (delta, torpedo . target_type);}
+				if (torpedo . cable === null || (torpedo . cable && torpedo . cable . sonar . targetNoLongerAudible (torpedo . target))) {torpedo . detectStrongest (torpedo . target_type);}
 			}
 		}
 	};
@@ -121,6 +121,7 @@ var akulaAI = function (akula) {
 		akula . sonar . retrieveTowedArray (function () {akula . setSpeed ('full');});
 	};
 	this . code = function (delta) {
+		akula . sonar . detect (delta);
 		switch (this . mode) {
 		case 'initiate_search':
 			akula . targetDepth ('test', 1);
@@ -132,7 +133,7 @@ var akulaAI = function (akula) {
 		case 'searching':
 			if (akula . position . depth === akula . test_depth) akula . targetDepth ('periscope', 1);
 			if (akula . position . depth === 60) akula . targetDepth ('test', 1);
-			var target = akula . sonar . detectStrongestEnemy (delta, 'submarine');
+			var target = akula . sonar . detectStrongestEnemy ('submarine');
 			if (target !== null) {
 				var wp = target . position;
 				this . mode = 'waypoint';
