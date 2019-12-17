@@ -221,7 +221,7 @@ var FireRocketOrTorpedo = function (escort, distance, ROCKET, TORPEDO) {
 		var torpedo = new escort . inventory [TORPEDO] . constructor (escort, TORPEDO);
 		escort . fireTorpedo (torpedo, escort . inventory [TORPEDO]);
 	} else {
-		var torpedo = new escort . silo [ROCKET] . contructor (escort, ROCKET, escort . country);
+		var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
 		torpedo . target_type = 'submarine';
 		torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target);
 	}
@@ -243,7 +243,7 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 		var target = escort . sonar . trackOrStrongestEnemy (escort . target, 'submarine');
 		if (escort . target !== target && target !== null) {
 			escort . target = target;
-			fireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
+			FireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
 		}
 		ChangeCourseAtTarget (escort);
 	};
@@ -257,7 +257,7 @@ var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
 		var target = escort . sonar . trackOrStrongestEnemy (escort . target, 'submarine');
 		if (escort . target !== target && target !== null) {
 			escort . target = target;
-			fireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
+			FireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
 		}
 		ChangeCourseAtTarget (escort);
 	};
