@@ -178,6 +178,17 @@ var MissionAbort = function () {
 	} else ResumeSimulation ();
 };
 
+var MissionLostAtSea = function () {
+	PauseSimulation ();
+	alert ('Lost at sea');
+	localStorage . setItem ('ChangesAllowed', 'true');
+	if (window . location . protocol . indexOf ('file') >= 0) {
+		var address = window . location . pathname;
+		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
+		window . location . assign (address . substring (0, index) + 'mission_lost_at_sea.html');
+	} else window . location . assign ('/mission_lost_at_sea.html');
+}
+
 var addVessel = function (vessel) {vessels . push (vessel);};
 var getVessel = function (name) {for (var ind in vessels) {if (vessels [ind] . name === name) return vessels [ind];}; return null;};
 var removeVessel = function (vessel) {vessel . destroyed = true; if (simulated === vessel) simulated = null; if (selected && selected . vessel === vessel) selected = null; notifyVesselLost (vessel);};
@@ -394,7 +405,7 @@ var resize = function (delta) {
 		simulate (delta);
 		removeVessels ();
 	}
-	if (simulated === null) {MissionDefeat (); return;}
+	if (simulated === null) {MissionLostAtSea (); return;}
 	drawGrid (ctx, window . innerWidth, window . innerHeight, simulated);
 	drawVessels (ctx);
 	if (ping !== null) {

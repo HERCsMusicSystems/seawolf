@@ -69,7 +69,7 @@ Captain
 			results += `<font color="red">${captain . rank} ${side . captain}</font> have been awarded a <b><font color="red">${AwardName (award)}</font></b>.<br /><img src="orders/${award}.png" height="100" hspace="100"/><br /><br />`;
 		}
 		document . getElementById ('results') . innerHTML = results;
-		captain . scenarios . push ({mission: localStorage . getItem ('mission'), status: 'Victory', type: SimulatedMission () ? 'Simulated' : 'Real'});
+		captain . scenarios . push ({mission: localStorage . getItem ('mission'), status: 'Victory', type: MissionType ()});
 		localStorage . setItem (side_name, JSON . stringify (side));
 		localStorage . removeItem ('ChangesAllowed');
 		localStorage . removeItem ('mission');
