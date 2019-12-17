@@ -234,7 +234,7 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 	this . code = function (delta) {
 		if (BUK !== undefined) buk_code . code (delta);
 		escort . sonar . detect ();
-		var target = escort . sonar . trackOrStrongestEnemy (escort . target);
+		var target = escort . sonar . trackOrStrongestEnemy (escort . target, 'submarine');
 		if (escort . target !== target && target !== null) {
 			escort . target = target;
 			var vector = escort . getRelativePositionOf (escort . target);
@@ -267,7 +267,7 @@ var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
 	this . code = function (delta) {
 		if (BUK !== undefined) buk_code . code (delta);
 		escort . sonar . detect ();
-		var target = escort . sonar . trackOrStrongestEnemy (escort . target);
+		var target = escort . sonar . trackOrStrongestEnemy (escort . target, 'submarine');
 		if (escort . target !== target && target !== null) {
 			escort . target = target;
 			var vector = escort . getRelativePositionOf (escort . target);

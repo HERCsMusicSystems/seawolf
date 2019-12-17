@@ -588,13 +588,14 @@ sonar . prototype . detectStrongestEnemy = function (type) {
 	return strongest && strongest . vessel;
 };
 
-sonar . prototype . trackOrStrongestEnemy = function (tracked) {
+sonar . prototype . trackOrStrongestEnemy = function (tracked, type) {
+	if (type === undefined) type = 'all';
 	var target = null;
 	var noise = 0;
 	for (var ind in this . detected) {
 		var detected = this . detected [ind];
 		if (detected . vessel === tracked) return tracked;
-		if (detected . noise > noise && detected . status === 'enemy' && detected . vessel . type === 'submarine') {noise = detected . noise; target = detected . vessel;}
+		if (detected . noise > noise && detected . status === 'enemy' && (type === 'all' || detected . vessel . type === type)) {noise = detected . noise; target = detected . vessel;}
 	}
 	return target;
 };
