@@ -215,17 +215,23 @@ var corsair = function (escort, rocket, static_delay, random_delay) {
 	};
 };
 
-var destroySubAI = function (escort, ROCKET, TORPEDO) {
-	var target = null;
-	var noise = 0;
-	var targetNoLongerAudible = true;
-	for (var ind in escort . sonar . detected) {
-		var detected = escord . sonar . detected [ind];
-		if (detected . status === 'enemy' && detected . vessel . type === 'submarine') {
-			if (detected . vessel === escort . target) targetNoLongerAudible = false;
-			if (detected . noise > noise) {target = detected . vessel; noise = detected . noise;}
-		}
+var FireRocketOrTorpedo = function (escort, distance, ROCKET, TORPEDO) {
+	var vector = escort . getRelativePositionOf (escort . target);
+	if (vector . distance < distance) {
+		var torpedo = new escort . inventory [TORPEDO] . constructor (escort, TORPEDO);
+		escort . fireTorpedo (torpedo, escort . inventory [TORPEDO]);
+	} else {
+		var torpedo = new escort . silo [ROCKET] . contructor (escort, ROCKET, escort . country);
+		torpedo . target_type = 'submarine';
+		torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target);
 	}
+};
+
+var ChangeCourseAtTarget = function (escort) {
+	if (escort . target === null) return;
+	escort . targetBearing (escort . target . position);
+	var vector = escort . getRelativePositionOf (escort . target);
+	escort . setSpeed (vector . distance > 1 ? 'full' : vector . distance > 0.5 ? 'half' : 'stop');
 };
 
 var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
@@ -237,28 +243,9 @@ var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
 		var target = escort . sonar . trackOrStrongestEnemy (escort . target, 'submarine');
 		if (escort . target !== target && target !== null) {
 			escort . target = target;
-			var vector = escort . getRelativePositionOf (escort . target);
-			if (vector . distance < 2) {
-				if (escort . inventory !== undefined && escort . inventory [TORPEDO] !== undefined) {
-					var torpedo = new escort . inventory [TORPEDO] . constructor (escort, TORPEDO);
-					escort . fireTorpedo (torpedo, escort . inventory [TORPEDO]);
-				}
-			} else {
-				if (escort . silo [ROCKET] !== undefined) {
-					var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
-					if (torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target)) {
-						torpedo . target_type = 'submarine';
-					}
-				}
-			}
+			fireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
 		}
-		if (escort . target !== null) {
-			var vector = escort . getRelativePositionOf (escort . target);
-			escort . targetBearing (escort . target . position);
-			if (vector . distance > 1) escort . setSpeed ('full');
-			else if (vector . distance > 0.5) escort . setSpeed ('half');
-			else escort . setSpeed ('stop');
-		}
+		ChangeCourseAtTarget (escort);
 	};
 };
 
@@ -270,28 +257,9 @@ var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
 		var target = escort . sonar . trackOrStrongestEnemy (escort . target, 'submarine');
 		if (escort . target !== target && target !== null) {
 			escort . target = target;
-			var vector = escort . getRelativePositionOf (escort . target);
-			if (vector . distance < 2) {
-				if (escort . inventory !== undefined && escort . inventory [TORPEDO] !== undefined) {
-					var torpedo = new escort . inventory [TORPEDO] . constructor (escort, TORPEDO);
-					escort . fireTorpedo (torpedo, escort . inventory [TORPEDO]);
-				}
-			} else {
-				if (escort . silo [ROCKET] !== undefined) {
-					var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
-					if (torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target)) {
-						torpedo . target_type = 'submarine';
-					}
-				}
-			}
+			fireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
 		}
-		if (escort . target !== null) {
-			var vector = escort . getRelativePositionOf (escort . target);
-			escort . targetBearing (escort . target . position);
-			if (vector . distance > 1) escort . setSpeed ('full');
-			else if (vector . distance > 0.5) escort . setSpeed ('half');
-			else escort . setSpeed ('stop');
-		}
+		ChangeCourseAtTarget (escort);
 	};
 };
 
