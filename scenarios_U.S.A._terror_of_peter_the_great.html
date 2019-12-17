@@ -83,10 +83,14 @@ var peter = CreateShip (Kirov, ['Пётр Великий'], 3, 4);
 peter . ai = new function (vessel) {
 	var buk_code = new superBukAI (vessel, [], 'Fort', 1);
 	var corsair_code = new corsair (vessel, 'SS-N-19', 40, 40);
+	var sub_tracker = new subTrackerAI (vessel, 'SS-N-15', 'Type 65');
+	var torpedo_avoidance = new torpedoAvoidanceAI (vessel);
 	this . code = function (delta) {
 		buk_code . code (delta);
 		vessel . sonar . detect ();
+		if (sub_tracker . code (delta)) {ChangeCourseAtTarget (vessel); return;}
 		corsair_code . code (delta);
+		torpedo_avoidance . code (delta);
 	};
 } (peter);
 

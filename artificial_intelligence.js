@@ -219,12 +219,13 @@ var FireRocketOrTorpedo = function (escort, distance, ROCKET, TORPEDO) {
 	var vector = escort . getRelativePositionOf (escort . target);
 	if (vector . distance < distance) {
 		var torpedo = new escort . inventory [TORPEDO] . constructor (escort, TORPEDO);
-		escort . fireTorpedo (torpedo, escort . inventory [TORPEDO]);
+		return escort . fireTorpedo (torpedo, escort . inventory [TORPEDO]);
 	} else {
 		var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
 		torpedo . target_type = 'submarine';
-		torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target);
+		return torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target);
 	}
+	return false;
 };
 
 var ChangeCourseAtTarget = function (escort) {
@@ -234,31 +235,35 @@ var ChangeCourseAtTarget = function (escort) {
 	escort . setSpeed (vector . distance > 1 ? 'full' : vector . distance > 0.5 ? 'half' : 'stop');
 };
 
-var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
-	var buk_fired = null;
-	var buk_code = new bukAI (escort, BUK);
+var subTrackerAI = function (escort, ROCKET, TORPEDO) {
 	this . code = function (delta) {
-		if (BUK !== undefined) buk_code . code (delta);
-		escort . sonar . detect ();
 		var target = escort . sonar . trackOrStrongestEnemy (escort . target, 'submarine');
 		if (escort . target !== target && target !== null) {
 			escort . target = target;
-			FireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
+			return FireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
 		}
+		return false;
+	}
+};
+
+var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
+	var buk_code = new bukAI (escort, BUK);
+	var sub_tracker = new subTrackerAI (escort, ROCKET, TORPEDO);
+	this . code = function (delta) {
+		if (BUK !== undefined) buk_code . code (delta);
+		escort . sonar . detect ();
+		sub_tracker . code (delta);
 		ChangeCourseAtTarget (escort);
 	};
 };
 
 var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
 	var buk_code = new superBukAI (escort, missiles, BUK);
+	var sub_tracker = new subTrackerAI (escort, ROCKET, TORPEDO);
 	this . code = function (delta) {
 		if (BUK !== undefined) buk_code . code (delta);
 		escort . sonar . detect ();
-		var target = escort . sonar . trackOrStrongestEnemy (escort . target, 'submarine');
-		if (escort . target !== target && target !== null) {
-			escort . target = target;
-			FireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
-		}
+		sub_tracker . code (delta);
 		ChangeCourseAtTarget (escort);
 	};
 };
@@ -268,7 +273,6 @@ var torpedoAvoidanceAI = function (vessel) {
 	this . code = function (delta) {
 		var torpedoes = vessel . sonar . detectTorpedoes ();
 		if (torpedoes . length > 0) {
-			console . log (delta);
 			for (var ind in torpedoes) {
 				var torpedo = torpedoes [ind];
 				var vector = vessel . getRelativePositionOf (torpedo);
@@ -278,7 +282,7 @@ var torpedoAvoidanceAI = function (vessel) {
 				while (bearing < -180) bearing += 360;
 				if (vector . distance < 0.3) {
 					if (delay <= 0) {
-						vessel . targetBearing (torpedo . position . bearing + 140);
+						vessel . targetBearing (torpedo . position . bearing + (Math . random () < 0.5 ? 140 : -140));
 						vessel . setSpeed ('full');
 						delay = 60;
 					} else {
