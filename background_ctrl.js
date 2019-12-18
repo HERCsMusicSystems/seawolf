@@ -122,5 +122,5 @@ while ((index = dir . indexOf ('')) >= 0) dir . splice (index, 1);
 for (index in dir) dir [index] = "url('images/" + dir [index] + "')";
 var backgrounds = dir;
 var background = backgrounds [Math . floor (Math . random () * backgrounds . length)];
-console . log (background);
+// console . log (background);
 document . body . style . backgroundImage = background;

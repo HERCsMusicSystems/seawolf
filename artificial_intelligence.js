@@ -18,19 +18,23 @@ var torpedoAI = function (torpedo) {
 			}
 		}
 		if (torpedo . target !== null) {
-			if (torpedo . sonar . targetNoLongerAudible (torpedo . target) || torpedo . target . destroyed) {
+			if (this . armed && (torpedo . sonar . targetNoLongerAudible (torpedo . target) || torpedo . target . destroyed)) {
 				torpedo . target = null;
 				torpedo . setSpeed ('slow');
 				torpedo . bearing (Math . random () < 0.5 ? -3 : 3);
 				return;
 			}
 			var vector = torpedo . getRelativePositionOf (torpedo . target);
-			if (vector . distance < 0.01)
+			if (vector . distance < 0.01 && Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 40) {torpedo . detonate (); return;}
+			torpedo . setSpeed (this . armed ? 'full' : 'slow');
+			torpedo . targetDepth (torpedo . target . position . depth > 0 ? torpedo . target . position . depth : 1);
+			torpedo . targetBearing (torpedo . target . position);
+			if (Math . abs (torpedo . position . depth - torpedo . target . position . depth) < 10) this . armed = true;
 		}
 	};
 };
 
-var torpedoAI = function (torpedo) {
+var torpedoAIbaK = function (torpedo) {
 	this . armed = false;
 	this . ping = 0;
 	this . setTarget = function (target) {this . target = target; this . armed = false;};
