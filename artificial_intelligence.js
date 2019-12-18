@@ -30,6 +30,13 @@ var torpedoAI = function (torpedo) {
 			torpedo . targetDepth (torpedo . target . position . depth > 0 ? torpedo . target . position . depth : 1);
 			torpedo . targetBearing (torpedo . target . position);
 			if (Math . abs (torpedo . position . depth - torpedo . target . position . depth) < 10) this . armed = true;
+		} else {
+			if (this . ping <= 0) {torpedo . sonar . ping (); this . ping = 4;}
+			this . ping -= delta;
+			if (torpedo . depth_target === torpedo . position . depth && torpedo . position . depth > 0 && torpedo . position . depth < torpedo . test_depth) torpedo . targetDepth ('test', 1);
+			if (torpedo . position . depth === torpedo . test_depth) torpedo . targetDepth ('surfae', 1);
+			if (torpedo . position . depth === 0) torpedo . targetDepth ('test', 1);
+			torpedo . detectStrongest (torpedo . target_type);
 		}
 	};
 };
