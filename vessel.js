@@ -549,7 +549,7 @@ sonar . prototype . detect = function (delta) {
 		if (vessel !== this . vessel) {
 			var noise = this . getNoiseOf (vessel) * this . towed_array_current_amplification;
 			if (noise < this . identification_threshold &&
-				((this . vessel . position . depth <= 60 && vessel . position . depth === 0)
+				((this . vessel . position . depth <= 60 && this . vessel . type === 'submarine' && vessel . position . depth === 0)
 				|| vessel . cable === this . vessel || vessel . type === 'rocket'
 				|| (vessel . type === 'mine' && vessel . cable === this . vessel))) noise = this . identification_threshold;
 			if (this . detected . hasOwnProperty (vessel . id)) {
