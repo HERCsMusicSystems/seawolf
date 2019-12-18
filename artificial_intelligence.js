@@ -6,6 +6,33 @@ var sonarDetect = function (vessel) {
 var torpedoAI = function (torpedo) {
 	this . armed = false;
 	this . ping = 0;
+	this . code = function (delta) {
+		torpedo . sonar . detect ();
+		var sdelta = delta / 3600;
+		torpedo . distance_travelled += torpedo . speed . x * sdelta;
+		if (torpedo . distance_travelled >= torpedo . range) {notifyRunOutOfFuel (torpedo); removeVessel (torpedo); return;}
+		if (torpedo . cable !== null) {
+			torpedo . distance_cable_travelled += torpedo . cable . speed . x * sdelta;
+			if (torpedo . distance_travelled > torpedo . cable_length || torpedo . distance_cable_travelled > torpedo . cable_to_ship_length) {
+				torpedo . cable = null; torpedo . initial_trail_delta = trail_delta; torpedo . trail_length = trail_length;
+			}
+		}
+		if (torpedo . target !== null) {
+			if (torpedo . sonar . targetNoLongerAudible (torpedo . target) || torpedo . target . destroyed) {
+				torpedo . target = null;
+				torpedo . setSpeed ('slow');
+				torpedo . bearing (Math . random () < 0.5 ? -3 : 3);
+				return;
+			}
+			var vector = torpedo . getRelativePositionOf (torpedo . target);
+			if (vector . distance < 0.01)
+		}
+	};
+};
+
+var torpedoAI = function (torpedo) {
+	this . armed = false;
+	this . ping = 0;
 	this . setTarget = function (target) {this . target = target; this . armed = false;};
 	this . code = function (delta) {
 		torpedo . sonar . detect (delta);
