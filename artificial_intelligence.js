@@ -26,10 +26,12 @@ var torpedoAI = function (torpedo) {
 			}
 			var vector = torpedo . getRelativePositionOf (torpedo . target);
 			if (vector . distance < 0.01 && Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 40) {torpedo . detonate (); return;}
-			torpedo . setSpeed (this . armed ? 'full' : 'slow');
+			// torpedo . setSpeed (this . armed ? 'full' : 'slow');
+			torpedo . setSpeed ('full');
 			torpedo . targetDepth (torpedo . target . position . depth > 0 ? torpedo . target . position . depth : 1);
 			torpedo . targetBearing (torpedo . target . position);
-			if (Math . abs (torpedo . position . depth - torpedo . target . position . depth) < 10) this . armed = true;
+			if (! torpedo . sonar . targetNoLongerAudible (torpedo . target)) this . armed = true;
+			// if (Math . abs (torpedo . position . depth - torpedo . target . position . depth) < 10) this . armed = true;
 		} else {
 			if (this . ping <= 0) {torpedo . sonar . ping (); this . ping = 4;}
 			this . ping -= delta;
