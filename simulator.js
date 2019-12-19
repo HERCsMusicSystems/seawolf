@@ -437,7 +437,7 @@ var resize = function (delta) {
 		var vector = simulated . getRelativePositionOf (sv);
 		selected_distance . innerHTML = vector . distance . toFixed (2);
 		bearing = displayBearing (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
-		selected_heading . innerHTML = bearing;
+		selected_heading . innerHTML = bearing + ` / ${(simulated . sonar . getNoiseOf (sv) * simulated . sonar . towed_array_current_amplification) . toFixed (2)}`;
 //		selected_heading . innerHTML = '[' + bearing + '/' + simulated . sonar . getNoiseOf (sv) . toFixed (4) + ']';
 		if (previous_selected !== selected) {
 			selected_image . innerHTML = selected . status === 'unknown' ? '' : `<a href="${sv . info}" target="_blank"><img src="silhouettes/${sv . image}.png" style="max-width: 300px; max-height: 80px; display: block; width: auto; height: auto; margin-left: auto; margin-right: auto;"/></a><nobr>${sv . name}<br/>${sv . class}</nobr>`;
