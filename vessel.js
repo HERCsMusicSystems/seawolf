@@ -383,7 +383,11 @@ vessel . prototype . damage = function (level) {
 vessel . prototype . detectStrongest = function (type) {this . target = this . sonar . detectStrongest (type);};
 vessel . prototype . detectStrongestEnemy = function (type) {this . target = this . sonar . detectStrongestEnemy (type);};
 
-vessel . prototype . setTarget = function (target) {this . target = target;};
+vessel . prototype . setTarget = function (target) {
+	this . target = target;
+	this . target_type = target . type;
+	this . targetDepth (target . position . depth > 0 ? target . position . depth : 1);
+};
 
 vessel . prototype . detonate = function () {removeVessel (this);};
 

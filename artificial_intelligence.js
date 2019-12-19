@@ -5,7 +5,7 @@ var sonarDetect = function (vessel) {
 
 var torpedoAI = function (torpedo) {
 	this . armed = false;
-	this . ping = 0;
+	this . ping = 4;
 	this . code = function (delta) {
 		torpedo . sonar . detect ();
 		var sdelta = delta / 3600;
@@ -18,23 +18,25 @@ var torpedoAI = function (torpedo) {
 			}
 		}
 		if (torpedo . target !== null) {
-			if (this . armed && (torpedo . sonar . targetNoLongerAudible (torpedo . target) || torpedo . target . destroyed)) {
+			this . ping = 4;
+			if (this . armed && (torpedo . sonar . targetNoLongerAudible (torpedo . target) || torpedo . target . destroyed) && torpedo . target . type) {
 				torpedo . target = null;
 				torpedo . setSpeed ('slow');
 				torpedo . bearing (Math . random () < 0.5 ? -3 : 3);
 				return;
 			}
 			var vector = torpedo . getRelativePositionOf (torpedo . target);
-			if (vector . distance < 0.01 && Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 40) {torpedo . detonate (); return;}
+			var td = torpedo . target . position . depth;
+			if (vector . distance < 0.01 && Math . abs (td - torpedo . position . depth) < 40 && torpedo . target . type) {torpedo . detonate (); return;}
 			torpedo . setSpeed (Math . abs (vector . heading) < 10 ? 'full' : 'slow');
-			torpedo . targetDepth (torpedo . target . position . depth > 0 ? torpedo . target . position . depth : 1);
+			torpedo . targetDepth (td > 0 ? td : 1);
 			torpedo . targetBearing (torpedo . target . position);
 			if (! torpedo . sonar . targetNoLongerAudible (torpedo . target)) this . armed = true;
 		} else {
 			if (this . ping <= 0) {torpedo . sonar . ping (); this . ping = 4;}
 			this . ping -= delta;
 			if (torpedo . depth_target === torpedo . position . depth && torpedo . position . depth > 0 && torpedo . position . depth < torpedo . test_depth) torpedo . targetDepth ('test', 1);
-			if (torpedo . position . depth === torpedo . test_depth) torpedo . targetDepth ('surfae', 1);
+			if (torpedo . position . depth === torpedo . test_depth) torpedo . targetDepth ('surface', 1);
 			if (torpedo . position . depth === 0) torpedo . targetDepth ('test', 1);
 			torpedo . detectStrongest (torpedo . target_type);
 		}
