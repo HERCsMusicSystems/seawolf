@@ -4,7 +4,6 @@
 
 var TorpedoSonar = function (vessel) {
 	sonar . call (this, vessel);
-	// this . noiseLevelBearingCorrection = function (noise, bearing) {return 0;};
 };
 inherit (TorpedoSonar, sonar);
 TorpedoSonar . prototype . ping_sound = 'torpedo_ping';
