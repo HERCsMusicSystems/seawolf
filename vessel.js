@@ -315,6 +315,9 @@ vessel . prototype . getRelativePositionOf = function (vessel) {
 	vector . distance = Math . sqrt (vector . x * vector . x + vector . y * vector . y);
 	vector . bearing = Math . atan2 (vector . y, vector . x);
 	vector . Vbearing = Math . atan2 (this . position . depth - vessel . position . depth, vector . distance * 6076.12);
+	var target_heading = nauticalBearing (vector . bearing); while (target_heading > 180) target_heading -= 360;
+	var origin_heading = this . position . bearing; while (origin_heading > 180) origin_heading -= 360;
+	vector . heading = target_heading - origin_heading;
 	return vector;
 };
 

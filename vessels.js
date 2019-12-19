@@ -709,13 +709,6 @@ var Mark48 = function (cable, name, country) {
 	this . collapse_depth = 2700;
 	this . strength = 1;
 	this . sonar = new TorpedoSonar (this);
-	// this . sonar . noiseLevelBearingCorrection = function (noise, bearing) {
-	// 	var org = bearing;
-	// 	bearing *= 10;
-	// 	if (bearing > Math . PI || bearing < - Math . PI) bearing = 0;
-	// 	else bearing = Math . cos (bearing * 0.5);
-	// 	return noise * bearing * bearing;
-	// };
 	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
 	this . ai = new torpedoAI (this);
 	this . distance_travelled = 0;
@@ -800,13 +793,6 @@ var Type65 = function (cable, name, country) {
 	this . collapse_depth = 2700;
 	this . strength = 1;
 	this . sonar = new TorpedoSonar (this);
-	// this . sonar . noiseLevelBearingCorrection = function (noise, bearing) {
-	// 	var org = bearing;
-	// 	bearing *= 10;
-	// 	if (bearing > Math . PI || bearing < - Math . PI) bearing = 0;
-	// 	else bearing = Math . cos (bearing * 0.5);
-	// 	return noise * bearing * bearing;
-	// };
 	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
 	this . ai = new torpedoAI (this);
 	this . distance_travelled = 0;
