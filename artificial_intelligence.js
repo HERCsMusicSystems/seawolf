@@ -42,6 +42,7 @@ var torpedoAI = function (torpedo) {
 			else if (torpedo . position . depth === torpedo . test_depth) torpedo . targetDepth ('surface', 1);
 			else if (torpedo . position . depth === 0) torpedo . targetDepth ('test', 1);
 			torpedo . detectStrongest (torpedo . target_type);
+			if (torpedo . target) this . armed = false;
 		}
 	};
 };
