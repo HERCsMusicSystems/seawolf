@@ -35,9 +35,10 @@ var torpedoAI = function (torpedo) {
 		} else {
 			if (this . ping <= 0) {torpedo . sonar . ping (); this . ping = 4;}
 			this . ping -= delta;
-			if (torpedo . depth_target === torpedo . position . depth && torpedo . position . depth > 0 && torpedo . position . depth < torpedo . test_depth) torpedo . targetDepth ('test', 1);
-			if (torpedo . position . depth === torpedo . test_depth) torpedo . targetDepth ('surface', 1);
-			if (torpedo . position . depth === 0) torpedo . targetDepth ('test', 1);
+			if (torpedo . target_type === 'surface') torpedo . targetDepth ('surface');
+			else if (torpedo . depth_target === torpedo . position . depth && torpedo . position . depth > 0 && torpedo . position . depth < torpedo . test_depth) torpedo . targetDepth ('test', 1);
+			else if (torpedo . position . depth === torpedo . test_depth) torpedo . targetDepth ('surface', 1);
+			else if (torpedo . position . depth === 0) torpedo . targetDepth ('test', 1);
 			torpedo . detectStrongest (torpedo . target_type);
 		}
 	};

@@ -63,9 +63,9 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<button onclick="javascript: detonateSelected ();">DETONATE</button>
 				<button onclick="javascript: acquireSubmarineTarget ();">SEARCH SUB</button>
 				<button onclick="javascript: acquireSurfaceTarget ();">SEARCH SURFACE</button>
-				<button onclick="javascript: matchDepth ();">MATCH DEPTH</button>
+				<!--<button onclick="javascript: matchDepth ();">MATCH DEPTH</button>
 				<button onclick="javascript: matchDepth (0);">SURFACE</button>
-				<button onclick="javascript: promptDepth ();">DEPTH</button>
+				<button onclick="javascript: promptDepth ();">DEPTH</button>-->
 				<button onclick="javascript: gotoWaypoint ();">GOTO</button>
 				<button onclick="javascript: targetSelect ();">TARGET</button>
 			</td>
