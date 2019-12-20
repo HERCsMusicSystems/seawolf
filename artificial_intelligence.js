@@ -33,6 +33,8 @@ var torpedoAI = function (torpedo) {
 			torpedo . targetBearing (torpedo . target . position);
 			if (! torpedo . sonar . targetNoLongerAudible (torpedo . target)) this . armed = true;
 		} else {
+			if (torpedo . bearing_speed === 0) torpedo . bearing (Math . random () < 0.5 ? -3 : 3);
+			torpedo . setSpeed ('slow');
 			if (this . ping <= 0) {torpedo . sonar . ping (); this . ping = 4;}
 			this . ping -= delta;
 			if (torpedo . target_type === 'surface') torpedo . targetDepth ('surface');
