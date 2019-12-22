@@ -31,7 +31,7 @@ var torpedoAI = function (torpedo) {
 			torpedo . setSpeed (Math . abs (vector . heading) < 10 ? 'full' : 'slow');
 			torpedo . targetDepth (td > 0 ? td : 1);
 			torpedo . targetBearing (torpedo . target . position);
-			if (! torpedo . sonar . targetNoLongerAudible (torpedo . target)) this . armed = true;
+			if (! torpedo . sonar . targetNoLongerAudible (torpedo . target) && ping === null) this . armed = true;
 		} else {
 			if (torpedo . bearing_speed === 0) torpedo . bearing (Math . random () < 0.5 ? -3 : 3);
 			torpedo . setSpeed ('slow');

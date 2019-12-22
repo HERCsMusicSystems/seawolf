@@ -268,7 +268,7 @@ var Seawolf = function (name, country) {
 	this . class = 'Seawolf SSN';
 	this . name = name;
 	this . speeds = [0, 2, 8, 15, 20, 25, 35];
-	this . noises = [10, 120, 480, 2400, 4800, 48000, 480000];
+	this . noises = [60, 120, 480, 2400, 4800, 48000, 480000];
 	this . sonar = new sonar (this);
 	this . inventory = {
 		'Mark 48': {constructor: Mark48, count: 26},
@@ -784,7 +784,7 @@ var Type65 = function (cable, name, country) {
 	this . type = 'torpedo';
 	this . class = 'Type 65';
 	this . name = name;
-	this . noises = [10, 12, 48, 480, 300, 400, 500];
+	this . noises = [60, 12, 48, 480, 300, 400, 500];
 	this . speeds = [0, 2, 10, 20, 30, 50, 50];
 	this . bearing_speeds = [0, 1, 2, 3, 4, 5, 6];
 	if (name === 'Fast') this . range = 27;
