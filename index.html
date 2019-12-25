@@ -80,6 +80,8 @@
 		</table>
 		<h2>Scenarios:</h2>
 		<font size="+1">
+		To unlock more scenarios you need to be promoted.<br />
+		To get promoted you need to <b>win</b> all unlocked scenarios in <b>real</b> mode.<br />
 		<ul id="scenario_content" style=" background-color: #00ff8866; display: inline-block;"></ul>
 		</font>
 		<div style="color: gold; text-shadow: 2px 2px black;">
@@ -145,20 +147,28 @@
 		return true;
 	};
 
+	var GetTick = function (mission) {
+		for (var ind in captain . scenarios) {
+			var scenario = captain . scenarios [ind];
+			if (scenario . mission === mission . Title && scenario . status === 'Victory' && (scenario . type === 'Real' || mission . rank < 2)) return '\u2714 ';
+		}
+		return '';
+	};
+
 	var populate_scenarios = function () {
 		var side = localStorage . getItem ('side');
 		var scenario_content = document . getElementById ('scenario_content');
 		if (scenario_content === null) return;
 		scenario_content . innerHTML = '';
 		for (var ind in scenarios [side]) {
-			var title = scenarios [side] [ind] . Title;
-			var instructions = scenarios [side] [ind] . Instructions;
+			var scenario = scenarios [side] [ind];
 			var li = document . createElement ('li');
-			li . innerHTML = `<a href="scenarios_${side}_${title}.html" onclick="return CheckAbort () && CheckCaptain ();">${title}</a>: ${instructions}`;
+			li . innerHTML = GetTick (scenario) + (scenario . rank > captain . rank_id ?
+				`<u>${scenario . Title}</u>: ${scenario . Instructions} ${captain . rank_id} ${ranks [side] [scenario . rank]}` :
+				`<a href="scenarios_${side}_${scenario . Title}.html" disabled="disabled" onclick="return CheckAbort () && CheckCaptain ();">${scenario . Title}</a>: ${scenario . Instructions} ${captain . rank_id} ${ranks [side] [scenario . rank]}`);
 			scenario_content . appendChild (li);
 		}
 	};
-	populate_scenarios ();
 
 	var DeleteCapitan = function (name) {
 		var side_name = localStorage . getItem ('side');
@@ -187,6 +197,8 @@
 		var side = JSON . parse (localStorage . getItem (side_name) || '{"captains": {}}');
 		side . captain = name;
 		localStorage . setItem (side_name, JSON . stringify (side));
+		captain = side . captains [side . captain];
+		populate_scenarios ();
 	};
 
 	var populate_captains = function () {
@@ -208,6 +220,7 @@
 			content += `<tr><td><input type="radio" name="captains" ${side . captain === ind ? 'checked' : ''} onclick="javascript: SelectCaptain ('${ind}');"/></td><td align="left">${ind}</td><td align="center">${captain . rank}</td><td align="right">${orders}</td><td align="center">${captain . score}</td><td align="center">${captain . victory}</td><td align="center">${captain . abort}</td><td align="center">${captain . defeat}</td><td align="center">${captain . status}</td><td><input type="button" value="Delete" onclick="javascript: DeleteCapitan ('${ind}');" /></td></tr>`;
 		}
 		document . getElementById ('captains_table') . innerHTML = content;
+		populate_scenarios ();
 	};
 	populate_captains ();
 </script>

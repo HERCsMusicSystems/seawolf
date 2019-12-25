@@ -157,13 +157,17 @@ var MissionVictory = function () {
 };
 
 var MissionDefeat = function () {
-	alert ("Defeat");
-	localStorage . setItem ('ChangesAllowed', 'true');
-	if (window . location . protocol . indexOf ('file') >= 0) {
-		var address = window . location . pathname;
-		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
-		window . location . assign (address . substring (0, index) + 'mission_defeat.html');
-	} else window . location . assign ('/mission_defeat.html');
+	if (victory_in_progress) return; victory_in_progress = true;
+	setTimeout (function () {
+		PauseSimulation ();
+		alert ("Defeat");
+		localStorage . setItem ('ChangesAllowed', 'true');
+		if (window . location . protocol . indexOf ('file') >= 0) {
+			var address = window . location . pathname;
+			var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
+			window . location . assign (address . substring (0, index) + 'mission_defeat.html');
+		} else window . location . assign ('/mission_defeat.html');
+	}, 3000);
 };
 
 var MissionAbort = function () {
@@ -179,14 +183,17 @@ var MissionAbort = function () {
 };
 
 var MissionLostAtSea = function () {
-	PauseSimulation ();
-	alert ('Lost at sea');
-	localStorage . setItem ('ChangesAllowed', 'true');
-	if (window . location . protocol . indexOf ('file') >= 0) {
-		var address = window . location . pathname;
-		var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
-		window . location . assign (address . substring (0, index) + 'mission_lost_at_sea.html');
-	} else window . location . assign ('/mission_lost_at_sea.html');
+	if (victory_in_progress) return; victory_in_progress = true;
+	setTimeout (function () {
+		PauseSimulation ();
+		alert ('Lost at sea');
+		localStorage . setItem ('ChangesAllowed', 'true');
+		if (window . location . protocol . indexOf ('file') >= 0) {
+			var address = window . location . pathname;
+			var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
+			window . location . assign (address . substring (0, index) + 'mission_lost_at_sea.html');
+		} else window . location . assign ('/mission_lost_at_sea.html');
+	}, 3000);
 }
 
 var addVessel = function (vessel) {vessels . push (vessel);};
