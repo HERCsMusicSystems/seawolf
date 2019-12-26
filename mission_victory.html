@@ -51,6 +51,7 @@ Captain
 </font>
 
 <script src="background_ctrl.js"></script>
+<script src="scenarios.js"></script>
 <script src="utilities.js"></script>
 <script>
 (function () {
@@ -61,6 +62,8 @@ Captain
 			results = `As this was a real mission, you have scored 1 point.<br/><br/>`;
 			side . captains [side . captain] . score = Number (side . captains [side . captain] . score) + 1;
 		}
+		captain . scenarios . push ({mission: localStorage . getItem ('mission'), status: 'Victory', type: MissionType ()});
+		if (NextMission () . rank > captain . rank_id) promote ();
 		var rank = localStorage . getItem ('previous_rank');
 		var promotion = localStorage . getItem ('promotion');
 		if (promotion) results += `<font color="red">${rank} ${side . captain}</font> have been promoted to the rank of <b><font color="red">${promotion}</font></b>.<br /><br />`;
@@ -69,7 +72,6 @@ Captain
 			results += `<font color="red">${captain . rank} ${side . captain}</font> have been awarded a <b><font color="red">${AwardName (award)}</font></b>.<br /><img src="orders/${award}.png" height="100" hspace="100"/><br /><br />`;
 		}
 		document . getElementById ('results') . innerHTML = results;
-		captain . scenarios . push ({mission: localStorage . getItem ('mission'), status: 'Victory', type: MissionType ()});
 		localStorage . setItem (side_name, JSON . stringify (side));
 		localStorage . removeItem ('ChangesAllowed');
 		localStorage . removeItem ('mission');

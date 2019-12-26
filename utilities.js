@@ -16,6 +16,19 @@ var SimulatedMission = function () {
 
 var MissionType = function () {return SimulatedMission () ? 'Simulated' : 'Real';};
 
+var NextMission = function () {
+	for (var ind in scenarios [side_name]) {
+		var scenario = scenarios [side_name] [ind];
+		var sub = 0, not_found = true;
+		while (sub < captain . scenarios . length && not_found) {
+			var mission = captain . scenarios [sub];
+			if (scenario . Title === mission . mission && mission . status === 'Victory' && (mission . type === 'Real' || scenario . rank < 2)) not_found = false;
+			sub += 1;
+		}
+		if (not_found) return scenario;
+	}
+};
+
 var CheckAbort = function () {
 	if (localStorage . getItem ('ChangesAllowed')) {
 		if (confirm ('Abort')) location . href = 'mission_abort.html';

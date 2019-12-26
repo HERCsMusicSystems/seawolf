@@ -59,7 +59,7 @@
 		</select>
 		Music On/Off <input id="music_on_off" type="checkbox" onchange="javascript: if (this . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');"/>
 		Dialect <select id="dialect" onchange="javascript: localStorage . setItem ('dialect', this . value);"></select>
-		<button onclick="javascript: CreateCaptain ();">Create Captain</button>
+		<button onclick="javascript: CreateCaptain ();">Create Commanding Officer</button>
 		<button onclick="javascript: if (confirm ('Are you sure?')) {localStorage . clear (); location . reload ();}" style="position: absolute; right: 10px;">Reset System</button>
 		<script type="text/javascript" charset="UTF-8">
 			var mission_type = localStorage . getItem ('mission_type');
@@ -75,13 +75,13 @@
 				localStorage . setItem (side_selector . value, JSON . stringify ({captains: {}, captain: ''}));
 			}
 		</script>
-		<h2>Captains:</h2>
+		<h2>Commanding Officers:</h2>
 		<table id="captains_table" border=1 style=" background-color: #00ff8866;">
 		</table>
 		<h2>Scenarios:</h2>
 		<font size="+1">
-		To unlock more scenarios you need to be promoted.<br />
-		To get promoted you need to <b>win</b> all unlocked scenarios in <b>real</b> mode.<br />
+		To unlock more scenarios you need to be <font color="red"><b>promoted</b></font>.<br />
+		To get promoted you need to <font color="red"><b>win</b></font> all unlocked scenarios in <font color="red"><b>real</b></font> mode.<br />
 		<ul id="scenario_content" style=" background-color: #00ff8866; display: inline-block;"></ul>
 		</font>
 		<div style="color: gold; text-shadow: 2px 2px black;">
@@ -164,8 +164,8 @@
 			var scenario = scenarios [side] [ind];
 			var li = document . createElement ('li');
 			li . innerHTML = GetTick (scenario) + (scenario . rank > captain . rank_id ?
-				`<u>${scenario . Title}</u>: ${scenario . Instructions} ${captain . rank_id} ${ranks [side] [scenario . rank]}` :
-				`<a href="scenarios_${side}_${scenario . Title}.html" disabled="disabled" onclick="return CheckAbort () && CheckCaptain ();">${scenario . Title}</a>: ${scenario . Instructions} ${captain . rank_id} ${ranks [side] [scenario . rank]}`);
+				`<u>${scenario . Title}</u>: Requires at least ${ranks [side] [scenario . rank]}.` :
+				`<a href="scenarios_${side}_${scenario . Title}.html" disabled="disabled" onclick="return CheckAbort () && CheckCaptain ();">${scenario . Title}</a>: ${scenario . Instructions}`);
 			scenario_content . appendChild (li);
 		}
 	};
@@ -178,17 +178,19 @@
 		if (side . captain === name && keys . length > 0) side . captain = keys [0];
 		if (keys . length < 1) side . captain = '';
 		localStorage . setItem (side_name, JSON . stringify (side));
+		captain = side . captains [side . captain];
 		populate_captains ();
 	};
 
 	var CreateCaptain = function () {
-		var captain = prompt ('Enter Captains\' Name');
-		if (captain === null) return;
+		var captain_name = prompt ('Enter Captains\' Name');
+		if (captain_name === null) return;
 		var side_name = localStorage . getItem ('side'); if (side_name === null) return;
 		var side = JSON . parse (localStorage . getItem (side_name) || '{"captains": {}}');
-		side . captains [captain] = {rank: ranks [side_name] [0], rank_id: 0, score: 0, victory: 0, abort: 0, defeat: 0, scenarios: [], orders: [], status: 'Active'};
-		side . captain = captain;
+		side . captains [captain_name] = {rank: ranks [side_name] [0], rank_id: 0, score: 0, victory: 0, abort: 0, defeat: 0, scenarios: [], orders: [], status: 'Active'};
+		side . captain = captain_name;
 		localStorage . setItem (side_name, JSON . stringify (side));
+		captain = side . captains [side . captain];
 		populate_captains ();
 	};
 
@@ -206,7 +208,7 @@
 		var side_name = localStorage . getItem ('side');
 		side = JSON . parse (localStorage . getItem (side_name));
 		if (side === null) return;
-		var content = '<tr><td></td><td align="center">Name</td><td>Rank</td><td>Ribbons</td><td>Score</td><td>Victories</td><td>Aborts</td><td>Defeats</td><td>Status</td></tr>'
+		var content = '<tr><td></td><td align="center">Rank</td><td>Name</td><td>Ribbons</td><td>Score</td><td>Victories</td><td>Aborts</td><td>Defeats</td><td>Status</td></tr>'
 		for (var ind in side . captains) {
 			var captain = side . captains [ind];
 			captain . orders . sort ();
@@ -217,7 +219,7 @@
 				if ((ol - ord) % 3 === 1) orders += '<br />';
 				if (ord === 0 && ol % 3 === 0) orders += '<br />';
 			}
-			content += `<tr><td><input type="radio" name="captains" ${side . captain === ind ? 'checked' : ''} onclick="javascript: SelectCaptain ('${ind}');"/></td><td align="left">${ind}</td><td align="center">${captain . rank}</td><td align="right">${orders}</td><td align="center">${captain . score}</td><td align="center">${captain . victory}</td><td align="center">${captain . abort}</td><td align="center">${captain . defeat}</td><td align="center">${captain . status}</td><td><input type="button" value="Delete" onclick="javascript: DeleteCapitan ('${ind}');" /></td></tr>`;
+			content += `<tr><td><input type="radio" name="captains" ${side . captain === ind ? 'checked' : ''} onclick="javascript: SelectCaptain ('${ind}');"/></td><td align="left">${captain . rank}</td><td align="left">${ind}</td><td align="right">${orders}</td><td align="center">${captain . score}</td><td align="center">${captain . victory}</td><td align="center">${captain . abort}</td><td align="center">${captain . defeat}</td><td align="center">${captain . status}</td><td><input type="button" value="Delete" onclick="javascript: DeleteCapitan ('${ind}');" /></td></tr>`;
 		}
 		document . getElementById ('captains_table') . innerHTML = content;
 		populate_scenarios ();

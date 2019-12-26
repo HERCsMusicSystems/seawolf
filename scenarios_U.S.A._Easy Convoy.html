@@ -61,7 +61,7 @@ Sink the three Oil Tankers.
 <script src="utilities.js"></script>
 <script>
 	var name = GenerateName ('Easy Convoy', Virginia);
-	document . getElementById ('name') . innerHTML = `Your captain <font color="red">${side . captains [side . captain] . rank} ${side . captain}</font> will be commanding Virginia class submarine <font color="red">${name}</font>`;
+	document . getElementById ('name') . innerHTML = `<font color="red">${side . captains [side . captain] . rank} ${side . captain}</font> will be commanding Virginia class submarine <font color="red">${name}</font>`;
 	if (SimulatedMission ()) document . getElementById ('mission_type') . innerHTML = `This mission is simulated${captain . rank_id < 2 ? " as your captain's rank is too low to command a ship" : ''}.`;
 </script>
 
