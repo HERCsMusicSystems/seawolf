@@ -58,6 +58,8 @@
 			<option>China</option>
 		</select>
 		Music On/Off <input id="music_on_off" type="checkbox" onchange="javascript: if (this . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');"/>
+		Effects On/Off <input id="effects_on_off" type="checkbox" onchange="javascript: localStorage . setItem ('effects', this . checked);"/>
+		Speech On/Off <input id="speech_on_off" type="checkbox" onchange="javascript: localStorage . setItem ('speech', this . checked);"/>
 		Dialect <select id="dialect" onchange="javascript: localStorage . setItem ('dialect', this . value);"></select>
 		<button onclick="javascript: CreateCaptain ();">Create Commanding Officer</button>
 		<button onclick="javascript: if (confirm ('Are you sure?')) {localStorage . clear (); location . reload ();}" style="position: absolute; right: 10px;">Reset System</button>
@@ -137,6 +139,8 @@
 	localStorage . removeItem ('ChangesAllowed');
 	localStorage . removeItem ('award');
 	document . getElementById ('music_on_off') . checked = localStorage . getItem ('music') !== 'false' ? true : false;
+	document . getElementById ('effects_on_off') . checked = localStorage . getItem ('effects') !== 'false' ? true : false;
+	document . getElementById ('speech_on_off') . checked = localStorage . getItem ('speech') !== 'false' ? true : false;
 	if (document . getElementById ('music_on_off') . checked) PlayMusicAndRemember ('Beowulf'); else PauseMusicAndRemember ('Beowulf');
 
 	var CheckCaptain = function () {
