@@ -411,12 +411,14 @@ var resize = function (delta) {
 	if (ping !== null) {
 		var mile = 128 * scaling;
 		ping . ping *= Math . pow (ping . attenuation, delta * simulation_ratio);
-		ctx . beginPath ();
-			ctx . arc (ping . x * mile, ping . y * mile, Math . log10 (ping . ping) * 10, 0, Math . PI * 2);
-			ctx . lineWidth = 1; ctx . strokeStyle = 'yellow';
-		ctx . stroke ();
-		ctx . fillStyle = 'yellow';
-		ctx . fillText (ping . depth . toFixed () + 'ft', ping . x * mile + 4, ping . y * mile - 12);
+		if (ping . type === 'ping') {
+			ctx . beginPath ();
+				ctx . arc (ping . x * mile, ping . y * mile, Math . log10 (ping . ping) * 10, 0, Math . PI * 2);
+				ctx . lineWidth = 1; ctx . strokeStyle = 'yellow';
+			ctx . stroke ();
+			ctx . fillStyle = 'yellow';
+			ctx . fillText (ping . depth . toFixed () + 'ft', ping . x * mile + 4, ping . y * mile - 12);
+		}
 		if (ping . ping < 10) ping = null;
 	}
 	var bearing = displayBearing (simulated . position . bearing);

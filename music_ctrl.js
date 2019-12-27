@@ -39,6 +39,7 @@ var music = {
 	akula: create_audio ('akula', true),
 	Beowulf: create_audio ('01 Beowulf Main Title'),
 	light: create_audio ('LetThereBeLight'),
+	torpedoLaunch: create_audio ('torpedo_launch1'),
 	harpoonLaunch: create_audio ('harpoon_launch'),
 	harpoonHit: create_audio ('harpoon_hit')
 };

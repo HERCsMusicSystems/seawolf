@@ -364,6 +364,7 @@ vessel . prototype . siloLaunch = function (silo, vessel, target) {
 	addVessel (this);
 	PlayMusic ('harpoonLaunch');
 	silo . amount -= 1;
+	ping = {x: vessel . position . x, y: vessel . position . y, depth: vessel . position . depth, ping: 1000000000, attenuation: 0.125, type: 'launch'};
 	return true;
 };
 
@@ -397,6 +398,7 @@ vessel . prototype . NewCount = function (count) {return count - 1;};
 vessel . prototype . postLaunch = function (tube) {
 	tube . torpedo = null; tube . flooded = 0;
 	if (tube . display_element !== null) {tube . display_element . bgColor = 'black'; tube . display_element . innerHTML = '';}
+	if (this === simulated) PlayMusic ('torpedoLaunch');
 };
 
 vessel . prototype . findRocket = function () {
@@ -651,7 +653,7 @@ sonar . prototype . drawDetected = function (ctx) {
 	}
 };
 
-sonar . prototype . ping = function () {ping = {x: this . vessel . position . x, y: this . vessel . position . y, depth: this . vessel . position . depth, ping: 1000000000, attenuation: 0.125}; notifyPing (this . vessel); PlayMusic (this . ping_sound);};
+sonar . prototype . ping = function () {ping = {x: this . vessel . position . x, y: this . vessel . position . y, depth: this . vessel . position . depth, ping: 1000000000, attenuation: 0.125, type: 'ping'}; notifyPing (this . vessel); PlayMusic (this . ping_sound);};
 sonar . prototype . ping_sound = 'ping_1';
 sonar . prototype . deployTowedArray = function (lambda) {
 	if (lambda !== undefined) this . lambda = lambda;
