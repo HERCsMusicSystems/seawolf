@@ -38,13 +38,13 @@ document . getElementById ('seawolf_game') . innerHTML = `
 		<tr>
 			<td>DEPTH:</td>
 			<td>
-				<button onclick="javascript: simulated . targetDepth ('surface');">SURFACE</button>
-				<button onclick="javascript: simulated . targetDepth ('periscope');">PERISCOPE</button>
-				<button onclick="javascript: simulated . targetDepth ('attack');">ATTACK</button>
-				<button onclick="javascript: simulated . targetDepth ('up thermal');">UP THERMAL</button>
-				<button onclick="javascript: simulated . targetDepth ('down thermal');">DOWN THERMAL</button>
-				<button onclick="javascript: simulated . targetDepth ('test');">TEST</button>
-				<button onclick="javascript: simulated . targetDepth ('crush');">COLLAPSE</button>
+				<button onclick="javascript: simulated . targetDepth ('surface'); sayWords (simulated, 'Going to the surface.');">SURFACE</button>
+				<button onclick="javascript: simulated . targetDepth ('periscope'); sayWords (simulated, 'Going to periscope depth.');">PERISCOPE</button>
+				<button onclick="javascript: simulated . targetDepth ('attack'); sayWords (simulated, 'Going to attack depth.');">ATTACK</button>
+				<button onclick="javascript: simulated . targetDepth ('up thermal'); sayWords (simulated, 'Going up one thermal.');">UP THERMAL</button>
+				<button onclick="javascript: simulated . targetDepth ('down thermal'); sayWords (simulated, 'Going down one thermal.');">DOWN THERMAL</button>
+				<button onclick="javascript: simulated . targetDepth ('test'); sayWords (simulated, 'Going to the test depth.');">TEST</button>
+				<button onclick="javascript: simulated . targetDepth ('crush'); sayWords (simulated, 'Going to the collapse depth.');">COLLAPSE</button>
 				<button onclick="javascript: PauseSimulation (); simulated . targetDepth (prompt ('Enter depth')); ResumeSimulation ();">SPECIFY</button>
 			</td>
 		</tr>

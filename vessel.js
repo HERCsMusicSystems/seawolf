@@ -114,8 +114,8 @@ vessel . prototype . move = function (delta) {
 		while (this . trail . length > this . trail_length) this . trail . shift ();
 	}
 	if (this . speed . x > this . speeds [5]) this . flank_speed += delta; else {this . flank_speed = 0; this . flank_speed_w = this . flank_speed_warning;}
-	if (this . flank_speed >= this . flank_speed_w) {this . flank_speed_w = 16384; sayWords (this, 'Engine is about to break');}
-	if (this . flank_speed >= this . flank_speed_end) {this . setSpeed ('stop'); this . damage_speed (0.8); sayWords (this, 'Damage');}
+	if (this . flank_speed >= this . flank_speed_w) {this . flank_speed_w = 16384; sayWords (this, 'Engine is about to break.');}
+	if (this . flank_speed >= this . flank_speed_end) {this . setSpeed ('stop'); this . damage_speed (0.8); sayWords (this, 'Engine damaged.');}
 	var bearing = (this . position . bearing - 90) * Math . PI / 180;
 	var sdelta = delta / 3600;
 	this . position . x += sdelta * (Math . cos (bearing) * this . speed . x - Math . sin (bearing) * this . speed . y);
@@ -130,9 +130,9 @@ vessel . prototype . move = function (delta) {
 			if (this . depth_target > this . position . depth) this . position . depth += dspeed;
 			else this . position . depth -= dspeed;
 		}
-		if (this . position . depth > this . test_depth) {if (this . test_depth_warning) {this . test_depth_warning = false; sayWords (this, 'Captain, we are below the test depth');}}
+		if (this . position . depth > this . test_depth) {if (this . test_depth_warning) {this . test_depth_warning = false; sayWords (this, 'We are below the test depth.');}}
 		else this . test_depth_warning = true;
-		if (this . position . depth >= this . collapse_depth_warning) {if (this . collapse_depth_w) {this . collapse_depth_w = false; sayWords (this, 'Captain, we are about to collapse.');}}
+		if (this . position . depth >= this . collapse_depth_warning) {if (this . collapse_depth_w) {this . collapse_depth_w = false; sayWords (this, 'We are about to collapse.');}}
 		else this . collapse_depth_w = true;
 		if (this . position . depth > this . collapse_depth) {sayWords (this, 'Captain, the hull collapsed.'); MissionDefeat ();}
 	}
@@ -181,7 +181,7 @@ vessel . prototype . targetDepth = function (depth, index, callback) {
 	if (index === undefined) index = this . diving_speeds . length - 1;
 	this . diving_speed = this . diving_speeds [index];
 	if (typeof (depth) === 'number') {this . depth_target = depth; return;}
-	if (! Number . isNaN (Number (depth))) {this . depth_target = Number (depth); return;}
+	if (! Number . isNaN (Number (depth))) {this . depth_target = Number (depth); sayWords (this, 'Going to ' + depth + ' feet.'); return;}
 	switch (depth) {
 		case 'surface': this . depth_target = 0; break;
 		case 'periscope': this . depth_target = 60; break;
