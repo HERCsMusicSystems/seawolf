@@ -398,7 +398,6 @@ vessel . prototype . NewCount = function (count) {return count - 1;};
 vessel . prototype . postLaunch = function (tube) {
 	tube . torpedo = null; tube . flooded = 0;
 	if (tube . display_element !== null) {tube . display_element . bgColor = 'black'; tube . display_element . innerHTML = '';}
-	if (this === simulated) PlayEffect ('torpedoLaunch');
 };
 
 vessel . prototype . findRocket = function () {
@@ -447,6 +446,7 @@ tube . prototype . move = function (delta) {
 				this . flooded = 1; this . command = null;
 				if (this . torpedo . launch (this, this . vessel)) {
 					this . torpedo . postLaunch (this);
+					if (this . vessel === simulated) PlayEffect ('torpedoLaunch');
 					if (this . fire_callback) {this . fire_callback (); this . fire_callback = null;}
 				} else this . display_element . bgColor = 'red';
 			}
@@ -488,8 +488,9 @@ tube . prototype . load = function (selector) {
 
 tube . prototype . fire = function (target, selector, callback) {
 	if (this . torpedo !== null) {
+	console . log ('solo fire');
 		if (this . flooded < 1) return;
-		if (this . torpedo . launch (this, this . vessel, target)) this . torpedo . postLaunch (this);
+		if (this . torpedo . launch (this, this . vessel, target)) {this . torpedo . postLaunch (this); if (this . vessel === simulated) PlayEffect ('torpedoLaunch');}
 		if (callback !== undefined) callback ();
 		return;
 	}

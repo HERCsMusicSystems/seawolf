@@ -51,7 +51,7 @@ var LoopMusic = function (id, loop) {music [id] . loop = loop;};
 var PlayMusicAndRemember = function (ind) {localStorage . setItem ('music', 'true'); PlayMusic (ind);};
 var PauseMusicAndRemember = function (ind) {localStorage . setItem ('music', 'false'); PauseMusic (ind);};
 
-var PlayEffect = function (id) {if (localStorage . getItem ('effects') === 'false') return; PlayMusic (ind);};
+var PlayEffect = function (ind) {if (localStorage . getItem ('effects') === 'false') return; PlayMusic (ind);};
 
 var say = function (word) {
 	if (localStorage . getItem ('speech') === 'false') return;

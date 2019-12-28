@@ -31,6 +31,7 @@ document . getElementById ('seawolf_game') . innerHTML = `
 				<button onclick="javascript: simulation_ratio = 2;">&#xd7;2</button>
 				<button onclick="javascript: simulation_ratio = 4;">&#xd7;4</button>
 				<button onclick="javascript: simulation_ratio = 8;">&#xd7;8</button>
+				<button onclick="javascript: simulation_ratio = 16;">&#xd7;16</button>
 				<button onclick="javascript: MissionAbort ();">ABORT</button>
 			</td>
 		</tr>
