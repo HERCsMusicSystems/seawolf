@@ -67,3 +67,9 @@ var say = function (word) {
 
 var sayWords = function (vessel, words) {if (vessel === simulated) say (words);};
 
+if (typeof background_music === 'undefined') {
+	var background_music = 'promises';
+}
+
+if (localStorage . getItem ('music') === 'true') PlayMusic (background_music);
+
