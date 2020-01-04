@@ -1,5 +1,6 @@
 
-if (localStorage . getItem ('music') === 'true') PlayMusic ('akula');
+var background_music = SelectRandom (['akula', 'beowulf', 'story', 'promises']);
+
 document . getElementById ('seawolf_game') . innerHTML = `
 <div><canvas id="seawolf" onmousedown="javascript: return onMouseDown (event);" ondblclick="javascript: setWaypoint (event);" style="cursor: default;"/></div>
 
