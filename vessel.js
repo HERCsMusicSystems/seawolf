@@ -58,6 +58,7 @@ var vessel = function (country) {
 	this . depth_target = 0;
 	this . bearing_target = null;
 	this . noise = 0;
+	this . acoustic_reflection = 1;
 	this . trail_delta = 0;
 	this . initial_trail_delta = trail_delta;
 	this . trail_length = trail_length;
@@ -634,7 +635,7 @@ sonar . prototype . getNoiseOf = function (source) {
 		var dx = source . position . x - ping . x, dy = source . position . y - ping . y;
 		var ratio = Math . sqrt (dx * dx + dy * dy);
 		if (ratio === 0) ratio = 1;
-		if (ratio > 0) noise += ping . ping / ratio / 1852;
+		if (ratio > 0) noise += source . acoustic_reflection * ping . ping / ratio / 1852;
 	}
 	for (var ind in thermoclines) {
 		if ((thermoclines [ind] . depth - source . position . depth) * (thermoclines [ind] . depth - this . vessel . position . depth) < 0) noise *= thermoclines [ind] . attenuation;
