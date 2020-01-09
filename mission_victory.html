@@ -63,7 +63,8 @@ Captain
 			side . captains [side . captain] . score = Number (side . captains [side . captain] . score) + 1;
 		}
 		captain . scenarios . push ({mission: localStorage . getItem ('mission'), status: 'Victory', type: MissionType ()});
-		if (NextMission () . rank > captain . rank_id) promote ();
+		var next_mission = NextMission ();
+		if (next_mission && next_mission . rank > captain . rank_id) promote ();
 		var rank = localStorage . getItem ('previous_rank');
 		var promotion = localStorage . getItem ('promotion');
 		if (promotion) results += `<font color="red">${rank} ${side . captain}</font> have been promoted to the rank of <b><font color="red">${promotion}</font></b>.<br /><br />`;
