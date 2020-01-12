@@ -101,7 +101,7 @@ simulatedVessel (texas);
 
 checkGameStatus = function (command, target, attacker) {
 	if (command === 'hit' && target !== peter && attacker === texas && target . type !== 'torpedo') {MissionDefeat ();}
-	if (peter . destroyed) {PossibleAward ('05-Defense-Superior-Service-Medal', 1, 1); MissionVictory ();}
+	if (peter . destroyed) {PossibleAward ('05-Defense-Superior-Service-Medal', 1.5, 3); MissionVictory ();}
 };
 
 </script>

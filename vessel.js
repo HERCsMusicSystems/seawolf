@@ -89,6 +89,8 @@ var vessel = function (country) {
 	this . flank_speed_end = 120;
 	this . flank_speed = 0;
 	this . flank_speed_w = 16384;
+	this . silo_launch_level = 100000;
+	this . tube_launch_level = 10;
 };
 
 vessel . prototype . image = 'Default';
@@ -348,6 +350,7 @@ vessel . prototype . launch = function (tube, vessel, target) {
 	var sp = vessel . position;
 	this . position = {x: sp . x, y: sp . y, depth: sp . depth, bearing: sp . bearing};
 	addVessel (this);
+	ping = {x: vessel . position . x, y: vessel . position . y, depth: vessel . position . depth, ping: this . tube_launch_level, attenuation: 0.125, type: 'launch'};
 	return true;
 };
 
@@ -365,7 +368,7 @@ vessel . prototype . siloLaunch = function (silo, vessel, target) {
 	addVessel (this);
 	PlayEffect ('harpoonLaunch');
 	silo . amount -= 1;
-	ping = {x: vessel . position . x, y: vessel . position . y, depth: vessel . position . depth, ping: 1000000000, attenuation: 0.125, type: 'launch'};
+	ping = {x: vessel . position . x, y: vessel . position . y, depth: vessel . position . depth, ping: this . silo_launch_level, attenuation: 0.125, type: 'launch'};
 	return true;
 };
 

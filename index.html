@@ -86,9 +86,10 @@
 		To get promoted you need to <font color="red"><b>win</b></font> all unlocked scenarios in <font color="red"><b>real</b></font> mode.<br />
 		<ul id="scenario_content" style=" background-color: #00ff8866; display: inline-block;"></ul>
 		</font>
+		<h2 id="next_scenario"></h2>
 		<div style="color: gold; text-shadow: 2px 2px black;">
 			<font size="+1">
-			<a href="doc/list_of_russian_submarines.html">List of Sovied and Russian Submarines</a>
+			<h2><a href="doc/list_of_russian_submarines.html">List of Sovied and Russian Submarines</a></h2>
 			<h2>Quick Manual:</h2>
 			<ul style=" background-color: #00ff8866; display: inline-block;">
 				<li>Left-click selects a target, Right-click changes your course.</li>
@@ -170,9 +171,12 @@
 			var li = document . createElement ('li');
 			li . innerHTML = GetTick (scenario) + (scenario . rank > captain . rank_id ?
 				`<u>${scenario . Title}</u>: Requires at least ${ranks [side] [scenario . rank]}.` :
-				`<a href="scenarios_${side}_${scenario . Title}.html" disabled="disabled" onclick="return CheckAbort () && CheckCaptain ();">${scenario . Title}</a>: ${scenario . Instructions}`);
+				`<a href="scenarios_${side}_${scenario . Title}.html" onclick="return CheckAbort () && CheckCaptain ();">${scenario . Title}</a>: ${scenario . Instructions}`);
 			scenario_content . appendChild (li);
 		}
+		var next_mission = NextMission ();
+		document . getElementById ('next_scenario') . innerHTML = next_mission === undefined ? '' :
+			`Next Scenario: <a href="scenarios_${side}_${next_mission . Title}.html" onclick="return CheckAbort () && CheckCaptain ();">${next_mission . Title}</a>`;
 	};
 
 	var DeleteCapitan = function (name) {
