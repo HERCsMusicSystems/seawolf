@@ -61,7 +61,6 @@
 		Effects On/Off <input id="effects_on_off" type="checkbox" onchange="javascript: localStorage . setItem ('effects', this . checked);"/>
 		Speech On/Off <input id="speech_on_off" type="checkbox" onchange="javascript: localStorage . setItem ('speech', this . checked);"/>
 		Dialect <select id="dialect" onchange="javascript: localStorage . setItem ('dialect', this . value);"></select>
-		<button onclick="javascript: CreateCaptain ();">Create Commanding Officer</button>
 		<button onclick="javascript: if (confirm ('Are you sure?')) {localStorage . clear (); location . reload ();}" style="position: absolute; right: 10px;">Reset System</button>
 		<script type="text/javascript" charset="UTF-8">
 			var mission_type = localStorage . getItem ('mission_type');
@@ -77,19 +76,22 @@
 				localStorage . setItem (side_selector . value, JSON . stringify ({captains: {}, captain: ''}));
 			}
 		</script>
-		<h2>Commanding Officers:</h2>
+		<h2>Commanding Officers:
+		<button onclick="javascript: CreateCaptain ();">Create Commanding Officer</button></h2>
 		<table id="captains_table" border=1 style=" background-color: #00ff8866;">
 		</table>
 		<h2>Scenarios:</h2>
 		<font size="+1">
+		To see <font color="red"><b>any scenario</b></font> you need to have <font color="red"><b>at least</b></font> one Commanding Officer.<br/>
 		To unlock more scenarios you need to be <font color="red"><b>promoted</b></font>.<br />
 		To get promoted you need to <font color="red"><b>win</b></font> all unlocked scenarios in <font color="red"><b>real</b></font> mode.<br />
+		If you are Ensign or Lieutenant you get promoted for <font color="red"><b>simulated</b></font> missions as well (as you are not allowed to command a real submarine).<br/>
 		<ul id="scenario_content" style=" background-color: #00ff8866; display: inline-block;"></ul>
 		</font>
 		<h2 id="next_scenario"></h2>
 		<div style="color: gold; text-shadow: 2px 2px black;">
 			<font size="+1">
-			<h2><a href="doc/list_of_russian_submarines.html">List of Sovied and Russian Submarines</a></h2>
+			<h2><a href="doc/list_of_russian_submarines.html">List of Soviet and Russian Submarines</a></h2>
 			<h2>Quick Manual:</h2>
 			<ul style=" background-color: #00ff8866; display: inline-block;">
 				<li>Left-click selects a target, Right-click changes your course.</li>
@@ -182,6 +184,7 @@
 	var DeleteCapitan = function (name) {
 		var side_name = localStorage . getItem ('side');
 		var side = JSON . parse (localStorage . getItem (side_name));
+		if (! confirm ('Delete Commanding Officer ' + name + '?')) return;
 		delete side . captains [name];
 		var keys = Object . keys (side . captains);
 		if (side . captain === name && keys . length > 0) side . captain = keys [0];
