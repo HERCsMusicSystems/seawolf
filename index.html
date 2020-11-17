@@ -172,7 +172,7 @@
 			var scenario = scenarios [side] [ind];
 			var li = document . createElement ('li');
 			li . innerHTML = GetTick (scenario) + (scenario . rank > captain . rank_id ?
-				`<u>${scenario . Title}</u>: Requires at least ${ranks [side] [scenario . rank]}.` :
+				`<u>${scenario . Title}</u>: <font color="red">&#x2717; Requires at least ${ranks [side] [scenario . rank]}</font>.` :
 				`<a href="scenarios_${side}_${scenario . Title}.html" onclick="return CheckAbort () && CheckCaptain ();">${scenario . Title}</a>: ${scenario . Instructions}`);
 			scenario_content . appendChild (li);
 		}

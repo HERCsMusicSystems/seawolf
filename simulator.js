@@ -145,7 +145,7 @@ var MissionVictory = function () {
 		localStorage . setItem ('ChangesAllowed', 'true');
 		if (window . location . protocol . indexOf ('file') >= 0) {
 			var address = window . location . pathname;
-			var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
+			var index = address . lastIndexOf ('Seawolf/') + 'Seawolf/' . length;
 			window . location . assign (address . substring (0, index) + 'mission_victory.html');
 		} else window . location . assign ('/mission_victory.html');
 	}, 3000);
@@ -159,7 +159,7 @@ var MissionDefeat = function () {
 		localStorage . setItem ('ChangesAllowed', 'true');
 		if (window . location . protocol . indexOf ('file') >= 0) {
 			var address = window . location . pathname;
-			var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
+			var index = address . lastIndexOf ('Seawolf/') + 'Seawolf/' . length;
 			window . location . assign (address . substring (0, index) + 'mission_defeat.html');
 		} else window . location . assign ('/mission_defeat.html');
 	}, 3000);
@@ -171,7 +171,7 @@ var MissionAbort = function () {
 		localStorage . setItem ('ChangesAllowed', 'true');
 		if (window . location . protocol . indexOf ('file') >= 0) {
 			var address = window . location . pathname;
-			var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
+			var index = address . lastIndexOf ('Seawolf/') + 'Seawolf/' . length;
 			window . location . assign (address . substring (0, index) + 'mission_abort.html');
 		} else window . location . assign ('/mission_abort.html');
 	} else ResumeSimulation ();
