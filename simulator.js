@@ -133,6 +133,7 @@ var simulation_ratio = 1;
 var trail_length = 24;
 var trail_delta = 15;
 var ping = null;
+var map = null;
 
 var checkGameStatus = function () {};
 
@@ -309,6 +310,7 @@ var drawGrid = function (ctx, width, height, vessel) {
 	var mile = 128 * scaling;
 	var shift = vessel === null ? {x: 0, y: 0} : {x: - vessel . position . x * mile, y: - vessel . position . y * mile};
 	ctx . translate (width + shift . x, height + shift . y);
+	if (map) {ctx . save (); ctx . scale (scaling, scaling); ctx . drawImage (map, 0, 0); ctx . restore ();}
 	ctx . beginPath ();
 	ctx . lineWidth = 1.5;
 	ctx . strokeStyle = 'yellow';
