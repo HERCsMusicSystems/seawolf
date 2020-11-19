@@ -133,7 +133,6 @@ var simulation_ratio = 1;
 var trail_length = 24;
 var trail_delta = 15;
 var ping = null;
-var map = null;
 
 var checkGameStatus = function () {};
 
@@ -305,19 +304,36 @@ var thermoclines = [{depth: 160, attenuation: 0.01}, {depth: 320, attenuation: 0
 
 var scaling = 1;
 
-var drawGrid = function (ctx, width, height, vessel) {
-	width *= 0.5; height *= 0.5;
+var drawWaypoint = function (ctx) {
+	ctx . strokeStyle = 'yellow';
+	ctx . beginPath ();
 	var mile = 128 * scaling;
-	var shift = vessel === null ? {x: 0, y: 0} : {x: - vessel . position . x * mile, y: - vessel . position . y * mile};
-	ctx . translate (width + shift . x, height + shift . y);
-	if (map) {ctx . save (); ctx . scale (scaling, scaling); ctx . drawImage (map, 0, 0); ctx . restore ();}
+	var x = waypoint . position . x * mile, y = waypoint . position . y * mile;
+	ctx . moveTo (x - 8, y); ctx . lineTo (x - 2, y); ctx . moveTo (x + 2, y); ctx . lineTo (x + 8, y);
+	ctx . moveTo (x, y - 8); ctx . lineTo (x, y - 2); ctx . moveTo (x, y + 2); ctx . lineTo (x, y + 8);
+	ctx . stroke ();
+};
+
+var shiftMapPosition = function (ctx, width, height, vessel) {
+	var half_width = width * 0.5;
+	var half_height = height * 0.5;
+	var mile = 128 * scaling;
+	var shift = vessel === null ? {x: 0, y: 0} : {x: vessel . position . x * mile, y: vessel . position . y * mile};
+	ctx . translate (half_width - shift . x, half_height - shift . y);
+	shift . half_width = half_width;
+	shift . half_height = half_height;
+	return shift;
+};
+
+var DrawSquareMap = function (ctx, shift) {
+	var mile = 128 * scaling;
 	ctx . beginPath ();
 	ctx . lineWidth = 1.5;
 	ctx . strokeStyle = 'yellow';
-	var limit_left = - shift . x - width;
-	var limit_right = - shift . x + width;
-	var limit_top = - shift . y - height;
-	var limit_bottom = - shift . y + height;
+	var limit_left = shift . x - shift . half_width;
+	var limit_right = shift . x + shift . half_width;
+	var limit_top = shift . y - shift . half_height;
+	var limit_bottom = shift . y + shift . half_height;
 	var grid_left = Math . floor (limit_left / mile) * mile + mile;
 	var grid_right = Math . floor (limit_right / mile) * mile + 1;
 	var grid_top = Math . floor (limit_top / mile) * mile + mile;
@@ -325,15 +341,9 @@ var drawGrid = function (ctx, width, height, vessel) {
 	for (var ind = grid_left; ind < grid_right; ind += mile) {ctx . moveTo (ind, limit_top); ctx . lineTo (ind, limit_bottom);}
 	for (var ind = grid_top; ind < grid_bottom; ind += mile) {ctx . moveTo (limit_left, ind); ctx . lineTo (limit_right, ind);}
 	ctx . stroke ();
-	if (waypoint !== null) {
-		ctx . beginPath ();
-		var mile = 128 * scaling;
-		var x = waypoint . position . x * mile, y = waypoint . position . y * mile;
-		ctx . moveTo (x - 8, y); ctx . lineTo (x - 2, y); ctx . moveTo (x + 2, y); ctx . lineTo (x + 8, y);
-		ctx . moveTo (x, y - 8); ctx . lineTo (x, y - 2); ctx . moveTo (x, y + 2); ctx . lineTo (x, y + 8);
-		ctx . stroke ();
-	}
 };
+
+var DrawGrid = DrawSquareMap;
 
 var canvas = document . getElementById ('seawolf');
 var ctx = canvas . getContext ('2d');
@@ -410,7 +420,8 @@ var resize = function (delta) {
 		removeVessels ();
 	}
 	if (simulated === null) {MissionLostAtSea (); return;}
-	drawGrid (ctx, window . innerWidth, window . innerHeight, simulated);
+	DrawGrid (ctx, shiftMapPosition (ctx, window . innerWidth, window . innerHeight, simulated));
+	if (waypoint !== null) drawWaypoint (ctx);
 	drawVessels (ctx);
 	if (ping !== null) {
 		var mile = 128 * scaling;
@@ -529,4 +540,3 @@ document . body . onwheel = onWheel;
 document . body . oncontextmenu = function (event) {event . preventDefault ();};
 
 localStorage . setItem ('logbook', JSON . stringify ([]));
-
