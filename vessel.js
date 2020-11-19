@@ -391,6 +391,7 @@ vessel . prototype . setTarget = function (target) {
 	this . target = target;
 	this . target_type = target . type;
 	this . targetDepth (target . position . depth > 0 ? target . position . depth : 1);
+	if (this . ai !== null) this . ai . armed = false;
 };
 
 vessel . prototype . detonate = function () {removeVessel (this);};
