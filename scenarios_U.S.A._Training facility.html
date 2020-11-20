@@ -1,0 +1,78 @@
+<meta charset="UTF-8"/>
+
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2020 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+
+<head>
+	<title>SEAWOLF</title>
+	<link rel="shortcut icon" type="image/x-icon" href="h.ico"/>
+	<style>
+	a:link {color: blue; text-shadow: 1px 1px red;}
+	a:visited {color: blue;}
+	a:hover {color: red; text-shadow: 1px 1px blue;}
+	a:active {color: red;}
+	</style>
+</head>
+
+<body bgcolor="#0000aa" style="font-family: arial; color: gold; text-shadow: 1px 1px black; background-size: cover;">
+
+<h2>Background Information</h2>
+There is an active guerilla training facility on the shores of mediterranean sea.
+You will need to approach the shore, locate the target and use Tomahawk cruise missle to dostroy the camp.
+However, be careful of the presence of enemy ships.
+They are not going to ask second questions before firing at you.
+
+<h2>Objective</h2>
+Destroy the ground facility.
+
+<h2><font color="red">Enemies:</font></h2>
+<table>
+	<tr><td align="center" rowspan="2" valign="top"><img src="silhouettes/Slava.png" height="320"/><br/>Slava class missile cruiser</td>
+		<td align="center" colspan="2"><img src="silhouettes/Udaloy.png" height="160"/><br/>Udaloy class missile destroyer</tr>
+	<tr>
+		<td><img src="silhouettes/Victor.png" height="160"><br/>Victor class nuclear submarine</td>
+		<td><img src="silhouettes/Sovremenny.png" height="160"><br/>Sovremenny class missile destroyer</td>
+	</tr>
+</table>
+
+<h2 id="name"></h2>
+<h2 id="mission_type"></h2>
+<a href="scenarios_U.S.A._training_facility.html">Proceed</a>
+
+<script src="background_ctrl.js" type="text/javascript" encoding="UTF-8"></script>
+<script src="music_ctrl.js" type="text/javascript" encoding="UTF-8"></script>
+<script src="vessel.js" type="text/javascript" encoding="UTF-8"></script>
+<script src="vessels.js" type="text/javascript" encoding="UTF-8"></script>
+<script src="utilities.js" type="text/javascript" encoding="UTF-8"></script>
+
+<script>
+	var name = GenerateName ('Training facility', Virginia);
+	document . getElementById ('name') . innerHTML = `<font color="red">${side . captains [side . captain] . rank} ${side . captain}</font> will be commanding Virginia class submarine <font color="red">${name}</font>`;
+	if (SimulatedMission ()) document . getElementById ('mission_type') . innerHTML = `This mission is simulated${captain . rank_id < 2 ? " as your captain's rank is too low to command a ship" : ''}.`;
+</script>
+
+</body>
+</html>
