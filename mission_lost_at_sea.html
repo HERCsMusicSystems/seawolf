@@ -16,6 +16,7 @@
 <body bgcolor="#0000aa" style="font-family: arial; color: gold; text-shadow: 1px 1px black; background-image: url('images/Submarine2.jpg'); background-size: cover;">
 	<h1>LOST AT SEA</h1>
 	<font size="+1">
+		<div id="results"></div>
 		<div><a href="index.html">Back to Scenarios</a></div><br />
 		<div id="view_logbook">
 			<a onclick="document . getElementById ('hide_logbook') . style . display = 'inline'; document . getElementById ('view_logbook') . style . display = 'none'; event . preventDefault ();" style="cursor: pointer;">
@@ -33,6 +34,9 @@
 	if (localStorage . getItem ('ChangesAllowed') === 'true') {
 		captain . scenarios . push ({mission: localStorage . getItem ('mission'), status: 'Lost at sea', type: MissionType ()});
 		if (! SimulatedMission ()) captain . status = 'Lost at sea';
+		else {
+			document . getElementById ('results') . innerHTML = `As this mission was simulated <font color="red">${captain . rank} ${side . captain}</font> will continue training.<br/><br/>`;
+		}
 		localStorage . setItem (side_name, JSON . stringify (side));
 		localStorage . removeItem ('ChangesAllowed');
 		localStorage . removeItem ('mission');

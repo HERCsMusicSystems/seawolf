@@ -25,7 +25,7 @@
 -->
 <html>
 <head>
-	<title>SEAWOLF => Training Facility</title>
+	<title>SEAWOLF => Typhoon's den</title>
 	<link rel="shortcut icon" type="image/x-icon" href="h.ico"/>
 	<style>
 	td {padding: 0px;}
@@ -33,7 +33,7 @@
 	</style>
 </head>
 
-<body bgcolor="#000044" style="margins: 0px;">
+<body bgcolor="#000044" style="margin: 0px;">
 <div id="seawolf_game"/>
 </body>
 
@@ -48,13 +48,26 @@
 
 <script type="text/javascript" encoding="UTF-8">
 
+DrawGrid = function (ctx, shift) {
+	// DrawSquareMap (ctx, shift);
+	ctx . beginPath ();
+	ctx . strokeStyle = 'yellow';
+	ctx . moveTo (0, 0);
+	ctx . bezierCurveTo (100, 0, 0, 100, 100, 100);
+	ctx . stroke ();
+};
+
+var slava = new Slava (SelectRandom (Slava . prototype . names));
+slava . positionVessel (1, -1, 0);
+addVessel (slava);
+
 var texas = new Virginia (localStorage . getItem ('SimulatedName'));
 texas . positionVessel (0, 0, 0, 800);
 addVessel (texas);
 
 simulatedVessel (texas);
 
-checkGameStatus = function () {};
+checkGameStatus = function () {if (slava . destroyed) MissionVictory ();};
 
 </script>
 

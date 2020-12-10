@@ -185,7 +185,7 @@ var MissionLostAtSea = function () {
 		localStorage . setItem ('ChangesAllowed', 'true');
 		if (window . location . protocol . indexOf ('file') >= 0) {
 			var address = window . location . pathname;
-			var index = address . lastIndexOf ('seawolf/') + 'seawolf/' . length;
+			var index = address . lastIndexOf ('Seawolf/') + 'seawolf/' . length;
 			window . location . assign (address . substring (0, index) + 'mission_lost_at_sea.html');
 		} else window . location . assign ('/mission_lost_at_sea.html');
 	}, 3000);

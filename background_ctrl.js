@@ -63,7 +63,7 @@ _46888672_newclip10copy.jpg
 AAFimt3.img.jpeg
 abcsfp63h03pvhmjqj7n.jpg
 Alfa-class_submarine.jpg
-ATKHAT2COWOKWJHFPTJC5ODN5A.jpg [Math . floor (Math . random () * backgrounds . length)]
+ATKHAT2COWOKWJHFPTJC5ODN5A.jpg
 BBN4ojo.img.jpeg
 collins2.jpg
 Collins.jpg
