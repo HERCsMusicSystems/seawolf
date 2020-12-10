@@ -40,17 +40,21 @@
 <body bgcolor="#0000aa" style="font-family: arial; color: gold; text-shadow: 1px 1px black; background-size: cover;">
 
 <h2>Background Information</h2>
-There is an active guerilla training facility on the shores of mediterranean sea.
-You will need to approach the shore, locate the target and use Tomahawk cruise missle to dostroy the camp.
-However, be careful of the presence of enemy ships.
-They are not going to ask second questions before firing at you.
+<p>On the remote island there is a secret facility for refuelling Typhoon submarines.
+Intelligence reports one of the is currently getting ready for missile attack.
+This thread needs to be eliminated.</p>
+<p>You will need to approach the island, locate the target and use Tomahawk cruise missle to dostroy the submarine.
+However, be careful of the presence of enemy ships.</p>
+<p>They are not going to ask second questions before firing at you....</p>
 
 <h2>Objective</h2>
-Destroy the ground facility.
+Locate Typhon submarine and destroy it.
 
 <h2><font color="red">Enemies:</font></h2>
 <table>
-	<tr><td align="center" rowspan="2" valign="top"><img src="silhouettes/Slava.png" height="320"/><br/>Slava class missile cruiser</td>
+	<tr>
+		<td align="center" rowspan="2" valign="top"><img src="silhouettes/typhoon.jpg" height="320"/><br/>Typhoon class submarine</td>
+		<td align="center" rowspan="2" valign="top"><img src="silhouettes/Slava.png" height="320"/><br/>Slava class missile cruiser</td>
 		<td align="center" colspan="2"><img src="silhouettes/Udaloy.png" height="160"/><br/>Udaloy class missile destroyer</tr>
 	<tr>
 		<td><img src="silhouettes/Victor.png" height="160"><br/>Victor class nuclear submarine</td>
@@ -60,7 +64,7 @@ Destroy the ground facility.
 
 <h2 id="name"></h2>
 <h2 id="mission_type"></h2>
-<a href="scenarios_U.S.A._training_facility.html">Proceed</a>
+<a href="scenarios_U.S.A._typhoons_den.html">Proceed</a>
 
 <script src="background_ctrl.js" type="text/javascript" encoding="UTF-8"></script>
 <script src="music_ctrl.js" type="text/javascript" encoding="UTF-8"></script>
@@ -69,7 +73,7 @@ Destroy the ground facility.
 <script src="utilities.js" type="text/javascript" encoding="UTF-8"></script>
 
 <script>
-	var name = GenerateName ('Training facility', Virginia);
+	var name = GenerateName ('Typhoon\'s den', Virginia);
 	document . getElementById ('name') . innerHTML = `<font color="red">${side . captains [side . captain] . rank} ${side . captain}</font> will be commanding Virginia class submarine <font color="red">${name}</font>`;
 	if (SimulatedMission ()) document . getElementById ('mission_type') . innerHTML = `This mission is simulated${captain . rank_id < 2 ? " as your captain's rank is too low to command a ship" : ''}.`;
 </script>
