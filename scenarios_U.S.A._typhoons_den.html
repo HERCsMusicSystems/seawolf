@@ -49,12 +49,15 @@
 <script type="text/javascript" encoding="UTF-8">
 
 DrawGrid = function (ctx, shift) {
-	// DrawSquareMap (ctx, shift);
+	DrawSquareMap (ctx, shift);
+	ctx . save ();
+	ctx . scale (scaling, scaling);
 	ctx . beginPath ();
 	ctx . strokeStyle = 'yellow';
 	ctx . moveTo (0, 0);
-	ctx . bezierCurveTo (100, 0, 0, 100, 100, 100);
+	ctx . bezierCurveTo (128, 0, 0, 128, 128, 128);
 	ctx . stroke ();
+	ctx . restore ();
 };
 
 var slava = new Slava (SelectRandom (Slava . prototype . names));
