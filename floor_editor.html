@@ -33,10 +33,14 @@
 </head>
 
 <body style="margin: 0px; background-color: blue;">
-	<canvas id="editor" width="1200" height="600" onwheel="javascript: adjust (event);" onmousedown="javascript: down (event);" onmousemove="javescript: move (event);" onmouseup="javascript: up (event);"/>
+	<canvas id="editor" width="1200" height="600" onwheel="javascript: adjust (event);" onmousedown="javascript: down (event);" onmousemove="javescript: move (event);" onmouseup="javascript: up (event);" oncontextmenu="javascript: event . preventDefault ();"/>
 </body>
 
 <script type="text/javascript" encoding="UTF-8">
+
+var floor_shift = {x: 0, y: 0};
+var dragging_line = null;
+var dragging_to = null;
 
 var floor = [];
 for (var row = 0; row < 100; row += 1) {
@@ -52,8 +56,8 @@ var ctx = canvas . getContext ('2d');
 var ge = function (e) {
 	var rect = canvas . getBoundingClientRect ();
 	var c = {x: e . clientX - rect . left, y: e . clientY - rect . top};
-	c . xx = Math . floor (c . x / 32);
-	c . yy = Math . floor (c . y / 32);
+	c . xx = Math . floor ((c . x - floor_shift . x) / 32);
+	c . yy = Math . floor ((c . y - floor_shift . y) / 32);
 	return c;
 };
 var adjust = function (e) {
@@ -65,10 +69,9 @@ var adjust = function (e) {
 	// console . log (x, y, e);
 };
 
-var dragging_line = null;
-var dragging_to = null;
 var move = function (e) {
 	if (! dragging_line) return;
+	if (e . buttons > 1) {floor_shift . x += e . movementX; floor_shift . y += e . movementY; repaint (); return;}
 	dragging_to = ge (e);
 	var dx = dragging_to . xx - dragging_line . xx;
 	var dy = dragging_to . yy - dragging_line . yy;
@@ -94,9 +97,9 @@ var repaint = function () {
 	ctx . clearRect (0, 0, canvas . width, canvas . height);
 	for (var ind = 0; ind < 100; ind += 1) {
 		for (var sub = 0; sub < 100; sub += 1) {
-			var x = 16 + ind * 32; var y = 16 + sub * 32;
+			var x = 16 + floor_shift . x + ind * 32; var y = 16 + floor_shift . y + sub * 32;
 			ctx . beginPath ();
-			ctx . arc (x, y, 10, 0, Math . PI + Math . PI);
+			ctx . arc (x, y, 16, 0, Math . PI + Math . PI);
 			var v = floor [ind] [sub] . toString (16) . padStart (2, 0);
 			ctx . fillStyle = '#' + v + '0000';
 			ctx . fill ();
