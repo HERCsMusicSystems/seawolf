@@ -1,0 +1,118 @@
+<meta charset="UTF-8"/>
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2020 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+-->
+<html>
+<head>
+	<title>Floor</title>
+	<link rel="shortcut icon" type="image/x-icon" href="h.ico"/>
+	<style>
+	td {padding: 0px;}
+	button {padding: 0px 0px;}
+	</style>
+</head>
+
+<body style="margin: 0px; background-color: blue;">
+	<canvas id="editor" width="1200" height="600" onwheel="javascript: adjust (event);" onmousedown="javascript: down (event);" onmousemove="javescript: move (event);" onmouseup="javascript: up (event);"/>
+</body>
+
+<script type="text/javascript" encoding="UTF-8">
+
+var floor = [];
+for (var row = 0; row < 100; row += 1) {
+	var array = []
+	for (var column = 0; column < 100; column += 1) array . push (64);
+	floor . push (array);
+}
+
+var canvas = document . getElementById ('editor');
+var ctx = canvas . getContext ('2d');
+// ctx . translate (16, 16);
+
+var ge = function (e) {
+	var rect = canvas . getBoundingClientRect ();
+	var c = {x: e . clientX - rect . left, y: e . clientY - rect . top};
+	c . xx = Math . floor (c . x / 32);
+	c . yy = Math . floor (c . y / 32);
+	return c;
+};
+var adjust = function (e) {
+	var c = ge (e);
+	floor [c . xx] [c . yy] += e . deltaY;
+	if (floor [c . xx] [c . yy] < 0) floor [c . xx] [c . yy] = 0;
+	if (floor [c . xx] [c . yy] > 255) floor [c . xx] [c . yy] = 255;
+	repaint ();
+	// console . log (x, y, e);
+};
+
+var dragging_line = null;
+var dragging_to = null;
+var move = function (e) {
+	if (! dragging_line) return;
+	dragging_to = ge (e);
+	var dx = dragging_to . xx - dragging_line . xx;
+	var dy = dragging_to . yy - dragging_line . yy;
+	if (dx > 0) for (var x = 0; x <= dx; x += 1) floor [dragging_line . xx + x] [Math . round (dragging_line . yy + dy * x / dx)] = floor [dragging_line . xx] [dragging_line . yy];
+	if (dx < 0) for (var x = 0; x >= dx; x -= 1) floor [dragging_line . xx + x] [Math . round (dragging_line . yy + dy * x / dx)] = floor [dragging_line . xx] [dragging_line . yy];
+	if (dy > 0) for (var y = 0; y <= dy; y += 1) floor [Math . round (dragging_line . xx + dx * y / dy)] [dragging_line . yy + y] = floor [dragging_line . xx] [dragging_line . yy];
+	if (dy < 0) for (var y = 0; y >= dy; y -= 1) floor [Math . round (dragging_line . xx + dx * y / dy)] [dragging_line . yy + y] = floor [dragging_line . xx] [dragging_line . yy];
+	repaint ();
+};
+var down = function (e) {
+	dragging_line = ge (e);
+	dragging_to = dragging_line;
+};
+var up = function (e) {
+	dragging_line = null;
+	dragging_to = null;
+	repaint ();
+};
+
+var repaint = function () {
+	ctx . textAlign = 'center';
+	ctx . textBaseline = 'middle';
+	ctx . clearRect (0, 0, canvas . width, canvas . height);
+	for (var ind = 0; ind < 100; ind += 1) {
+		for (var sub = 0; sub < 100; sub += 1) {
+			var x = 16 + ind * 32; var y = 16 + sub * 32;
+			ctx . beginPath ();
+			ctx . arc (x, y, 10, 0, Math . PI + Math . PI);
+			var v = floor [ind] [sub] . toString (16) . padStart (2, 0);
+			ctx . fillStyle = '#' + v + '0000';
+			ctx . fill ();
+			ctx . fillStyle = 'white';
+			ctx . fillText (v . toUpperCase (), x, y);
+		}
+	}
+	if (dragging_line) {
+		ctx . strokeStyle = 'yellow';
+		ctx . beginPath (); ctx . moveTo (dragging_line . x, dragging_line . y); ctx . lineTo (dragging_to . x, dragging_to . y); ctx . stroke ();
+	}
+};
+
+repaint ();
+
+</script>
+
+
+</html>
