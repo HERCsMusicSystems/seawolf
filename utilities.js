@@ -1,6 +1,6 @@
 
 var ranks = {
-	'U.S.A.': ['Ensign', 'Lieutenant', 'Lieutenant Commander', 'Commander', 'Captain'],
+	'USA': ['Ensign', 'Lieutenant', 'Lieutenant Commander', 'Commander', 'Captain'],
 	'United Kingdom': ['Sub-lieutenant', 'Lieutenant', 'Lieutenant Commander', 'Commander', 'Captain', 'Commodore'],
 	Russia: ['Лейтенант', 'Старший лейтенант', 'Капитан-лейтенант', 'Капитан третьего ранга', 'Капитан второго ранга', 'Капитан']
 };

@@ -1,20 +1,20 @@
 
 var friends = {
-	'U.S.A.': ['U.S.A.', 'United Kingdom', 'Australia'],
-	'United Kingdom': ['United Kingdom', 'Australia', 'U.S.A.'],
-	'Australia': ['Australia', 'United Kingdom', 'U.S.A.'],
+	'USA': ['USA', 'United Kingdom', 'Australia'],
+	'United Kingdom': ['United Kingdom', 'Australia', 'USA'],
+	'Australia': ['Australia', 'United Kingdom', 'USA'],
 	'Russia': ['Russia', 'India', 'China'],
 	'China': ['China', 'Russia', 'India'],
 	'India': ['India', 'Russia', 'China']
 };
 
 var enemies = {
-	'U.S.A.': ['Russia', 'China', 'India'],
+	'USA': ['Russia', 'China', 'India'],
 	'United Kingdom': ['Russia', 'China', 'India'],
 	'Australia': ['Russia', 'China', 'India'],
-	'Russia': ['U.S.A.', 'United Kingdom', 'Australia'],
-	'China': ['U.S.A.', 'Uniged Kingdom', 'Australia'],
-	'India': ['U.S.A.', 'United kingdom', 'Australia']
+	'Russia': ['USA', 'United Kingdom', 'Australia'],
+	'China': ['USA', 'Uniged Kingdom', 'Australia'],
+	'India': ['USA', 'United kingdom', 'Australia']
 };
 
 var subImage = new Image (); subImage . src = 'silhouettes/LosAngelesTopView.png';

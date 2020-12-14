@@ -1,6 +1,6 @@
 
 var scenarios = {
-	'U.S.A.': [
+	'USA': [
 		{Title: 'Easy Detection', Instructions: 'Confirm there is an Oil Tanker', rank: 0},
 		{Title: 'Three Oilers', Instructions: 'Sink three Oil Tankers', rank: 1},
 		{Title: 'Easy Convoy', Instructions: 'Sink three Oil Tankers, but watch out for Sovremenny\s escort.', rank: 2},
