@@ -17,6 +17,7 @@ var SimulatedMission = function () {
 var MissionType = function () {return SimulatedMission () ? 'Simulated' : 'Real';};
 
 var NextMission = function () {
+	if (! captain) return;
 	for (var ind in scenarios [side_name]) {
 		var scenario = scenarios [side_name] [ind];
 		var sub = 0, not_found = true;

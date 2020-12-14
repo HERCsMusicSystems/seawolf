@@ -48,7 +48,7 @@
 			<option>Real</option>
 		</select>
 		Choose a side:
-		<select id="side_selector" onchange="javascript: localStorage . setItem ('side', this . value); populate_scenarios (); populate_captains ();">
+		<select id="side_selector" onchange="javascript: SelectSide (this . value); populate_captains ();">
 			<option selected>USA</option>
 			<option>Russia</option>
 			<option>United Kingdom</option>
@@ -147,6 +147,14 @@
 	document . getElementById ('speech_on_off') . checked = localStorage . getItem ('speech') !== 'false' ? true : false;
 	if (document . getElementById ('music_on_off') . checked) PlayMusicAndRemember (background_music); else PauseMusicAndRemember (background_music);
 
+	var SelectSide = function (s) {
+		side_name = s;
+		localStorage . setItem ('side', side_name);
+		side = JSON . parse (localStorage . getItem (side_name));
+		if (side === null) {side = {captains: {}, captain: ''}; localStorage . setItem (side_name, JSON . stringify (side));}
+		captain = side . captains [side . captain];
+	};
+
 	var CheckCaptain = function () {
 		var side = JSON . parse (localStorage . getItem (localStorage . getItem ('side')));
 		if (side . captain === '') {alert ('You need to create/select a captain for your mission.'); return false;}
@@ -164,21 +172,23 @@
 	};
 
 	var populate_scenarios = function () {
-		var side = localStorage . getItem ('side');
+		side_name = localStorage . getItem ('side');
 		var scenario_content = document . getElementById ('scenario_content');
 		if (scenario_content === null) return;
 		scenario_content . innerHTML = '';
-		for (var ind in scenarios [side]) {
-			var scenario = scenarios [side] [ind];
+		for (var ind in scenarios [side_name]) {
+			var scenario = scenarios [side_name] [ind];
 			var li = document . createElement ('li');
-			li . innerHTML = GetTick (scenario) + (scenario . rank > captain . rank_id ?
-				`<u>${scenario . Title}</u>: <font color="red">&#x2717; Requires at least ${ranks [side] [scenario . rank]}</font>.` :
-				`<a href="scenarios_${side}_${scenario . Title}.html" onclick="return CheckAbort () && CheckCaptain ();">${scenario . Title}</a>: ${scenario . Instructions}`);
+			if (captain)
+				li . innerHTML = GetTick (scenario) + (scenario . rank > captain . rank_id ?
+					`<u>${scenario . Title}</u>: <font color="red">&#x2717; Requires at least ${ranks [side_name] [scenario . rank]}</font>.` :
+					`<a href="scenarios_${side_name}_${scenario . Title}.html" onclick="return CheckAbort () && CheckCaptain ();">${scenario . Title}</a>: ${scenario . Instructions}`);
+			else li . innerHTML = `${scenario . Title}`;
 			scenario_content . appendChild (li);
 		}
 		var next_mission = NextMission ();
 		document . getElementById ('next_scenario') . innerHTML = next_mission === undefined ? '' :
-			`Next Scenario: <a href="scenarios_${side}_${next_mission . Title}.html" onclick="return CheckAbort () && CheckCaptain ();">${next_mission . Title}</a>`;
+			`Next Scenario: <a href="scenarios_${side_name}_${next_mission . Title}.html" onclick="return CheckAbort () && CheckCaptain ();">${next_mission . Title}</a>`;
 	};
 
 	var DeleteCapitan = function (name) {
@@ -219,7 +229,7 @@
 		document . getElementById ('captains_table') . innerHTML = '';
 		var side_name = localStorage . getItem ('side');
 		side = JSON . parse (localStorage . getItem (side_name));
-		if (side === null) return;
+		// if (side === null) return;
 		var content = '<tr><td></td><td align="center">Rank</td><td>Name</td><td>Ribbons</td><td>Score</td><td>Victories</td><td>Aborts</td><td>Defeats</td><td>Status</td></tr>'
 		for (var ind in side . captains) {
 			var captain = side . captains [ind];
