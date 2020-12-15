@@ -1,0 +1,99 @@
+<meta charset="UTF-8"/>
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2020 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+-->
+<html>
+<head>
+	<title>Floor</title>
+	<link rel="shortcut icon" type="image/x-icon" href="h.ico"/>
+	<style>
+	td {padding: 0px;}
+	button {padding: 0px 0px;}
+	</style>
+</head>
+
+<body style="margin: 0px; background-color: blue;">
+	<canvas id="visualiser" width="1200" height="600" onwheel="javascript: adjust (event);" onmousedown="javascript: down (event);" onmousemove="javescript: move (event);" onmouseleave="javascript: up (event);" onmouseup="javascript: up (event);" oncontextmenu="javascript: event . preventDefault ();"/>
+</body>
+
+<script type="text/javascript">
+
+var canvas = document . getElementById ('visualiser');
+var ctx = canvas . getContext ('2d');
+
+var screen = {x: 0, y: 0, z: 500, alpha: 0, alphaCos: 1, alphaSin: 0, beta: 0, betaCos: 1, betaSin: 0};
+
+var lineto = function (x, y, z) {
+	var xx = x * screen . alphaCos - z * screen . alphaSin;
+	var zz = z * screen . alphaCos + x * screen . alphaSin;
+	var yy = y * screen . betaCos - zz * screen . betaSin;
+	zz += screen . z;
+	if (zz <= 0) return;
+	ctx . lineTo (screen . z * (xx + screen . x) / zz, screen . z * (yy + screen . y) / zz);
+};
+
+var floor = JSON . parse (localStorage . getItem ('floor'));
+
+var dragging = false;
+var move = function (e) {
+	if (! dragging) return;
+	console . log (e . buttons);
+	if (e . buttons < 2) {screen . x += e . movementX; screen . y += e . movementY;}
+	else {
+		screen . alpha += 0.01 * e . movementX; screen . alphaCos = Math . cos (screen . alpha); screen . alphaSin = Math . sin (screen . alpha);
+		screen . beta += 0.01 * e . movementY; screen . betaCos = Math . cos (screen . beta); screen . betaSin = Math . sin (screen . beta);
+	}
+	repaint ();
+};
+var adjust = function () {};
+var up = function () {dragging = false;};
+var down = function () {dragging = true;};
+
+var repaint = function () {
+	ctx . save ();
+	canvas . width = window . innerWidth; canvas . height = window . innerHeight;
+	ctx . translate (canvas . width * 0.5, canvas . height * 0.5);
+	ctx . strokeStyle = 'white';
+ 	for (var ind in floor) {
+		var column = floor [ind];
+		ctx . beginPath ();
+		for (var sub in column) {
+			lineto (sub * 8 - 200, 0 - column [sub], Number (ind) * 8 - 200);
+		}
+		ctx . stroke ();
+	}
+	for (var ind = 0; ind < 100; ind ++) {
+		ctx . beginPath ();
+		for (var sub = 0; sub < 100; sub ++) {
+			lineto (ind * 8 - 200, 0 - floor [sub] [ind], sub * 8 - 200);
+		}
+		ctx . stroke ();
+	}
+	ctx . restore ();
+};
+
+repaint ();
+	
+</script>
+
+</html>
