@@ -41,13 +41,14 @@
 var canvas = document . getElementById ('visualiser');
 var ctx = canvas . getContext ('2d');
 
-var screen = {x: 0, y: 0, z: 500, alpha: 0, alphaCos: 1, alphaSin: 0, beta: 0, betaCos: 1, betaSin: 0};
+var screen = {x: 0, y: 0, z: 500, alpha: 0, alphaCos: 1, alphaSin: 0, beta: 0, betaCos: 1, betaSin: 0, zee: 0};
 
 var lineto = function (x, y, z) {
 	var xx = x * screen . alphaCos - z * screen . alphaSin;
 	var zz = z * screen . alphaCos + x * screen . alphaSin;
 	var yy = y * screen . betaCos - zz * screen . betaSin;
-	zz += screen . z;
+	zz = zz * screen . betaCos + y * screen . betaSin;
+	zz += screen . z + screen . zee;
 	if (zz <= 0) return;
 	ctx . lineTo (screen . z * (xx + screen . x) / zz, screen . z * (yy + screen . y) / zz);
 };
@@ -57,7 +58,6 @@ var floor = JSON . parse (localStorage . getItem ('floor'));
 var dragging = false;
 var move = function (e) {
 	if (! dragging) return;
-	console . log (e . buttons);
 	if (e . buttons < 2) {screen . x += e . movementX; screen . y += e . movementY;}
 	else {
 		screen . alpha += 0.01 * e . movementX; screen . alphaCos = Math . cos (screen . alpha); screen . alphaSin = Math . sin (screen . alpha);
@@ -65,7 +65,7 @@ var move = function (e) {
 	}
 	repaint ();
 };
-var adjust = function () {};
+var adjust = function (e) {screen . zee += (e . deltaX + e . deltaY + e . deltaZ) * 1; repaint ();};
 var up = function () {dragging = false;};
 var down = function () {dragging = true;};
 
@@ -74,18 +74,21 @@ var repaint = function () {
 	canvas . width = window . innerWidth; canvas . height = window . innerHeight;
 	ctx . translate (canvas . width * 0.5, canvas . height * 0.5);
 	ctx . strokeStyle = 'white';
+	var cells = floor . length - 1;
+	var csize = 400 / cells;
+	cells *= csize / 2;
  	for (var ind in floor) {
 		var column = floor [ind];
 		ctx . beginPath ();
 		for (var sub in column) {
-			lineto (sub * 8 - 200, 0 - column [sub], Number (ind) * 8 - 200);
+			lineto (sub * csize - cells, 0 - column [sub], Number (ind) * csize - cells);
 		}
 		ctx . stroke ();
 	}
-	for (var ind = 0; ind < 100; ind ++) {
+	for (var ind = 0; ind < floor . length; ind ++) {
 		ctx . beginPath ();
-		for (var sub = 0; sub < 100; sub ++) {
-			lineto (ind * 8 - 200, 0 - floor [sub] [ind], sub * 8 - 200);
+		for (var sub = 0; sub < floor . length; sub ++) {
+			lineto (ind * csize - cells, 0 - floor [sub] [ind], sub * csize - cells);
 		}
 		ctx . stroke ();
 	}

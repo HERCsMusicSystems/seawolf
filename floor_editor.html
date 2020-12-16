@@ -45,15 +45,16 @@ var floor_shift = {x: 0, y: 0};
 var dragging_line = null;
 var dragging_to = null;
 
+var csize = 8;
 var floor = [];
-for (var row = 0; row < 100; row += 1) {
+for (var row = 0; row < csize; row += 1) {
 	var array = []
-	for (var column = 0; column < 100; column += 1) array . push (64);
+	for (var column = 0; column < csize; column += 1) array . push (0);
 	floor . push (array);
 }
 
 var fl = localStorage . getItem ('floor');
-if (fl !== null) floor = JSON . parse (fl);
+if (fl !== null) {floor = JSON . parse (fl); csize = floor . length;}
 
 var canvas = document . getElementById ('editor');
 var ctx = canvas . getContext ('2d');
@@ -79,6 +80,7 @@ var move = function (e) {
 	if (! dragging_line) return;
 	if (e . buttons > 1) {floor_shift . x += e . movementX; floor_shift . y += e . movementY; repaint (); return;}
 	dragging_to = ge (e);
+	if (dragging_to . xx < 0 || dragging_to . xx >= csize || dragging_to . yy < 0 || dragging_to . yy >= csize) return;
 	var dx = dragging_to . xx - dragging_line . xx;
 	var dy = dragging_to . yy - dragging_line . yy;
 	if (dx > 0) for (var x = 0; x <= dx; x += 1) floor [dragging_line . xx + x] [Math . round (dragging_line . yy + dy * x / dx)] = floor [dragging_line . xx] [dragging_line . yy];
@@ -102,12 +104,13 @@ var repaint = function () {
 	ctx . textAlign = 'center';
 	ctx . textBaseline = 'middle';
 	ctx . clearRect (0, 0, canvas . width, canvas . height);
-	for (var ind = 0; ind < 100; ind += 1) {
-		for (var sub = 0; sub < 100; sub += 1) {
+	for (var ind in floor) {
+		var column = floor [ind];
+		for (var sub in column) {
 			var x = 16 + floor_shift . x + ind * 32; var y = 16 + floor_shift . y + sub * 32;
 			ctx . beginPath ();
 			ctx . arc (x, y, 16, 0, Math . PI + Math . PI);
-			var v = floor [ind] [sub] . toString (16) . padStart (2, 0);
+			var v = column [sub] . toString (16) . padStart (2, 0);
 			ctx . fillStyle = '#' + v + '0000';
 			ctx . fill ();
 			ctx . fillStyle = 'white';
