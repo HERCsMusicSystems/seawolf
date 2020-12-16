@@ -76,6 +76,11 @@ var adjust = function (e) {
 	// console . log (x, y, e);
 };
 
+// cubic:
+// a = x / 2 + z / 6 + y / 2
+// b = 2 y - 2.5 x - z / 2
+// c = 3 x - 1.5 y + z / 3
+
 var move = function (e) {
 	if (! dragging_line) return;
 	if (e . buttons > 1) {floor_shift . x += e . movementX; floor_shift . y += e . movementY; repaint (); return;}
