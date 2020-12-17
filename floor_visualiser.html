@@ -69,6 +69,33 @@ var adjust = function (e) {screen . zee += (e . deltaX + e . deltaY + e . deltaZ
 var up = function () {dragging = false;};
 var down = function () {dragging = true;};
 
+var section = function (row, index, csize, cells, to) {
+	if (to === undefined) to = 2;
+	var ps = floor [row]; var p0 = ps [index];
+	var x = ps [index + 1] - p0; var y = ps [index + 2] - p0; var z = ps [index + 3] - p0;
+	var a = x / 2 + z / 6 - y / 2;
+	var b = 2 * y - 2.5 * x - z / 2;
+	var c = 3 * x - 1.5 * y + z / 3;
+	for (var ind = 0; ind <= to; ind += 0.0625) {
+		var v = a * ind * ind * ind + b * ind * ind + c * ind;
+		lineto ((index + ind) * csize - cells, 0 - v - p0, row * csize - cells);
+	}
+	return 12 * a + 4 * b + c;
+};
+
+var subsection = function (row, index, csize, cells, delta, to) {
+	if (to === undefined) to = 1;
+	var ps = floor [row]; var p0 = ps [index];
+	var x = ps [index + 1] - p0; var y = ps [index + 2] - p0;
+	var a = y / 4 + delta / 2 - x;
+	var b = 2 * x - 1.5 * delta - y / 4;
+	for (var ind = 0; ind <= to; ind += 0.0625) {
+		var v = a * ind * ind * ind + b * ind * ind + delta * ind;
+		lineto ((index + ind) * csize - cells, 0 - v - p0, row * csize - cells);
+	}
+	return 3 * a + 2 * b + delta;
+};
+
 var repaint = function () {
 	ctx . save ();
 	canvas . width = window . innerWidth; canvas . height = window . innerHeight;
@@ -91,6 +118,12 @@ var repaint = function () {
 			lineto (ind * csize - cells, 0 - floor [sub] [ind], sub * csize - cells);
 		}
 		ctx . stroke ();
+	}
+	var d;
+	for (var row = 0; row < floor . length; row ++) {
+		ctx . strokeStyle = 'red'; ctx . beginPath (); d = section (row, 0, csize, cells); ctx . stroke ();
+		for (var ind = 2; ind < floor . length - 3; ind ++) {ctx . beginPath (); d = subsection (row, ind, csize, cells, d); ctx . stroke ();}
+		ctx . strokeStyle = 'red'; ctx . beginPath (); d = subsection (row, floor . length - 3, csize, cells, d, 2); ctx . stroke ();
 	}
 	ctx . restore ();
 };
