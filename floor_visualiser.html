@@ -65,7 +65,7 @@ var move = function (e) {
 	}
 	repaint ();
 };
-var adjust = function (e) {screen . zee += (e . deltaX + e . deltaY + e . deltaZ) * 1; repaint ();};
+var adjust = function (e) {screen . zee += (e . deltaX + e . deltaY + e . deltaZ) * 4; repaint ();};
 var up = function () {dragging = false;};
 var down = function () {dragging = true;};
 
@@ -96,6 +96,31 @@ var subsection = function (row, index, csize, cells, delta, to) {
 	return 3 * a + 2 * b + delta;
 };
 
+var bez = function (row, index, csize, cells) {
+	var ps = floor [row];
+	var x = ps [index]; var y = ps [index + 1]; var z = ps [index + 2];
+	x = (x + y) / 2; z = (z + y) / 2;
+	for (var t = 0; t <= 1; t += 0.0625) {
+		var tt = 1 - t;
+		var xy = t * y + tt * x;
+		var yz = t * z + tt * y;
+		var xyz = t * yz + tt * xy;
+		lineto ((index + t + 0.5) * csize - cells, 0 - xyz, row * csize - cells);
+	}
+};
+
+var subz = function (row, index, csize, cells) {
+	var x = floor [index] [row]; var y = floor [index + 1] [row]; var z = floor [index + 2] [row];
+	x = (x + y) / 2; z = (z + y) / 2;
+	for (var t = 0; t <= 1; t += 0.0625) {
+		var tt = 1 - t;
+		var xy = t * y + tt * x;
+		var yz = t * z + tt * y;
+		var xyz = t * yz + tt * xy;
+		lineto (row * csize - cells, 0 - xyz, (index + t + 0.5) * csize - cells);
+	}
+};
+
 var repaint = function () {
 	ctx . save ();
 	canvas . width = window . innerWidth; canvas . height = window . innerHeight;
@@ -124,6 +149,16 @@ var repaint = function () {
 		ctx . strokeStyle = 'red'; ctx . beginPath (); d = section (row, 0, csize, cells); ctx . stroke ();
 		for (var ind = 2; ind < floor . length - 3; ind ++) {ctx . beginPath (); d = subsection (row, ind, csize, cells, d); ctx . stroke ();}
 		ctx . strokeStyle = 'red'; ctx . beginPath (); d = subsection (row, floor . length - 3, csize, cells, d, 2); ctx . stroke ();
+	}
+	for (var row = 0; row < floor . length; row ++) {
+		ctx . strokeStyle = 'lime'; ctx . beginPath ();
+		for (var ind = 0; ind < floor . length - 2; ind ++) bez (row, ind, csize, cells);
+		ctx . stroke ();
+	}
+	for (var column = 0; column < floor . length; column ++) {
+		ctx . strokeStyle = 'black'; ctx . beginPath ();
+		for (var ind = 0; ind < floor . length - 2; ind ++) subz (column, ind, csize, cells);
+		ctx . stroke ();
 	}
 	ctx . restore ();
 };
