@@ -546,6 +546,7 @@ sonar . prototype . detect = function (delta) {
 			this . towed_array_deployed = 1; this . deploying_speed = 0;
 			this . towed_array_current_amplification = this . towed_array_amplification;
 			if (this . lambda) {this . lambda (); this . lambda = null;}
+			if (this . vessel === simulated) {document . getElementById ('retrieveTowedArray') . disabled = false;}
 			sayWords (this . vessel, 'Towed array deployed.');
 		}
 		if (this . towed_array_deployed <= 0) {
@@ -554,6 +555,7 @@ sonar . prototype . detect = function (delta) {
 			this . towed_array_current_amplification = 1;
 			this . vessel . speed_index_limit = this . vessel . speeds . length - 1;
 			if (this . lambda) {this . lambda (); this . lambda = null;}
+			if (this . vessel === simulated) { document . getElementById ('cutTowedArray') . disabled = true; document . getElementById ('deployTowedArray') . disabled = false;}
 			sayWords (this . vessel, 'Towed array retrieved.');
 		}
 	}

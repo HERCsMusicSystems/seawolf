@@ -53,8 +53,8 @@ document . getElementById ('seawolf_game') . innerHTML = `
 			<td>SONAR:</td>
 			<td>
 				<button onclick="javascript: simulated . sonar . ping ();">PING</button>
-				<button id=deployTowedArray onclick="javascript: simulated . sonar . deployTowedArray (); document . getElementById ('retrieveTowedArray') . disabled = false; document . getElementById ('cutTowedArray') . disabled = false; this . disabled = true;">DEPLOY TOWED ARRAY</button>
-				<button id=retrieveTowedArray onclick="javascript: simulated . sonar . retrieveTowedArray (); document . getElementById ('deployTowedArray') . disabled = false; this . disabled = true; document . getElementById ('cutTowedArray') . disabled = true;" disabled>RETRIVE TOWED ARRAY</button>
+				<button id=deployTowedArray onclick="javascript: simulated . sonar . deployTowedArray (); document . getElementById ('cutTowedArray') . disabled = false; this . disabled = true;">DEPLOY TOWED ARRAY</button>
+				<button id=retrieveTowedArray onclick="javascript: simulated . sonar . retrieveTowedArray (); this . disabled = true;" disabled>RETRIVE TOWED ARRAY</button>
 				<button id=cutTowedArray onclick="javascript: simulated . sonar . cutTowedArray (); document . getElementById ('retrieveTowedArray') . disabled = true; this . disabled = true;" disabled>CUT TOWED ARRAY</button>
 				<button onclick="javascript: if (localStorage . getItem ('music') === 'false') {PlayMusicAndRemember (background_music); this . innerText = 'MUSIC OFF';} else {PauseMusicAndRemember (background_music); this . innerText = 'MUSIC ON';}">${localStorage . getItem ('music') === 'false' ? 'MUSIC ON' : 'MUSIC OFF'}</button>
 			</td>
