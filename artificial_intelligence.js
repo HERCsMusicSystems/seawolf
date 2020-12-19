@@ -19,7 +19,7 @@ var torpedoAI = function (torpedo) {
 		}
 		if (torpedo . target !== null) {
 			this . ping = 4;
-			if (this . armed && (torpedo . sonar . targetNoLongerAudible (torpedo . target) || torpedo . target . destroyed) && torpedo . target . type) {
+			if ((this . armed && torpedo . sonar . targetNoLongerAudible (torpedo . target) && torpedo . target . type) || torpedo . target . destroyed) {
 				torpedo . target = null;
 				torpedo . setSpeed ('slow');
 				torpedo . bearing (Math . random () < 0.5 ? -3 : 3);
