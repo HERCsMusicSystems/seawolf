@@ -7,7 +7,8 @@ var log = function (text) {
 };
 
 var notifyVesselLost = function (vessel) {
-	log ("Vessel <font color=\"red\"><b>" + vessel . name + "</b></font> (Class " + vessel . class + ") <font color=\"red\"><b>lost</b></font>.");
+	var colour = statusColours [simulated . checkStatusOf (vessel)];
+	log (`Vessel <font color="${colour}"><b>${vessel . name}</b></font> (Class ${vessel . class}) <font color="${colour}"><b>lost</b></font>.`);
 	checkGameStatus ('lost', vessel);
 };
 
@@ -18,7 +19,8 @@ var notifyTargetDetonated = function (detonated, detonator) {log (`${detonated .
 var notifyExplosion = function (vessel) {log (`${vessel . name} exploded.`);};
 
 var notifyHit = function (target, attacker) {
-	log (`<font color="red"><b>${target . name} was hit</b></font> by ${attacker . name}.`);
+	var colour = statusColours [simulated . checkStatusOf (target)];
+	log (`<font color="${colour}"><b>${target . name} was hit</b></font> by ${attacker . name}.`);
 	checkGameStatus ('hit', target, attacker);
 };
 

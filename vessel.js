@@ -17,6 +17,8 @@ var enemies = {
 	'India': ['USA', 'United kingdom', 'Australia']
 };
 
+var statusColours = {enemy: 'red', neutral: 'yellow', friend: 'lime', unknown: 'white', simulation: 'lime'};
+
 var subImage = new Image (); subImage . src = 'silhouettes/LosAngelesTopView.png';
 
 var inherit = function (from, to) {

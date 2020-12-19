@@ -14,7 +14,7 @@ for (var ind in logbook) {
 	cell . appendChild (document . createTextNode (logbook [ind] . time));
 	row . appendChild (cell);
 	cell = document . createElement ('td');
-	cell . innerHTML = logbook [ind] . message;
+	cell . innerHTML = `<font color="gray">${logbook [ind] . message}</font>`;
 //	cell . appendChild (document . createTextNode (logbook [ind] . message));
 	row . appendChild (cell);
 	tbody . appendChild (row);
