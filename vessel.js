@@ -239,18 +239,19 @@ vessel . prototype . draw = function (ctx, status) {
 		var alpha = Math . cos (bearing) * 12, beta = Math . sin (bearing) * 12;
 		ctx . lineCap = 'round'
 		ctx . lineWidth = 4; ctx . strokeStyle = 'lime';
-		 var scc = 110 * 128 / (1852 * subImage . width);
-		 if (scc * scaling * subImage . width < 24) {
-		ctx . beginPath (); ctx . moveTo (x - alpha, y - beta); ctx . lineTo (x + alpha, y + beta); ctx . stroke ();
+		var scc = scaling * 110 * 128 / 1852;
+		if (scc < 24) {
+			ctx . beginPath (); ctx . moveTo (x - alpha, y - beta); ctx . lineTo (x + alpha, y + beta); ctx . stroke ();
 		} else {
-		 ctx . save ();
-		 ctx . translate (x, y);
-		 ctx . rotate (bearing);
-		 ctx . scale (scc * scaling, scc * scaling);
-		 ctx . translate (subImage . width * -0.5, subImage . height * -0.5);
-		 ctx . drawImage (subImage, 0, 0);
-		 ctx . restore ();
-		 }
+			scc /= subImage . width;
+			ctx . save ();
+			ctx . translate (x, y);
+			ctx . rotate (bearing);
+			ctx . scale (scc, scc);
+			ctx . translate (subImage . width * -0.5, subImage . height * -0.5);
+			ctx . drawImage (subImage, 0, 0);
+			ctx . restore ();
+		}
 		return;
 	}
 	switch (status) {
