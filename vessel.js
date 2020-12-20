@@ -566,6 +566,10 @@ sonar . prototype . detect = function (delta) {
 			sayWords (this . vessel, 'Towed array retrieved.');
 		}
 	}
+	for (var ind in this . detected) {
+		var vessel = this . detected [ind];
+		if (vessel . vessel . destroyed) delete this . detected [ind];
+	}
 	// this . detected = {};
 	for (var ind in vessels) {
 		var vessel = vessels [ind];
