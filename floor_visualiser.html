@@ -200,6 +200,23 @@ var rebez = function (row, index, nf, step) {
 	}
 };
 
+var resubez = function (sub, nf, nff, step) {
+	var xx = nf [sub]; var yy = nf [sub + 1]; var zz = nf [sub + 2];
+	for (var t = 0; t < 1; t += step) {
+		var row = [];
+		for (var ind in xx) {
+			var x = xx [ind]; var y = yy [ind]; var z = zz [ind];
+			x = (x + y) / 2; z = (z + y) / 2;
+			var tt = 1 - t;
+			var xy = t * y + tt * x;
+			var yz = t * z + tt * y;
+			var xyz = t * yz + tt * xy;
+			row . push (xyz);
+		}
+		nff . push (row);
+	}
+};
+
 var resample = function () {
 	var nf = [];
 	var step = 0.25;
@@ -210,9 +227,14 @@ var resample = function () {
 		var nc = [];
 		for (var sub = 0; sub < column . length - 2; sub ++) rebez (ind, sub, nc, step);
 		nc . push (column [column . length - 1]);
-		for (var sub = 0; sub < 1; sub += step) nf . push (nc);
+		nf . push (nc);
 	}
-	floor = nf;
+	nf . unshift (nf [0]);
+	nf . push (nf [nf . length - 1]);
+	var nff = [];
+	for (var sub = 0; sub < nf . length - 2; sub ++) resubez (sub, nf, nff, step);
+	nff . push (nf [nf . length - 1]);
+	floor = nff;
 	repaint ();
 };
 
