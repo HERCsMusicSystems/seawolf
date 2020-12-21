@@ -36,7 +36,11 @@
 	<div style="position: absolute; bottom: 10px; left: 10px; font-family: arial; background-color: yellow; border-radius: 8px; margin: 8px; padding: 8px;">
 		<input type="checkbox" id="grid" onchange="javascript: repaint ();">GRID</input><br/>
 		<input type="checkbox" id="cubic" onchange="javascript: repaint ();">CUBIC</input><br/>
-		<input type="checkbox" id="bezier" onchange="javascript: repaint ();">BEZIER</input>
+		<input type="checkbox" id="bezier" onchange="javascript: repaint ();">BEZIER</input><br/>
+		<input type="button" value="RESAMPLE &#x00D7 2;" onclick="javascript: resample (0.5);"/><br/>
+		<input type="button" value="RESAMPLE &#x00D7 4;" onclick="javascript: resample (0.25);"/><br/>
+		<input type="button" value="STORE" onclick="javascript: localStorage . setItem ('visualisation', JSON . stringify (floor));"/><br/>
+		<input type="button" value="EXPORT" onclick="javascript: Export ();"/><br/>
 	</div>
 	<canvas id="visualiser" width="1200" height="600" onwheel="javascript: adjust (event);" onmousedown="javascript: down (event);" onmousemove="javescript: move (event);" onmouseleave="javascript: up (event);" onmouseup="javascript: up (event);" oncontextmenu="javascript: event . preventDefault ();"/>
 </body>
@@ -211,15 +215,14 @@ var resubez = function (sub, nf, nff, step) {
 			var xy = t * y + tt * x;
 			var yz = t * z + tt * y;
 			var xyz = t * yz + tt * xy;
-			row . push (xyz);
+			row . push (Math . round (xyz));
 		}
 		nff . push (row);
 	}
 };
 
-var resample = function () {
+var resample = function (step) {
 	var nf = [];
-	var step = 0.25;
 	for (var ind in floor) {
 		var column = floor [ind];
 		column . unshift (column [0]);
@@ -239,6 +242,27 @@ var resample = function () {
 };
 
 repaint ();
+
+var Export = function () {
+	var canvas = document . createElement ('canvas');
+	canvas . width = floor . length;
+	canvas . height = floor [0] . length;
+	var ctx = canvas . getContext ('2d');
+	var img = ctx . createImageData (1, 1);
+	var data = img . data;
+	data [0] = 255;
+	data [1] = 0;
+	data [2] = 0;
+	data [3] = 255;
+	for (var ind in floor) {
+		var row = floor [ind];
+		for (var sub in row) {
+			data [0] = Math . floor (row [sub] / 20) * 20;
+			ctx . putImageData (img, ind, sub);
+		}
+	}
+	window . location = canvas . toDataURL ('image/png');
+};
 
 </script>
 
