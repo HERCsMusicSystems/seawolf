@@ -33,6 +33,11 @@
 </head>
 
 <body style="margin: 0px; background-color: blue;">
+	<div style="position: absolute; bottom: 10px; left: 10px; font-family: arial; background-color: yellow; border-radius: 8px; margin: 8px; padding: 8px;">
+		<input type="checkbox" id="grid" onchange="javascript: repaint ();">GRID</input><br/>
+		<input type="checkbox" id="cubic" onchange="javascript: repaint ();">CUBIC</input><br/>
+		<input type="checkbox" id="bezier" onchange="javascript: repaint ();">BEZIER</input>
+	</div>
 	<canvas id="visualiser" width="1200" height="600" onwheel="javascript: adjust (event);" onmousedown="javascript: down (event);" onmousemove="javescript: move (event);" onmouseleave="javascript: up (event);" onmouseup="javascript: up (event);" oncontextmenu="javascript: event . preventDefault ();"/>
 </body>
 
@@ -129,38 +134,87 @@ var repaint = function () {
 	var cells = floor . length - 1;
 	var csize = 400 / cells;
 	cells *= csize / 2;
- 	for (var ind in floor) {
-		var column = floor [ind];
-		ctx . beginPath ();
-		for (var sub in column) {
-			lineto (sub * csize - cells, 0 - column [sub], Number (ind) * csize - cells);
+	if (document . getElementById ('grid') . checked) {
+		for (var ind in floor) {
+			var column = floor [ind];
+			ctx . beginPath ();
+			for (var sub in column) {
+				lineto (sub * csize - cells, 0 - column [sub], Number (ind) * csize - cells);
+			}
+			ctx . stroke ();
 		}
-		ctx . stroke ();
-	}
-	for (var ind = 0; ind < floor . length; ind ++) {
-		ctx . beginPath ();
-		for (var sub = 0; sub < floor . length; sub ++) {
-			lineto (ind * csize - cells, 0 - floor [sub] [ind], sub * csize - cells);
+		for (var ind = 0; ind < floor [0] . length; ind ++) {
+			ctx . beginPath ();
+			for (var sub = 0; sub < floor . length; sub ++) {
+				lineto (ind * csize - cells, 0 - floor [sub] [ind], sub * csize - cells);
+			}
+			ctx . stroke ();
 		}
-		ctx . stroke ();
 	}
 	var d;
-	for (var row = 0; row < floor . length; row ++) {
-		ctx . strokeStyle = 'red'; ctx . beginPath (); d = section (row, 0, csize, cells); ctx . stroke ();
-		for (var ind = 2; ind < floor . length - 3; ind ++) {ctx . beginPath (); d = subsection (row, ind, csize, cells, d); ctx . stroke ();}
-		ctx . strokeStyle = 'red'; ctx . beginPath (); d = subsection (row, floor . length - 3, csize, cells, d, 2); ctx . stroke ();
+	if (document . getElementById ('cubic') . checked) {
+		for (var row = 0; row < floor . length; row ++) {
+			ctx . strokeStyle = 'red'; ctx . beginPath (); d = section (row, 0, csize, cells); ctx . stroke ();
+			for (var ind = 2; ind < floor [0] . length - 3; ind ++) {ctx . beginPath (); d = subsection (row, ind, csize, cells, d); ctx . stroke ();}
+			ctx . strokeStyle = 'red'; ctx . beginPath (); d = subsection (row, floor [0] . length - 3, csize, cells, d, 2); ctx . stroke ();
+		}
 	}
-	for (var row = 0; row < floor . length; row ++) {
-		ctx . strokeStyle = 'lime'; ctx . beginPath ();
-		for (var ind = 0; ind < floor . length - 2; ind ++) bez (row, ind, csize, cells);
-		ctx . stroke ();
-	}
-	for (var column = 0; column < floor . length; column ++) {
-		ctx . strokeStyle = 'black'; ctx . beginPath ();
-		for (var ind = 0; ind < floor . length - 2; ind ++) subz (column, ind, csize, cells);
-		ctx . stroke ();
+	if (document . getElementById ('bezier') . checked) {
+		for (var row = 0; row < floor . length; row ++) {
+			ctx . strokeStyle = 'lime'; ctx . beginPath ();
+			for (var ind = 0; ind < floor [0] . length - 2; ind ++) bez (row, ind, csize, cells);
+			ctx . stroke ();
+		}
+		for (var column = 0; column < floor [0] . length; column ++) {
+			ctx . strokeStyle = 'lime'; ctx . beginPath ();
+			for (var ind = 0; ind < floor . length - 2; ind ++) subz (column, ind, csize, cells);
+			ctx . stroke ();
+		}
 	}
 	ctx . restore ();
+};
+
+var bez = function (row, index, csize, cells) {
+	var ps = floor [row];
+	var x = ps [index]; var y = ps [index + 1]; var z = ps [index + 2];
+	x = (x + y) / 2; z = (z + y) / 2;
+	for (var t = 0; t <= 1; t += 0.0625) {
+		var tt = 1 - t;
+		var xy = t * y + tt * x;
+		var yz = t * z + tt * y;
+		var xyz = t * yz + tt * xy;
+		lineto ((index + t + 0.5) * csize - cells, 0 - xyz, row * csize - cells);
+	}
+};
+
+var rebez = function (row, index, nf) {
+	var ps = floor [row];
+	var x = ps [index]; var y = ps [index + 1]; var z = ps [index + 2];
+	x = (x + y) / 2; z = (z + y) / 2;
+	console . log ('rebez', x, y, z);
+	for (var t = 0; t < 1; t += 0.25) {
+		var tt = 1 - t;
+		var xy = t * y + tt * x;
+		var yz = t * z + tt * y;
+		var xyz = t * yz + tt * xy;
+		console . log (xyz);
+		nf . push (xyz);
+	}
+};
+
+var resample = function () {
+	var nf = [];
+	for (var ind in floor) {
+		var column = floor [ind];
+		column . unshift (column [0]);
+		column . push (column [column . length - 1]);
+		var nc = [];
+		for (var sub = 0; sub < column . length - 2; sub ++) rebez (ind, sub, nc);
+		nc . push (column [column . length - 1]);
+		nf . push (nc);
+	}
+	floor = nf;
+	repaint ();
 };
 
 repaint ();
