@@ -39,7 +39,7 @@
 		<input type="checkbox" id="bezier" onchange="javascript: repaint ();">BEZIER</input><br/>
 		<input type="button" value="RESAMPLE &#x00D7 2;" onclick="javascript: resample (0.5);"/><br/>
 		<input type="button" value="RESAMPLE &#x00D7 4;" onclick="javascript: resample (0.25);"/><br/>
-		<input type="button" value="STORE" onclick="javascript: localStorage . setItem ('visualisation', JSON . stringify (floor));"/><br/>
+		<input type="button" value="STORE" onclick="javascript: localStorage . setItem ('recall', JSON . stringify (floor));"/><br/>
 		<input type="button" value="EXPORT" onclick="javascript: Export ();"/><br/>
 	</div>
 	<canvas id="visualiser" width="1200" height="600" onwheel="javascript: adjust (event);" onmousedown="javascript: down (event);" onmousemove="javescript: move (event);" onmouseleave="javascript: up (event);" onmouseup="javascript: up (event);" oncontextmenu="javascript: event . preventDefault ();"/>

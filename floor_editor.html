@@ -34,7 +34,12 @@
 
 <body style="margin: 0px; background-color: blue;">
 	<div style="position: absolute; bottom: 10px; right: 10px;">
+		<input type="button" value="RESET 3" onclick="javascript: Reset (3);"/>
+		<input type="button" value="RESET 5" onclick="javascript: Reset (5);"/>
+		<input type="button" value="RESET 7" onclick="javascript: Reset (7);"/>
+		<input type="button" value="RESET *" onclick="javascript: Reset ();"/>
 		<input type="button" value="STORE" onclick="javascript: localStorage . setItem ('floor', JSON . stringify (floor));"/>
+		<input type="button" value="RECALL" onclick="javascript: floor = JSON . parse (localStorage . getItem ('recall')); repaint ();"/>
 	</div>
 	<canvas id="editor" width="1200" height="600" onwheel="javascript: adjust (event);" onmousedown="javascript: down (event);" onmousemove="javescript: move (event);" onmouseup="javascript: up (event);" oncontextmenu="javascript: event . preventDefault ();"/>
 </body>
@@ -47,11 +52,23 @@ var dragging_to = null;
 
 var csize = 3;
 var floor = [];
-for (var row = 0; row < csize; row += 1) {
-	var array = []
-	for (var column = 0; column < csize; column += 1) array . push (0);
-	floor . push (array);
-}
+
+var Reset = function (s) {
+	if (s === undefined) {
+		s = prompt ("RESET SIZE?");
+		if (! s) return;
+		s = Number (s);
+		if (! s) return;
+	}
+	csize = s;
+	floor = [];
+	for (var row = 0; row < csize; row += 1) {
+		var array = []
+		for (var column = 0; column < csize; column += 1) array . push (0);
+		floor . push (array);
+	}
+	repaint ();
+};
 
 var fl = localStorage . getItem ('floor');
 if (fl !== null) {floor = JSON . parse (fl); csize = floor . length;}
@@ -127,6 +144,8 @@ var repaint = function () {
 		ctx . beginPath (); ctx . moveTo (dragging_line . x, dragging_line . y); ctx . lineTo (dragging_to . x, dragging_to . y); ctx . stroke ();
 	}
 };
+
+if (floor . length < 1) Reset (3);
 
 setTimeout (function () {repaint ();}, 200);
 
