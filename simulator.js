@@ -198,7 +198,16 @@ var removeVessels = function () {var ind = 0; while (ind < vessels . length) {if
 var showVessels = function () {for (var ind in vessels) console . log (vessels [ind]); console . log ('====');};
 var simulate = function (delta) {for (var ind in vessels) vessels [ind] . simulate (delta);};
 var aiVessels = function (delta) {for (var ind in vessels) {if (vessels [ind] . ai !== null) vessels [ind] . ai . code (delta);}};
-var drawVessels = function (ctx) {simulated . draw (ctx); simulated . sonar . drawDetected (ctx);};
+var halos = false;
+var drawHalos = function (ctx) {
+	var scc = scaling * 128;
+	ctx . fillStyle = '#4444ff44';
+	for (var ind in vessels) {
+		var vessel = vessels [ind];
+		if (vessel !== simulated) {ctx . beginPath (); ctx . arc (vessel . position . x * scc, vessel . position . y * scc, 16, 0, Math . PI * 2); ctx . fill ();}
+	}
+};
+var drawVessels = function (ctx) {simulated . draw (ctx); simulated . sonar . drawDetected (ctx); if (halos) drawHalos (ctx);};
 var classifyVessels = function (vessel) {for (var ind in vessels) vessels [ind] . status = vessels [ind] . checkStatusOf (vessel);};
 var simulatedVessel = function (vessel) {
 	if (localStorage . getItem ('ChangesAllowed') === 'true') location . href = 'mission_abort.html';
