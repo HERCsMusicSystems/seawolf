@@ -87,7 +87,7 @@ var section = function (row, index, csize, cells, to) {
 	var c = 3 * x - 1.5 * y + z / 3;
 	for (var ind = 0; ind <= to; ind += 0.0625) {
 		var v = a * ind * ind * ind + b * ind * ind + c * ind;
-		lineto ((index + ind) * csize - cells, 0 - v - p0, row * csize - cells);
+		lineto ((index + ind) * csize - cells, 0 - v / 2 - p0 / 2, row * csize - cells);
 	}
 	return 12 * a + 4 * b + c;
 };
@@ -100,7 +100,7 @@ var subsection = function (row, index, csize, cells, delta, to) {
 	var b = 2 * x - 1.5 * delta - y / 4;
 	for (var ind = 0; ind <= to; ind += 0.0625) {
 		var v = a * ind * ind * ind + b * ind * ind + delta * ind;
-		lineto ((index + ind) * csize - cells, 0 - v - p0, row * csize - cells);
+		lineto ((index + ind) * csize - cells, 0 - v / 2 - p0 / 2, row * csize - cells);
 	}
 	return 3 * a + 2 * b + delta;
 };
@@ -114,7 +114,7 @@ var bez = function (row, index, csize, cells) {
 		var xy = t * y + tt * x;
 		var yz = t * z + tt * y;
 		var xyz = t * yz + tt * xy;
-		lineto ((index + t + 0.5) * csize - cells, 0 - xyz, row * csize - cells);
+		lineto ((index + t + 0.5) * csize - cells, 0 - xyz / 2, row * csize - cells);
 	}
 };
 
@@ -126,7 +126,7 @@ var subz = function (row, index, csize, cells) {
 		var xy = t * y + tt * x;
 		var yz = t * z + tt * y;
 		var xyz = t * yz + tt * xy;
-		lineto (row * csize - cells, 0 - xyz, (index + t + 0.5) * csize - cells);
+		lineto (row * csize - cells, 0 - xyz / 2, (index + t + 0.5) * csize - cells);
 	}
 };
 
@@ -143,14 +143,14 @@ var repaint = function () {
 			var column = floor [ind];
 			ctx . beginPath ();
 			for (var sub in column) {
-				lineto (sub * csize - cells, 0 - column [sub], Number (ind) * csize - cells);
+				lineto (sub * csize - cells, 0 - column [sub] / 2, Number (ind) * csize - cells);
 			}
 			ctx . stroke ();
 		}
 		for (var ind = 0; ind < floor [0] . length; ind ++) {
 			ctx . beginPath ();
 			for (var sub = 0; sub < floor . length; sub ++) {
-				lineto (ind * csize - cells, 0 - floor [sub] [ind], sub * csize - cells);
+				lineto (ind * csize - cells, 0 - floor [sub] [ind] / 2, sub * csize - cells);
 			}
 			ctx . stroke ();
 		}
@@ -176,19 +176,6 @@ var repaint = function () {
 		}
 	}
 	ctx . restore ();
-};
-
-var bez = function (row, index, csize, cells) {
-	var ps = floor [row];
-	var x = ps [index]; var y = ps [index + 1]; var z = ps [index + 2];
-	x = (x + y) / 2; z = (z + y) / 2;
-	for (var t = 0; t <= 1; t += 0.0625) {
-		var tt = 1 - t;
-		var xy = t * y + tt * x;
-		var yz = t * z + tt * y;
-		var xyz = t * yz + tt * xy;
-		lineto ((index + t + 0.5) * csize - cells, 0 - xyz, row * csize - cells);
-	}
 };
 
 var rebez = function (row, index, nf, step) {
@@ -257,7 +244,8 @@ var Export = function () {
 	for (var ind in floor) {
 		var row = floor [ind];
 		for (var sub in row) {
-			data [0] = Math . floor (row [sub] / 20) * 20;
+			// data [0] = Math . floor (row [sub] / 20) * 20;
+			data [0] = Math . floor (row [sub]);
 			ctx . putImageData (img, ind, sub);
 		}
 	}

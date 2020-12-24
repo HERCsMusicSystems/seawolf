@@ -39,7 +39,7 @@
 		<input type="button" value="RESET 7" onclick="javascript: Reset (7);"/>
 		<input type="button" value="RESET *" onclick="javascript: Reset ();"/>
 		<input type="button" value="STORE" onclick="javascript: localStorage . setItem ('floor', JSON . stringify (floor));"/>
-		<input type="button" value="RECALL" onclick="javascript: floor = JSON . parse (localStorage . getItem ('recall')); repaint ();"/>
+		<input type="button" value="RECALL" onclick="javascript: floor = JSON . parse (localStorage . getItem ('recall')); csize = floor . length; repaint ();"/>
 	</div>
 	<canvas id="editor" width="1200" height="600" onwheel="javascript: adjust (event);" onmousedown="javascript: down (event);" onmousemove="javescript: move (event);" onmouseup="javascript: up (event);" oncontextmenu="javascript: event . preventDefault ();"/>
 </body>
@@ -86,9 +86,12 @@ var ge = function (e) {
 };
 var adjust = function (e) {
 	var c = ge (e);
-	floor [c . xx] [c . yy] += e . deltaY;
-	if (floor [c . xx] [c . yy] < 0) floor [c . xx] [c . yy] = 0;
-	if (floor [c . xx] [c . yy] > 255) floor [c . xx] [c . yy] = 255;
+	if (c . xx < 0 || c . xx >= floor . length) return;
+	var column = floor [c . xx];
+	if (c . yy < 0 || c . yy >= column . length) return;
+	column [c . yy] += e . deltaY;
+	if (column [c . yy] < 0) column [c . yy] = 0;
+	if (column [c . yy] > 255) column [c . yy] = 255;
 	repaint ();
 	// console . log (x, y, e);
 };
