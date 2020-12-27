@@ -550,7 +550,6 @@ var sonar = function (vessel) {
 	this . towed_array_current_amplification = 1;
 	this . towed_array_speed_limit = 3;
 	this . lambda = null;
-	this . DrawDetectionLines = false;
 };
 
 sonar . prototype . DrawShadow = function () {
@@ -715,7 +714,6 @@ sonar . prototype . drawDetected = function (ctx) {
 };
 
 sonar . prototype . DrawLines = function (ctx) {
-	if (! this . DrawDetectionLines) return;
 	var scc = scaling * 128;
 	for (var ind in this . detected) {
 		var d = this . detected [ind];

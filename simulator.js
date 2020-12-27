@@ -128,6 +128,7 @@ var missionTime = function () {return (new Date () - missionStart) / 1000;};
 
 var simulated = null;
 var selected = null;
+var monitored = null;
 var waypoint = null;
 var simulation_ratio = 1;
 var trail_length = 24;
@@ -201,12 +202,17 @@ var aiVessels = function (delta) {for (var ind in vessels) {if (vessels [ind] . 
 var halos = false;
 var drawHalos = function (ctx) {
 	var scc = scaling * 128;
-	ctx . fillStyle = '#4444ff44';
+	ctx . textBaseline = 'middle'; ctx . textAlign = 'center';
 	for (var ind in vessels) {
 		var vessel = vessels [ind];
-		if (vessel !== simulated) {ctx . beginPath (); ctx . arc (vessel . position . x * scc, vessel . position . y * scc, 16, 0, Math . PI * 2); ctx . fill ();}
-		if (vessel . sonar) vessel . sonar . DrawLines (ctx);
+		if (vessel !== simulated) {
+			ctx . fillStyle = '#4444ff44';
+			var xx = vessel . position . x * scc; var yy = vessel . position . y * scc;
+			ctx . beginPath (); ctx . arc (xx, yy, 16, 0, Math . PI * 2); ctx . fill ();
+			ctx . fillStyle = 'gold'; ctx . fillText (vessel . name, xx, yy);
+		}
 	}
+	if (monitored && monitored . sonar) monitored . sonar . DrawLines (ctx);
 };
 var drawVessels = function (ctx) {simulated . draw (ctx); simulated . sonar . drawDetected (ctx); if (halos) drawHalos (ctx);};
 var classifyVessels = function (vessel) {for (var ind in vessels) vessels [ind] . status = vessels [ind] . checkStatusOf (vessel);};
@@ -223,6 +229,15 @@ var simulationHitTest = function (x, y, reference, minimum_distance) {
 	x /= 128 * scaling; y /= 128 * scaling;
 	x += reference . position . x; y += reference . position . y;
 	var selected = null, distance = 16384;
+	if (halos) {
+		var subdistance = distance;
+		for (var ind in vessels) {
+			var v = vessels [ind];
+			var xx = v . position . x - x; var yy = v . position . y - y;
+			var d = Math . sqrt (xx * xx + yy * yy);
+			if (d < subdistance) {monitored = v; subdistance = d;}
+		}
+	}
 	for (var ind in reference . sonar . detected) {
 		var v = reference . sonar . detected [ind], vv = v . vessel;
 		if (vv !== reference) {
