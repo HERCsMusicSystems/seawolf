@@ -45,7 +45,8 @@ var music = {
 	light: create_audio ('LetThereBeLight'),
 	torpedoLaunch: create_audio ('torpedo_launch1'),
 	harpoonLaunch: create_audio ('harpoon_launch'),
-	harpoonHit: create_audio ('harpoon_hit')
+	harpoonHit: create_audio ('harpoon_hit'),
+	floor: create_audio ('floor')
 };
 
 var PlayMusic = function (id) {music [id] . currentTime = 0; music [id] . play ();};

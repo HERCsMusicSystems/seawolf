@@ -129,6 +129,7 @@ vessel . prototype . move = function (delta) {
 	if (this . position . depth >= floor) {
 		this . position . depth = this . depth_target = floor - 1; this . speed . x = this . speed . y = this . bearing_speed = 0; this . bearing_target = this . position . bearing;
 		DamageShift = 12;
+		PlayEffect ('floor');
 		sayWords (this, "Captain, we scratched the bottom.");
 	}
 	if (this . position . depth !== this . depth_target) {
