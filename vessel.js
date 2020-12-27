@@ -552,6 +552,40 @@ var sonar = function (vessel) {
 	this . lambda = null;
 };
 
+sonar . prototype . DrawShadow = function () {
+	var scc = 128 * scaling;
+	for (var ind in this . detected) {
+		var d = this . detected [ind];
+		var x = this . vessel . position . x; var y = this . vessel . position . y; var depth = this . vessel . position . depth;
+		var dx = d . vessel . position . x - x; var dy = d . vessel . position . y - y; var dd = d . vessel . position . depth - depth;
+		var alpha = Math . atan2 (dy, dx);
+		var distance = Math . sqrt (dx * dx + dy * dy);
+		for (var ind = 0.5; ind < distance; ind += 0.5) {
+			var px = x + Math . cos (alpha) * ind; var py = y + Math . sin (alpha) * ind;
+			var floor = Floor ({x: px, y: py});
+			px *= scc; py *= scc;
+			ctx . strokeStyle = ctx . fillStyle = 'gold';
+			ctx . beginPath (); ctx . arc (px, py, 8, 0, Math . PI + Math . PI); ctx . stroke ();
+			ctx . textBaseline = 'middle'; ctx . textAlign = 'center';
+			ctx . fillText (Math . floor (floor), px, py + 16);
+			ctx . fillText (Math . floor (depth + dd * ind / distance), px, py + 24);
+		}
+	}
+};
+
+sonar . prototype . Shadow = function (vessel, noise) {
+	var x = this . vessel . position . x; var y = this . vessel . position . y; var depth = this . vessel . position . depth;
+	var dx = vessel . position . x - x; var dy = vessel . position . y - y; var dd = vessel . position . depth - depth;
+	var alpha = Math . atan2 (dy, dx); var cos = Math . cos (alpha); var sin = Math . sin (alpha);
+	var distance = Math . sqrt (dx * dx + dy * dy);
+	for (var ind = 0.0625; ind < distance; ind += 0.0625) {
+		var px = x + cos * ind; var py = y + sin * ind; var pd = depth + dd * ind / distance;
+		var floor = Floor ({x: px, y: py});
+		if (floor < pd) return 0;
+	}
+	return noise;
+};
+
 sonar . prototype . detect = function (delta) {
 	if (this . deploying_speed !== 0) {
 		this . towed_array_deployed += this . deploying_speed * delta;
@@ -580,7 +614,7 @@ sonar . prototype . detect = function (delta) {
 	for (var ind in vessels) {
 		var vessel = vessels [ind];
 		if (vessel !== this . vessel) {
-			var noise = this . getNoiseOf (vessel) * this . towed_array_current_amplification;
+			var noise = this . Shadow (vessel, this . getNoiseOf (vessel) * this . towed_array_current_amplification);
 			if (noise < this . identification_threshold &&
 				((this . vessel . position . depth <= 60 && this . vessel . type === 'submarine' && vessel . position . depth === 0)
 				|| vessel . cable === this . vessel || vessel . type === 'rocket'
