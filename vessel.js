@@ -125,6 +125,12 @@ vessel . prototype . move = function (delta) {
 	var sdelta = delta / 3600;
 	this . position . x += sdelta * (Math . cos (bearing) * this . speed . x - Math . sin (bearing) * this . speed . y);
 	this . position . y += sdelta * (Math . cos (bearing) * this . speed . y + Math . sin (bearing) * this . speed . x);
+	var floor = Floor (this . position);
+	if (this . position . depth >= floor) {
+		this . position . depth = this . depth_target = floor - 1; this . speed . x = this . speed . y = this . bearing_speed = 0; this . bearing_target = this . position . bearing;
+		DamageShift = 12;
+		sayWords (this, "Captain, we scratched the bottom.");
+	}
 	if (this . position . depth !== this . depth_target) {
 		var dspeed = this . diving_speed * delta;
 		if (Math . abs (this . depth_target - this . position . depth) <= dspeed) {

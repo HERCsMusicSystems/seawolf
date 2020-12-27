@@ -352,6 +352,8 @@ var DrawSquareMap = function (ctx, shift) {
 	ctx . stroke ();
 };
 
+var Floor = function (position) {return 3000;};
+
 var DrawGrid = DrawSquareMap;
 
 var canvas = document . getElementById ('seawolf');
@@ -416,6 +418,8 @@ var time = Date . now ();
 
 var previous_selected = null;
 
+var DamageShift = 0;
+
 var resize = function (delta) {
 	joystick ();
 	var now = Date . now ();
@@ -429,6 +433,7 @@ var resize = function (delta) {
 		removeVessels ();
 	}
 	if (simulated === null) {MissionLostAtSea (); return;}
+	if (DamageShift != 0) {var alpha = Math . random () * Math . PI * 2; ctx . translate (Math . cos (alpha) * 20, Math . sin (alpha) * 20); DamageShift -= 1;};
 	DrawGrid (ctx, shiftMapPosition (ctx, window . innerWidth, window . innerHeight, simulated));
 	if (waypoint !== null) drawWaypoint (ctx);
 	drawVessels (ctx);
@@ -478,13 +483,16 @@ var resize = function (delta) {
 		selected_distance . innerHTML = '<>';
 		selected_image . innerHTML = '';
 	}
+	var floor = Floor (simulated . position) * 0.05;
 	ctc . fillStyle = 'green';
-	ctc . fillRect (0, 0, 16, 200);
+	ctc . fillRect (0, 0, 16, floor);
 	ctc . strokeStyle = 'yellow';
 	ctc . beginPath ();
 	for (var ind in thermoclines) {var d = thermoclines [ind] . depth * 0.05; ctc . moveTo (16, d); ctc . lineTo (0, d);}
 	ctc . stroke ();
 	ctc . beginPath (); var d = simulated . position . depth * 0.05; ctc . moveTo (0, d); ctc . lineTo (16, d); ctc . strokeStyle = 'red'; ctc . stroke ();
+	ctc . fillStyle = 'white';
+	ctc . fillRect (0, floor, 16, 200);
 };
 
 var simulation_interval = setInterval (resize, 50);
