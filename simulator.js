@@ -212,6 +212,7 @@ var drawHalos = function (ctx) {
 			ctx . fillStyle = 'gold'; ctx . fillText (vessel . name, xx, yy);
 		}
 	}
+	if (monitored && monitored . destroyed) monitored = null;
 	if (monitored && monitored . sonar) monitored . sonar . DrawLines (ctx);
 };
 var drawVessels = function (ctx) {simulated . draw (ctx); simulated . sonar . drawDetected (ctx); if (halos) drawHalos (ctx);};
