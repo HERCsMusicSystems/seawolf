@@ -205,6 +205,7 @@ var drawHalos = function (ctx) {
 	for (var ind in vessels) {
 		var vessel = vessels [ind];
 		if (vessel !== simulated) {ctx . beginPath (); ctx . arc (vessel . position . x * scc, vessel . position . y * scc, 16, 0, Math . PI * 2); ctx . fill ();}
+		if (vessel . sonar) vessel . sonar . DrawLines (ctx);
 	}
 };
 var drawVessels = function (ctx) {simulated . draw (ctx); simulated . sonar . drawDetected (ctx); if (halos) drawHalos (ctx);};

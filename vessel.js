@@ -550,6 +550,7 @@ var sonar = function (vessel) {
 	this . towed_array_current_amplification = 1;
 	this . towed_array_speed_limit = 3;
 	this . lambda = null;
+	this . DrawDetectionLines = false;
 };
 
 sonar . prototype . DrawShadow = function () {
@@ -709,6 +710,17 @@ sonar . prototype . drawDetected = function (ctx) {
 	for (var ind in this . detected) {
 		var d = this . detected [ind];
 		if (d . vessel . destroyed) delete this . detected [ind]; else d . vessel . draw (ctx, d . status);
+	}
+	// this . DrawShadow ();
+};
+
+sonar . prototype . DrawLines = function (ctx) {
+	if (! this . DrawDetectionLines) return;
+	var scc = scaling * 128;
+	for (var ind in this . detected) {
+		var d = this . detected [ind];
+		ctx . strokeStyle = 'lime';
+		ctx . beginPath (); ctx . moveTo (this . vessel . position . x * scc, this . vessel . position . y * scc); ctx . lineTo (d . vessel . position . x * scc, d . vessel . position . y * scc); ctx . stroke ();
 	}
 };
 
