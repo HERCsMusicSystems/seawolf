@@ -37,13 +37,16 @@
 		<input type="checkbox" id="grid" onchange="javascript: repaint ();">GRID</input><br/>
 		<input type="checkbox" id="cubic" onchange="javascript: repaint ();">CUBIC</input><br/>
 		<input type="checkbox" id="bezier" onchange="javascript: repaint ();">BEZIER</input><br/>
-		<input type="button" value="RESAMPLE &#x00D7 2;" onclick="javascript: resample (0.5);"/><br/>
-		<input type="button" value="RESAMPLE &#x00D7 4;" onclick="javascript: resample (0.25);"/><br/>
+		<input type="button" value="RESAMPLE &#x00D7 2;" onclick="javascript: floor = resample (floor, 0.5); repaint ();"/><br/>
+		<input type="button" value="RESAMPLE &#x00D7 4;" onclick="javascript: floor = resample (floor, 0.25); repaint ();"/><br/>
 		<input type="button" value="STORE" onclick="javascript: localStorage . setItem ('recall', JSON . stringify (floor));"/><br/>
-		<input type="button" value="EXPORT" onclick="javascript: Export ();"/><br/>
+		<input type="button" value="EXPORT FLOOR" onclick="javascript: Export ('floor');"/><br/>
+		<input type="button" value="EXPORT MAP" onclick="javascript: Export ('map');"/><br/>
 	</div>
 	<canvas id="visualiser" width="1200" height="600" onwheel="javascript: adjust (event);" onmousedown="javascript: down (event);" onmousemove="javescript: move (event);" onmouseleave="javascript: up (event);" onmouseup="javascript: up (event);" oncontextmenu="javascript: event . preventDefault ();"/>
 </body>
+
+<script type="text/javascript" src="resampler.js" encoding="UTF-8"></script>
 
 <script type="text/javascript">
 
@@ -178,59 +181,9 @@ var repaint = function () {
 	ctx . restore ();
 };
 
-var rebez = function (row, index, nf, step) {
-	var ps = floor [row];
-	var x = ps [index]; var y = ps [index + 1]; var z = ps [index + 2];
-	x = (x + y) / 2; z = (z + y) / 2;
-	for (var t = 0; t < 1; t += step) {
-		var tt = 1 - t;
-		var xy = t * y + tt * x;
-		var yz = t * z + tt * y;
-		var xyz = t * yz + tt * xy;
-		nf . push (xyz);
-	}
-};
-
-var resubez = function (sub, nf, nff, step) {
-	var xx = nf [sub]; var yy = nf [sub + 1]; var zz = nf [sub + 2];
-	for (var t = 0; t < 1; t += step) {
-		var row = [];
-		for (var ind in xx) {
-			var x = xx [ind]; var y = yy [ind]; var z = zz [ind];
-			x = (x + y) / 2; z = (z + y) / 2;
-			var tt = 1 - t;
-			var xy = t * y + tt * x;
-			var yz = t * z + tt * y;
-			var xyz = t * yz + tt * xy;
-			row . push (Math . round (xyz));
-		}
-		nff . push (row);
-	}
-};
-
-var resample = function (step) {
-	var nf = [];
-	for (var ind in floor) {
-		var column = floor [ind];
-		column . unshift (column [0]);
-		column . push (column [column . length - 1]);
-		var nc = [];
-		for (var sub = 0; sub < column . length - 2; sub ++) rebez (ind, sub, nc, step);
-		nc . push (column [column . length - 1]);
-		nf . push (nc);
-	}
-	nf . unshift (nf [0]);
-	nf . push (nf [nf . length - 1]);
-	var nff = [];
-	for (var sub = 0; sub < nf . length - 2; sub ++) resubez (sub, nf, nff, step);
-	nff . push (nf [nf . length - 1]);
-	floor = nff;
-	repaint ();
-};
-
 repaint ();
 
-var Export = function () {
+var Export = function (type) {
 	var canvas = document . createElement ('canvas');
 	canvas . width = floor . length;
 	canvas . height = floor [0] . length;
@@ -238,14 +191,18 @@ var Export = function () {
 	var img = ctx . createImageData (1, 1);
 	var data = img . data;
 	data [0] = 255;
-	data [1] = 0;
-	data [2] = 0;
+	data [1] = 255;
+	data [2] = 255;
 	data [3] = 255;
 	for (var ind in floor) {
 		var row = floor [ind];
 		for (var sub in row) {
-			// data [0] = Math . floor (row [sub] / 20) * 20;
-			data [0] = Math . floor (row [sub]);
+			// data [0] = Math . floor (row [sub] / 32) * 8 + 192;
+			// data [1] = Math . floor (row [sub] / 32) * 8 + 192;
+			// data [2] = Math . floor (row [sub] / 32) * 8 + 192;
+			// data [3] = Math . floor (row [sub]);
+			if (type === 'map') data [3] = Math . floor (row [sub] / 20) * 20;
+			if (type === 'floor') data [3] = Math . floor (row [sub]);
 			ctx . putImageData (img, ind, sub);
 		}
 	}
