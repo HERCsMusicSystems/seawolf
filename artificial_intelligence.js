@@ -263,13 +263,13 @@ var FireRocketOrTorpedo = function (escort, distance, ROCKET, TORPEDO) {
 	var vector = escort . getRelativePositionOf (escort . target);
 	if (vector . distance < distance) {
 		var torpedo = new escort . inventory [TORPEDO] . constructor (escort, TORPEDO);
-		return escort . fireTorpedo (torpedo, escort . inventory [TORPEDO]);
+		return escort . fireTorpedo (torpedo, escort . inventory [TORPEDO]) ? torpedo : null;
 	} else {
 		var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
 		torpedo . target_type = 'submarine';
-		return torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target);
+		return torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target) ? torepdo : null;
 	}
-	return false;
+	return null;
 };
 
 var ChangeCourseAtTarget = function (escort) {
@@ -280,11 +280,14 @@ var ChangeCourseAtTarget = function (escort) {
 };
 
 var subTrackerAI = function (escort, ROCKET, TORPEDO) {
+	this . fired = null;
+	this . weapon = null;
 	this . code = function (delta) {
 		var target = escort . sonar . trackOrStrongestEnemy (escort . target, 'submarine');
-		if (escort . target !== target && target !== null) {
+		if (target !== null & (escort . target !== target || this . fired !== target || this . weapon === null || this . weapon . target !== target || this . weapon . destroyed)) {
 			escort . target = target;
-			return FireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
+			this . fired = target;
+			return this . weapon = FireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
 		}
 		return false;
 	}

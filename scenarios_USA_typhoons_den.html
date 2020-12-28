@@ -108,12 +108,20 @@ DrawGrid = function (ctx, shift) {
 	DrawSquareMap (ctx, shift);
 };
 
-var dpt = function () {console . log (Floor (simulated . position));};
+halos = true;
 
 var slava = new Slava (SelectRandom (Slava . prototype . names));
 slava . positionVessel (1, -1, 160);
-slava . ai = new sonarDetect (slava);
+//slava . ai = new sonarDetect (slava);
 slava . setSpeed ('half');
+slava . ai = new function (vessel) {
+	this . sub_tracker = new subTrackerAI (vessel, 'SS-N-15', 'Type 65');
+	this . code = function (delta) {
+		vessel . sonar . detect ();
+		var track = this . sub_tracker . code (delta);
+		if (track) {console . log ('FIRED', track);}
+	};
+} (slava);
 addVessel (slava);
 
 var texas = new Virginia (localStorage . getItem ('SimulatedName'));

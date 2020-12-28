@@ -206,7 +206,7 @@ var drawHalos = function (ctx) {
 	for (var ind in vessels) {
 		var vessel = vessels [ind];
 		if (vessel !== simulated) {
-			ctx . fillStyle = '#4444ff44';
+			ctx . fillStyle = monitored === vessel ? '#44ff4444' : '#4444ff44';
 			var xx = vessel . position . x * scc; var yy = vessel . position . y * scc;
 			ctx . beginPath (); ctx . arc (xx, yy, 16, 0, Math . PI * 2); ctx . fill ();
 			ctx . fillStyle = 'gold'; ctx . fillText (vessel . name, xx, yy);
