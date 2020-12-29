@@ -280,14 +280,14 @@ var ChangeCourseAtTarget = function (escort) {
 };
 
 var subTrackerAI = function (escort, ROCKET, TORPEDO) {
-	this . fired = null;
-	this . weapon = null;
+	fired = null;
+	weapon = null;
 	this . code = function (delta) {
 		var target = escort . sonar . trackOrStrongestEnemy (escort . target, 'submarine');
-		if (target !== null & (escort . target !== target || this . fired !== target || this . weapon === null || this . weapon . target !== target || this . weapon . destroyed)) {
+		if (target !== null & (escort . target !== target || fired !== target || weapon === null || weapon . target !== target || weapon . destroyed)) {
 			escort . target = target;
-			this . fired = target;
-			return this . weapon = FireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
+			fired = target;
+			return weapon = FireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
 		}
 		return false;
 	}
