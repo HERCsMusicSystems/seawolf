@@ -347,7 +347,8 @@ vessel . prototype . getRelativePositionOf = function (vessel) {
 	vector . distance = Math . sqrt (vector . x * vector . x + vector . y * vector . y);
 	vector . bearing = Math . atan2 (vector . y, vector . x);
 	vector . Vbearing = Math . atan2 (this . position . depth - vessel . position . depth, vector . distance * 6076.12);
-	vector . heading = nauticalBearing (vector . bearing) - this . position . bearing;
+	vector . nautical_bearing = nauticalBearing (vector . bearing);
+	vector . heading = vector . nautical_bearing - this . position . bearing;
 	while (vector . heading > 180) vector . heading -= 360; while (vector . heading < -180) vector . heading += 360;
 	return vector;
 };
@@ -365,7 +366,7 @@ vessel . prototype . fireTorpedo = function (torpedo, inventory) {
 	torpedo . target = this . target;
 	var sp = this . position;
 	var vector = this . getRelativePositionOf (this . target);
-	torpedo . position = {x: sp . x, y: sp . y, depth: sp . depth, bearing: vector . bearing};
+	torpedo . position = {x: sp . x, y: sp . y, depth: sp . depth, bearing: vector . nautical_bearing};
 	torpedo . targetDepth (this . target . position . depth);
 	addVessel (torpedo);
 	inventory . count -= 1;
