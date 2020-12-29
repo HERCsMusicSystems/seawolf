@@ -15,6 +15,17 @@ TorpedoSonar . prototype . noiseLevelBearingCorrection = function (noise, bearin
 	return noise * bearing * bearing;
 };
 
+////////////
+// Leader //
+////////////
+
+var Leader = function () {
+	vessel . call (this);
+	this . type = this . name = this . class = 'LEADER';
+	this . noises = [0, 0, 0, 0, 0, 0, 0];
+};
+inherit (Leader, vessel);
+
 /////////////
 // Vessels //
 /////////////
