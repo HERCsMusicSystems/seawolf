@@ -176,7 +176,7 @@ vessel . prototype . setSpeed = function (index) {
 	switch (index) {
 		case 'stop': index = 0; break;
 		case 'slow': index = 1; break;
-		case 'one quarter': index = 2; break;
+		case 'one quarter': case 'quarter': index = 2; break;
 		case 'half': index = 3; break;
 		case 'three quarters': index = 4; break;
 		case 'full': index = 5; break;
@@ -185,6 +185,20 @@ vessel . prototype . setSpeed = function (index) {
 	}
 	if (index < 0) index = 0; if (index > this . speed_index_limit) index = this . speed_index_limit;
 	this . noise = this . noises [index]; this . speed = {x: this . speeds [index], y: 0}; this . speed_index = index;
+};
+
+vessel . prototype . adjustSpeed = function (target_speed) {
+	for (var ind = 0; ind < this . speed_index_limit; ind += 1) {
+		if (target_speed <= this . speeds [ind]) {this . setSpeed (ind); return;}
+		if (target_speed < this . speeds [ind + 1]) {
+			var t = (target_speed - this . speeds [ind]) / (this . speeds [ind + 1] - this . speeds [ind]);
+			this . setSpeed (t < 0.5 ? ind : ind + 1);
+			this . speed . x = target_speed;
+			this . noise = this . noises [ind + 1] * t + this . noises [ind] * (1 - t);
+			return;
+		}
+	}
+	this . setSpeed (this . speed_index_limit);
 };
 
 vessel . prototype . targetDepth = function (depth, index, callback) {
