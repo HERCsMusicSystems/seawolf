@@ -194,7 +194,7 @@ var MissionLostAtSea = function () {
 
 var addVessel = function (vessel) {vessels . push (vessel);};
 var getVessel = function (name) {for (var ind in vessels) {if (vessels [ind] . name === name) return vessels [ind];}; return null;};
-var removeVessel = function (vessel) {vessel . destroyed = true; if (simulated === vessel) simulated = null; if (selected && selected . vessel === vessel) selected = null; notifyVesselLost (vessel);};
+var removeVessel = function (vessel) {vessel . destroyed = true; if (selected && selected . vessel === vessel) selected = null; notifyVesselLost (vessel);};
 var removeVessels = function () {var ind = 0; while (ind < vessels . length) {if (vessels [ind] . destroyed) vessels . splice (ind, 1); else ind ++;}};
 var showVessels = function () {for (var ind in vessels) console . log (vessels [ind]); console . log ('====');};
 var simulate = function (delta) {for (var ind in vessels) vessels [ind] . simulate (delta);};
@@ -449,7 +449,7 @@ var resize = function (delta) {
 		simulate (delta);
 		removeVessels ();
 	}
-	if (simulated === null) {MissionLostAtSea (); return;}
+	if (simulated === null || simulated . destroyed) MissionLostAtSea ();
 	if (DamageShift != 0) {var alpha = Math . random () * Math . PI * 2; ctx . translate (Math . cos (alpha) * 20, Math . sin (alpha) * 20); DamageShift -= 1;};
 	DrawGrid (ctx, shiftMapPosition (ctx, window . innerWidth, window . innerHeight, simulated));
 	if (waypoint !== null) drawWaypoint (ctx);

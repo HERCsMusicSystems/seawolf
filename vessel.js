@@ -244,6 +244,7 @@ vessel . prototype . draw = function (ctx, status) {
 	}
 	var x = this . position . x * scc, y = this . position . y * scc;
 	if (status === undefined) {
+		if (this . destroyed) return;
 		var bearing = (this . position . bearing - 90) * Math . PI / 180;
 		var alpha = Math . cos (bearing) * 12, beta = Math . sin (bearing) * 12;
 		ctx . lineCap = 'round'
