@@ -47,52 +47,6 @@ var torpedoAI = function (torpedo) {
 	};
 };
 
-var torpedoAIbaK = function (torpedo) {
-	this . armed = false;
-	this . ping = 0;
-	this . setTarget = function (target) {this . target = target; this . armed = false;};
-	this . code = function (delta) {
-		torpedo . sonar . detect (delta);
-		var sdelta = delta / 3600;
-		torpedo . distance_travelled += torpedo . speed . x * sdelta;
-		if (torpedo . distance_travelled >= torpedo . range) {notifyRunOutOfFuel (torpedo); removeVessel (torpedo); return;}
-		if (torpedo . cable !== null) {
-			torpedo . distance_cable_travelled += torpedo . cable . speed . x * sdelta;
-			if (torpedo . distance_travelled > torpedo . cable_length || torpedo . distance_cable_travelled > torpedo . cable_to_ship_length) {
-					torpedo . cable = null; torpedo . initial_trail_delta = trail_delta; torpedo . trail_length = trail_length;
-			}
-		}
-		if (torpedo . target === null) {
-			if (torpedo . bearing_speed === 0) {torpedo . bearing (Math . random () < 0.5 ? -3 : 3);}
-			if (this . ping <= 0) {torpedo . sonar . ping (); this . ping = 4;}
-			this . ping -= delta;
-			if (torpedo . depth_target === torpedo . position . depth && torpedo . position . depth > 0 && torpedo . position . depth < torpedo . test_depth) torpedo . targetDepth ('test', 1);
-			if (torpedo . position . depth === torpedo . test_depth) torpedo . targetDepth ('surface', 1);
-			if (torpedo . position . depth === 0) torpedo . targetDepth ('test', 1);
-			torpedo . detectStrongest (torpedo . target_type);
-			return;
-		}
-		if (torpedo . target . destroyed) {torpedo . target = null; return;}
-		var vector = torpedo . getRelativePositionOf (torpedo . target);
-		if (vector . distance < 0.01) {
-			if (torpedo . target . type === null) {torpedo . target = null; return;}
-			if (Math . abs (torpedo . target . position . depth - torpedo . position . depth) < 40) {torpedo . detonate (); return;}
-		}
-		torpedo . targetDepth (torpedo . target . position . depth > 0 ? torpedo . target . position . depth : 1);
-		torpedo . targetBearing (nauticalBearing (vector . bearing));
-		var frontAngle = Math . abs (torpedo . bearing_target - torpedo . position . bearing);
-		if (frontAngle < 10 && Math . abs (vector . Vbearing) < 10) {
-			torpedo . setSpeed ('full');
-			if (! this . armed) {this . armed = true;}
-		} else {
-			torpedo . setSpeed ('slow');
-			if (this . armed) {
-				if (torpedo . cable === null || (torpedo . cable && torpedo . cable . sonar . targetNoLongerAudible (torpedo . target))) {torpedo . detectStrongest (torpedo . target_type);}
-			}
-		}
-	};
-};
-
 var wakehomingAI = function (torpedo) {
 	this . status = 'waypoint';
 	this . findTrail = function (torpedo) {
@@ -290,7 +244,17 @@ var subTrackerAI = function (escort, ROCKET, TORPEDO) {
 			return weapon = FireRocketOrTorpedo (escort, 2, ROCKET, TORPEDO);
 		}
 		return false;
-	}
+	};
+};
+
+var FollowLeaderAI = function (vessel, Leader, NauticalBearing, distance, tolerance) {
+	var bearing = (Leader . position . bearing + NauticalBearing) * Math . PI / 180;
+	var shift = {x: distance * Math . sin (bearing), y: - distance * Math . cos (bearing)};
+	this . code = function (delta) {
+		vessel . position . x = Leader . position . x + shift . x;
+		vessel . position . y = Leader . position . y + shift . y;
+		vessel . position . bearing = Leader . position . bearing;
+	};
 };
 
 var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
