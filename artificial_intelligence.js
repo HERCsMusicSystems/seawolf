@@ -250,10 +250,19 @@ var subTrackerAI = function (escort, ROCKET, TORPEDO) {
 var FollowLeaderAI = function (vessel, Leader, NauticalBearing, distance, tolerance) {
 	var bearing = (Leader . position . bearing + NauticalBearing) * Math . PI / 180;
 	var shift = {x: distance * Math . sin (bearing), y: - distance * Math . cos (bearing)};
+	following = false;
 	this . code = function (delta) {
-		vessel . position . x = Leader . position . x + shift . x;
-		vessel . position . y = Leader . position . y + shift . y;
-		vessel . position . bearing = Leader . position . bearing;
+		var x = Leader . position . x + shift . x; var y = Leader . position . y + shift . y;
+		var dx = vessel . position . x - x; var dy = vessel . position . y - y;
+		var distance = Math . sqrt (dx * dx + dy * dy);
+		following = distance < (following ? 0.0625 : 0.03125);
+		if (following) {
+			if (Leader . speed . x !== vessel . speed . x) vessel . adjustSpeed (Leader . speed . x);
+			if (Leader . position . bearing !== vessel . position . bearing) vessel . targetBearing (Leader . position . bearing);
+		} else {
+			vessel . setSpeed ('full');
+			vessel . targetBearing ({x: x, y: y});
+		}
 	};
 };
 
