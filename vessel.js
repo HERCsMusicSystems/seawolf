@@ -637,7 +637,8 @@ sonar . prototype . detect = function (delta) {
 				|| vessel . cable === this . vessel || vessel . type === 'rocket'
 				|| (vessel . type === 'mine' && vessel . cable === this . vessel))) noise = this . identification_threshold;
 			if (this . detected . hasOwnProperty (vessel . id)) {
-				if (noise < this . tracking_threshold) {if (selected && selected . vessel === vessel) selected = null; delete this . detected [vessel . id];}
+				// if (noise < this . tracking_threshold) {if (selected && selected . vessel === vessel && this . vessel === simulated) selected = null; delete this . detected [vessel . id];}
+				if (noise < this . tracking_threshold) delete this . detected [vessel . id];
 				else {
 					if (this . detected [vessel . id] . status === 'unknown' && noise >= this . identification_threshold) this . detected [vessel . id] . status = this . vessel . checkStatusOf (vessel);
 					this . detected [vessel . id] . noise = noise;
@@ -694,12 +695,14 @@ sonar . prototype . detectTorpedoes = function () {
 	return torpedoes;
 };
 
-sonar . prototype . targetNoLongerAudible = function (target) {
-	for (var ind in this . detected) {
-		if (this . detected [ind]  . vessel === target) return false;
-	}
-	return true;
-};
+//sonar . prototype . targetNoLongerAudiblee = function (target) {
+//	for (var ind in this . detected) {
+//		if (this . detected [ind]  . vessel === target) return false;
+//	}
+//	return true;
+//};
+
+sonar . prototype . targetNoLongerAudible = function (target) {return ! (target . id in this . detected);};
 
 sonar . prototype . getNoiseOf = function (source) {
 	var vector = this . vessel . getRelativePositionOf (source);
