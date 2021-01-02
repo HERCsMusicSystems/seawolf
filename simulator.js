@@ -433,7 +433,7 @@ var joystick = function () {
 
 var time = Date . now ();
 
-var previous_selected = null;
+var previous_selected = null; var previous_status = '';
 
 var DamageShift = 0;
 
@@ -487,9 +487,13 @@ var resize = function (delta) {
 		bearing = displayBearing (vector . bearing * 180 / Math . PI + 90 - simulated . position . bearing);
 		selected_heading . innerHTML = bearing + ` / ${(simulated . sonar . getNoiseOf (sv) * simulated . sonar . towed_array_current_amplification) . toFixed (2)}`;
 //		selected_heading . innerHTML = '[' + bearing + '/' + simulated . sonar . getNoiseOf (sv) . toFixed (4) + ']';
-		if (previous_selected !== selected) {
-			selected_image . innerHTML = selected . status === 'unknown' ? '' : `<a href="${sv . info}" target="_blank"><img src="silhouettes/${sv . image}.png" style="max-width: 300px; max-height: 80px; display: block; width: auto; height: auto; margin-left: auto; margin-right: auto;"/></a><nobr>${sv . name}<br/>${sv . class}</nobr>`;
+		if (previous_selected !== selected || previous_status != selected . status) {
+			selected_image . innerHTML = selected . status === 'unknown' ?
+				'' :
+				//'<img src="silhouettes/Default.png" style="max-width: 300px; max-height: 80px; display: block; width: auto; height: auto; margin-left: auto; margin-right: auto;"/>' :
+				`<a href="${sv . info}" target="_blank"><img src="silhouettes/${sv . image}.png" style="max-width: 300px; max-height: 80px; display: block; width: auto; height: auto; margin-left: auto; margin-right: auto;"/></a><nobr>${sv . name}<br/>${sv . class}</nobr>`;
 			previous_selected = selected;
+			previous_status = selected . status;
 		}
 	} else {
 		// selected_name . innerHTML = '<====>';
