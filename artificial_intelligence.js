@@ -8,14 +8,11 @@ var torpedoAI = function (torpedo) {
 	this . ping = 4;
 	this . code = function (delta) {
 		torpedo . sonar . detect ();
-		var sdelta = delta / 3600;
-		torpedo . distance_travelled += torpedo . speed . x * sdelta;
 		if (torpedo . distance_travelled >= torpedo . range) {notifyRunOutOfFuel (torpedo); removeVessel (torpedo); return;}
 		if (torpedo . cable !== null) {
-			torpedo . distance_cable_travelled += torpedo . cable . speed . x * sdelta;
 			if (torpedo . distance_travelled > torpedo . cable_length || torpedo . distance_cable_travelled > torpedo . cable_to_ship_length) {
 				torpedo . cable = null; torpedo . initial_trail_delta = trail_delta; torpedo . trail_length = trail_length;
-			}
+			} else torpedo . distance_cable_travelled += torpedo . cable . speed . x * delta / 3600;
 		}
 		if (torpedo . target !== null) {
 			this . ping = 4;
@@ -56,8 +53,6 @@ var wakehomingAI = function (torpedo) {
 		torpedo . targetDepth (0);
 	};
 	this . code = function (delta) {
-		var sdelta = delta / 3600;
-		torpedo . distance_travelled += torpedo . speed . x * sdelta;
 		if (torpedo . distance_travelled >= torpedo . range) {notifyRunOutOfFuel (torpedo); removeVessel (torpedo); return;}
 		switch (this . status) {
 			case 'waypoint':
