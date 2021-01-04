@@ -221,7 +221,7 @@ var FireRocketOrTorpedo = function (escort, distance, ROCKET, TORPEDO) {
 	} else {
 		var torpedo = new escort . silo [ROCKET] . constructor (escort, ROCKET, escort . country);
 		torpedo . target_type = 'submarine';
-		return torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target) ? torepdo : null;
+		return torpedo . siloLaunch (escort . silo [ROCKET], escort, escort . target) ? torpedo : null;
 	}
 	return null;
 };

@@ -722,7 +722,6 @@ var Mark48 = function (cable, name, country) {
 	this . sonar = new TorpedoSonar (this);
 	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
 	this . ai = new torpedoAI (this);
-	this . distance_travelled = 0;
 	this . distance_cable_travelled = 0;
 	this . cable_length = 10; this . cable_to_ship_length = 5;
 	this . initial_trail_delta = 2;
@@ -748,7 +747,6 @@ var Mark46 = function (cable, name, country) {
 	this . strength = 1;
 	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
 	this . ai = new wakehomingAI (this);
-	this . distance_travelled = 0;
 	this . initial_trail_delta = 2;
 	this . trail_length = 100;
 };
@@ -806,7 +804,6 @@ var Type65 = function (cable, name, country) {
 	this . sonar = new TorpedoSonar (this);
 	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
 	this . ai = new torpedoAI (this);
-	this . distance_travelled = 0;
 	this . distance_cable_travelled = 0;
 	this . cable_length = 10; this . cable_to_ship_length = 5;
 	this . initial_trail_delta = 2;
@@ -832,7 +829,6 @@ var Type53 = function (cable, name, country) {
 	this . strength = 1;
 	this . detonate = function () {explode (this, 0.01, 40, 1 + Math . random ());};
 	this . ai = new wakehomingAI (this);
-	this . distance_travelled = 0;
 	this . initial_trail_delta = 2;
 	this . trail_length = 100;
 };
@@ -869,7 +865,7 @@ var SS_N_15 = function (cable, name, country) {
 inherit (SS_N_15, Harpoon);
 SS_N_15 . prototype . image = 'veter_rocket';
 SS_N_15 . prototype . image_alt = 'veter_torpedo';
-SS_N_15 . prototype . info = 'https://en.wikipedia.org/wiki/SS-N-16';
+SS_N_15 . prototype . info = 'https://en.wikipedia.org/wiki/SS-N-15';
 
 var SS_N_16 = function (cable, name, country) {
 	Harpoon . call (this, cable, name, country);

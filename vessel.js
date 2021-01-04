@@ -59,6 +59,7 @@ var vessel = function (country) {
 	this . bearing_speed = 0;
 	this . depth_target = 0;
 	this . bearing_target = null;
+	this . distance_travelled = 0;
 	this . noise = 0;
 	this . acoustic_reflection = 1;
 	this . trail_delta = 0;
