@@ -19,13 +19,15 @@ TorpedoSonar . prototype . noiseLevelBearingCorrection = function (noise, bearin
 // Leader //
 ////////////
 
-var Leader = function (x, y, bearing) {
+var Leader = function (x, y, bearing, speed) {
 	vessel . call (this);
 	this . type = this . name = this . class = 'LEADER';
 	this . noises = [0, 0, 0, 0, 0, 0, 0];
+	this . trail_length = 0;
 	if (x !== undefined) this . position . x = x;
 	if (y !== undefined) this . position . y = y;
 	if (bearing !== undefined) this . position . bearing = bearing;
+	if (speed !== undefined) this . setSpeed (speed);
 };
 inherit (Leader, vessel);
 

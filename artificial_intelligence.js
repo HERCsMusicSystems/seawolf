@@ -246,7 +246,7 @@ var FollowLeaderAI = function (vessel, Leader, NauticalBearing, distance) {
 	var bearing = (Leader . position . bearing + NauticalBearing) * Math . PI / 180;
 	var shift = {x: distance * Math . sin (bearing), y: - distance * Math . cos (bearing)};
 	following = true;
-	vessel . positionVessel (Leader . position . x, Leader . position . y, Leader . position . bearing);
+	vessel . positionVessel (Leader . position . x + shift . x, Leader . position . y + shift . y, Leader . position . bearing);
 	this . code = function (delta) {
 		var x = Leader . position . x + shift . x; var y = Leader . position . y + shift . y;
 		var dx = vessel . position . x - x; var dy = vessel . position . y - y;
