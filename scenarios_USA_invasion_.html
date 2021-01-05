@@ -62,7 +62,7 @@ var CreateAlligator = function (leader, bearing, distance) {
 var position = {x: Math . random () * 20 - 10, y: Math . random () * 20 - 10, bearing: Math . floor (Math . random () * 360), speed: 'quarter'};
 var leader = new Leader (position . x, position . y, position . bearing, position . speed);
 addVessel (leader);
-for (var ind = 0; ind < 360; ind += 60) CreateAlligator (leader, ind, 0.5);
+for (var ind = 0; ind < 360; ind += 60) CreateAlligator (leader, ind, 0.2);
 
 var angle = Math . random () * Math . PI * 2;
 var distance = Math . random () * 6 + 2;
@@ -70,31 +70,22 @@ position . x += Math . cos (angle) * distance;
 position . y += Math . sin (angle) * distance;
 
 addVessel (leader = new Leader (position . x, position . y, position . bearing, position . speed));
-for (var ind = 0; ind < 360; ind += 60) CreateAlligator (leader, ind, 0.5);
+for (var ind = 0; ind < 360; ind += 60) CreateAlligator (leader, ind, 0.2);
+
+var slava = new Slava (TakeRandom (Slava . prototype . names));
+slava . ai = function (vessel) {
+	var follower = new FollowLeaderAI (vessel, leader, 90, 0.4);
+	this . code = function (delta) {
+		return follower . code (delta);
+	};
+} (slava);
 
 /*
-var CreateEnemy = function (enemy, position, x, y, angle) {
-	angle += Math . PI * 0.5;
-	enemy . positionVessel (
-		position . x + x * Math . cos (angle) - y * Math . sin (angle),
-		position . y + y * Math . cos (angle) + x * Math . sin (angle),
-		position . bearing);
-	enemy . setSpeed ('full');
-	addVessel (enemy);
-	Enemies . push (enemy);
-};
 
 var from = {x: Math . random () * 20 - 10, y: Math . random () * 20 - 10};
 var to = {x: Math . random () * 14 - 7, y: Math . random () * 14 - 7};
 var atan = Math . atan2 (to . y - from . y, to . x - from . x);
 from . bearing = nauticalBearing (atan);
-var Alligators = SelectRandom (Alligator . prototype . names, 12);
-CreateEnemy (new Alligator (Alligators [0]), from, 0, 0, atan);
-CreateEnemy (new Alligator (Alligators [1]), from, 0.2, 0.2, atan);
-CreateEnemy (new Alligator (Alligators [2]), from, -0.2, 0.2, atan);
-CreateEnemy (new Alligator (Alligators [3]), from, 0, 0.4, atan);
-CreateEnemy (new Alligator (Alligators [4]), from, 0.2, 0.6, atan);
-CreateEnemy (new Alligator (Alligators [5]), from, -0.2, 0.6, atan);
 
 var global_missiles = [];
 
