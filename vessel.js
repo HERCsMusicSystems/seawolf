@@ -525,7 +525,6 @@ tube . prototype . load = function (selector) {
 
 tube . prototype . fire = function (target, selector, callback) {
 	if (this . torpedo !== null) {
-	console . log ('solo fire');
 		if (this . flooded < 1) return;
 		if (this . torpedo . launch (this, this . vessel, target)) {this . torpedo . postLaunch (this); if (this . vessel === simulated) PlayEffect ('torpedoLaunch');}
 		if (callback !== undefined) callback ();

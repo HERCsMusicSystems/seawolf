@@ -52,6 +52,19 @@ texas . positionVessel (0, 0, 0, 800);
 
 var Enemies = [];
 
+var CreateAlligator = function (leader, bearing, distance) {
+	var alligator = new Alligator (TakeRandom (Alligator . prototype . names));
+	alligator . ai = new FollowLeaderAI (alligator, leader, bearing, distance);
+	addVessel (alligator);
+	Enemies . push (alligator);
+};
+
+var leader = new Leader (Math . random () * 20 - 10, Math . random () * 20 - 10, Math . floor (Math . random () * 360));
+addVessel (leader);
+leader . setSpeed ('quarter');
+for (var ind = 0; ind < 360; ind += 60) CreateAlligator (leader, ind, 0.2);
+
+/*
 var CreateEnemy = function (enemy, position, x, y, angle) {
 	angle += Math . PI * 0.5;
 	enemy . positionVessel (
@@ -95,7 +108,7 @@ var kirov = new Kirov (SelectRandom (Kirov . prototype . names));
 kirov . ai = new superEscortAI (kirov, global_missiles, 'SS-N-15', 'Type 65', 'Fort');
 CreateEnemy (kirov, from, -0.4, 0.3, atan);
 kirov . setSpeed ('half');
-
+*/
 addVessel (texas);
 simulatedVessel (texas);
 
