@@ -73,12 +73,13 @@ addVessel (leader = new Leader (position . x, position . y, position . bearing, 
 for (var ind = 0; ind < 360; ind += 60) CreateAlligator (leader, ind, 0.2);
 
 var slava = new Slava (TakeRandom (Slava . prototype . names));
-slava . ai = function (vessel) {
+slava . ai = new function (vessel) {
 	var follower = new FollowLeaderAI (vessel, leader, 90, 0.4);
 	this . code = function (delta) {
 		return follower . code (delta);
 	};
 } (slava);
+addVessel (slava);
 
 /*
 
