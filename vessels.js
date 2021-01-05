@@ -228,7 +228,7 @@ var Alligator = function (name, country) {
 	this . type = 'surface';
 	this . name = name;
 	this . class = 'Alligator Large Landing Ship';
-	this . speeds = [0, 1, 4, 8, 16, 18];
+	this . speeds = [0, 1, 4, 8, 12, 16, 18];
 };
 inherit (Alligator, vessel);
 Alligator . prototype . image = 'Alligator';
