@@ -59,10 +59,21 @@ var CreateAlligator = function (leader, bearing, distance) {
 	Enemies . push (alligator);
 };
 
+var global_missiles = [];
+var AI = function (vessel, leader) {
+	var follower = new FollowLeaderAI (vessel, leader, 90, 0.4);
+	this . code = function (delta) {
+		return follower . code (delta);
+	};
+};
+
 var position = {x: Math . random () * 20 - 10, y: Math . random () * 20 - 10, bearing: Math . floor (Math . random () * 360), speed: 'quarter'};
 var leader = new Leader (position . x, position . y, position . bearing, position . speed);
 addVessel (leader);
 for (var ind = 0; ind < 360; ind += 60) CreateAlligator (leader, ind, 0.2);
+var slava = new Slava (TakeRandom (Slava . prototype . names));
+slava . ai = new AI (slava, leader);
+addVessel (slava);
 
 var angle = Math . random () * Math . PI * 2;
 var distance = Math . random () * 6 + 2;
@@ -71,15 +82,9 @@ position . y += Math . sin (angle) * distance;
 
 addVessel (leader = new Leader (position . x, position . y, position . bearing, position . speed));
 for (var ind = 0; ind < 360; ind += 60) CreateAlligator (leader, ind, 0.2);
-
-var slava = new Slava (TakeRandom (Slava . prototype . names));
-slava . ai = new function (vessel) {
-	var follower = new FollowLeaderAI (vessel, leader, 90, 0.4);
-	this . code = function (delta) {
-		return follower . code (delta);
-	};
-} (slava);
-addVessel (slava);
+var kirov = new Kirov (TakeRandom (Kirov . prototype . names));
+kirov . ai = new AI (kirov, leader);
+addVessel (kirov);
 
 /*
 
