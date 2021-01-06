@@ -171,7 +171,8 @@ var bukAI = function (escort, BUK, distance) {
 	};
 };
 
-var superBukAI = function (escort, missiles, BUK, distance) {
+var superBukAI = function (escort, BUK, missiles, distance) {
+	if (missiles === undefined) missiles = [];
 	if (distance === undefined) distance = 3;
 	this . code = function (delta) {
 		var incomings = escort . findEnemyRockets ();
@@ -262,19 +263,8 @@ var FollowLeaderAI = function (vessel, Leader, NauticalBearing, distance) {
 	};
 };
 
-var escortAI = function (escort, ROCKET, TORPEDO, BUK) {
-	var buk_code = new bukAI (escort, BUK);
-	var sub_tracker = new subTrackerAI (escort, ROCKET, TORPEDO);
-	this . code = function (delta) {
-		if (BUK !== undefined) buk_code . code (delta);
-		escort . sonar . detect ();
-		sub_tracker . code (delta);
-		ChangeCourseAtTarget (escort);
-	};
-};
-
-var superEscortAI = function (escort, missiles, ROCKET, TORPEDO, BUK) {
-	var buk_code = new superBukAI (escort, missiles, BUK);
+var escortAI = function (escort, ROCKET, TORPEDO, BUK, SuperMissiles) {
+	var buk_code = new superBukAI (escort, BUK, SuperMissiles);
 	var sub_tracker = new subTrackerAI (escort, ROCKET, TORPEDO);
 	this . code = function (delta) {
 		if (BUK !== undefined) buk_code . code (delta);

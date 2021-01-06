@@ -60,9 +60,12 @@ var CreateAlligator = function (leader, bearing, distance) {
 };
 
 var global_missiles = [];
-var AI = function (vessel, leader) {
-	var follower = new FollowLeaderAI (vessel, leader, 90, 0.4);
+var AI = function (vessel, leader, BUK, angle) {
+	if (angle === undefined) angle = 90;
+	var follower = new FollowLeaderAI (vessel, leader, angle, 0.4);
+	var buk = new superBukAI (vessel, BUK, global_missiles);
 	this . code = function (delta) {
+		buk . code (delta);
 		return follower . code (delta);
 	};
 };
@@ -72,7 +75,10 @@ var leader = new Leader (position . x, position . y, position . bearing, positio
 addVessel (leader);
 for (var ind = 0; ind < 360; ind += 60) CreateAlligator (leader, ind, 0.2);
 var slava = new Slava (TakeRandom (Slava . prototype . names));
-slava . ai = new AI (slava, leader);
+slava . ai = new AI (slava, leader, 'Buk');
+addVessel (slava);
+slava = new Slava (TakeRandom (Slava . prototype . names));
+slava . ai = new AI (slava, leader, 'Buk', 60);
 addVessel (slava);
 
 var angle = Math . random () * Math . PI * 2;
@@ -83,37 +89,9 @@ position . y += Math . sin (angle) * distance;
 addVessel (leader = new Leader (position . x, position . y, position . bearing, position . speed));
 for (var ind = 0; ind < 360; ind += 60) CreateAlligator (leader, ind, 0.2);
 var kirov = new Kirov (TakeRandom (Kirov . prototype . names));
-kirov . ai = new AI (kirov, leader);
+kirov . ai = new AI (kirov, leader, 'Fort');
 addVessel (kirov);
 
-/*
-
-var from = {x: Math . random () * 20 - 10, y: Math . random () * 20 - 10};
-var to = {x: Math . random () * 14 - 7, y: Math . random () * 14 - 7};
-var atan = Math . atan2 (to . y - from . y, to . x - from . x);
-from . bearing = nauticalBearing (atan);
-
-var global_missiles = [];
-
-var slava = new Slava (SelectRandom (Slava . prototype . names));
-slava . ai = new superEscortAI (slava, global_missiles, 'SS-N-16', 'Type 65', 'Buk');
-CreateEnemy (slava, from, 0.4, 0.3, atan);
-slava . setSpeed ('half');
-var distance = Math . random () * 6 + 2;
-var angle = Math . random () * Math . PI * 2;
-from . x += distance * Math . cos (angle);
-from . y += distance * Math . sin (angle);
-CreateEnemy (new Alligator (Alligators [6]), from, 0, 0, atan);
-CreateEnemy (new Alligator (Alligators [7]), from, 0.2, 0.2, atan);
-CreateEnemy (new Alligator (Alligators [8]), from, -0.2, 0.2, atan);
-CreateEnemy (new Alligator (Alligators [9]), from, 0, 0.4, atan);
-CreateEnemy (new Alligator (Alligators [10]), from, 0.2, 0.6, atan);
-CreateEnemy (new Alligator (Alligators [11]), from, -0.2, 0.6, atan);
-var kirov = new Kirov (SelectRandom (Kirov . prototype . names));
-kirov . ai = new superEscortAI (kirov, global_missiles, 'SS-N-15', 'Type 65', 'Fort');
-CreateEnemy (kirov, from, -0.4, 0.3, atan);
-kirov . setSpeed ('half');
-*/
 addVessel (texas);
 simulatedVessel (texas);
 
