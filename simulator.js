@@ -144,7 +144,7 @@ var MissionVictory = function () {
 		PauseSimulation ();
 		alert ("Victory");
 		localStorage . setItem ('ChangesAllowed', 'true');
-		if (window . location . protocol . indexOf ('file') >= 0) {
+		if (window . location . pathname . indexOf ('Seawolf/') >= 0) {
 			var address = window . location . pathname;
 			var index = address . lastIndexOf ('Seawolf/') + 'Seawolf/' . length;
 			window . location . assign (address . substring (0, index) + 'mission_victory.html');
@@ -158,7 +158,7 @@ var MissionDefeat = function () {
 		PauseSimulation ();
 		alert ("Defeat");
 		localStorage . setItem ('ChangesAllowed', 'true');
-		if (window . location . protocol . indexOf ('file') >= 0) {
+		if (window . location . pathname . indexOf ('Seawolf/') >= 0) {
 			var address = window . location . pathname;
 			var index = address . lastIndexOf ('Seawolf/') + 'Seawolf/' . length;
 			window . location . assign (address . substring (0, index) + 'mission_defeat.html');
@@ -170,7 +170,7 @@ var MissionAbort = function () {
 	PauseSimulation ();
 	if (confirm ('Do you wish to abort the mission?')) {
 		localStorage . setItem ('ChangesAllowed', 'true');
-		if (window . location . protocol . indexOf ('file') >= 0) {
+		if (window . location . pathname . indexOf ('Seawolf/') >= 0) {
 			var address = window . location . pathname;
 			var index = address . lastIndexOf ('Seawolf/') + 'Seawolf/' . length;
 			window . location . assign (address . substring (0, index) + 'mission_abort.html');
@@ -184,9 +184,9 @@ var MissionLostAtSea = function () {
 		PauseSimulation ();
 		alert ('Lost at sea');
 		localStorage . setItem ('ChangesAllowed', 'true');
-		if (window . location . protocol . indexOf ('file') >= 0) {
+		if (window . location . pathname . indexOf ('Seawolf/') >= 0) {
 			var address = window . location . pathname;
-			var index = address . lastIndexOf ('Seawolf/') + 'seawolf/' . length;
+			var index = address . lastIndexOf ('Seawolf/') + 'Seawolf/' . length;
 			window . location . assign (address . substring (0, index) + 'mission_lost_at_sea.html');
 		} else window . location . assign ('/mission_lost_at_sea.html');
 	}, 3000);
