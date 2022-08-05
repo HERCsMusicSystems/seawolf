@@ -537,6 +537,7 @@ var ctrl = function (e) {
 		case 'x': simulation_ratio = 2; return true;
 		case 'c': simulation_ratio = 4; return true;
 		case 'v': simulation_ratio = 8; return true;
+		case 'b': simulation_ratio = 16; return true;
 		case 'q': simulated . targetDepth ('surface'); return true;
 		case 'w': simulated . targetDepth ('periscope'); return true;
 		case 'e': simulated . targetDepth ('up thermal'); return true;
