@@ -482,7 +482,7 @@ tube . prototype . move = function (delta) {
 			} else {
 				this . flooded = 1; this . command = null;
 				if (this . torpedo . launch (this, this . vessel)) {
-					notifyTorpedoLaunch (this, this . torpedo);
+					notifyTorpedoLaunch (this . vessel, this . torpedo);
 					this . torpedo . postLaunch (this);
 					if (this . vessel === simulated) PlayEffect ('torpedoLaunch');
 					if (this . fire_callback) {this . fire_callback (); this . fire_callback = null;}
@@ -528,7 +528,7 @@ tube . prototype . fire = function (target, selector, callback) {
 	if (this . torpedo !== null) {
 		var subtorpedo = this . torpedo;
 		if (this . flooded < 1) return;
-		if (this . torpedo . launch (this, this . vessel, target)) {notifyTorpedoLaunch (this, this . torpedo); this . torpedo . postLaunch (this); if (this . vessel === simulated) PlayEffect ('torpedoLaunch');}
+		if (this . torpedo . launch (this, this . vessel, target)) {notifyTorpedoLaunch (this . vessel, this . torpedo); this . torpedo . postLaunch (this); if (this . vessel === simulated) PlayEffect ('torpedoLaunch');}
 		if (callback !== undefined) callback ();
 		return;
 	}
