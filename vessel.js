@@ -372,6 +372,7 @@ vessel . prototype . fireTorpedo = function (torpedo, inventory) {
 	torpedo . targetDepth (this . target . position . depth);
 	addVessel (torpedo);
 	inventory . count -= 1;
+	notifyTorpedoLaunch (this, torpedo);
 	return true;
 };
 
@@ -401,6 +402,7 @@ vessel . prototype . siloLaunch = function (silo, vessel, target) {
 	PlayEffect ('harpoonLaunch');
 	silo . amount -= 1;
 	ping = {x: vessel . position . x, y: vessel . position . y, depth: vessel . position . depth, ping: this . silo_launch_level, attenuation: 0.125, type: 'launch'};
+	notifySiloLaunch (vessel, this);
 	return true;
 };
 

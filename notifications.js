@@ -21,6 +21,13 @@ var notifyTorpedoLaunch = function (vessel, torpedo) {
 	} else log (`<font color="${colour}"><b>${vessel . name}</b> [Class ${vessel . class}]</font> launched <font color="${TorpedoColour}"><b>${torpedo . name}</b> [Class ${torpedo . class}]</font> at <font color=${statusColours . neutral}><b>waypoint</b></font>.`);
 };
 
+var notifySiloLaunch = function (vessel, rocket) {
+	var VesselColour = statusColours [simulated . checkStatusOf (vessel)];
+	var RocketColour = statusColours [simulated . checkStatusOf (rocket)];
+	var TargetColour = statusColours [simulated . checkStatusOf (rocket . target)];
+	log (`<font color="${VesselColour}"><b>${vessel . name}</b> [Class ${vessel . class}]</font> launched <font color="${RocketColour}"><b>${rocket . name}</b> [Class ${rocket . class}]</font> at <font color="${TargetColour}"><b>${rocket . target . name}</b> [Class ${rocket . target . class}]</font>.`);
+};
+
 var notifyPing = function (vessel) {};
 
 var notifyTargetDetonated = function (detonated, detonator) {log (`${detonated . name} was detonated by ${detonator . name}.`);};
